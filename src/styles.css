@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@source "./components/**/*.{ts,tsx}";
+@source "./routes/**/*.{ts,tsx}";
+
+
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-rose-accent: var(--rose-accent);
+  --color-ivory: var(--ivory);
+  --color-ivory-soft: var(--ivory-soft);
+
+  --font-display: 'Playfair Display', serif;
+  --font-italic: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* Warm neutral palette */
+  --background: oklch(0.953 0.012 70);          /* #F5F0EB */
+  --ivory: oklch(0.953 0.012 70);
+  --ivory-soft: oklch(0.928 0.014 70);          /* #EDE8E1 */
+  --foreground: oklch(0.18 0 0);                /* #1A1A1A */
+  --card: oklch(0.953 0.012 70);
+  --card-foreground: oklch(0.18 0 0);
+  --popover: oklch(0.953 0.012 70);
+  --popover-foreground: oklch(0.18 0 0);
+  --primary: oklch(0.18 0 0);
+  --primary-foreground: oklch(0.953 0.012 70);
+  --secondary: oklch(0.928 0.014 70);
+  --secondary-foreground: oklch(0.18 0 0);
+  --muted: oklch(0.928 0.014 70);
+  --muted-foreground: oklch(0.58 0.01 80);      /* #8A8A82 */
+  --accent: oklch(0.928 0.014 70);
+  --accent-foreground: oklch(0.18 0 0);
+  --rose-accent: oklch(0.66 0.078 17);          /* #C4848A */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0 0);
+  --border: oklch(0 0 0 / 0.09);
+  --input: oklch(0 0 0 / 0.09);
+  --ring: oklch(0.66 0.078 17);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-italic-serif { font-family: var(--font-italic); font-style: italic; }
+  .font-body { font-family: var(--font-body); }
+
+  .tracking-wider-2 { letter-spacing: 0.18em; }
+
+  @keyframes pulse-rose {
+    0%, 100% { box-shadow: 0 0 0 0 oklch(0.66 0.078 17 / 0.5); }
+    50% { box-shadow: 0 0 0 14px oklch(0.66 0.078 17 / 0); }
+  }
+  .animate-pulse-rose { animation: pulse-rose 2.4s ease-out infinite; }
+
+  @keyframes marquee-fade {
+    0%, 30% { opacity: 1; transform: translateY(0); }
+    35%, 65% { opacity: 0; transform: translateY(-6px); }
+    70%, 100% { opacity: 1; transform: translateY(0); }
+  }
+}
