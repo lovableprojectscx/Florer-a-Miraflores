@@ -55,28 +55,31 @@ export function Hero({ banners }: Props) {
     setTouchEnd(null);
   };
 
+  // Altura responsiva profesional: 260px en móvil, 350px en tablet, 450px en PC estándar y 480px en pantallas grandes
+  const containerClasses = "relative w-full overflow-hidden bg-[#FDFAF6] h-[260px] sm:h-[350px] md:h-[450px] lg:h-[480px] xl:h-[500px]";
+
   if (banners.length === 0) {
     return (
       <section className="w-full">
-        <div className="relative w-full overflow-hidden bg-[#FDFAF6]">
+        <div className={containerClasses}>
           <img
             src={heroImg}
             alt="Arreglo floral de portada"
-            className="w-full h-auto block"
+            className="w-full h-full object-cover object-center block"
           />
         </div>
       </section>
     );
   }
 
-  // Caso de banner único: se muestra de forma nativa sin carrusel ni controles
+  // Caso de banner único: se muestra con la altura responsiva fija ideal y object-cover
   if (banners.length === 1) {
     const ban = banners[0];
     const img = (
       <img
         src={ban.imagen_url}
         alt={ban.titulo ?? "Banner Florería Miraflores"}
-        className="w-full h-auto block"
+        className="w-full h-full object-cover object-center block select-none pointer-events-none"
         onError={(e) => {
           e.currentTarget.onerror = null;
           e.currentTarget.src = heroImg;
@@ -86,11 +89,11 @@ export function Hero({ banners }: Props) {
 
     return (
       <section className="w-full">
-        <div className="relative w-full overflow-hidden bg-[#FDFAF6]">
+        <div className={containerClasses}>
           {ban.cta_link ? (
             <a
               href={ban.cta_link}
-              className="block w-full h-auto"
+              className="block w-full h-full pointer-events-auto"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -123,7 +126,7 @@ export function Hero({ banners }: Props) {
             <img
               src={ban.imagen_url}
               alt={ban.titulo ?? "Banner Florería Miraflores"}
-              className="w-full h-auto block select-none pointer-events-none"
+              className="w-full h-full object-cover object-center block select-none pointer-events-none"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = heroImg;
@@ -134,12 +137,12 @@ export function Hero({ banners }: Props) {
           return (
             <div 
               key={ban.id} 
-              className="w-full flex-shrink-0 relative select-none"
+              className={`w-full flex-shrink-0 relative select-none ${containerClasses}`}
             >
               {ban.cta_link ? (
                 <a
                   href={ban.cta_link}
-                  className="block w-full h-auto pointer-events-auto"
+                  className="block w-full h-full pointer-events-auto"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -153,7 +156,7 @@ export function Hero({ banners }: Props) {
         })}
       </div>
 
-      {/* Flechas de Navegación (Estilo premium y minimalista, ocultas en celular si no hay hover) */}
+      {/* Flechas de Navegación */}
       <button
         onClick={handlePrev}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-[#4A3E3D] hover:bg-white/40 active:scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 hidden md:flex shadow-sm cursor-pointer border border-white/30"
@@ -170,7 +173,7 @@ export function Hero({ banners }: Props) {
         <ChevronRight className="w-6 h-6" />
       </button>
 
-      {/* Puntos de Navegación (Dots indicativos abajo) */}
+      {/* Puntos de Navegación */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {banners.map((_, idx) => {
           const isActive = idx === activeIndex;
