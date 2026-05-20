@@ -20,14 +20,19 @@ export const Route = createFileRoute("/categoria/$slug")({
     meta: loaderData
       ? [
           { title: `${loaderData.cat.nombre} | Florería Miraflores` },
-          { name: "description", content: `Explora ${loaderData.cat.nombre} en Florería Miraflores. Delivery en Lima.` },
+          {
+            name: "description",
+            content: `Explora ${loaderData.cat.nombre} en Florería Miraflores. Delivery en Lima.`,
+          },
         ]
       : [],
   }),
   notFoundComponent: () => (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
       <h1 className="font-display text-4xl mb-4 text-[#2C2420]">Categoría no encontrada</h1>
-      <Link to="/" className="text-[#C4956A] underline">Volver al inicio</Link>
+      <Link to="/" className="text-[#C4956A] underline">
+        Volver al inicio
+      </Link>
     </div>
   ),
   errorComponent: ({ error }) => (
@@ -45,9 +50,7 @@ function CategoriaPage() {
   const hasChild = matches.some((m) => m.routeId === "/categoria/$slug/$sub");
   if (hasChild) return <Outlet />;
 
-  const hermanas = categorias.filter(
-    (c: CategoriaRow) => !c.parent_id && c.slug !== cat.slug
-  );
+  const hermanas = categorias.filter((c: CategoriaRow) => !c.parent_id && c.slug !== cat.slug);
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
@@ -56,13 +59,17 @@ function CategoriaPage() {
 
       <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-10 md:py-16">
         <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-6 flex items-center gap-1.5">
-          <Link to="/" className="hover:text-[#2C2420] transition-colors">Inicio</Link>
+          <Link to="/" className="hover:text-[#2C2420] transition-colors">
+            Inicio
+          </Link>
           <span>/</span>
           <span className="text-[#2C2420]">{cat.nombre}</span>
         </nav>
 
         <header className="max-w-2xl mb-10 md:mb-16">
-          <p className="font-italic-serif text-rose-accent text-base md:text-lg mb-2">— colección</p>
+          <p className="font-italic-serif text-rose-accent text-base md:text-lg mb-2">
+            — colección
+          </p>
           <h1 className="font-display text-4xl md:text-6xl text-[#2C2420] leading-tight">
             {cat.nombre}
           </h1>
@@ -141,4 +148,3 @@ function CategoriaPage() {
     </div>
   );
 }
-              

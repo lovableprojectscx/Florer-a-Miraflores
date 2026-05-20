@@ -12,7 +12,7 @@ import { getCategorias, getConfig } from "@/lib/queries";
 
 const confirmacionSearch = z.object({
   numero: z.string().min(1),
-  email:  z.string().email(),
+  email: z.string().email(),
 });
 
 // ─── Ruta ─────────────────────────────────────────────────────────────────────
@@ -21,7 +21,9 @@ export const Route = createFileRoute("/confirmacion")({
   validateSearch: (search) => confirmacionSearch.parse(search),
 
   // Si los search params son inválidos → redirect a home
-  onError: () => { throw redirect({ to: "/" }); },
+  onError: () => {
+    throw redirect({ to: "/" });
+  },
 
   loader: async () => {
     const [categorias, config] = await Promise.all([
@@ -44,7 +46,7 @@ export const Route = createFileRoute("/confirmacion")({
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 function ConfirmacionPage() {
-  const { numero, email }     = Route.useSearch();
+  const { numero, email } = Route.useSearch();
   const { categorias, config } = Route.useLoaderData();
 
   const whatsappMsg = encodeURIComponent(`Hola, mi pedido es ${numero}`);
@@ -56,7 +58,6 @@ function ConfirmacionPage() {
       <Header categorias={categorias} />
 
       <main className="max-w-2xl mx-auto px-5 md:px-10 py-16 md:py-24 text-center">
-
         {/* Ícono de check */}
         <div className="flex justify-center mb-8">
           <div className="w-24 h-24 rounded-full bg-[#F5EFE6] flex items-center justify-center">
@@ -70,9 +71,7 @@ function ConfirmacionPage() {
         </h1>
 
         {/* Número de pedido */}
-        <p className="font-body text-sm text-[#8A7A6E] mb-2">
-          Tu número de pedido es
-        </p>
+        <p className="font-body text-sm text-[#8A7A6E] mb-2">Tu número de pedido es</p>
         <p className="font-body text-2xl font-medium text-[#C4956A] tracking-wider mb-8">
           {numero}
         </p>
@@ -82,18 +81,16 @@ function ConfirmacionPage() {
 
         {/* Mensaje */}
         <p className="font-body font-light text-[#2C2420]/80 leading-relaxed mb-2">
-          Recibirás una confirmación en{" "}
-          <span className="font-medium text-[#2C2420]">{email}</span>.
+          Recibirás una confirmación en <span className="font-medium text-[#2C2420]">{email}</span>.
         </p>
         <p className="font-body font-light text-[#8A7A6E] text-sm leading-relaxed mb-10">
-          Si tienes alguna duda o quieres coordinar tu entrega, escríbenos por WhatsApp y
-          te atendemos al instante. Horario:{" "}
+          Si tienes alguna duda o quieres coordinar tu entrega, escríbenos por WhatsApp y te
+          atendemos al instante. Horario:{" "}
           <span className="text-[#2C2420]">9 am – 9 pm, todos los días</span>.
         </p>
 
         {/* Botones */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-
           {/* WhatsApp */}
           <a
             href={whatsappUrl}
@@ -112,9 +109,7 @@ function ConfirmacionPage() {
           >
             Seguir comprando
           </Link>
-
         </div>
-
       </main>
 
       <Footer config={config} />

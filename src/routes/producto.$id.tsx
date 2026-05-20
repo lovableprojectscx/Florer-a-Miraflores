@@ -21,10 +21,10 @@ import type { CategoriaRow, ProductoRow } from "@/types/database";
 // ─── Badge helper ─────────────────────────────────────────────────────────────
 
 const BADGE_MAP: Record<string, { label: string; className: string }> = {
-  novedad:          { label: "NUEVO",            className: "bg-[#2C2420] text-white" },
+  novedad: { label: "NUEVO", className: "bg-[#2C2420] text-white" },
   edicion_limitada: { label: "EDICIÓN LIMITADA", className: "bg-[#2C2420] text-white" },
-  oferta:           { label: "OFERTA",           className: "bg-[#C4956A] text-white" },
-  mas_vendido:      { label: "MÁS VENDIDO",      className: "bg-[#8A7A6E] text-white" },
+  oferta: { label: "OFERTA", className: "bg-[#C4956A] text-white" },
+  mas_vendido: { label: "MÁS VENDIDO", className: "bg-[#8A7A6E] text-white" },
 };
 
 // ─── Loader ───────────────────────────────────────────────────────────────────
@@ -64,7 +64,10 @@ export const Route = createFileRoute("/producto/$id")({
     meta: loaderData
       ? [
           { title: `${loaderData.product.nombre} | Florería Miraflores` },
-          { name: "description", content: loaderData.product.descripcion ?? loaderData.product.nombre },
+          {
+            name: "description",
+            content: loaderData.product.descripcion ?? loaderData.product.nombre,
+          },
           { property: "og:title", content: `${loaderData.product.nombre} | Florería Miraflores` },
           { property: "og:image", content: loaderData.product.imagenes?.[0] ?? "" },
         ]
@@ -73,7 +76,9 @@ export const Route = createFileRoute("/producto/$id")({
   notFoundComponent: () => (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
       <h1 className="font-display text-4xl mb-4 text-[#2C2420]">Producto no encontrado</h1>
-      <Link to="/" className="text-[#C4956A] underline">Volver al inicio</Link>
+      <Link to="/" className="text-[#C4956A] underline">
+        Volver al inicio
+      </Link>
     </div>
   ),
   errorComponent: ({ error }) => (
@@ -88,21 +93,20 @@ export const Route = createFileRoute("/producto/$id")({
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 function ProductPage() {
-  const { product, relacionados, categorias, config, subcat, parentCat } =
-    Route.useLoaderData();
+  const { product, relacionados, categorias, config, subcat, parentCat } = Route.useLoaderData();
   const navigate = useNavigate();
   const { agregarItem, abrirCarrito } = useCartStore();
 
-  const [cantidad,   setCantidad]   = useState(1);
-  const [activeImg,  setActiveImg]  = useState(0);
+  const [cantidad, setCantidad] = useState(1);
+  const [activeImg, setActiveImg] = useState(0);
 
   const firstTag = product.tags?.[0];
-  const badge    = firstTag ? BADGE_MAP[firstTag] : null;
+  const badge = firstTag ? BADGE_MAP[firstTag] : null;
   const imagenes = product.imagenes ?? [];
 
   const handleAgregar = () => {
     agregarItem({
-      id:     product.id,
+      id: product.id,
       nombre: product.nombre,
       precio: product.precio,
       imagen: imagenes[0] ?? "",
@@ -113,7 +117,7 @@ function ProductPage() {
 
   const handleComprarAhora = () => {
     agregarItem({
-      id:     product.id,
+      id: product.id,
       nombre: product.nombre,
       precio: product.precio,
       imagen: imagenes[0] ?? "",
@@ -128,14 +132,19 @@ function ProductPage() {
       <Header categorias={categorias} />
 
       <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-8 md:py-14">
-
         {/* Breadcrumb */}
         <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-8 flex flex-wrap items-center gap-1.5">
-          <Link to="/" className="hover:text-[#2C2420] transition-colors">Inicio</Link>
+          <Link to="/" className="hover:text-[#2C2420] transition-colors">
+            Inicio
+          </Link>
           {parentCat && (
             <>
               <span>/</span>
-              <Link to="/categoria/$slug" params={{ slug: parentCat.slug }} className="hover:text-[#2C2420] transition-colors">
+              <Link
+                to="/categoria/$slug"
+                params={{ slug: parentCat.slug }}
+                className="hover:text-[#2C2420] transition-colors"
+              >
                 {parentCat.nombre}
               </Link>
             </>
@@ -143,7 +152,11 @@ function ProductPage() {
           {subcat && parentCat && (
             <>
               <span>/</span>
-              <Link to="/categoria/$slug/$sub" params={{ slug: parentCat.slug, sub: subcat.slug }} className="hover:text-[#2C2420] transition-colors">
+              <Link
+                to="/categoria/$slug/$sub"
+                params={{ slug: parentCat.slug, sub: subcat.slug }}
+                className="hover:text-[#2C2420] transition-colors"
+              >
                 {subcat.nombre}
               </Link>
             </>
@@ -154,12 +167,16 @@ function ProductPage() {
 
         {/* Layout principal */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
-
           {/* Imágenes (60%) */}
           <div className="w-full lg:w-[60%] flex flex-col gap-3">
-            <div className="relative overflow-hidden bg-[#F5EFE6] rounded-xl" style={{ aspectRatio: "4/5" }}>
+            <div
+              className="relative overflow-hidden bg-[#F5EFE6] rounded-xl"
+              style={{ aspectRatio: "4/5" }}
+            >
               {badge && (
-                <span className={`absolute top-4 left-4 z-10 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${badge.className}`}>
+                <span
+                  className={`absolute top-4 left-4 z-10 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${badge.className}`}
+                >
                   {badge.label}
                 </span>
               )}
@@ -183,7 +200,9 @@ function ProductPage() {
                     onClick={() => setActiveImg(i)}
                     aria-label={`Ver imagen ${i + 1}`}
                     className={`w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
-                      activeImg === i ? "border-[#C4956A]" : "border-transparent hover:border-[#E8DDD0]"
+                      activeImg === i
+                        ? "border-[#C4956A]"
+                        : "border-transparent hover:border-[#E8DDD0]"
                     }`}
                   >
                     <img
@@ -205,7 +224,9 @@ function ProductPage() {
           {/* Info (40%) */}
           <div className="w-full lg:w-[40%] flex flex-col">
             {badge && (
-              <span className={`lg:hidden self-start mb-3 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${badge.className}`}>
+              <span
+                className={`lg:hidden self-start mb-3 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${badge.className}`}
+              >
                 {badge.label}
               </span>
             )}
@@ -227,7 +248,9 @@ function ProductPage() {
 
             {/* Selector cantidad */}
             <div className="mt-8">
-              <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">Cantidad</p>
+              <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">
+                Cantidad
+              </p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setCantidad((q) => Math.max(1, q - 1))}
@@ -270,8 +293,10 @@ function ProductPage() {
               <MapPin className="h-4 w-4 text-[#C4956A] mt-0.5 flex-shrink-0" strokeWidth={1.5} />
               <p className="font-body text-xs text-[#8A7A6E] leading-relaxed">
                 Delivery disponible en{" "}
-                <span className="text-[#2C2420]">Miraflores, Surco, Barranco, Lince y San Isidro</span>.
-                Coordina tu hora de entrega en el checkout.
+                <span className="text-[#2C2420]">
+                  Miraflores, Surco, Barranco, Lince y San Isidro
+                </span>
+                . Coordina tu hora de entrega en el checkout.
               </p>
             </div>
           </div>

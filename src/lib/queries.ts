@@ -109,16 +109,16 @@ export async function getProductoPorId(id: string): Promise<ProductoRow | null> 
     if (!local) return null;
     // Adaptar la forma de Product (catalog.ts) a ProductoRow (Supabase)
     return {
-      id:           local.id,
-      nombre:       local.nombre,
-      precio:       local.precio,
-      descripcion:  local.descripcion,
-      imagenes:     local.imagenes,
+      id: local.id,
+      nombre: local.nombre,
+      precio: local.precio,
+      descripcion: local.descripcion,
+      imagenes: local.imagenes,
       categoria_id: local.categoria_id,
-      tags:         local.tags,
-      activo:       local.activo,
-      orden:        0,
-      created_at:   new Date().toISOString(),
+      tags: local.tags,
+      activo: local.activo,
+      orden: 0,
+      created_at: new Date().toISOString(),
     } satisfies ProductoRow;
   }
 
@@ -141,10 +141,7 @@ export async function getProductoPorId(id: string): Promise<ProductoRow | null> 
  * La tabla `config` siempre tiene exactamente 1 fila (upsert).
  */
 export async function getConfig(): Promise<ConfigRow | null> {
-  const { data, error } = await supabase
-    .from("config")
-    .select("*")
-    .maybeSingle();
+  const { data, error } = await supabase.from("config").select("*").maybeSingle();
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
   return data;
@@ -225,7 +222,8 @@ export async function getOcasiones(): Promise<OcasionHomeRow[]> {
 export async function getColecciones(): Promise<ColeccionConCategoria[]> {
   const { data, error } = await supabase
     .from("colecciones_home")
-    .select(`
+    .select(
+      `
       *,
       categoria:categorias (
         id,
@@ -233,7 +231,8 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
         slug,
         imagen_url
       )
-    `)
+    `,
+    )
     .eq("activo", true)
     .order("orden", { ascending: true });
 
@@ -247,18 +246,18 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
 
 export interface CrearPedidoInput {
   nombre_cliente: string;
-  telefono:       string;
-  email:          string;
-  distrito_id:    string;
-  direccion:      string;
-  referencia?:    string;
-  fecha_entrega:  string;
-  hora_entrega:   string;
-  notas?:         string;
-  productos:      PedidoProducto[];
-  subtotal:       number;
-  delivery:       number;
-  total:          number;
+  telefono: string;
+  email: string;
+  distrito_id: string;
+  direccion: string;
+  referencia?: string;
+  fecha_entrega: string;
+  hora_entrega: string;
+  notas?: string;
+  productos: PedidoProducto[];
+  subtotal: number;
+  delivery: number;
+  total: number;
 }
 
 /**
@@ -275,25 +274,23 @@ export async function crearPedido(input: CrearPedidoInput): Promise<string> {
   // fecha_entrega debe llegar como "YYYY-MM-DD" desde el input[type=date] — no transformar.
   // distrito_id debe ser UUID válido — viene del select cargado desde getDistritos().
 
-  const { error } = await supabase
-    .from("pedidos")
-    .insert({
-      numero,
-      nombre_cliente: input.nombre_cliente,
-      telefono:       input.telefono,
-      email:          input.email,
-      distrito_id:    input.distrito_id,
-      direccion:      input.direccion,
-      referencia:     input.referencia ?? null,
-      fecha_entrega:  input.fecha_entrega,
-      hora_entrega:   input.hora_entrega,
-      notas:          input.notas ?? null,
-      productos:      input.productos,
-      subtotal:       input.subtotal,
-      delivery:       input.delivery,
-      total:          input.total,
-      estado:         "pendiente" as const,
-    });
+  const { error } = await supabase.from("pedidos").insert({
+    numero,
+    nombre_cliente: input.nombre_cliente,
+    telefono: input.telefono,
+    email: input.email,
+    distrito_id: input.distrito_id,
+    direccion: input.direccion,
+    referencia: input.referencia ?? null,
+    fecha_entrega: input.fecha_entrega,
+    hora_entrega: input.hora_entrega,
+    notas: input.notas ?? null,
+    productos: input.productos,
+    subtotal: input.subtotal,
+    delivery: input.delivery,
+    total: input.total,
+    estado: "pendiente" as const,
+  });
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
   return numero;

@@ -13,25 +13,25 @@ export const Route = createFileRoute("/admin/dashboard")({
 // --- Tipos ---
 
 interface Stats {
-  totalProductos:    number;
+  totalProductos: number;
   pedidosPendientes: number;
-  totalCategorias:   number;
+  totalCategorias: number;
 }
 
 interface PedidoReciente {
-  id:             string;
-  numero:         string | null;
+  id: string;
+  numero: string | null;
   nombre_cliente: string | null;
-  total:          number | null;
-  estado:         string;
-  created_at:     string;
+  total: number | null;
+  estado: string;
+  created_at: string;
 }
 
 // --- Helpers ---
 
 const ESTADO_BADGE: Record<string, string> = {
   pendiente: "bg-amber-100 text-amber-700",
-  pagado:    "bg-blue-100 text-blue-700",
+  pagado: "bg-blue-100 text-blue-700",
   en_camino: "bg-purple-100 text-purple-700",
   entregado: "bg-green-100 text-green-700",
   cancelado: "bg-red-100 text-red-700",
@@ -39,7 +39,7 @@ const ESTADO_BADGE: Record<string, string> = {
 
 const ESTADO_LABEL: Record<string, string> = {
   pendiente: "Pendiente",
-  pagado:    "Pagado",
+  pagado: "Pagado",
   en_camino: "En camino",
   entregado: "Entregado",
   cancelado: "Cancelado",
@@ -47,8 +47,11 @@ const ESTADO_LABEL: Record<string, string> = {
 
 function formatFecha(iso: string) {
   return new Date(iso).toLocaleDateString("es-PE", {
-    day: "2-digit", month: "short", year: "numeric",
-    hour: "2-digit", minute: "2-digit",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 }
 
@@ -67,15 +70,18 @@ function StatSkeleton() {
 // --- Pagina ---
 
 function DashboardPage() {
-  const [stats,     setStats]     = useState<Stats | null>(null);
+  const [stats, setStats] = useState<Stats | null>(null);
   const [recientes, setRecientes] = useState<PedidoReciente[]>([]);
-  const [loading,   setLoading]   = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       const [productosRes, pedidosRes, categoriasRes, recientesRes] = await Promise.all([
         supabase.from("productos").select("id", { count: "exact", head: true }).eq("activo", true),
-        supabase.from("pedidos").select("id", { count: "exact", head: true }).eq("estado", "pendiente"),
+        supabase
+          .from("pedidos")
+          .select("id", { count: "exact", head: true })
+          .eq("estado", "pendiente"),
         supabase.from("categorias").select("id", { count: "exact", head: true }).eq("activo", true),
         supabase
           .from("pedidos")
@@ -85,9 +91,9 @@ function DashboardPage() {
       ]);
 
       setStats({
-        totalProductos:    productosRes.count  ?? 0,
-        pedidosPendientes: pedidosRes.count    ?? 0,
-        totalCategorias:   categoriasRes.count ?? 0,
+        totalProductos: productosRes.count ?? 0,
+        pedidosPendientes: pedidosRes.count ?? 0,
+        totalCategorias: categoriasRes.count ?? 0,
       });
       setRecientes((recientesRes.data ?? []) as PedidoReciente[]);
       setLoading(false);
@@ -96,33 +102,37 @@ function DashboardPage() {
     load();
   }, []);
 
-  const statCards = stats ? [
-    {
-      label: "Productos activos",
-      value: stats.totalProductos,
-      icon:  Package,
-      color: "bg-[#F5EFE6] text-[#C4956A]",
-      link:  "/admin/productos",
-    },
-    {
-      label: "Pedidos pendientes",
-      value: stats.pedidosPendientes,
-      icon:  ShoppingBag,
-      color: stats.pedidosPendientes > 0 ? "bg-amber-50 text-amber-600" : "bg-[#F5EFE6] text-[#8A7A6E]",
-      link:  "/admin/pedidos",
-    },
-    {
-      label: "Categorias activas",
-      value: stats.totalCategorias,
-      icon:  FolderTree,
-      color: "bg-[#F5EFE6] text-[#8A7A6E]",
-      link:  "/admin/categorias",
-    },
-  ] : [];
+  const statCards = stats
+    ? [
+        {
+          label: "Productos activos",
+          value: stats.totalProductos,
+          icon: Package,
+          color: "bg-[#F5EFE6] text-[#C4956A]",
+          link: "/admin/productos",
+        },
+        {
+          label: "Pedidos pendientes",
+          value: stats.pedidosPendientes,
+          icon: ShoppingBag,
+          color:
+            stats.pedidosPendientes > 0
+              ? "bg-amber-50 text-amber-600"
+              : "bg-[#F5EFE6] text-[#8A7A6E]",
+          link: "/admin/pedidos",
+        },
+        {
+          label: "Categorias activas",
+          value: stats.totalCategorias,
+          icon: FolderTree,
+          color: "bg-[#F5EFE6] text-[#8A7A6E]",
+          link: "/admin/categorias",
+        },
+      ]
+    : [];
 
   return (
     <div className="p-8 md:p-10">
-
       {/* Encabezado */}
       <div className="mb-10">
         <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1">Panel</p>
@@ -143,13 +153,17 @@ function DashboardPage() {
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${color}`}>
                     <Icon className="h-5 w-5" strokeWidth={1.5} />
                   </div>
-                  <ArrowRight className="h-4 w-4 text-[#E8DDD0] group-hover:text-[#C4956A] transition-colors" strokeWidth={1.5} />
+                  <ArrowRight
+                    className="h-4 w-4 text-[#E8DDD0] group-hover:text-[#C4956A] transition-colors"
+                    strokeWidth={1.5}
+                  />
                 </div>
                 <p className="font-display text-4xl text-[#2C2420] mb-1">{value}</p>
-                <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">{label}</p>
+                <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  {label}
+                </p>
               </Link>
-            ))
-        }
+            ))}
       </div>
 
       {/* Pedidos recientes */}
@@ -194,13 +208,17 @@ function DashboardPage() {
                   {p.numero ?? `#${p.id.slice(0, 8)}`}
                 </p>
                 <div className="flex-1 min-w-0">
-                  <p className="font-body text-sm text-[#2C2420] truncate">{p.nombre_cliente ?? "-"}</p>
+                  <p className="font-body text-sm text-[#2C2420] truncate">
+                    {p.nombre_cliente ?? "-"}
+                  </p>
                   <p className="font-body text-xs text-[#8A7A6E]">{formatFecha(p.created_at)}</p>
                 </div>
                 <p className="font-body text-sm text-[#2C2420] font-medium flex-shrink-0">
                   {p.total != null ? `S/ ${Number(p.total).toFixed(2)}` : "-"}
                 </p>
-                <span className={`inline-flex px-2.5 py-1 text-[10px] tracking-widest uppercase font-body font-medium rounded-full flex-shrink-0 ${ESTADO_BADGE[p.estado] ?? "bg-gray-100 text-gray-600"}`}>
+                <span
+                  className={`inline-flex px-2.5 py-1 text-[10px] tracking-widest uppercase font-body font-medium rounded-full flex-shrink-0 ${ESTADO_BADGE[p.estado] ?? "bg-gray-100 text-gray-600"}`}
+                >
                   {ESTADO_LABEL[p.estado] ?? p.estado}
                 </span>
               </div>
@@ -208,7 +226,6 @@ function DashboardPage() {
           </div>
         )}
       </div>
-
     </div>
   );
 }

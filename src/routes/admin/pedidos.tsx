@@ -12,9 +12,9 @@ export const Route = createFileRoute("/admin/pedidos")({
 // --- Constantes ---
 
 const ESTADOS: { value: EstadoPedido | "todos"; label: string }[] = [
-  { value: "todos",     label: "Todos"     },
+  { value: "todos", label: "Todos" },
   { value: "pendiente", label: "Pendiente" },
-  { value: "pagado",    label: "Pagado"    },
+  { value: "pagado", label: "Pagado" },
   { value: "en_camino", label: "En camino" },
   { value: "entregado", label: "Entregado" },
   { value: "cancelado", label: "Cancelado" },
@@ -22,7 +22,7 @@ const ESTADOS: { value: EstadoPedido | "todos"; label: string }[] = [
 
 const ESTADO_BADGE: Record<EstadoPedido, string> = {
   pendiente: "bg-amber-100 text-amber-700 border-amber-200",
-  pagado:    "bg-green-100 text-green-700 border-green-200",
+  pagado: "bg-green-100 text-green-700 border-green-200",
   en_camino: "bg-blue-100 text-blue-700 border-blue-200",
   entregado: "bg-gray-100 text-gray-600 border-gray-200",
   cancelado: "bg-red-100 text-red-700 border-red-200",
@@ -30,16 +30,16 @@ const ESTADO_BADGE: Record<EstadoPedido, string> = {
 
 const ESTADO_LABEL: Record<EstadoPedido, string> = {
   pendiente: "Pendiente",
-  pagado:    "Pagado",
+  pagado: "Pagado",
   en_camino: "En camino",
   entregado: "Entregado",
   cancelado: "Cancelado",
 };
 
 const HORA_LABEL: Record<string, string> = {
-  manana:        "Manana 9-12",
-  tarde:         "Tarde 12-17",
-  noche:         "Noche 17-21",
+  manana: "Manana 9-12",
+  tarde: "Tarde 12-17",
+  noche: "Noche 17-21",
   "Manana 9-12": "Manana 9-12",
   "Tarde 12-17": "Tarde 12-17",
   "Noche 17-21": "Noche 17-21",
@@ -50,7 +50,9 @@ const HORA_LABEL: Record<string, string> = {
 function formatFecha(iso: string | null) {
   if (!iso) return "-";
   return new Date(iso).toLocaleDateString("es-PE", {
-    day: "2-digit", month: "short", year: "numeric",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
     timeZone: "UTC",
   });
 }
@@ -58,8 +60,11 @@ function formatFecha(iso: string | null) {
 function formatFechaHora(iso: string | null) {
   if (!iso) return "-";
   return new Date(iso).toLocaleDateString("es-PE", {
-    day: "2-digit", month: "short", year: "numeric",
-    hour: "2-digit", minute: "2-digit",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 }
 
@@ -70,13 +75,27 @@ function TableSkeleton() {
     <>
       {[1, 2, 3, 4, 5].map((n) => (
         <tr key={n} className="border-b border-[#E8DDD0] animate-pulse">
-          <td className="px-4 py-3"><div className="h-4 w-24 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-36 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-28 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-28 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-20 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-6 w-20 bg-[#F5EFE6] rounded-full" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-12 bg-[#F5EFE6] rounded" /></td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-24 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-36 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-28 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-28 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-20 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-6 w-20 bg-[#F5EFE6] rounded-full" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-12 bg-[#F5EFE6] rounded" />
+          </td>
         </tr>
       ))}
     </>
@@ -87,7 +106,9 @@ function TableSkeleton() {
 
 function EstadoBadge({ estado }: { estado: EstadoPedido }) {
   return (
-    <span className={`inline-flex px-2.5 py-1 text-[10px] tracking-widest uppercase font-body font-medium border ${ESTADO_BADGE[estado]}`}>
+    <span
+      className={`inline-flex px-2.5 py-1 text-[10px] tracking-widest uppercase font-body font-medium border ${ESTADO_BADGE[estado]}`}
+    >
       {ESTADO_LABEL[estado]}
     </span>
   );
@@ -96,14 +117,14 @@ function EstadoBadge({ estado }: { estado: EstadoPedido }) {
 // --- Modal de detalle ---
 
 interface DetalleModalProps {
-  pedido:   PedidoRow;
-  onClose:  () => void;
+  pedido: PedidoRow;
+  onClose: () => void;
   onUpdate: (id: string, estado: EstadoPedido) => Promise<void>;
 }
 
 function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
-  const [estado,  setEstado]  = useState<EstadoPedido>(pedido.estado);
-  const [saving,  setSaving]  = useState(false);
+  const [estado, setEstado] = useState<EstadoPedido>(pedido.estado);
+  const [saving, setSaving] = useState(false);
   const [changed, setChanged] = useState(false);
 
   function handleEstadoChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -127,7 +148,6 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative bg-white w-full max-w-2xl max-h-[90vh] flex flex-col shadow-xl">
-
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8DDD0] flex-shrink-0">
           <div>
@@ -138,17 +158,21 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
               Recibido el {formatFechaHora(pedido.created_at)}
             </p>
           </div>
-          <button onClick={onClose} className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onClose}
+            className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             <X className="h-5 w-5" strokeWidth={1.5} />
           </button>
         </div>
 
         {/* Body scrollable */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-
           {/* Datos del cliente */}
           <section>
-            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">Cliente</p>
+            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">
+              Cliente
+            </p>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2">
               <div>
                 <p className="font-body text-xs text-[#8A7A6E]">Nombre</p>
@@ -167,16 +191,22 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
 
           {/* Datos de entrega */}
           <section>
-            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">Entrega</p>
+            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">
+              Entrega
+            </p>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2">
               <div>
                 <p className="font-body text-xs text-[#8A7A6E]">Fecha</p>
-                <p className="font-body text-sm text-[#2C2420]">{formatFecha(pedido.fecha_entrega)}</p>
+                <p className="font-body text-sm text-[#2C2420]">
+                  {formatFecha(pedido.fecha_entrega)}
+                </p>
               </div>
               <div>
                 <p className="font-body text-xs text-[#8A7A6E]">Hora</p>
                 <p className="font-body text-sm text-[#2C2420]">
-                  {pedido.hora_entrega ? (HORA_LABEL[pedido.hora_entrega] ?? pedido.hora_entrega) : "-"}
+                  {pedido.hora_entrega
+                    ? (HORA_LABEL[pedido.hora_entrega] ?? pedido.hora_entrega)
+                    : "-"}
                 </p>
               </div>
               <div className="col-span-2">
@@ -200,10 +230,14 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
 
           {/* Productos */}
           <section>
-            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">Productos</p>
+            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">
+              Productos
+            </p>
             <div className="border border-[#E8DDD0] divide-y divide-[#E8DDD0]">
               {productos.length === 0 ? (
-                <p className="font-body text-sm text-[#8A7A6E] px-4 py-3">Sin productos registrados</p>
+                <p className="font-body text-sm text-[#8A7A6E] px-4 py-3">
+                  Sin productos registrados
+                </p>
               ) : (
                 productos.map((p, idx) => (
                   <div key={idx} className="flex items-center gap-3 px-4 py-3">
@@ -220,7 +254,9 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="font-body text-sm text-[#2C2420] truncate">{p.nombre}</p>
-                      <p className="font-body text-xs text-[#8A7A6E]">Cantidad: x{p.cantidad} &bull; S/ {Number(p.precio).toFixed(2)} c/u</p>
+                      <p className="font-body text-xs text-[#8A7A6E]">
+                        Cantidad: x{p.cantidad} &bull; S/ {Number(p.precio).toFixed(2)} c/u
+                      </p>
                     </div>
                     <p className="font-body text-sm text-[#2C2420] flex-shrink-0 font-medium">
                       S/ {(p.precio * p.cantidad).toFixed(2)}
@@ -236,22 +272,30 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
             <div className="border border-[#E8DDD0] divide-y divide-[#E8DDD0]">
               <div className="flex justify-between px-4 py-2.5">
                 <p className="font-body text-sm text-[#8A7A6E]">Subtotal</p>
-                <p className="font-body text-sm text-[#2C2420]">S/ {pedido.subtotal != null ? Number(pedido.subtotal).toFixed(2) : "-"}</p>
+                <p className="font-body text-sm text-[#2C2420]">
+                  S/ {pedido.subtotal != null ? Number(pedido.subtotal).toFixed(2) : "-"}
+                </p>
               </div>
               <div className="flex justify-between px-4 py-2.5">
                 <p className="font-body text-sm text-[#8A7A6E]">Delivery</p>
-                <p className="font-body text-sm text-[#2C2420]">S/ {pedido.delivery != null ? Number(pedido.delivery).toFixed(2) : "-"}</p>
+                <p className="font-body text-sm text-[#2C2420]">
+                  S/ {pedido.delivery != null ? Number(pedido.delivery).toFixed(2) : "-"}
+                </p>
               </div>
               <div className="flex justify-between px-4 py-2.5 bg-[#FDFAF6]">
                 <p className="font-body text-sm font-medium text-[#2C2420]">Total pagado</p>
-                <p className="font-body text-sm font-semibold text-[#2C2420]">S/ {pedido.total != null ? Number(pedido.total).toFixed(2) : "-"}</p>
+                <p className="font-body text-sm font-semibold text-[#2C2420]">
+                  S/ {pedido.total != null ? Number(pedido.total).toFixed(2) : "-"}
+                </p>
               </div>
             </div>
           </section>
 
           {/* Cambiar estado */}
           <section className="bg-[#FDFAF6] border border-[#E8DDD0] p-4">
-            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">Cambiar estado del pedido</p>
+            <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">
+              Cambiar estado del pedido
+            </p>
             <div className="flex items-center gap-3">
               <div className="relative flex-1">
                 <select
@@ -260,10 +304,15 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
                   className="w-full h-11 pl-3 pr-8 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors appearance-none"
                 >
                   {ESTADOS.filter((e) => e.value !== "todos").map((e) => (
-                    <option key={e.value} value={e.value}>{e.label}</option>
+                    <option key={e.value} value={e.value}>
+                      {e.label}
+                    </option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8A7A6E] pointer-events-none" strokeWidth={1.5} />
+                <ChevronDown
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8A7A6E] pointer-events-none"
+                  strokeWidth={1.5}
+                />
               </div>
               <button
                 onClick={handleSave}
@@ -275,7 +324,6 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
               </button>
             </div>
           </section>
-
         </div>
 
         {/* Footer */}
@@ -287,7 +335,6 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
             Cerrar
           </button>
         </div>
-
       </div>
     </div>
   );
@@ -296,11 +343,11 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
 // --- Pagina principal ---
 
 function PedidosPage() {
-  const [pedidos,    setPedidos]    = useState<PedidoRow[]>([]);
-  const [loading,    setLoading]    = useState(true);
-  const [error,      setError]      = useState<string | null>(null);
-  const [filtro,     setFiltro]     = useState<EstadoPedido | "todos">("todos");
-  const [detalle,    setDetalle]    = useState<PedidoRow | null>(null);
+  const [pedidos, setPedidos] = useState<PedidoRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [filtro, setFiltro] = useState<EstadoPedido | "todos">("todos");
+  const [detalle, setDetalle] = useState<PedidoRow | null>(null);
 
   const cargarPedidos = useCallback(async () => {
     setLoading(true);
@@ -319,29 +366,23 @@ function PedidosPage() {
     }
   }, []);
 
-  useEffect(() => { cargarPedidos(); }, [cargarPedidos]);
+  useEffect(() => {
+    cargarPedidos();
+  }, [cargarPedidos]);
 
   async function handleUpdate(id: string, estado: EstadoPedido) {
-    const { error: err } = await supabase
-      .from("pedidos")
-      .update({ estado })
-      .eq("id", id);
+    const { error: err } = await supabase.from("pedidos").update({ estado }).eq("id", id);
     if (err) throw new Error(err.message);
     // Actualizar local
-    setPedidos((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, estado } : p))
-    );
+    setPedidos((prev) => prev.map((p) => (p.id === id ? { ...p, estado } : p)));
     setDetalle((prev) => (prev?.id === id ? { ...prev, estado } : prev));
   }
 
-  const filtrados = filtro === "todos"
-    ? pedidos
-    : pedidos.filter((p) => p.estado === filtro);
+  const filtrados = filtro === "todos" ? pedidos : pedidos.filter((p) => p.estado === filtro);
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
       <div className="max-w-6xl mx-auto px-6 py-8">
-
         {/* Titulo */}
         <div className="mb-8">
           <h1 className="font-display text-3xl text-[#2C2420]">Pedidos</h1>
@@ -353,9 +394,10 @@ function PedidosPage() {
         {/* Filtros por estado */}
         <div className="flex flex-wrap gap-2 mb-6">
           {ESTADOS.map((e) => {
-            const count = e.value === "todos"
-              ? pedidos.length
-              : pedidos.filter((p) => p.estado === e.value).length;
+            const count =
+              e.value === "todos"
+                ? pedidos.length
+                : pedidos.filter((p) => p.estado === e.value).length;
             return (
               <button
                 key={e.value}
@@ -367,7 +409,9 @@ function PedidosPage() {
                 }`}
               >
                 {e.label}
-                <span className={`ml-2 text-[10px] ${filtro === e.value ? "text-white/70" : "text-[#C4956A]"}`}>
+                <span
+                  className={`ml-2 text-[10px] ${filtro === e.value ? "text-white/70" : "text-[#C4956A]"}`}
+                >
                   ({count})
                 </span>
               </button>
@@ -379,7 +423,9 @@ function PedidosPage() {
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 font-body text-sm text-red-700">
             Error al cargar pedidos: {error}
-            <button onClick={cargarPedidos} className="ml-3 underline">Reintentar</button>
+            <button onClick={cargarPedidos} className="ml-3 underline">
+              Reintentar
+            </button>
           </div>
         )}
 
@@ -388,13 +434,27 @@ function PedidosPage() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#E8DDD0] bg-[#F5EFE6]">
-                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">N. Pedido</th>
-                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">Cliente</th>
-                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">Telefono</th>
-                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">Entrega</th>
-                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">Total</th>
-                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">Estado</th>
-                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">Ver</th>
+                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">
+                  N. Pedido
+                </th>
+                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">
+                  Cliente
+                </th>
+                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">
+                  Telefono
+                </th>
+                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">
+                  Entrega
+                </th>
+                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">
+                  Total
+                </th>
+                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">
+                  Estado
+                </th>
+                <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">
+                  Ver
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -402,13 +462,21 @@ function PedidosPage() {
                 <TableSkeleton />
               ) : filtrados.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-12 text-center font-body text-sm text-[#8A7A6E]">
-                    {filtro === "todos" ? "Aun no hay pedidos." : `No hay pedidos con estado "${ESTADO_LABEL[filtro as EstadoPedido]}".`}
+                  <td
+                    colSpan={7}
+                    className="px-4 py-12 text-center font-body text-sm text-[#8A7A6E]"
+                  >
+                    {filtro === "todos"
+                      ? "Aun no hay pedidos."
+                      : `No hay pedidos con estado "${ESTADO_LABEL[filtro as EstadoPedido]}".`}
                   </td>
                 </tr>
               ) : (
                 filtrados.map((p) => (
-                  <tr key={p.id} className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6] transition-colors">
+                  <tr
+                    key={p.id}
+                    className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6] transition-colors"
+                  >
                     <td className="px-4 py-3 font-body text-sm text-[#2C2420] font-medium">
                       {p.numero ?? `#${p.id.slice(0, 8)}`}
                     </td>
@@ -442,18 +510,12 @@ function PedidosPage() {
             </tbody>
           </table>
         </div>
-
       </div>
 
       {/* Modal de detalle */}
       {detalle && (
-        <DetalleModal
-          pedido={detalle}
-          onClose={() => setDetalle(null)}
-          onUpdate={handleUpdate}
-        />
+        <DetalleModal pedido={detalle} onClose={() => setDetalle(null)} onUpdate={handleUpdate} />
       )}
-
     </div>
   );
 }

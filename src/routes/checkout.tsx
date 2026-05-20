@@ -24,20 +24,23 @@ function getFechaMinima() {
 // ─── Schema de validación ─────────────────────────────────────────────────────
 
 const checkoutSchema = z.object({
-  nombre:        z.string().min(2, "Ingresa tu nombre completo"),
-  telefono:      z.string().min(9, "El teléfono debe tener al menos 9 dígitos").regex(/^\d+$/, "Solo números"),
-  email:         z.string().email("Ingresa un email válido"),
-  distrito_id:   z.string().min(1, "Selecciona un distrito"),
-  direccion:     z.string().min(5, "Ingresa tu dirección completa"),
-  referencia:    z.string().optional(),
-  fecha_entrega: z.string().min(1, "Selecciona una fecha de entrega").refine(
-    (f) => f >= getFechaMinima(),
-    "La fecha mínima de entrega es mañana"
-  ),
-  hora_entrega:  z.enum(["manana", "tarde", "noche"], {
-                   errorMap: () => ({ message: "Selecciona una hora de entrega" }),
-                 }),
-  notas:         z.string().optional(),
+  nombre: z.string().min(2, "Ingresa tu nombre completo"),
+  telefono: z
+    .string()
+    .min(9, "El teléfono debe tener al menos 9 dígitos")
+    .regex(/^\d+$/, "Solo números"),
+  email: z.string().email("Ingresa un email válido"),
+  distrito_id: z.string().min(1, "Selecciona un distrito"),
+  direccion: z.string().min(5, "Ingresa tu dirección completa"),
+  referencia: z.string().optional(),
+  fecha_entrega: z
+    .string()
+    .min(1, "Selecciona una fecha de entrega")
+    .refine((f) => f >= getFechaMinima(), "La fecha mínima de entrega es mañana"),
+  hora_entrega: z.enum(["manana", "tarde", "noche"], {
+    errorMap: () => ({ message: "Selecciona una hora de entrega" }),
+  }),
+  notas: z.string().optional(),
 });
 
 type CheckoutForm = z.infer<typeof checkoutSchema>;
@@ -54,10 +57,7 @@ export const Route = createFileRoute("/checkout")({
     return { distritos, categorias, config };
   },
   head: () => ({
-    meta: [
-      { title: "Checkout | Florería Miraflores" },
-      { name: "robots", content: "noindex" },
-    ],
+    meta: [{ title: "Checkout | Florería Miraflores" }, { name: "robots", content: "noindex" }],
   }),
   component: CheckoutPage,
 });
@@ -66,13 +66,13 @@ export const Route = createFileRoute("/checkout")({
 
 function CheckoutPage() {
   const { distritos, categorias, config } = Route.useLoaderData();
-  const navigate               = useNavigate();
+  const navigate = useNavigate();
   const { items, total, vaciarCarrito } = useCartStore();
 
   // Estado local — todos los hooks ANTES de cualquier early return
-  const [modalOpen,    setModalOpen]    = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [numeroPedido, setNumeroPedido] = useState("");
-  const [submitError,  setSubmitError]  = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Redirect si el carrito está vacío — no redirigir si ya hay un pedido procesado
   useEffect(() => {
@@ -96,8 +96,8 @@ function CheckoutPage() {
 
   // Actualiza delivery al cambiar distrito
   const watchDistritoId = watch("distrito_id");
-  const distritoActual  = distritos.find((d: DistritoRow) => d.id === watchDistritoId);
-  const delivery        = distritoActual ? Number(distritoActual.precio_delivery) : null;
+  const distritoActual = distritos.find((d: DistritoRow) => d.id === watchDistritoId);
+  const delivery = distritoActual ? Number(distritoActual.precio_delivery) : null;
   const totalConDelivery = delivery !== null ? subtotal + delivery : null;
 
   // ── Submit ────────────────────────────────────────────────────────────────
@@ -107,24 +107,24 @@ function CheckoutPage() {
     try {
       const numero = await crearPedido({
         nombre_cliente: data.nombre,
-        telefono:       data.telefono,
-        email:          data.email,
-        distrito_id:    data.distrito_id,
-        direccion:      data.direccion,
-        referencia:     data.referencia,
-        fecha_entrega:  data.fecha_entrega,
-        hora_entrega:   data.hora_entrega,
-        notas:          data.notas,
-        productos:      items.map((item) => ({
-          id:       item.id,
-          nombre:   item.nombre,
-          precio:   item.precio,
-          imagen:   item.imagen,
+        telefono: data.telefono,
+        email: data.email,
+        distrito_id: data.distrito_id,
+        direccion: data.direccion,
+        referencia: data.referencia,
+        fecha_entrega: data.fecha_entrega,
+        hora_entrega: data.hora_entrega,
+        notas: data.notas,
+        productos: items.map((item) => ({
+          id: item.id,
+          nombre: item.nombre,
+          precio: item.precio,
+          imagen: item.imagen,
           cantidad: item.cantidad,
         })),
         subtotal,
         delivery: delivery ?? 0,
-        total:    totalConDelivery ?? subtotal,
+        total: totalConDelivery ?? subtotal,
       });
 
       setNumeroPedido(numero);
@@ -153,14 +153,10 @@ function CheckoutPage() {
       <Header categorias={categorias} />
 
       <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-10 md:py-16">
-
         {/* Título */}
-        <h1 className="font-display italic text-4xl md:text-5xl text-[#2C2420] mb-10">
-          Checkout
-        </h1>
+        <h1 className="font-display italic text-4xl md:text-5xl text-[#2C2420] mb-10">Checkout</h1>
 
         <div className="flex flex-col-reverse lg:flex-row gap-10 lg:gap-16 items-start">
-
           {/* ══════════════════════════════════════════
               FORMULARIO — izquierda en desktop
           ══════════════════════════════════════════ */}
@@ -169,14 +165,12 @@ function CheckoutPage() {
             noValidate
             className="w-full lg:w-[60%] space-y-10"
           >
-
             {/* ── Datos del cliente ── */}
             <fieldset>
               <legend className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-5 pb-3 border-b border-[#E8DDD0] w-full">
                 Datos del cliente
               </legend>
               <div className="space-y-5">
-
                 {/* Nombre */}
                 <div>
                   <label htmlFor="nombre" className="block font-body text-sm text-[#2C2420] mb-1.5">
@@ -199,7 +193,10 @@ function CheckoutPage() {
 
                 {/* Teléfono */}
                 <div>
-                  <label htmlFor="telefono" className="block font-body text-sm text-[#2C2420] mb-1.5">
+                  <label
+                    htmlFor="telefono"
+                    className="block font-body text-sm text-[#2C2420] mb-1.5"
+                  >
                     Teléfono <span className="text-[#C4956A]">*</span>
                   </label>
                   <div className="flex">
@@ -219,7 +216,9 @@ function CheckoutPage() {
                     />
                   </div>
                   {errors.telefono && (
-                    <p className="mt-1.5 text-xs font-body text-red-500">{errors.telefono.message}</p>
+                    <p className="mt-1.5 text-xs font-body text-red-500">
+                      {errors.telefono.message}
+                    </p>
                   )}
                 </div>
 
@@ -242,7 +241,6 @@ function CheckoutPage() {
                     <p className="mt-1.5 text-xs font-body text-red-500">{errors.email.message}</p>
                   )}
                 </div>
-
               </div>
             </fieldset>
 
@@ -252,10 +250,12 @@ function CheckoutPage() {
                 Datos de entrega
               </legend>
               <div className="space-y-5">
-
                 {/* Distrito */}
                 <div>
-                  <label htmlFor="distrito_id" className="block font-body text-sm text-[#2C2420] mb-1.5">
+                  <label
+                    htmlFor="distrito_id"
+                    className="block font-body text-sm text-[#2C2420] mb-1.5"
+                  >
                     Distrito <span className="text-[#C4956A]">*</span>
                   </label>
                   <select
@@ -273,13 +273,18 @@ function CheckoutPage() {
                     ))}
                   </select>
                   {errors.distrito_id && (
-                    <p className="mt-1.5 text-xs font-body text-red-500">{errors.distrito_id.message}</p>
+                    <p className="mt-1.5 text-xs font-body text-red-500">
+                      {errors.distrito_id.message}
+                    </p>
                   )}
                 </div>
 
                 {/* Dirección */}
                 <div>
-                  <label htmlFor="direccion" className="block font-body text-sm text-[#2C2420] mb-1.5">
+                  <label
+                    htmlFor="direccion"
+                    className="block font-body text-sm text-[#2C2420] mb-1.5"
+                  >
                     Dirección completa <span className="text-[#C4956A]">*</span>
                   </label>
                   <input
@@ -293,15 +298,19 @@ function CheckoutPage() {
                     }`}
                   />
                   {errors.direccion && (
-                    <p className="mt-1.5 text-xs font-body text-red-500">{errors.direccion.message}</p>
+                    <p className="mt-1.5 text-xs font-body text-red-500">
+                      {errors.direccion.message}
+                    </p>
                   )}
                 </div>
 
                 {/* Referencia (opcional) */}
                 <div>
-                  <label htmlFor="referencia" className="block font-body text-sm text-[#2C2420] mb-1.5">
-                    Referencia{" "}
-                    <span className="text-[#8A7A6E] font-light">(opcional)</span>
+                  <label
+                    htmlFor="referencia"
+                    className="block font-body text-sm text-[#2C2420] mb-1.5"
+                  >
+                    Referencia <span className="text-[#8A7A6E] font-light">(opcional)</span>
                   </label>
                   <input
                     id="referencia"
@@ -314,10 +323,12 @@ function CheckoutPage() {
 
                 {/* Fecha y hora — grid 2 cols en sm+ */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-
                   {/* Fecha de entrega */}
                   <div>
-                    <label htmlFor="fecha_entrega" className="block font-body text-sm text-[#2C2420] mb-1.5">
+                    <label
+                      htmlFor="fecha_entrega"
+                      className="block font-body text-sm text-[#2C2420] mb-1.5"
+                    >
                       Fecha de entrega <span className="text-[#C4956A]">*</span>
                     </label>
                     <input
@@ -330,13 +341,18 @@ function CheckoutPage() {
                       }`}
                     />
                     {errors.fecha_entrega && (
-                      <p className="mt-1.5 text-xs font-body text-red-500">{errors.fecha_entrega.message}</p>
+                      <p className="mt-1.5 text-xs font-body text-red-500">
+                        {errors.fecha_entrega.message}
+                      </p>
                     )}
                   </div>
 
                   {/* Hora de entrega */}
                   <div>
-                    <label htmlFor="hora_entrega" className="block font-body text-sm text-[#2C2420] mb-1.5">
+                    <label
+                      htmlFor="hora_entrega"
+                      className="block font-body text-sm text-[#2C2420] mb-1.5"
+                    >
                       Hora de entrega <span className="text-[#C4956A]">*</span>
                     </label>
                     <select
@@ -352,17 +368,17 @@ function CheckoutPage() {
                       <option value="noche">Noche · 5 pm – 9 pm</option>
                     </select>
                     {errors.hora_entrega && (
-                      <p className="mt-1.5 text-xs font-body text-red-500">{errors.hora_entrega.message}</p>
+                      <p className="mt-1.5 text-xs font-body text-red-500">
+                        {errors.hora_entrega.message}
+                      </p>
                     )}
                   </div>
-
                 </div>
 
                 {/* Notas adicionales (opcional) */}
                 <div>
                   <label htmlFor="notas" className="block font-body text-sm text-[#2C2420] mb-1.5">
-                    Notas adicionales{" "}
-                    <span className="text-[#8A7A6E] font-light">(opcional)</span>
+                    Notas adicionales <span className="text-[#8A7A6E] font-light">(opcional)</span>
                   </label>
                   <textarea
                     id="notas"
@@ -372,7 +388,6 @@ function CheckoutPage() {
                     className="w-full px-4 py-3 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#C4956A] resize-none"
                   />
                 </div>
-
               </div>
             </fieldset>
 
@@ -392,14 +407,12 @@ function CheckoutPage() {
               <ShoppingBag className="h-4 w-4" strokeWidth={1.5} />
               {isSubmitting
                 ? "Procesando…"
-                : `Pagar con IZIPay — S/ ${totalConDelivery !== null ? totalConDelivery.toFixed(2) : subtotal.toFixed(2)}`
-              }
+                : `Pagar con IZIPay — S/ ${totalConDelivery !== null ? totalConDelivery.toFixed(2) : subtotal.toFixed(2)}`}
             </button>
 
             <p className="text-center font-body text-xs text-[#8A7A6E]">
               Tus datos están protegidos. Pago 100% seguro.
             </p>
-
           </form>
 
           {/* ══════════════════════════════════════════
@@ -408,10 +421,7 @@ function CheckoutPage() {
           ══════════════════════════════════════════ */}
           <aside className="w-full lg:w-[40%] lg:sticky lg:top-8">
             <div className="bg-[#F5EFE6] p-6 md:p-8">
-
-              <h2 className="font-display italic text-2xl text-[#2C2420] mb-6">
-                Tu pedido
-              </h2>
+              <h2 className="font-display italic text-2xl text-[#2C2420] mb-6">Tu pedido</h2>
 
               {/* Lista de items */}
               <ul className="space-y-4 mb-6">
@@ -445,19 +455,17 @@ function CheckoutPage() {
                 <div className="flex justify-between font-body text-sm text-[#8A7A6E]">
                   <span>Delivery</span>
                   <span>
-                    {delivery !== null
-                      ? `S/ ${delivery.toFixed(2)}`
-                      : <span className="italic">Selecciona un distrito</span>
-                    }
+                    {delivery !== null ? (
+                      `S/ ${delivery.toFixed(2)}`
+                    ) : (
+                      <span className="italic">Selecciona un distrito</span>
+                    )}
                   </span>
                 </div>
                 <div className="flex justify-between font-body text-base font-medium text-[#2C2420] pt-2 border-t border-[#E8DDD0]">
                   <span>Total</span>
                   <span>
-                    {totalConDelivery !== null
-                      ? `S/ ${totalConDelivery.toFixed(2)}`
-                      : "—"
-                    }
+                    {totalConDelivery !== null ? `S/ ${totalConDelivery.toFixed(2)}` : "—"}
                   </span>
                 </div>
               </div>
@@ -469,10 +477,8 @@ function CheckoutPage() {
               >
                 ← Seguir comprando
               </Link>
-
             </div>
           </aside>
-
         </div>
       </main>
 
@@ -489,7 +495,6 @@ function CheckoutPage() {
 
           {/* Card */}
           <div className="relative w-full max-w-md bg-[#FDFAF6] p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-
             {/* Botón cerrar */}
             <button
               onClick={irAConfirmacion}
@@ -523,7 +528,8 @@ function CheckoutPage() {
                 Integracion de pago IZIPay
               </p>
               <p className="font-body text-xs text-[#8A7A6E]">
-                Tu pedido ha sido registrado. Nos pondremos en contacto contigo para coordinar el pago.
+                Tu pedido ha sido registrado. Nos pondremos en contacto contigo para coordinar el
+                pago.
               </p>
             </div>
 

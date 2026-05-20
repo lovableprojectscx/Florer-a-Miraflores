@@ -12,9 +12,8 @@ export function About() {
             Flores que hablan por ti.
           </h2>
           <p className="mt-4 md:mt-8 font-body font-light text-sm md:text-lg text-muted-foreground leading-relaxed max-w-lg">
-            En Miraflores diseñamos arreglos únicos con flores de temporada,
-            traídas frescas cada mañana. Cada ramo es una pequeña carta de amor,
-            pensada para emocionar.
+            En Miraflores diseñamos arreglos únicos con flores de temporada, traídas frescas cada
+            mañana. Cada ramo es una pequeña carta de amor, pensada para emocionar.
           </p>
 
           <ul className="mt-6 md:mt-10 space-y-3 md:space-y-4">
@@ -31,7 +30,10 @@ export function About() {
           </ul>
         </div>
 
-        <div className="relative overflow-hidden bg-ivory-soft order-first lg:order-last" style={{ aspectRatio: "4/3" }}>
+        <div
+          className="relative overflow-hidden bg-ivory-soft order-first lg:order-last"
+          style={{ aspectRatio: "4/3" }}
+        >
           <img
             src={about}
             alt="Florista arreglando flores en el atelier de Miraflores"

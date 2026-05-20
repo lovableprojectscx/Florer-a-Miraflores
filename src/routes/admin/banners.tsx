@@ -1,8 +1,18 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Plus, Pencil, Trash2, ChevronUp, ChevronDown,
-  X, ImageOff, Loader2, ToggleLeft, ToggleRight, Upload, Link as LinkIcon
+  Plus,
+  Pencil,
+  Trash2,
+  ChevronUp,
+  ChevronDown,
+  X,
+  ImageOff,
+  Loader2,
+  ToggleLeft,
+  ToggleRight,
+  Upload,
+  Link as LinkIcon,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { BannerRow } from "@/types/database";
@@ -19,27 +29,27 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const BUCKET = "banners";
 
 interface FormState {
-  titulo:     string;
-  subtexto:   string;
-  cta_texto:  string;
-  cta_link:   string;
+  titulo: string;
+  subtexto: string;
+  cta_texto: string;
+  cta_link: string;
   imagen_url: string;
-  activo:     boolean;
+  activo: boolean;
 }
 
 const EMPTY_FORM: FormState = {
-  titulo:     "",
-  subtexto:   "",
-  cta_texto:  "",
-  cta_link:   "",
+  titulo: "",
+  subtexto: "",
+  cta_texto: "",
+  cta_link: "",
   imagen_url: "",
-  activo:     true,
+  activo: true,
 };
 
 // --- Helpers ---
 
 async function subirImagen(file: File): Promise<string> {
-  const ext  = file.name.split(".").pop() ?? "jpg";
+  const ext = file.name.split(".").pop() ?? "jpg";
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
   const { error: uploadError } = await supabase.storage
     .from(BUCKET)
@@ -67,12 +77,25 @@ function TableSkeleton() {
     <>
       {[1, 2, 3].map((n) => (
         <tr key={n} className="border-b border-[#E8DDD0] animate-pulse">
-          <td className="px-4 py-4 w-44"><div className="aspect-[21/9] bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-4"><div className="h-4 w-32 bg-[#F5EFE6] rounded mb-1" /><div className="h-3 w-48 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-4"><div className="h-4 w-24 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-4"><div className="h-4 w-12 bg-[#F5EFE6] rounded mx-auto" /></td>
-          <td className="px-4 py-4"><div className="h-6 w-10 bg-[#F5EFE6] rounded-full mx-auto" /></td>
-          <td className="px-4 py-4"><div className="h-4 w-16 bg-[#F5EFE6] rounded ml-auto" /></td>
+          <td className="px-4 py-4 w-44">
+            <div className="aspect-[21/9] bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-4 w-32 bg-[#F5EFE6] rounded mb-1" />
+            <div className="h-3 w-48 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-4 w-24 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-4 w-12 bg-[#F5EFE6] rounded mx-auto" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-6 w-10 bg-[#F5EFE6] rounded-full mx-auto" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-4 w-16 bg-[#F5EFE6] rounded ml-auto" />
+          </td>
         </tr>
       ))}
     </>
@@ -83,16 +106,16 @@ function TableSkeleton() {
 
 interface BannerFormProps {
   initial: FormState;
-  saving:  boolean;
+  saving: boolean;
   onClose: () => void;
-  onSave:  (form: FormState) => Promise<void>;
-  titulo:  string;
+  onSave: (form: FormState) => Promise<void>;
+  titulo: string;
 }
 
 function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProps) {
-  const [form,        setForm]        = useState<FormState>(initial);
-  const [errors,      setErrors]      = useState<Partial<Record<keyof FormState, string>>>({});
-  const [uploading,   setUploading]   = useState(false);
+  const [form, setForm] = useState<FormState>(initial);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -117,7 +140,11 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
       const url = await subirImagen(file);
       setForm((prev) => ({ ...prev, imagen_url: url }));
     } catch (err) {
-      setUploadError(err instanceof Error ? err.message : "Error al subir la imagen. Verifica que exista el bucket 'banners'.");
+      setUploadError(
+        err instanceof Error
+          ? err.message
+          : "Error al subir la imagen. Verifica que exista el bucket 'banners'.",
+      );
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
@@ -147,18 +174,19 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative bg-white w-full max-w-lg max-h-[90vh] flex flex-col shadow-xl">
-
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#E8DDD0] flex-shrink-0">
           <h2 className="font-display text-2xl text-[#2C2420]">{titulo}</h2>
-          <button onClick={onClose} className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onClose}
+            className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             <X className="h-5 w-5" strokeWidth={1.5} />
           </button>
         </div>
 
         {/* Body Form */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-
           {/* Imagen Banner */}
           <div>
             <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-2">
@@ -184,12 +212,15 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
                 ) : (
                   <>
                     <Upload className="h-5 w-5 text-[#8A7A6E] mb-1.5" strokeWidth={1.5} />
-                    <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] text-center px-4">Subir imagen de Banner</span>
+                    <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] text-center px-4">
+                      Subir imagen de Banner
+                    </span>
                     <span className="font-body text-[10px] text-[#C4956A] mt-1 text-center px-4">
                       Medida recomendada: 1920x800 px (o proporción similar, ej. 1600x660).
                     </span>
                     <span className="font-body text-[9px] text-[#8A7A6E] mt-0.5 text-center px-4 leading-normal">
-                      Sube la imagen con el diseño y texto ya incorporados. En móviles y PC se adaptará automáticamente a pantalla completa sin recortarse ni estirarse.
+                      Sube la imagen con el diseño y texto ya incorporados. En móviles y PC se
+                      adaptará automáticamente a pantalla completa sin recortarse ni estirarse.
                     </span>
                   </>
                 )}
@@ -203,7 +234,9 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
                 />
               </label>
             )}
-            {errors.imagen_url && <p className="mt-1 font-body text-xs text-red-500">{errors.imagen_url}</p>}
+            {errors.imagen_url && (
+              <p className="mt-1 font-body text-xs text-red-500">{errors.imagen_url}</p>
+            )}
             {uploadError && (
               <p className="mt-2 font-body text-xs text-red-500 bg-red-50 border border-red-200 px-3 py-2">
                 {uploadError}
@@ -213,7 +246,10 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
 
           {/* Título */}
           <div>
-            <label htmlFor="titulo" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
+            <label
+              htmlFor="titulo"
+              className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5"
+            >
               Título (Opcional)
             </label>
             <input
@@ -228,7 +264,10 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
 
           {/* Subtexto */}
           <div>
-            <label htmlFor="subtexto" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
+            <label
+              htmlFor="subtexto"
+              className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5"
+            >
               Subtexto / Descripción (Opcional)
             </label>
             <textarea
@@ -244,7 +283,10 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
           {/* CTA Botón */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label htmlFor="cta_texto" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
+              <label
+                htmlFor="cta_texto"
+                className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5"
+              >
                 Texto del botón (Opcional)
               </label>
               <input
@@ -257,7 +299,10 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
               />
             </div>
             <div>
-              <label htmlFor="cta_link" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
+              <label
+                htmlFor="cta_link"
+                className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5"
+              >
                 Enlace de destino (Opcional)
               </label>
               <input
@@ -276,14 +321,18 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
             <label className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
               Mostrar en la página de inicio
             </label>
-            <button type="button" onClick={() => setField("activo", !form.activo)} className="transition-colors">
-              {form.activo
-                ? <ToggleRight className="h-7 w-7 text-[#C4956A]" strokeWidth={1.5} />
-                : <ToggleLeft  className="h-7 w-7 text-[#8A7A6E]" strokeWidth={1.5} />
-              }
+            <button
+              type="button"
+              onClick={() => setField("activo", !form.activo)}
+              className="transition-colors"
+            >
+              {form.activo ? (
+                <ToggleRight className="h-7 w-7 text-[#C4956A]" strokeWidth={1.5} />
+              ) : (
+                <ToggleLeft className="h-7 w-7 text-[#8A7A6E]" strokeWidth={1.5} />
+              )}
             </button>
           </div>
-
         </form>
 
         {/* Footer */}
@@ -306,7 +355,6 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
             Guardar
           </button>
         </div>
-
       </div>
     </div>
   );
@@ -314,23 +362,27 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
 
 // --- Confirmación de eliminación ---
 
-function ConfirmDelete({ onConfirm, onCancel }: {
-  onConfirm: () => void;
-  onCancel: () => void;
-}) {
+function ConfirmDelete({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/40" onClick={onCancel} />
       <div className="relative bg-white w-full max-w-sm p-6 shadow-xl">
         <h3 className="font-display text-xl text-[#2C2420] mb-2">¿Eliminar banner?</h3>
         <p className="font-body text-sm text-[#8A7A6E] mb-6">
-          Vas a eliminar este banner permanentemente. Dejará de mostrarse en la portada de la tienda inmediatamente.
+          Vas a eliminar este banner permanentemente. Dejará de mostrarse en la portada de la tienda
+          inmediatamente.
         </p>
         <div className="flex gap-3 justify-end">
-          <button onClick={onCancel} className="h-10 px-5 font-body text-xs tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onCancel}
+            className="h-10 px-5 font-body text-xs tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             Cancelar
           </button>
-          <button onClick={onConfirm} className="h-10 px-5 bg-red-600 hover:bg-red-700 text-white font-body text-xs tracking-widest uppercase transition-colors">
+          <button
+            onClick={onConfirm}
+            className="h-10 px-5 bg-red-600 hover:bg-red-700 text-white font-body text-xs tracking-widest uppercase transition-colors"
+          >
             Eliminar
           </button>
         </div>
@@ -342,13 +394,13 @@ function ConfirmDelete({ onConfirm, onCancel }: {
 // --- Componente de página ---
 
 function BannersPage() {
-  const [banners,     setBanners]     = useState<BannerRow[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [showCreate,  setShowCreate]  = useState(false);
-  const [editando,    setEditando]    = useState<BannerRow | null>(null);
-  const [eliminando,  setEliminando]  = useState<BannerRow | null>(null);
-  const [saving,      setSaving]      = useState(false);
-  const [togglingId,  setTogglingId]  = useState<string | null>(null);
+  const [banners, setBanners] = useState<BannerRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showCreate, setShowCreate] = useState(false);
+  const [editando, setEditando] = useState<BannerRow | null>(null);
+  const [eliminando, setEliminando] = useState<BannerRow | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const cargarDatos = useCallback(async () => {
     setLoading(true);
@@ -377,13 +429,13 @@ function BannersPage() {
       const maxOrden = banners.reduce((max, b) => Math.max(max, b.orden), 0);
 
       const { error } = await supabase.from("banners").insert({
-        titulo:     form.titulo.trim() || null,
-        subtexto:   form.subtexto.trim() || null,
-        cta_texto:  form.cta_texto.trim() || null,
-        cta_link:   form.cta_link.trim() || null,
+        titulo: form.titulo.trim() || null,
+        subtexto: form.subtexto.trim() || null,
+        cta_texto: form.cta_texto.trim() || null,
+        cta_link: form.cta_link.trim() || null,
         imagen_url: form.imagen_url,
-        activo:     form.activo,
-        orden:      maxOrden + 1,
+        activo: form.activo,
+        orden: maxOrden + 1,
       });
 
       if (error) throw error;
@@ -404,12 +456,12 @@ function BannersPage() {
       const { error } = await supabase
         .from("banners")
         .update({
-          titulo:     form.titulo.trim() || null,
-          subtexto:   form.subtexto.trim() || null,
-          cta_texto:  form.cta_texto.trim() || null,
-          cta_link:   form.cta_link.trim() || null,
+          titulo: form.titulo.trim() || null,
+          subtexto: form.subtexto.trim() || null,
+          cta_texto: form.cta_texto.trim() || null,
+          cta_link: form.cta_link.trim() || null,
           imagen_url: form.imagen_url,
-          activo:     form.activo,
+          activo: form.activo,
         })
         .eq("id", editando.id);
 
@@ -452,9 +504,7 @@ function BannersPage() {
         .eq("id", ban.id);
 
       if (error) throw error;
-      setBanners((prev) =>
-        prev.map((b) => b.id === ban.id ? { ...b, activo: !b.activo } : b)
-      );
+      setBanners((prev) => prev.map((b) => (b.id === ban.id ? { ...b, activo: !b.activo } : b)));
     } catch (err) {
       console.error(err);
     } finally {
@@ -494,7 +544,6 @@ function BannersPage() {
 
   return (
     <div className="p-8 md:p-10">
-
       {/* Encabezado */}
       <div className="flex items-end justify-between mb-8">
         <div>
@@ -521,12 +570,24 @@ function BannersPage() {
         <table className="w-full min-w-[800px]">
           <thead>
             <tr className="border-b border-[#E8DDD0] bg-[#FDFAF6]">
-              <th className="px-4 py-3 text-left w-52 font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Vista previa</th>
-              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Contenido</th>
-              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Botón de Acción</th>
-              <th className="px-4 py-3 text-center font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-24">Prioridad</th>
-              <th className="px-4 py-3 text-center font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-28">Activo</th>
-              <th className="px-4 py-3 text-right font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-28">Acciones</th>
+              <th className="px-4 py-3 text-left w-52 font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Vista previa
+              </th>
+              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Contenido
+              </th>
+              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Botón de Acción
+              </th>
+              <th className="px-4 py-3 text-center font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-24">
+                Prioridad
+              </th>
+              <th className="px-4 py-3 text-center font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-28">
+                Activo
+              </th>
+              <th className="px-4 py-3 text-right font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-28">
+                Acciones
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -544,7 +605,10 @@ function BannersPage() {
                 const isLast = idx === banners.length - 1;
 
                 return (
-                  <tr key={ban.id} className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6]/50 transition-colors">
+                  <tr
+                    key={ban.id}
+                    className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6]/50 transition-colors"
+                  >
                     {/* Vista Previa */}
                     <td className="px-4 py-4 w-52">
                       <div className="w-48 aspect-[21/9] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]/50 rounded-sm">
@@ -566,10 +630,14 @@ function BannersPage() {
                     {/* Contenido (Título + Subtexto) */}
                     <td className="px-4 py-4">
                       <p className="font-body text-sm font-semibold text-[#2C2420] mb-0.5">
-                        {ban.titulo ?? <span className="font-normal italic text-[#8A7A6E]">Sin título</span>}
+                        {ban.titulo ?? (
+                          <span className="font-normal italic text-[#8A7A6E]">Sin título</span>
+                        )}
                       </p>
                       <p className="font-body text-xs text-[#8A7A6E] line-clamp-2">
-                        {ban.subtexto ?? <span className="italic text-[#8A7A6E]/70">Sin descripción</span>}
+                        {ban.subtexto ?? (
+                          <span className="italic text-[#8A7A6E]/70">Sin descripción</span>
+                        )}
                       </p>
                     </td>
 
@@ -621,7 +689,10 @@ function BannersPage() {
                         title={ban.activo ? "Ocultar" : "Mostrar"}
                       >
                         {togglingId === ban.id ? (
-                          <Loader2 className="h-5 w-5 text-[#C4956A] animate-spin mx-auto" strokeWidth={1.5} />
+                          <Loader2
+                            className="h-5 w-5 text-[#C4956A] animate-spin mx-auto"
+                            strokeWidth={1.5}
+                          />
                         ) : ban.activo ? (
                           <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
                         ) : (
@@ -672,12 +743,12 @@ function BannersPage() {
         <BannerForm
           titulo="Editar Banner"
           initial={{
-            titulo:     editando.titulo ?? "",
-            subtexto:   editando.subtexto ?? "",
-            cta_texto:  editando.cta_texto ?? "",
-            cta_link:   editando.cta_link ?? "",
+            titulo: editando.titulo ?? "",
+            subtexto: editando.subtexto ?? "",
+            cta_texto: editando.cta_texto ?? "",
+            cta_link: editando.cta_link ?? "",
             imagen_url: editando.imagen_url,
-            activo:     editando.activo,
+            activo: editando.activo,
           }}
           saving={saving}
           onClose={() => setEditando(null)}
@@ -686,12 +757,8 @@ function BannersPage() {
       )}
 
       {eliminando && (
-        <ConfirmDelete
-          onConfirm={handleDelete}
-          onCancel={() => setEliminando(null)}
-        />
+        <ConfirmDelete onConfirm={handleDelete} onCancel={() => setEliminando(null)} />
       )}
-
     </div>
   );
 }

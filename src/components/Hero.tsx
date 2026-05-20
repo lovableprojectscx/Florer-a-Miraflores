@@ -56,7 +56,8 @@ export function Hero({ banners }: Props) {
   };
 
   // Altura responsiva profesional: 260px en móvil, 350px en tablet, 450px en PC estándar y 480px en pantallas grandes
-  const containerClasses = "relative w-full overflow-hidden bg-[#FDFAF6] h-[260px] sm:h-[350px] md:h-[450px] lg:h-[480px] xl:h-[500px]";
+  const containerClasses =
+    "relative w-full overflow-hidden bg-[#FDFAF6] h-[260px] sm:h-[350px] md:h-[450px] lg:h-[480px] xl:h-[500px]";
 
   if (banners.length === 0) {
     return (
@@ -108,7 +109,7 @@ export function Hero({ banners }: Props) {
   }
 
   return (
-    <section 
+    <section
       className="w-full relative group overflow-hidden bg-[#FDFAF6]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -117,7 +118,7 @@ export function Hero({ banners }: Props) {
       onTouchEnd={handleTouchEnd}
     >
       {/* Slider track (desplazamiento horizontal fluido) */}
-      <div 
+      <div
         className="flex transition-transform duration-700 ease-in-out w-full"
         style={{ transform: `translateX(-${activeIndex * 100}%)` }}
       >
@@ -135,8 +136,8 @@ export function Hero({ banners }: Props) {
           );
 
           return (
-            <div 
-              key={ban.id} 
+            <div
+              key={ban.id}
               className={`w-full flex-shrink-0 relative select-none ${containerClasses}`}
             >
               {ban.cta_link ? (

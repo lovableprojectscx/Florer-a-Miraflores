@@ -7,16 +7,49 @@ import velvet from "@/assets/product-novedad-velvet.jpg";
 import aurora from "@/assets/product-novedad-aurora.jpg";
 
 const FALLBACK = [
-  { id: "aurora",       nombre: "Aurora",       descripcion: "Rosas durazno y ranunculos crema",        precio: 165, imagenes: [aurora], tags: ["novedad"]         as const, categoria_id: null, activo: true, orden: 0, created_at: "" },
-  { id: "velvet-box",   nombre: "Velvet Box",   descripcion: "Caja redonda con rosas rojas terciopelo", precio: 220, imagenes: [velvet], tags: ["edicion_limitada"] as const, categoria_id: null, activo: true, orden: 1, created_at: "" },
-  { id: "pampas-sculpt",nombre: "Pampas Sculpt",descripcion: "Pampas, palma seca y orquideas blancas",  precio: 280, imagenes: [pampas], tags: ["novedad"]         as const, categoria_id: null, activo: true, orden: 2, created_at: "" },
+  {
+    id: "aurora",
+    nombre: "Aurora",
+    descripcion: "Rosas durazno y ranunculos crema",
+    precio: 165,
+    imagenes: [aurora],
+    tags: ["novedad"] as const,
+    categoria_id: null,
+    activo: true,
+    orden: 0,
+    created_at: "",
+  },
+  {
+    id: "velvet-box",
+    nombre: "Velvet Box",
+    descripcion: "Caja redonda con rosas rojas terciopelo",
+    precio: 220,
+    imagenes: [velvet],
+    tags: ["edicion_limitada"] as const,
+    categoria_id: null,
+    activo: true,
+    orden: 1,
+    created_at: "",
+  },
+  {
+    id: "pampas-sculpt",
+    nombre: "Pampas Sculpt",
+    descripcion: "Pampas, palma seca y orquideas blancas",
+    precio: 280,
+    imagenes: [pampas],
+    tags: ["novedad"] as const,
+    categoria_id: null,
+    activo: true,
+    orden: 2,
+    created_at: "",
+  },
 ];
 
 const BADGE_MAP: Record<string, string> = {
-  novedad:          "Nuevo",
+  novedad: "Nuevo",
   edicion_limitada: "Edicion limitada",
-  oferta:           "Oferta",
-  mas_vendido:      "Mas vendido",
+  oferta: "Oferta",
+  mas_vendido: "Mas vendido",
 };
 
 interface Props {
@@ -46,7 +79,10 @@ export function Novedades({ productos }: Props) {
             const imgSrc = p.imagenes?.[0] ?? "";
 
             return (
-              <article key={p.id} className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0">
+              <article
+                key={p.id}
+                className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0"
+              >
                 <Link to="/producto/$id" params={{ id: p.id }} className="block">
                   <div className="relative overflow-hidden bg-ivory" style={{ aspectRatio: "1/1" }}>
                     {badgeLabel && (
@@ -62,16 +98,28 @@ export function Novedades({ productos }: Props) {
                     />
                   </div>
                   <div className="mt-4 flex-1 flex flex-col">
-                    <p className="font-display text-foreground text-lg md:text-2xl leading-tight">{p.nombre}</p>
+                    <p className="font-display text-foreground text-lg md:text-2xl leading-tight">
+                      {p.nombre}
+                    </p>
                     {p.descripcion && (
-                      <p className="mt-1 font-body font-light text-foreground/60 text-sm line-clamp-2">{p.descripcion}</p>
+                      <p className="mt-1 font-body font-light text-foreground/60 text-sm line-clamp-2">
+                        {p.descripcion}
+                      </p>
                     )}
-                    <p className="mt-2 font-body font-medium text-foreground text-sm">S/ {p.precio.toFixed(2)}</p>
+                    <p className="mt-2 font-body font-medium text-foreground text-sm">
+                      S/ {p.precio.toFixed(2)}
+                    </p>
                   </div>
                 </Link>
                 <button
                   onClick={() => {
-                    agregarItem({ id: p.id, nombre: p.nombre, precio: p.precio, imagen: p.imagenes?.[0] ?? "", cantidad: 1 });
+                    agregarItem({
+                      id: p.id,
+                      nombre: p.nombre,
+                      precio: p.precio,
+                      imagen: p.imagenes?.[0] ?? "",
+                      cantidad: 1,
+                    });
                     abrirCarrito();
                   }}
                   className="mt-3 w-full h-10 border border-foreground text-foreground font-body text-[10px] tracking-widest uppercase hover:bg-foreground hover:text-background transition-colors"

@@ -103,8 +103,7 @@ export const catalog: Category[] = [
   },
 ];
 
-export const getCategory = (slug: string) =>
-  catalog.find((c) => c.slug === slug);
+export const getCategory = (slug: string) => catalog.find((c) => c.slug === slug);
 
 export const getSubcategory = (catSlug: string, subSlug: string) => {
   const c = getCategory(catSlug);

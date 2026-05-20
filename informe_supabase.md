@@ -5,6 +5,7 @@ Este documento detalla la estructura, políticas de seguridad y datos iniciales 
 ---
 
 ## 1. Detalles del Proyecto
+
 - **Nombre del Proyecto:** `Floreria-pasarela-pagos`
 - **Plataforma:** Supabase (PostgreSQL 17.6)
 - **Región:** Sudamérica (sa-east-1)
@@ -14,15 +15,16 @@ Este documento detalla la estructura, políticas de seguridad y datos iniciales 
 ---
 
 ## 2. Extensiones PostgreSQL Activas
+
 El proyecto cuenta con las siguientes extensiones instaladas y operativas en la base de datos:
 
-| Nombre | Versión | Esquema | Descripción |
-| :--- | :---: | :---: | :--- |
-| `plpgsql` | `1.0` | `pg_catalog` | Lenguaje de procedimientos estructurado PL/pgSQL |
-| `pgcrypto` | `1.3` | `extensions` | Funciones criptográficas (hashing, cifrado) |
-| `uuid-ossp` | `1.1` | `extensions` | Algoritmos de generación de identificadores únicos universales (UUID) |
-| `pg_stat_statements` | `1.11` | `extensions` | Seguimiento de estadísticas de sentencias SQL |
-| `supabase_vault` | `0.3.1` | `vault` | Extensión de almacenamiento seguro (Vault) de Supabase |
+| Nombre               | Versión |   Esquema    | Descripción                                                           |
+| :------------------- | :-----: | :----------: | :-------------------------------------------------------------------- |
+| `plpgsql`            |  `1.0`  | `pg_catalog` | Lenguaje de procedimientos estructurado PL/pgSQL                      |
+| `pgcrypto`           |  `1.3`  | `extensions` | Funciones criptográficas (hashing, cifrado)                           |
+| `uuid-ossp`          |  `1.1`  | `extensions` | Algoritmos de generación de identificadores únicos universales (UUID) |
+| `pg_stat_statements` | `1.11`  | `extensions` | Seguimiento de estadísticas de sentencias SQL                         |
+| `supabase_vault`     | `0.3.1` |   `vault`    | Extensión de almacenamiento seguro (Vault) de Supabase                |
 
 ---
 
@@ -30,20 +32,21 @@ El proyecto cuenta con las siguientes extensiones instaladas y operativas en la 
 
 Se crearon las 10 tablas requeridas en el esquema `public`, utilizando `uuid` con generación automática (`gen_random_uuid()`) como llaves primarias.
 
-| Tabla | Descripción y Campos Principales |
-|---|---|
-| `config` | **1 fila única**. Campos: `whatsapp`, `correo`, `horario`, `logo_url`, `anuncio_barra`, `instagram_url`, `tiktok_url`, `facebook_url`, `libro_reclamaciones_activo`. |
-| `banners` | Imágenes para el slider principal. Campos: `imagen_url`, `titulo`, `subtexto`, `cta_texto`, `cta_link`, `orden`, `activo`. |
-| `popup` | Popup promocional. Campos: `imagen_url`, `texto`, `activo`, `fecha_expiracion`. |
-| `categorias` | Sistema jerárquico de categorías. Campos: `nombre`, `slug` (único), `imagen_url`, `parent_id` (relación a misma tabla), `orden`, `activo`. |
-| `productos` | Catálogo de productos. Campos: `nombre`, `precio`, `descripcion`, `imagenes` (array de URLs), `categoria_id`, `tags` (array), `activo`, `orden`. |
-| `ocasiones_home` | Accesos rápidos por ocasión en el Home. Campos: `nombre`, `icono`, `categoria_id`, `orden`, `activo`. |
-| `colecciones_home` | Colecciones destacadas en el Home. Campos: `categoria_id`, `imagen_custom_url`, `orden`, `activo`. |
-| `faqs` | Preguntas frecuentes. Campos: `pregunta`, `respuesta`, `orden`, `activo`. |
-| `distritos` | Zonas de cobertura y costos de delivery. Campos: `nombre`, `precio_delivery`, `activo`. |
-| `pedidos` | Órdenes de los clientes. Campos: `numero` (único), `nombre_cliente`, `telefono`, `email`, `distrito_id`, `direccion`, `referencia`, `fecha_entrega`, `hora_entrega`, `productos` (jsonb), desglose de precios (subtotal, delivery, total), `estado`, `izi_transaction_id` (Izipay), `notas`. |
+| Tabla              | Descripción y Campos Principales                                                                                                                                                                                                                                                             |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `config`           | **1 fila única**. Campos: `whatsapp`, `correo`, `horario`, `logo_url`, `anuncio_barra`, `instagram_url`, `tiktok_url`, `facebook_url`, `libro_reclamaciones_activo`.                                                                                                                         |
+| `banners`          | Imágenes para el slider principal. Campos: `imagen_url`, `titulo`, `subtexto`, `cta_texto`, `cta_link`, `orden`, `activo`.                                                                                                                                                                   |
+| `popup`            | Popup promocional. Campos: `imagen_url`, `texto`, `activo`, `fecha_expiracion`.                                                                                                                                                                                                              |
+| `categorias`       | Sistema jerárquico de categorías. Campos: `nombre`, `slug` (único), `imagen_url`, `parent_id` (relación a misma tabla), `orden`, `activo`.                                                                                                                                                   |
+| `productos`        | Catálogo de productos. Campos: `nombre`, `precio`, `descripcion`, `imagenes` (array de URLs), `categoria_id`, `tags` (array), `activo`, `orden`.                                                                                                                                             |
+| `ocasiones_home`   | Accesos rápidos por ocasión en el Home. Campos: `nombre`, `icono`, `categoria_id`, `orden`, `activo`.                                                                                                                                                                                        |
+| `colecciones_home` | Colecciones destacadas en el Home. Campos: `categoria_id`, `imagen_custom_url`, `orden`, `activo`.                                                                                                                                                                                           |
+| `faqs`             | Preguntas frecuentes. Campos: `pregunta`, `respuesta`, `orden`, `activo`.                                                                                                                                                                                                                    |
+| `distritos`        | Zonas de cobertura y costos de delivery. Campos: `nombre`, `precio_delivery`, `activo`.                                                                                                                                                                                                      |
+| `pedidos`          | Órdenes de los clientes. Campos: `numero` (único), `nombre_cliente`, `telefono`, `email`, `distrito_id`, `direccion`, `referencia`, `fecha_entrega`, `hora_entrega`, `productos` (jsonb), desglose de precios (subtotal, delivery, total), `estado`, `izi_transaction_id` (Izipay), `notas`. |
 
 ### Relaciones (Claves Foráneas)
+
 1. `categorias.parent_id` ➔ `categorias.id` (Auto-relación)
 2. `productos.categoria_id` ➔ `categorias.id`
 3. `ocasiones_home.categoria_id` ➔ `categorias.id`
@@ -57,17 +60,19 @@ Se crearon las 10 tablas requeridas en el esquema `public`, utilizando `uuid` co
 Se habilitó RLS (`ENABLE ROW LEVEL SECURITY`) de manera global en las 10 tablas para prevenir modificaciones no autorizadas por parte del cliente.
 
 ### 4.1. Permisos para Clientes (Público / Anónimos)
+
 - **Lectura (SELECT):** Acceso libre a las tablas `config`, `banners`, `popup`, `categorias`, `productos`, `ocasiones_home`, `colecciones_home`, `faqs`, y `distritos`.
 - **Escritura (INSERT):** Permiso exclusivo para insertar nuevas filas en la tabla `pedidos` (con `CHECK (true)`).
 - **Prohibido:** El público no puede consultar (`SELECT`), modificar (`UPDATE`) ni borrar (`DELETE`) el listado de pedidos realizados. Tampoco pueden modificar los productos ni configuraciones.
 
 ### 4.2. Permisos para Administrador (Auth UID válido)
+
 - El administrador (validado mediante sesión iniciada, `auth.uid() IS NOT NULL` bajo el rol `authenticated`) tiene permisos completos sobre la totalidad de las tablas.
 - Específicamente en la tabla `pedidos`, las políticas están divididas de la siguiente manera para evitar conflictos con la pasarela de pagos:
-  * **`insert_public`**: Permite `INSERT` para `anon` y `authenticated` con `WITH CHECK (true)`.
-  * **`admin_select`**: Permite `SELECT` solo para `authenticated` con `USING (auth.uid() IS NOT NULL)`.
-  * **`admin_update`**: Permite `UPDATE` solo para `authenticated` con `USING/WITH CHECK (auth.uid() IS NOT NULL)`.
-  * **`admin_delete`**: Permite `DELETE` solo para `authenticated` con `USING (auth.uid() IS NOT NULL)`.
+  - **`insert_public`**: Permite `INSERT` para `anon` y `authenticated` con `WITH CHECK (true)`.
+  - **`admin_select`**: Permite `SELECT` solo para `authenticated` con `USING (auth.uid() IS NOT NULL)`.
+  - **`admin_update`**: Permite `UPDATE` solo para `authenticated` con `USING/WITH CHECK (auth.uid() IS NOT NULL)`.
+  - **`admin_delete`**: Permite `DELETE` solo para `authenticated` con `USING (auth.uid() IS NOT NULL)`.
 
 > [!IMPORTANT]
 > Se han separado las políticas de administración de la tabla `pedidos` en consultas individuales por comando (`SELECT`, `UPDATE`, `DELETE`) en lugar de usar una política única `FOR ALL`. Esto asegura que las peticiones de compras anónimas realizadas por la pasarela de pagos puedan insertar nuevos registros sin ser bloqueadas por las restricciones de lectura del administrador.
@@ -77,7 +82,9 @@ Se habilitó RLS (`ENABLE ROW LEVEL SECURITY`) de manera global en las 10 tablas
 ## 5. Datos Iniciales Insertados (Seed)
 
 ### 5.1. Configuración General (`config`)
+
 Se insertó una única fila con la información operativa del negocio:
+
 - **ID:** `eec25c49-29ae-4057-9f37-8d387c44196e`
 - **WhatsApp:** `+51 999 600 482`
 - **Correo:** `pedidos@floreriamiraflores.com`
@@ -89,7 +96,9 @@ Se insertó una única fila con la información operativa del negocio:
 - **Libro de Reclamaciones Activo:** `false`
 
 ### 5.2. Zonas de Reparto (`distritos`)
+
 Se agregaron 5 distritos iniciales, todos con el costo base de `S/ 10.00`:
+
 1. Miraflores
 2. Surco
 3. Barranco
@@ -97,28 +106,33 @@ Se agregaron 5 distritos iniciales, todos con el costo base de `S/ 10.00`:
 5. San Isidro
 
 ### 5.3. Categorías (`categorias`)
+
 Se insertaron 26 categorías, asegurando el enlace relacional (`parent_id`) utilizando el `slug` para ubicar al padre.
 
 **Categorías Padre (Nivel 1):**
+
 - Ocasión (`ocasion`)
 - Arreglos Florales (`arreglos-florales`)
-- Arreglos Premium (`arreglos-premium`) - *Sin hijas directas*
+- Arreglos Premium (`arreglos-premium`) - _Sin hijas directas_
 - Tulipanes (`tulipanes`)
 - Primaverales (`primaverales`)
 - Defunción (`defuncion`)
-- Ofertas (`ofertas`) - *Sin hijas directas*
+- Ofertas (`ofertas`) - _Sin hijas directas_
 
 **Subcategorías (Nivel 2):**
-- *Dentro de Ocasión:* Amor / Aniversario, Cumpleaños, Graduación, Nacimientos, Para Él.
-- *Dentro de Arreglos Florales:* Box Luxury, Box con Chocolates, Inauguración, Ramos, Bonsais.
-- *Dentro de Tulipanes:* Arreglos, Ramos, Floreros.
-- *Dentro de Primaverales:* Girasoles.
-- *Dentro de Defunción:* Coronas Fúnebres, Cruces, Lágrima con Pedestal, Lágrimas, Mantos.
+
+- _Dentro de Ocasión:_ Amor / Aniversario, Cumpleaños, Graduación, Nacimientos, Para Él.
+- _Dentro de Arreglos Florales:_ Box Luxury, Box con Chocolates, Inauguración, Ramos, Bonsais.
+- _Dentro de Tulipanes:_ Arreglos, Ramos, Floreros.
+- _Dentro de Primaverales:_ Girasoles.
+- _Dentro de Defunción:_ Coronas Fúnebres, Cruces, Lágrima con Pedestal, Lágrimas, Mantos.
 
 ---
 
 ## 6. Resumen de Flujos de Datos Relacionados a la Pasarela de Pagos (Izipay)
+
 El flujo del e-commerce opera integrando el frontend en Vite con la base de datos a través del registro en la tabla `pedidos`:
+
 1. El usuario selecciona productos (guardándose temporalmente en el carrito local).
 2. Procede al checkout, ingresando su dirección y seleccionando su distrito (clave foránea con `distritos` para sumarse al total).
 3. Al proceder al pago, se genera una llamada al SDK de la pasarela **Izipay**.
@@ -131,6 +145,7 @@ El flujo del e-commerce opera integrando el frontend en Vite con la base de dato
 ---
 
 ## 7. Pedidos Registrados (Pruebas Exitosas)
+
 Se han registrado con éxito los primeros **2 pedidos** de prueba en la tabla `pedidos`, lo que valida la correcta inserción por parte de clientes anónimos y el correcto funcionamiento de las políticas RLS:
 
 1. **Pedido `FM-TEST01`**:

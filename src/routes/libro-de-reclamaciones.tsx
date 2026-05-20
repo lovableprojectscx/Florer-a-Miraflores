@@ -47,7 +47,9 @@ function LibroReclamaciones() {
           <div className="mt-8 border border-foreground/15 bg-ivory p-8 md:p-12">
             <div className="flex items-center justify-between flex-wrap gap-4 pb-6 border-b border-foreground/15">
               <div>
-                <p className="font-italic-serif text-rose-accent text-base">— conforme a Ley N° 29571</p>
+                <p className="font-italic-serif text-rose-accent text-base">
+                  — conforme a Ley N° 29571
+                </p>
                 <h1 className="font-display text-3xl md:text-5xl text-foreground mt-1">
                   Libro de Reclamaciones
                 </h1>
@@ -59,9 +61,10 @@ function LibroReclamaciones() {
             </div>
 
             <p className="mt-6 font-body font-light text-sm text-foreground/80 leading-relaxed">
-              <strong className="font-medium">Razón social:</strong> Miraflores Boutique Floral S.A.C. ·{" "}
-              <strong className="font-medium">RUC:</strong> 20XXXXXXXXX ·{" "}
-              <strong className="font-medium">Domicilio:</strong> Av. Larco 345, Miraflores, Lima — Perú.
+              <strong className="font-medium">Razón social:</strong> Miraflores Boutique Floral
+              S.A.C. · <strong className="font-medium">RUC:</strong> 20XXXXXXXXX ·{" "}
+              <strong className="font-medium">Domicilio:</strong> Av. Larco 345, Miraflores, Lima —
+              Perú.
             </p>
 
             {sent ? (
@@ -70,7 +73,8 @@ function LibroReclamaciones() {
                   Gracias, hemos recibido tu reclamo.
                 </h2>
                 <p className="mt-3 font-body font-light text-foreground/75">
-                  Te responderemos al correo registrado en un plazo máximo de 15 días hábiles, conforme a la Ley de Protección al Consumidor.
+                  Te responderemos al correo registrado en un plazo máximo de 15 días hábiles,
+                  conforme a la Ley de Protección al Consumidor.
                 </p>
                 <button
                   onClick={() => setSent(false)}
@@ -103,14 +107,22 @@ function LibroReclamaciones() {
                 </Fieldset>
 
                 <Fieldset title="3. Detalle de la reclamación">
-                  <Radio name="motivo" options={["Reclamo (disconformidad del servicio)", "Queja (malestar respecto a la atención)"]} />
+                  <Radio
+                    name="motivo"
+                    options={[
+                      "Reclamo (disconformidad del servicio)",
+                      "Queja (malestar respecto a la atención)",
+                    ]}
+                  />
                   <Field label="Detalle de tu reclamo o queja" name="detalle" textarea required />
                   <Field label="Pedido del consumidor" name="pedido" textarea required />
                 </Fieldset>
 
                 <div className="pt-6 border-t border-foreground/15">
                   <p className="font-body font-light text-xs text-muted-foreground leading-relaxed">
-                    La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para denuncias ante INDECOPI. El proveedor debe dar respuesta en un plazo no mayor a 15 días hábiles.
+                    La formulación del reclamo no impide acudir a otras vías de solución de
+                    controversias ni es requisito previo para denuncias ante INDECOPI. El proveedor
+                    debe dar respuesta en un plazo no mayor a 15 días hábiles.
                   </p>
                   <button
                     type="submit"
@@ -172,7 +184,10 @@ function Radio({ name, options }: { name: string; options: string[] }) {
   return (
     <div className="sm:col-span-2 flex flex-wrap gap-6">
       {options.map((o) => (
-        <label key={o} className="flex items-center gap-2 font-body font-light text-foreground/85 text-sm cursor-pointer">
+        <label
+          key={o}
+          className="flex items-center gap-2 font-body font-light text-foreground/85 text-sm cursor-pointer"
+        >
           <input type="radio" name={name} value={o} className="accent-rose-accent" required />
           {o}
         </label>

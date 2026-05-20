@@ -4,10 +4,7 @@ import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/admin-login")({
   head: () => ({
-    meta: [
-      { title: "Admin Login | Florería Miraflores" },
-      { name: "robots", content: "noindex" },
-    ],
+    meta: [{ title: "Admin Login | Florería Miraflores" }, { name: "robots", content: "noindex" }],
   }),
   component: AdminLoginPage,
 });
@@ -15,10 +12,10 @@ export const Route = createFileRoute("/admin-login")({
 function AdminLoginPage() {
   const navigate = useNavigate();
 
-  const [email,    setEmail]    = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error,    setError]    = useState<string | null>(null);
-  const [loading,  setLoading]  = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(true);
 
   // Si ya hay sesión activa → ir al dashboard
@@ -38,7 +35,7 @@ function AdminLoginPage() {
     setLoading(true);
 
     const { error: authError } = await supabase.auth.signInWithPassword({
-      email:    email.trim(),
+      email: email.trim(),
       password,
     });
 
@@ -63,7 +60,6 @@ function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-[#FDFAF6] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
-
         {/* Logo */}
         <div className="text-center mb-10">
           <span className="font-display italic font-bold text-4xl text-[#2C2420]">Miraflores</span>
@@ -77,9 +73,11 @@ function AdminLoginPage() {
           <h1 className="font-display text-2xl text-[#2C2420] mb-6">Iniciar sesión</h1>
 
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
-
             <div>
-              <label htmlFor="email" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-2">
+              <label
+                htmlFor="email"
+                className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-2"
+              >
                 Email
               </label>
               <input
@@ -95,7 +93,10 @@ function AdminLoginPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-2">
+              <label
+                htmlFor="password"
+                className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-2"
+              >
                 Contraseña
               </label>
               <input
@@ -123,16 +124,17 @@ function AdminLoginPage() {
             >
               {loading ? "Ingresando…" : "Ingresar"}
             </button>
-
           </form>
         </div>
 
         <p className="text-center mt-6 font-body text-xs text-[#8A7A6E]">
-          <a href="/" className="hover:text-[#C4956A] transition-colors underline underline-offset-2">
+          <a
+            href="/"
+            className="hover:text-[#C4956A] transition-colors underline underline-offset-2"
+          >
             ← Volver a la tienda
           </a>
         </p>
-
       </div>
     </div>
   );

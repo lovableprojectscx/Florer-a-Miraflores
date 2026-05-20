@@ -14,7 +14,7 @@ interface Props {
 export function AnnouncementBar({ config }: Props) {
   const messages: string[] = [];
   if (config?.anuncio_barra) messages.push(config.anuncio_barra);
-  if (config?.whatsapp)      messages.push(`WhatsApp ${config.whatsapp}`);
+  if (config?.whatsapp) messages.push(`WhatsApp ${config.whatsapp}`);
   const finalMessages = messages.length > 0 ? messages : FALLBACK_MESSAGES;
 
   const [idx, setIdx] = useState(0);

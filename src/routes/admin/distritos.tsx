@@ -1,7 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Plus, Pencil, Trash2, X, Loader2, ToggleLeft, ToggleRight, DollarSign, MapPin
+  Plus,
+  Pencil,
+  Trash2,
+  X,
+  Loader2,
+  ToggleLeft,
+  ToggleRight,
+  DollarSign,
+  MapPin,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { DistritoRow } from "@/types/database";
@@ -14,15 +22,15 @@ export const Route = createFileRoute("/admin/distritos")({
 // --- Constantes ---
 
 interface FormState {
-  nombre:          string;
+  nombre: string;
   precio_delivery: string;
-  activo:          boolean;
+  activo: boolean;
 }
 
 const EMPTY_FORM: FormState = {
-  nombre:          "",
+  nombre: "",
   precio_delivery: "0.00",
-  activo:          true,
+  activo: true,
 };
 
 // --- Skeleton ---
@@ -32,10 +40,18 @@ function TableSkeleton() {
     <>
       {[1, 2, 3, 4, 5].map((n) => (
         <tr key={n} className="border-b border-[#E8DDD0] animate-pulse">
-          <td className="px-4 py-4"><div className="h-4 w-44 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-4"><div className="h-4 w-24 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-4"><div className="h-6 w-10 bg-[#F5EFE6] rounded-full mx-auto" /></td>
-          <td className="px-4 py-4"><div className="h-4 w-16 bg-[#F5EFE6] rounded ml-auto" /></td>
+          <td className="px-4 py-4">
+            <div className="h-4 w-44 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-4 w-24 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-6 w-10 bg-[#F5EFE6] rounded-full mx-auto" />
+          </td>
+          <td className="px-4 py-4">
+            <div className="h-4 w-16 bg-[#F5EFE6] rounded ml-auto" />
+          </td>
         </tr>
       ))}
     </>
@@ -46,14 +62,14 @@ function TableSkeleton() {
 
 interface DistritoFormProps {
   initial: FormState;
-  saving:  boolean;
+  saving: boolean;
   onClose: () => void;
-  onSave:  (form: FormState) => Promise<void>;
-  titulo:  string;
+  onSave: (form: FormState) => Promise<void>;
+  titulo: string;
 }
 
 function DistritoForm({ initial, saving, onClose, onSave, titulo }: DistritoFormProps) {
-  const [form,   setForm]   = useState<FormState>(initial);
+  const [form, setForm] = useState<FormState>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
 
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
@@ -84,21 +100,25 @@ function DistritoForm({ initial, saving, onClose, onSave, titulo }: DistritoForm
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative bg-white w-full max-w-sm p-6 shadow-xl flex flex-col">
-
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-[#E8DDD0] mb-5">
           <h2 className="font-display text-xl text-[#2C2420]">{titulo}</h2>
-          <button onClick={onClose} className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onClose}
+            className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             <X className="h-5 w-5" strokeWidth={1.5} />
           </button>
         </div>
 
         {/* Body Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-
           {/* Nombre */}
           <div>
-            <label htmlFor="nombre" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
+            <label
+              htmlFor="nombre"
+              className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5"
+            >
               Nombre del distrito *
             </label>
             <div className="relative">
@@ -115,12 +135,17 @@ function DistritoForm({ initial, saving, onClose, onSave, titulo }: DistritoForm
                 className="w-full h-10 pl-9 pr-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors"
               />
             </div>
-            {errors.nombre && <p className="mt-1 font-body text-xs text-red-500">{errors.nombre}</p>}
+            {errors.nombre && (
+              <p className="mt-1 font-body text-xs text-red-500">{errors.nombre}</p>
+            )}
           </div>
 
           {/* Costo de Delivery */}
           <div>
-            <label htmlFor="precio_delivery" className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
+            <label
+              htmlFor="precio_delivery"
+              className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5"
+            >
               Costo de Delivery *
             </label>
             <div className="relative">
@@ -149,14 +174,18 @@ function DistritoForm({ initial, saving, onClose, onSave, titulo }: DistritoForm
             <label className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
               Habilitado para delivery
             </label>
-            <button type="button" onClick={() => setField("activo", !form.activo)} className="transition-colors">
-              {form.activo
-                ? <ToggleRight className="h-7 w-7 text-[#C4956A]" strokeWidth={1.5} />
-                : <ToggleLeft  className="h-7 w-7 text-[#8A7A6E]" strokeWidth={1.5} />
-              }
+            <button
+              type="button"
+              onClick={() => setField("activo", !form.activo)}
+              className="transition-colors"
+            >
+              {form.activo ? (
+                <ToggleRight className="h-7 w-7 text-[#C4956A]" strokeWidth={1.5} />
+              ) : (
+                <ToggleLeft className="h-7 w-7 text-[#8A7A6E]" strokeWidth={1.5} />
+              )}
             </button>
           </div>
-
         </form>
 
         {/* Footer */}
@@ -179,7 +208,6 @@ function DistritoForm({ initial, saving, onClose, onSave, titulo }: DistritoForm
             Guardar
           </button>
         </div>
-
       </div>
     </div>
   );
@@ -187,7 +215,11 @@ function DistritoForm({ initial, saving, onClose, onSave, titulo }: DistritoForm
 
 // --- Confirmación de eliminación ---
 
-function ConfirmDelete({ nombre, onConfirm, onCancel }: {
+function ConfirmDelete({
+  nombre,
+  onConfirm,
+  onCancel,
+}: {
   nombre: string;
   onConfirm: () => void;
   onCancel: () => void;
@@ -198,13 +230,20 @@ function ConfirmDelete({ nombre, onConfirm, onCancel }: {
       <div className="relative bg-white w-full max-w-xs p-5 shadow-xl">
         <h3 className="font-display text-lg text-[#2C2420] mb-2">¿Eliminar distrito?</h3>
         <p className="font-body text-xs text-[#8A7A6E] mb-5">
-          Vas a eliminar <strong className="text-[#2C2420]">"{nombre}"</strong>. Los clientes ya no podrán elegir esta zona para sus pedidos. Esta acción no se puede deshacer.
+          Vas a eliminar <strong className="text-[#2C2420]">"{nombre}"</strong>. Los clientes ya no
+          podrán elegir esta zona para sus pedidos. Esta acción no se puede deshacer.
         </p>
         <div className="flex gap-2 justify-end">
-          <button onClick={onCancel} className="h-9 px-4 font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onCancel}
+            className="h-9 px-4 font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             Cancelar
           </button>
-          <button onClick={onConfirm} className="h-9 px-4 bg-red-600 hover:bg-red-700 text-white font-body text-[10px] tracking-widest uppercase transition-colors">
+          <button
+            onClick={onConfirm}
+            className="h-9 px-4 bg-red-600 hover:bg-red-700 text-white font-body text-[10px] tracking-widest uppercase transition-colors"
+          >
             Eliminar
           </button>
         </div>
@@ -216,13 +255,13 @@ function ConfirmDelete({ nombre, onConfirm, onCancel }: {
 // --- Componente de página ---
 
 function DistritosPage() {
-  const [distritos,   setDistritos]   = useState<DistritoRow[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [showCreate,  setShowCreate]  = useState(false);
-  const [editando,    setEditando]    = useState<DistritoRow | null>(null);
-  const [eliminando,  setEliminando]  = useState<DistritoRow | null>(null);
-  const [saving,      setSaving]      = useState(false);
-  const [togglingId,  setTogglingId]  = useState<string | null>(null);
+  const [distritos, setDistritos] = useState<DistritoRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showCreate, setShowCreate] = useState(false);
+  const [editando, setEditando] = useState<DistritoRow | null>(null);
+  const [eliminando, setEliminando] = useState<DistritoRow | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const cargarDatos = useCallback(async () => {
     setLoading(true);
@@ -249,9 +288,9 @@ function DistritosPage() {
     setSaving(true);
     try {
       const { error } = await supabase.from("distritos").insert({
-        nombre:          form.nombre.trim(),
+        nombre: form.nombre.trim(),
         precio_delivery: Number(form.precio_delivery),
-        activo:          form.activo,
+        activo: form.activo,
       });
 
       if (error) throw error;
@@ -272,9 +311,9 @@ function DistritosPage() {
       const { error } = await supabase
         .from("distritos")
         .update({
-          nombre:          form.nombre.trim(),
+          nombre: form.nombre.trim(),
           precio_delivery: Number(form.precio_delivery),
-          activo:          form.activo,
+          activo: form.activo,
         })
         .eq("id", editando.id);
 
@@ -312,9 +351,7 @@ function DistritosPage() {
         .eq("id", dist.id);
 
       if (error) throw error;
-      setDistritos((prev) =>
-        prev.map((d) => d.id === dist.id ? { ...d, activo: !d.activo } : d)
-      );
+      setDistritos((prev) => prev.map((d) => (d.id === dist.id ? { ...d, activo: !d.activo } : d)));
     } catch (err) {
       console.error(err);
     } finally {
@@ -324,7 +361,6 @@ function DistritosPage() {
 
   return (
     <div className="p-8 md:p-10">
-
       {/* Encabezado */}
       <div className="flex items-end justify-between mb-8">
         <div>
@@ -342,7 +378,8 @@ function DistritosPage() {
 
       {!loading && (
         <p className="font-body text-xs text-[#8A7A6E] mb-4">
-          {distritos.length} {distritos.length === 1 ? "distrito registrado" : "distritos registrados"}
+          {distritos.length}{" "}
+          {distritos.length === 1 ? "distrito registrado" : "distritos registrados"}
         </p>
       )}
 
@@ -351,10 +388,18 @@ function DistritosPage() {
         <table className="w-full min-w-[650px]">
           <thead>
             <tr className="border-b border-[#E8DDD0] bg-[#FDFAF6]">
-              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Nombre del distrito</th>
-              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Costo de Delivery</th>
-              <th className="px-4 py-3 text-center font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-36">Estado</th>
-              <th className="px-4 py-3 text-right font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-36">Acciones</th>
+              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Nombre del distrito
+              </th>
+              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Costo de Delivery
+              </th>
+              <th className="px-4 py-3 text-center font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-36">
+                Estado
+              </th>
+              <th className="px-4 py-3 text-right font-body text-xs tracking-widest uppercase text-[#8A7A6E] w-36">
+                Acciones
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -368,7 +413,10 @@ function DistritosPage() {
               </tr>
             ) : (
               distritos.map((dist) => (
-                <tr key={dist.id} className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6]/50 transition-colors">
+                <tr
+                  key={dist.id}
+                  className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6]/50 transition-colors"
+                >
                   {/* Nombre */}
                   <td className="px-4 py-4 font-body text-sm font-medium text-[#2C2420]">
                     {dist.nombre}
@@ -388,7 +436,10 @@ function DistritosPage() {
                       title={dist.activo ? "Deshabilitar distrito" : "Habilitar distrito"}
                     >
                       {togglingId === dist.id ? (
-                        <Loader2 className="h-6 w-6 text-[#C4956A] animate-spin mx-auto" strokeWidth={1.5} />
+                        <Loader2
+                          className="h-6 w-6 text-[#C4956A] animate-spin mx-auto"
+                          strokeWidth={1.5}
+                        />
                       ) : dist.activo ? (
                         <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
                       ) : (
@@ -438,9 +489,9 @@ function DistritosPage() {
         <DistritoForm
           titulo="Editar distrito"
           initial={{
-            nombre:          editando.nombre,
+            nombre: editando.nombre,
             precio_delivery: Number(editando.precio_delivery).toFixed(2),
-            activo:          editando.activo,
+            activo: editando.activo,
           }}
           saving={saving}
           onClose={() => setEditando(null)}
@@ -455,7 +506,6 @@ function DistritosPage() {
           onCancel={() => setEliminando(null)}
         />
       )}
-
     </div>
   );
 }

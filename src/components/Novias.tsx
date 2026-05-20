@@ -26,7 +26,9 @@ export function Novias() {
           </div>
           <div className="lg:col-span-5">
             <p className="font-body font-light text-foreground/80 text-base md:text-lg leading-relaxed">
-              Agendamos una asesoría privada en boutique para diseñar tu ramo, los arreglos de iglesia y la decoración del banquete. Cada propuesta es única y se trabaja con un mes de anticipación.
+              Agendamos una asesoría privada en boutique para diseñar tu ramo, los arreglos de
+              iglesia y la decoración del banquete. Cada propuesta es única y se trabaja con un mes
+              de anticipación.
             </p>
             <a
               href="https://wa.me/51999999999"
@@ -39,8 +41,14 @@ export function Novias() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
           {bouquets.map((b) => (
-            <article key={b.name} className="group flex flex-col w-full max-w-[340px] mx-auto md:mx-0">
-              <div className="relative overflow-hidden bg-ivory-soft" style={{ aspectRatio: "1/1" }}>
+            <article
+              key={b.name}
+              className="group flex flex-col w-full max-w-[340px] mx-auto md:mx-0"
+            >
+              <div
+                className="relative overflow-hidden bg-ivory-soft"
+                style={{ aspectRatio: "1/1" }}
+              >
                 <img
                   src={b.img}
                   alt={`Bouquet de novia ${b.name}`}

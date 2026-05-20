@@ -35,14 +35,19 @@ export const Route = createFileRoute("/categoria/$slug/$sub")({
     meta: loaderData
       ? [
           { title: `${loaderData.subcat.nombre} — ${loaderData.cat.nombre} | Florería Miraflores` },
-          { name: "description", content: `${loaderData.subcat.nombre} en Florería Miraflores. Delivery en Lima.` },
+          {
+            name: "description",
+            content: `${loaderData.subcat.nombre} en Florería Miraflores. Delivery en Lima.`,
+          },
         ]
       : [],
   }),
   notFoundComponent: () => (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
       <h1 className="font-display text-4xl mb-4 text-[#2C2420]">No encontrado</h1>
-      <Link to="/" className="text-[#C4956A] underline">Volver al inicio</Link>
+      <Link to="/" className="text-[#C4956A] underline">
+        Volver al inicio
+      </Link>
     </div>
   ),
   errorComponent: ({ error }) => (
@@ -68,7 +73,9 @@ function SubPage() {
       <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-10 md:py-16">
         {/* Breadcrumb */}
         <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-6 flex flex-wrap items-center gap-1.5">
-          <Link to="/" className="hover:text-[#2C2420] transition-colors">Inicio</Link>
+          <Link to="/" className="hover:text-[#2C2420] transition-colors">
+            Inicio
+          </Link>
           <span>/</span>
           <Link
             to="/categoria/$slug"
@@ -97,7 +104,8 @@ function SubPage() {
           <section className="border border-[#E8DDD0] p-8 md:p-16 bg-[#F5EFE6]/40 text-center">
             <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>
             <p className="font-body font-light text-[#2C2420]/75 max-w-md mx-auto">
-              Pronto cargaremos los arreglos de esta subcategoría. Si deseas una pieza personalizada, escríbenos.
+              Pronto cargaremos los arreglos de esta subcategoría. Si deseas una pieza
+              personalizada, escríbenos.
             </p>
             <a
               href="https://wa.me/51999600482"

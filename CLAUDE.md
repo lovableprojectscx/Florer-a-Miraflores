@@ -6,12 +6,12 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 
 ## 1. IDENTIDAD DEL PROYECTO
 
-| Campo | Valor |
-|---|---|
-| Nombre del negocio | Florería Miraflores |
-| Dominio | floreriamiraflores.com |
-| Tipo | E-commerce de flores y regalos — Lima, Perú |
-| Mercado | Miraflores, Surco, Barranco, Lince, San Isidro |
+| Campo              | Valor                                          |
+| ------------------ | ---------------------------------------------- |
+| Nombre del negocio | Florería Miraflores                            |
+| Dominio            | floreriamiraflores.com                         |
+| Tipo               | E-commerce de flores y regalos — Lima, Perú    |
+| Mercado            | Miraflores, Surco, Barranco, Lince, San Isidro |
 
 ---
 
@@ -22,6 +22,7 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 ### Archivos YA existentes en Lovable (NO recrear)
 
 **Componentes (`/components`):**
+
 - `AnnouncementBar.tsx` — barra de anuncio superior
 - `Header.tsx` — header con nav (mobile: acordeón, desktop: dropdown)
 - `Hero.tsx` — slider/banner principal
@@ -30,17 +31,20 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 - `Occasions.tsx` — sección ocasiones con iconos
 - `ProductGrid.tsx` — grid reutilizable de cards de producto
 - `About.tsx` — sección marca con imagen + bullets
+- `Faq.tsx` — acordeón de preguntas frecuentes estáticas predeterminadas
 - `Footer.tsx` — footer con redes y contacto
 - `WhatsappFab.tsx` — botón flotante de WhatsApp
 - `Novias.tsx` — componente existente (verificar si tiene ruta asignada)
 
 **Rutas (`/routes`):**
+
 - `index.tsx` — home completo ✓
 - `categoria.$slug.tsx` — categoría padre → muestra subcategorías como cards
 - `categoria.$slug.$sub.tsx` — subcategoría → muestra productos
 - `libro-de-reclamaciones.tsx` — página existente
 
 **Data (`/data`) — hardcodeada, se reemplaza en Fase 2:**
+
 - `catalog.ts` — productos de muestra
 - `categories.ts` — categorías de muestra
 
@@ -52,48 +56,52 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 
 ### Lo que FALTA construir
 
-| Página / Feature | Ruta | Estado |
-|---|---|---|
-| Producto individual | `/producto/:id` | ❌ No existe |
-| Drawer de carrito | componente global | ❌ No existe |
-| Checkout | `/checkout` | ❌ No existe |
-| Confirmación post-pago | `/confirmacion` | ❌ No existe |
-| Panel admin | `/admin/*` | ❌ No existe |
-| Conexión Supabase | — | ❌ Todo es data estática aún |
-| IZIPay | — | ❌ Pendiente credenciales de cliente |
+| Página / Feature       | Ruta              | Estado                               |
+| ---------------------- | ----------------- | ------------------------------------ |
+| Producto individual    | `/producto/:id`   | ❌ No existe                         |
+| Drawer de carrito      | componente global | ❌ No existe                         |
+| Checkout               | `/checkout`       | ❌ No existe                         |
+| Confirmación post-pago | `/confirmacion`   | ❌ No existe                         |
+| Panel admin            | `/admin/*`        | ❌ No existe                         |
+| Conexión Supabase      | —                 | ❌ Todo es data estática aún         |
+| IZIPay                 | —                 | ❌ Pendiente credenciales de cliente |
 
 ### Fases del proyecto
 
 **FASE 1 (actual) — Frontend completo con data estática**
 Construir en este orden:
+
 1. Página de producto individual
 2. Carrito (drawer lateral, estado Zustand)
 3. Checkout (formulario completo)
 4. Página de confirmación
 
 **FASE 2 — Conectar Supabase**
+
 - Reemplazar `data/catalog.ts` y `categories.ts` con queries reales
 - Panel admin completo
 
 **FASE 3 — IZIPay**
+
 - Edge Functions + webhook (cuando lleguen credenciales de Sofía)
 
 ---
 
 ## 3. STACK TÉCNICO
 
-| Capa | Tecnología |
-|---|---|
-| Frontend | React + Vite |
-| Backend / DB | Supabase (PostgreSQL + Storage + Auth + Edge Functions) |
-| Deploy | Vercel |
-| Pasarela de pago | IZIPay |
-| Estilos | Tailwind CSS |
-| Routing | React Router v6 |
-| Estado global | Zustand |
-| Imágenes | Supabase Storage |
+| Capa             | Tecnología                                              |
+| ---------------- | ------------------------------------------------------- |
+| Frontend         | React + Vite                                            |
+| Backend / DB     | Supabase (PostgreSQL + Storage + Auth + Edge Functions) |
+| Deploy           | Vercel                                                  |
+| Pasarela de pago | IZIPay                                                  |
+| Estilos          | Tailwind CSS                                            |
+| Routing          | React Router v6                                         |
+| Estado global    | Zustand                                                 |
+| Imágenes         | Supabase Storage                                        |
 
 **Reglas de stack:**
+
 - Sin SSR. Todo SPA con Vite.
 - Edge Functions para todo lo que toque secrets (IZI, credenciales).
 - NUNCA exponer API keys en el frontend.
@@ -105,6 +113,7 @@ Construir en este orden:
 ## 4. IDENTIDAD VISUAL
 
 ### Paleta
+
 ```
 --color-bg:         #FDFAF6   /* fondo principal — crema muy claro */
 --color-surface:    #F5EFE6   /* tarjetas, secciones alternadas */
@@ -117,11 +126,13 @@ Construir en este orden:
 ```
 
 ### Tipografía
+
 - **Display / Headings:** `Cormorant Garamond` (serif elegante, tono lujo floral)
 - **Body / UI:** `DM Sans` (limpio, legible, moderno)
 - Importar desde Google Fonts.
 
 ### Estilo general
+
 - Minimalismo refinado con calidez. No frío ni clínico.
 - Fotografía como protagonista — layouts limpios.
 - Bordes redondeados sutiles (`rounded-xl` aprox).
@@ -164,28 +175,29 @@ Estado global que persiste mientras el usuario navega:
 
 ```typescript
 interface CartItem {
-  id: string
-  nombre: string
-  precio: number
-  imagen: string
-  cantidad: number
+  id: string;
+  nombre: string;
+  precio: number;
+  imagen: string;
+  cantidad: number;
 }
 
 interface CartStore {
-  items: CartItem[]
-  isOpen: boolean
-  agregarItem: (producto: CartItem) => void
-  quitarItem: (id: string) => void
-  actualizarCantidad: (id: string, cantidad: number) => void
-  vaciarCarrito: () => void
-  abrirCarrito: () => void
-  cerrarCarrito: () => void
-  total: () => number
-  totalItems: () => number
+  items: CartItem[];
+  isOpen: boolean;
+  agregarItem: (producto: CartItem) => void;
+  quitarItem: (id: string) => void;
+  actualizarCantidad: (id: string, cantidad: number) => void;
+  vaciarCarrito: () => void;
+  abrirCarrito: () => void;
+  cerrarCarrito: () => void;
+  total: () => number;
+  totalItems: () => number;
 }
 ```
 
 **Drawer del carrito:**
+
 - Se abre desde el ícono del header (contador de items).
 - Slide-in desde la derecha, overlay oscuro detrás.
 - Lista de items: imagen miniatura, nombre, precio unitario, selector de cantidad (+/-), botón eliminar.
@@ -198,11 +210,13 @@ interface CartStore {
 **Layout mobile:** imagen arriba, info abajo
 
 **Sección de imagen:**
+
 - Imagen principal grande.
 - Si hay múltiples imágenes: miniaturas clickeables debajo.
 - Sin zoom (demasiado complejo por ahora).
 
 **Sección de info:**
+
 - Breadcrumb: `Inicio > Ocasión > Cumpleaños > Velvet Box`
 - Badge de tag si aplica (NUEVO / EDICIÓN LIMITADA / OFERTA)
 - Nombre del producto (Cormorant Garamond, grande)
@@ -214,6 +228,7 @@ interface CartStore {
 - Nota de delivery: "Delivery disponible en Miraflores, Surco, Barranco, Lince y San Isidro"
 
 **Productos relacionados:**
+
 - Sección al final: 4 productos de la misma subcategoría.
 - Usar `ProductGrid` existente.
 
@@ -226,12 +241,14 @@ interface CartStore {
 **Layout:** una columna en mobile, dos columnas en desktop (formulario izquierda, resumen derecha).
 
 **Resumen del pedido (sticky en desktop):**
+
 - Lista de items: imagen, nombre, cantidad, precio
 - Subtotal
 - Delivery (se calcula cuando elige distrito)
 - **Total**
 
 **Formulario — datos del cliente:**
+
 ```
 Nombre completo *
 Teléfono * (con prefijo +51)
@@ -239,6 +256,7 @@ Email *
 ```
 
 **Formulario — datos de entrega:**
+
 ```
 Distrito * (select con distritos activos + precio de delivery)
 Dirección completa *
@@ -249,17 +267,20 @@ Notas adicionales (textarea, opcional)
 ```
 
 **Lógica de precio delivery:**
+
 - Al seleccionar distrito → mostrar precio de delivery inmediatamente en el resumen.
 - Total = subtotal + precio_delivery del distrito seleccionado.
 - En Fase 1 los precios de distrito vienen hardcodeados (todos S/10).
 
 **Botón de pago:**
+
 - Texto: "Pagar con IZIPay — S/ [total]"
 - En Fase 1: mostrar modal "Integración de pago próximamente" o simular flujo.
 - En Fase 3: llamar Edge Function que genera sesión IZIPay.
 
 **Validaciones:**
-- Todos los campos marcados con * son requeridos.
+
+- Todos los campos marcados con \* son requeridos.
 - Email con formato válido.
 - Teléfono mínimo 9 dígitos.
 - Mostrar errores inline bajo cada campo.
@@ -271,6 +292,7 @@ Notas adicionales (textarea, opcional)
 - Si se accede directo sin estado de pedido → redirect a `/`.
 
 **Contenido:**
+
 - Ícono de check grande (color acento)
 - Título: "¡Tu pedido fue recibido!"
 - Número de pedido (generado: `#FM-XXXXXX`)
@@ -284,6 +306,7 @@ Notas adicionales (textarea, opcional)
 ## 7. REGLAS DE CATEGORÍAS Y PRODUCTOS
 
 **Estructura padre → hijo (los productos siempre cuelgan de una subcategoría):**
+
 ```
 Ocasión (padre — solo navegación, sin productos directos)
 └── Cumpleaños (subcategoría — aquí viven los productos)
@@ -294,6 +317,7 @@ Ocasión (padre — solo navegación, sin productos directos)
 **Excepción:** Arreglos Premium y Ofertas no tienen subcategorías → sus productos cuelgan del padre directamente.
 
 **En la data (`categories.ts` y `catalog.ts`), cada producto tiene:**
+
 - `id` único
 - `nombre`
 - `precio`
@@ -304,12 +328,14 @@ Ocasión (padre — solo navegación, sin productos directos)
 - `activo: boolean`
 
 **Badges en cards y producto individual:**
+
 ```
 'novedad'          → badge "NUEVO" fondo oscuro
 'edicion_limitada' → badge "EDICIÓN LIMITADA" fondo oscuro
 'oferta'           → badge "OFERTA" fondo acento
 'mas_vendido'      → badge "MÁS VENDIDO" fondo tierra
 ```
+
 Si tiene múltiples tags, mostrar solo el primero.
 
 ---
@@ -352,6 +378,7 @@ Ofertas                    slug: ofertas             ← sin subcategorías
 ```
 
 **Navegación:**
+
 - Nav desktop: hover en padre → dropdown con subcategorías.
 - Nav mobile: acordeón (ya implementado en `Header.tsx`).
 - `/categoria/ocasion` → muestra cards de sus 5 subcategorías.
@@ -363,30 +390,38 @@ Ofertas                    slug: ofertas             ← sin subcategorías
 ## 9. SECCIONES DEL HOME (referencia para no romper lo existente)
 
 ### Barra de anuncio (`AnnouncementBar.tsx`)
+
 - Texto editable. Fondo acento, texto blanco.
 
 ### Header (`Header.tsx`)
+
 - Logo + nav con dropdown desktop / acordeón mobile.
 - Ícono carrito con contador desde Zustand.
 - Sticky en scroll.
 
 ### Hero (`Hero.tsx`)
+
 - Slider de banners: imagen fondo, título, subtexto, CTA.
 
 ### Colecciones (`CategoryShowcase.tsx`)
+
 - Grid de categorías padre con imagen y contador de subcategorías.
 
 ### Novedades (`Novedades.tsx`)
+
 - Productos con tag `novedad` o `edicion_limitada`.
 - Cards con badge.
 
 ### Ocasiones (`Occasions.tsx`)
+
 - Grid de iconos por ocasión.
 
 ### Marca (`About.tsx`)
+
 - Imagen + título + párrafo + bullets.
 
 ### Footer (`Footer.tsx`)
+
 - Logo, contacto, horario, redes, libro de reclamaciones.
 
 ---
@@ -407,6 +442,7 @@ Ofertas                    slug: ofertas             ← sin subcategorías
 ```
 
 **IZIPay — importante:**
+
 - Todo por Edge Functions. NUNCA credenciales en frontend.
 - Dos ambientes separados: **Sandbox** (pruebas, no cobra) y **Producción** (cobro real).
 - Usar Sandbox hasta que Sofía apruebe el ambiente productivo.
@@ -419,6 +455,7 @@ Ofertas                    slug: ofertas             ← sin subcategorías
 ## 11. BASE DE DATOS (Supabase — Fase 2)
 
 ### `config`
+
 ```sql
 CREATE TABLE config (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -436,6 +473,7 @@ CREATE TABLE config (
 ```
 
 ### `banners`
+
 ```sql
 CREATE TABLE banners (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -451,6 +489,7 @@ CREATE TABLE banners (
 ```
 
 ### `popup`
+
 ```sql
 CREATE TABLE popup (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -463,6 +502,7 @@ CREATE TABLE popup (
 ```
 
 ### `categorias`
+
 ```sql
 CREATE TABLE categorias (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -476,6 +516,7 @@ CREATE TABLE categorias (
 ```
 
 ### `productos`
+
 ```sql
 CREATE TABLE productos (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -492,6 +533,7 @@ CREATE TABLE productos (
 ```
 
 ### `ocasiones_home`
+
 ```sql
 CREATE TABLE ocasiones_home (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -504,6 +546,7 @@ CREATE TABLE ocasiones_home (
 ```
 
 ### `colecciones_home`
+
 ```sql
 CREATE TABLE colecciones_home (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -515,6 +558,7 @@ CREATE TABLE colecciones_home (
 ```
 
 ### `distritos`
+
 ```sql
 CREATE TABLE distritos (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -526,6 +570,7 @@ CREATE TABLE distritos (
 ```
 
 ### `pedidos`
+
 ```sql
 CREATE TABLE pedidos (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -550,6 +595,7 @@ CREATE TABLE pedidos (
 ```
 
 ### RLS
+
 - Lectura pública: `config`, `banners`, `popup`, `categorias`, `productos`, `ocasiones_home`, `colecciones_home`, `distritos`.
 - Escritura solo admin: todas las tablas anteriores.
 - `pedidos`: INSERT público, SELECT/UPDATE solo admin.
@@ -587,6 +633,7 @@ CREATE TABLE pedidos (
 - `robots.txt`: permitir todo excepto `/admin`.
 - Imágenes con `alt` descriptivo siempre.
 - Schema.org `LocalBusiness` en home:
+
 ```json
 {
   "@type": "Florist",
@@ -602,23 +649,24 @@ CREATE TABLE pedidos (
 
 ## 15. DATOS DE OPERACIÓN
 
-| Campo | Valor |
-|---|---|
-| WhatsApp admin | +51 999 600 482 |
-| Correo pedidos | pedidos@floreriamiraflores.com |
-| Horario | 9am a 9pm todos los días |
-| Instagram | https://www.instagram.com/floreriamirafloreslima |
-| TikTok | https://www.tiktok.com/@floreriamirafloreslima |
-| Facebook | pendiente |
+| Campo          | Valor                                            |
+| -------------- | ------------------------------------------------ |
+| WhatsApp admin | +51 999 600 482                                  |
+| Correo pedidos | pedidos@floreriamiraflores.com                   |
+| Horario        | 9am a 9pm todos los días                         |
+| Instagram      | https://www.instagram.com/floreriamirafloreslima |
+| TikTok         | https://www.tiktok.com/@floreriamirafloreslima   |
+| Facebook       | pendiente                                        |
 
 ### Distritos
-| Distrito | Delivery |
-|---|---|
-| Miraflores | S/10.00 |
-| Surco | S/10.00 |
-| Barranco | S/10.00 |
-| Lince | S/10.00 |
-| San Isidro | S/10.00 |
+
+| Distrito   | Delivery |
+| ---------- | -------- |
+| Miraflores | S/10.00  |
+| Surco      | S/10.00  |
+| Barranco   | S/10.00  |
+| Lince      | S/10.00  |
+| San Isidro | S/10.00  |
 
 ---
 

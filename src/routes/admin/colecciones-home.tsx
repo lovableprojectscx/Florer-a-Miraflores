@@ -1,8 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Plus, Trash2, ChevronUp, ChevronDown,
-  X, Loader2, ToggleLeft, ToggleRight,
+  Plus,
+  Trash2,
+  ChevronUp,
+  ChevronDown,
+  X,
+  Loader2,
+  ToggleLeft,
+  ToggleRight,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { CategoriaRow } from "@/types/database";
@@ -15,16 +21,16 @@ export const Route = createFileRoute("/admin/colecciones-home")({
 // --- Tipos ---
 
 interface ColeccionRow {
-  id:               string;
-  categoria_id:     string | null;
+  id: string;
+  categoria_id: string | null;
   imagen_custom_url: string | null;
-  orden:            number;
-  activo:           boolean;
+  orden: number;
+  activo: boolean;
 }
 
 interface ColeccionConCategoria extends ColeccionRow {
   categoria_nombre: string;
-  categoria_slug:   string;
+  categoria_slug: string;
 }
 
 // --- Helpers ---
@@ -40,11 +46,21 @@ function RowSkeleton() {
     <>
       {[1, 2, 3].map((n) => (
         <tr key={n} className="border-b border-[#E8DDD0] animate-pulse">
-          <td className="px-4 py-3"><div className="h-4 w-6 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-40 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-32 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-6 w-10 bg-[#F5EFE6] rounded-full" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-12 bg-[#F5EFE6] rounded" /></td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-6 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-40 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-32 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-6 w-10 bg-[#F5EFE6] rounded-full" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-12 bg-[#F5EFE6] rounded" />
+          </td>
         </tr>
       ))}
     </>
@@ -54,24 +70,25 @@ function RowSkeleton() {
 // --- Modal agregar coleccion ---
 
 interface AgregarModalProps {
-  categorias:    CategoriaRow[];
+  categorias: CategoriaRow[];
   colExistentes: string[]; // categoria_ids ya usados
-  onClose:       () => void;
-  onSave:        (categoriaId: string) => Promise<void>;
+  onClose: () => void;
+  onSave: (categoriaId: string) => Promise<void>;
 }
 
 function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarModalProps) {
   const [categoriaId, setCategoriaId] = useState("");
-  const [saving,      setSaving]      = useState(false);
-  const [error,       setError]       = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Solo mostrar categorias que no estan ya agregadas
-  const disponibles = categorias.filter(
-    (c) => c.activo && !colExistentes.includes(c.id)
-  );
+  const disponibles = categorias.filter((c) => c.activo && !colExistentes.includes(c.id));
 
   async function handleSave() {
-    if (!categoriaId) { setError("Selecciona una categoria."); return; }
+    if (!categoriaId) {
+      setError("Selecciona una categoria.");
+      return;
+    }
     setSaving(true);
     try {
       await onSave(categoriaId);
@@ -86,10 +103,12 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative bg-white w-full max-w-sm shadow-xl">
-
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#E8DDD0]">
           <h2 className="font-display text-2xl text-[#2C2420]">Agregar coleccion</h2>
-          <button onClick={onClose} className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onClose}
+            className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             <X className="h-5 w-5" strokeWidth={1.5} />
           </button>
         </div>
@@ -100,28 +119,40 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
               Categoria *
             </label>
             {disponibles.length === 0 ? (
-              <p className="font-body text-sm text-[#8A7A6E]">Todas las categorias activas ya estan en el home.</p>
+              <p className="font-body text-sm text-[#8A7A6E]">
+                Todas las categorias activas ya estan en el home.
+              </p>
             ) : (
               <select
                 value={categoriaId}
-                onChange={(e) => { setCategoriaId(e.target.value); setError(null); }}
+                onChange={(e) => {
+                  setCategoriaId(e.target.value);
+                  setError(null);
+                }}
                 className="w-full h-10 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors"
               >
                 <option value="">Seleccionar...</option>
                 {disponibles.map((c) => (
-                  <option key={c.id} value={c.id}>{c.nombre}</option>
+                  <option key={c.id} value={c.id}>
+                    {c.nombre}
+                  </option>
                 ))}
               </select>
             )}
             {error && <p className="mt-1 font-body text-xs text-red-500">{error}</p>}
           </div>
           <p className="font-body text-[10px] text-[#8A7A6E]">
-            La coleccion usara la imagen de la categoria. Puedes agregar una imagen personalizada despues desde la tabla.
+            La coleccion usara la imagen de la categoria. Puedes agregar una imagen personalizada
+            despues desde la tabla.
           </p>
         </div>
 
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#E8DDD0]">
-          <button onClick={onClose} disabled={saving} className="h-10 px-5 font-body text-xs tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors disabled:opacity-50">
+          <button
+            onClick={onClose}
+            disabled={saving}
+            className="h-10 px-5 font-body text-xs tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors disabled:opacity-50"
+          >
             Cancelar
           </button>
           <button
@@ -133,7 +164,6 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
             Agregar
           </button>
         </div>
-
       </div>
     </div>
   );
@@ -143,11 +173,11 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
 
 function ColeccionesHomePage() {
   const [colecciones, setColecciones] = useState<ColeccionConCategoria[]>([]);
-  const [categorias,  setCategorias]  = useState<CategoriaRow[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [showModal,   setShowModal]   = useState(false);
-  const [togglingId,  setTogglingId]  = useState<string | null>(null);
-  const [movingId,    setMovingId]    = useState<string | null>(null);
+  const [categorias, setCategorias] = useState<CategoriaRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
+  const [movingId, setMovingId] = useState<string | null>(null);
 
   const cargarDatos = useCallback(async () => {
     setLoading(true);
@@ -169,7 +199,7 @@ function ColeccionesHomePage() {
         return {
           ...col,
           categoria_nombre: cat?.nombre ?? "Sin categoria",
-          categoria_slug:   cat?.slug   ?? "",
+          categoria_slug: cat?.slug ?? "",
         };
       });
       setColecciones(mapped);
@@ -180,17 +210,17 @@ function ColeccionesHomePage() {
     }
   }, []);
 
-  useEffect(() => { cargarDatos(); }, [cargarDatos]);
+  useEffect(() => {
+    cargarDatos();
+  }, [cargarDatos]);
 
   async function handleAgregar(categoriaId: string) {
-    const maxOrden = colecciones.length > 0
-      ? Math.max(...colecciones.map((c) => c.orden)) + 1
-      : 0;
+    const maxOrden = colecciones.length > 0 ? Math.max(...colecciones.map((c) => c.orden)) + 1 : 0;
     const { error } = await supabase.from("colecciones_home").insert({
-      categoria_id:     categoriaId,
+      categoria_id: categoriaId,
       imagen_custom_url: null,
-      orden:            maxOrden,
-      activo:           true,
+      orden: maxOrden,
+      activo: true,
     });
     if (error) throw new Error(error.message);
     setShowModal(false);
@@ -200,7 +230,10 @@ function ColeccionesHomePage() {
   async function handleEliminar(id: string) {
     if (!confirm("Quitar esta coleccion del home?")) return;
     const { error } = await supabase.from("colecciones_home").delete().eq("id", id);
-    if (error) { console.error(error); return; }
+    if (error) {
+      console.error(error);
+      return;
+    }
     await cargarDatos();
   }
 
@@ -213,7 +246,7 @@ function ColeccionesHomePage() {
         .eq("id", col.id);
       if (error) throw error;
       setColecciones((prev) =>
-        prev.map((c) => c.id === col.id ? { ...c, activo: !c.activo } : c)
+        prev.map((c) => (c.id === col.id ? { ...c, activo: !c.activo } : c)),
       );
     } catch (err) {
       console.error(err);
@@ -223,7 +256,7 @@ function ColeccionesHomePage() {
   }
 
   async function handleMover(idx: number, dir: "up" | "down") {
-    const target  = colecciones[idx];
+    const target = colecciones[idx];
     const swapIdx = dir === "up" ? idx - 1 : idx + 1;
     if (swapIdx < 0 || swapIdx >= colecciones.length) return;
     const swap = colecciones[swapIdx];
@@ -246,7 +279,6 @@ function ColeccionesHomePage() {
 
   return (
     <div className="p-8 md:p-10">
-
       {/* Encabezado */}
       <div className="flex items-end justify-between mb-8">
         <div>
@@ -263,7 +295,8 @@ function ColeccionesHomePage() {
       </div>
 
       <p className="font-body text-xs text-[#8A7A6E] mb-6">
-        Estas son las colecciones que aparecen en la seccion de categorias destacadas del home. El orden aqui es el orden que ve el cliente.
+        Estas son las colecciones que aparecen en la seccion de categorias destacadas del home. El
+        orden aqui es el orden que ve el cliente.
       </p>
 
       {/* Tabla */}
@@ -272,19 +305,29 @@ function ColeccionesHomePage() {
           <thead>
             <tr className="border-b border-[#E8DDD0] bg-[#FDFAF6]">
               <th className="px-4 py-3 text-left w-16">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Orden</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Orden
+                </span>
               </th>
               <th className="px-4 py-3 text-left">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Categoria</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Categoria
+                </span>
               </th>
               <th className="px-4 py-3 text-left">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Slug</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Slug
+                </span>
               </th>
               <th className="px-4 py-3 text-center">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Activo</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Activo
+                </span>
               </th>
               <th className="px-4 py-3 text-right">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Acciones</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Acciones
+                </span>
               </th>
             </tr>
           </thead>
@@ -299,8 +342,10 @@ function ColeccionesHomePage() {
               </tr>
             ) : (
               colecciones.map((col, idx) => (
-                <tr key={col.id} className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6] transition-colors">
-
+                <tr
+                  key={col.id}
+                  className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6] transition-colors"
+                >
                   {/* Orden */}
                   <td className="px-4 py-3">
                     <div className="flex flex-col gap-0.5">
@@ -323,12 +368,16 @@ function ColeccionesHomePage() {
 
                   {/* Nombre */}
                   <td className="px-4 py-3">
-                    <p className="font-body text-sm text-[#2C2420] font-medium">{col.categoria_nombre}</p>
+                    <p className="font-body text-sm text-[#2C2420] font-medium">
+                      {col.categoria_nombre}
+                    </p>
                   </td>
 
                   {/* Slug */}
                   <td className="px-4 py-3">
-                    <p className="font-body text-xs text-[#8A7A6E] font-mono">{col.categoria_slug || "-"}</p>
+                    <p className="font-body text-xs text-[#8A7A6E] font-mono">
+                      {col.categoria_slug || "-"}
+                    </p>
                   </td>
 
                   {/* Toggle activo */}
@@ -340,7 +389,10 @@ function ColeccionesHomePage() {
                       title={col.activo ? "Desactivar" : "Activar"}
                     >
                       {togglingId === col.id ? (
-                        <Loader2 className="h-6 w-6 text-[#C4956A] animate-spin mx-auto" strokeWidth={1.5} />
+                        <Loader2
+                          className="h-6 w-6 text-[#C4956A] animate-spin mx-auto"
+                          strokeWidth={1.5}
+                        />
                       ) : col.activo ? (
                         <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
                       ) : (
@@ -361,7 +413,6 @@ function ColeccionesHomePage() {
                       </button>
                     </div>
                   </td>
-
                 </tr>
               ))
             )}
@@ -378,7 +429,6 @@ function ColeccionesHomePage() {
           onSave={handleAgregar}
         />
       )}
-
     </div>
   );
 }

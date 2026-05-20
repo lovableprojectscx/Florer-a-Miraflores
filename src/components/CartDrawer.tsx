@@ -3,8 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useCartStore } from "@/store/cart";
 
 export function CartDrawer() {
-  const { items, isOpen, cerrarCarrito, quitarItem, actualizarCantidad, total } =
-    useCartStore();
+  const { items, isOpen, cerrarCarrito, quitarItem, actualizarCantidad, total } = useCartStore();
 
   const subtotal = total();
 
@@ -45,9 +44,7 @@ export function CartDrawer() {
           /* Carrito vacío */
           <div className="flex-1 flex flex-col items-center justify-center px-6 gap-5">
             <ShoppingBag className="h-14 w-14 text-[#E8DDD0]" strokeWidth={1} />
-            <p className="font-body text-[#8A7A6E] text-sm text-center">
-              Tu carrito está vacío
-            </p>
+            <p className="font-body text-[#8A7A6E] text-sm text-center">Tu carrito está vacío</p>
             <Link
               to="/"
               onClick={cerrarCarrito}

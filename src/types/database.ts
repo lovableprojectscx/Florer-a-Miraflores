@@ -11,15 +11,15 @@
 // ─── config ───────────────────────────────────────────────────────────────────
 
 export interface ConfigRow {
-  id:                         string;
-  whatsapp:                   string | null;
-  correo:                     string | null;
-  horario:                    string | null;
-  logo_url:                   string | null;
-  anuncio_barra:              string | null;
-  instagram_url:              string | null;
-  tiktok_url:                 string | null;
-  facebook_url:               string | null;
+  id: string;
+  whatsapp: string | null;
+  correo: string | null;
+  horario: string | null;
+  logo_url: string | null;
+  anuncio_barra: string | null;
+  instagram_url: string | null;
+  tiktok_url: string | null;
+  facebook_url: string | null;
   libro_reclamaciones_activo: boolean;
 }
 
@@ -29,14 +29,14 @@ export type ConfigUpdate = Partial<ConfigInsert>;
 // ─── banners ──────────────────────────────────────────────────────────────────
 
 export interface BannerRow {
-  id:         string;
+  id: string;
   imagen_url: string;
-  titulo:     string | null;
-  subtexto:   string | null;
-  cta_texto:  string | null;
-  cta_link:   string | null;
-  orden:      number;
-  activo:     boolean;
+  titulo: string | null;
+  subtexto: string | null;
+  cta_texto: string | null;
+  cta_link: string | null;
+  orden: number;
+  activo: boolean;
   created_at: string;
 }
 
@@ -46,10 +46,10 @@ export type BannerUpdate = Partial<BannerInsert>;
 // ─── popup ────────────────────────────────────────────────────────────────────
 
 export interface PopupRow {
-  id:               string;
-  imagen_url:       string | null;
-  texto:            string | null;
-  activo:           boolean;
+  id: string;
+  imagen_url: string | null;
+  texto: string | null;
+  activo: boolean;
   fecha_expiracion: string | null; // date → string ISO
 }
 
@@ -59,13 +59,13 @@ export type PopupUpdate = Partial<PopupInsert>;
 // ─── categorias ───────────────────────────────────────────────────────────────
 
 export interface CategoriaRow {
-  id:         string;
-  nombre:     string;
-  slug:       string;
+  id: string;
+  nombre: string;
+  slug: string;
   imagen_url: string | null;
-  parent_id:  string | null;
-  orden:      number;
-  activo:     boolean;
+  parent_id: string | null;
+  orden: number;
+  activo: boolean;
 }
 
 export type CategoriaInsert = Omit<CategoriaRow, "id">;
@@ -81,16 +81,16 @@ export interface CategoriaConHijas extends CategoriaRow {
 export type ProductoTag = "novedad" | "mas_vendido" | "edicion_limitada" | "oferta";
 
 export interface ProductoRow {
-  id:           string;
-  nombre:       string;
-  precio:       number;
-  descripcion:  string | null;
-  imagenes:     string[];
+  id: string;
+  nombre: string;
+  precio: number;
+  descripcion: string | null;
+  imagenes: string[];
   categoria_id: string | null;
-  tags:         ProductoTag[];
-  activo:       boolean;
-  orden:        number;
-  created_at:   string;
+  tags: ProductoTag[];
+  activo: boolean;
+  orden: number;
+  created_at: string;
 }
 
 export type ProductoInsert = Omit<ProductoRow, "id" | "created_at">;
@@ -99,12 +99,12 @@ export type ProductoUpdate = Partial<ProductoInsert>;
 // ─── ocasiones_home ───────────────────────────────────────────────────────────
 
 export interface OcasionHomeRow {
-  id:           string;
-  nombre:       string;
-  icono:        string | null;
+  id: string;
+  nombre: string;
+  icono: string | null;
   categoria_id: string | null;
-  orden:        number;
-  activo:       boolean;
+  orden: number;
+  activo: boolean;
 }
 
 export type OcasionHomeInsert = Omit<OcasionHomeRow, "id">;
@@ -113,11 +113,11 @@ export type OcasionHomeUpdate = Partial<OcasionHomeInsert>;
 // ─── colecciones_home ─────────────────────────────────────────────────────────
 
 export interface ColeccionHomeRow {
-  id:               string;
-  categoria_id:     string | null;
+  id: string;
+  categoria_id: string | null;
   imagen_custom_url: string | null;
-  orden:            number;
-  activo:           boolean;
+  orden: number;
+  activo: boolean;
 }
 
 export type ColeccionHomeInsert = Omit<ColeccionHomeRow, "id">;
@@ -131,11 +131,11 @@ export interface ColeccionConCategoria extends ColeccionHomeRow {
 // ─── faqs ─────────────────────────────────────────────────────────────────────
 
 export interface FaqRow {
-  id:        string;
-  pregunta:  string;
+  id: string;
+  pregunta: string;
   respuesta: string;
-  orden:     number;
-  activo:    boolean;
+  orden: number;
+  activo: boolean;
 }
 
 export type FaqInsert = Omit<FaqRow, "id">;
@@ -144,10 +144,10 @@ export type FaqUpdate = Partial<FaqInsert>;
 // ─── distritos ────────────────────────────────────────────────────────────────
 
 export interface DistritoRow {
-  id:              string;
-  nombre:          string;
+  id: string;
+  nombre: string;
   precio_delivery: number;
-  activo:          boolean;
+  activo: boolean;
 }
 
 export type DistritoInsert = Omit<DistritoRow, "id">;
@@ -158,32 +158,32 @@ export type DistritoUpdate = Partial<DistritoInsert>;
 export type EstadoPedido = "pendiente" | "pagado" | "en_camino" | "entregado" | "cancelado";
 
 export interface PedidoProducto {
-  id:       string;
-  nombre:   string;
-  precio:   number;
+  id: string;
+  nombre: string;
+  precio: number;
   cantidad: number;
-  imagen:   string;
+  imagen: string;
 }
 
 export interface PedidoRow {
-  id:                 string;
-  numero:             string | null;
-  nombre_cliente:     string | null;
-  telefono:           string | null;
-  email:              string | null;
-  distrito_id:        string | null;
-  direccion:          string | null;
-  referencia:         string | null;
-  fecha_entrega:      string | null; // date → string ISO
-  hora_entrega:       string | null;
-  productos:          PedidoProducto[]; // jsonb
-  subtotal:           number | null;
-  delivery:           number | null;
-  total:              number | null;
-  estado:             EstadoPedido;
+  id: string;
+  numero: string | null;
+  nombre_cliente: string | null;
+  telefono: string | null;
+  email: string | null;
+  distrito_id: string | null;
+  direccion: string | null;
+  referencia: string | null;
+  fecha_entrega: string | null; // date → string ISO
+  hora_entrega: string | null;
+  productos: PedidoProducto[]; // jsonb
+  subtotal: number | null;
+  delivery: number | null;
+  total: number | null;
+  estado: EstadoPedido;
   izi_transaction_id: string | null;
-  notas:              string | null;
-  created_at:         string;
+  notas: string | null;
+  created_at: string;
 }
 
 export type PedidoInsert = Omit<PedidoRow, "id" | "izi_transaction_id" | "created_at"> & {
@@ -197,68 +197,68 @@ export interface Database {
   public: {
     Tables: {
       config: {
-        Row:           ConfigRow;
-        Insert:        ConfigInsert;
-        Update:        ConfigUpdate;
+        Row: ConfigRow;
+        Insert: ConfigInsert;
+        Update: ConfigUpdate;
         Relationships: [];
       };
       banners: {
-        Row:           BannerRow;
-        Insert:        BannerInsert;
-        Update:        BannerUpdate;
+        Row: BannerRow;
+        Insert: BannerInsert;
+        Update: BannerUpdate;
         Relationships: [];
       };
       popup: {
-        Row:           PopupRow;
-        Insert:        PopupInsert;
-        Update:        PopupUpdate;
+        Row: PopupRow;
+        Insert: PopupInsert;
+        Update: PopupUpdate;
         Relationships: [];
       };
       categorias: {
-        Row:           CategoriaRow;
-        Insert:        CategoriaInsert;
-        Update:        CategoriaUpdate;
+        Row: CategoriaRow;
+        Insert: CategoriaInsert;
+        Update: CategoriaUpdate;
         Relationships: [];
       };
       productos: {
-        Row:           ProductoRow;
-        Insert:        ProductoInsert;
-        Update:        ProductoUpdate;
+        Row: ProductoRow;
+        Insert: ProductoInsert;
+        Update: ProductoUpdate;
         Relationships: [];
       };
       ocasiones_home: {
-        Row:           OcasionHomeRow;
-        Insert:        OcasionHomeInsert;
-        Update:        OcasionHomeUpdate;
+        Row: OcasionHomeRow;
+        Insert: OcasionHomeInsert;
+        Update: OcasionHomeUpdate;
         Relationships: [];
       };
       colecciones_home: {
-        Row:           ColeccionHomeRow;
-        Insert:        ColeccionHomeInsert;
-        Update:        ColeccionHomeUpdate;
+        Row: ColeccionHomeRow;
+        Insert: ColeccionHomeInsert;
+        Update: ColeccionHomeUpdate;
         Relationships: [];
       };
       faqs: {
-        Row:           FaqRow;
-        Insert:        FaqInsert;
-        Update:        FaqUpdate;
+        Row: FaqRow;
+        Insert: FaqInsert;
+        Update: FaqUpdate;
         Relationships: [];
       };
       distritos: {
-        Row:           DistritoRow;
-        Insert:        DistritoInsert;
-        Update:        DistritoUpdate;
+        Row: DistritoRow;
+        Insert: DistritoInsert;
+        Update: DistritoUpdate;
         Relationships: [];
       };
       pedidos: {
-        Row:           PedidoRow;
-        Insert:        PedidoInsert;
-        Update:        PedidoUpdate;
+        Row: PedidoRow;
+        Insert: PedidoInsert;
+        Update: PedidoUpdate;
         Relationships: [];
       };
     };
-    Views:     {};
+    Views: {};
     Functions: {};
-    Enums:     {};
+    Enums: {};
   };
 }

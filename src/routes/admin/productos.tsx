@@ -1,8 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  Plus, Pencil, Trash2, ChevronUp, ChevronDown,
-  X, ImageOff, Loader2, ToggleLeft, ToggleRight, Upload,
+  Plus,
+  Pencil,
+  Trash2,
+  ChevronUp,
+  ChevronDown,
+  X,
+  ImageOff,
+  Loader2,
+  ToggleLeft,
+  ToggleRight,
+  Upload,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { ProductoRow, ProductoTag, CategoriaRow } from "@/types/database";
@@ -20,67 +29,67 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const BUCKET = "productos";
 
 const TAGS: { value: ProductoTag; label: string }[] = [
-  { value: "novedad",          label: "Novedad"          },
-  { value: "mas_vendido",      label: "Más vendido"      },
+  { value: "novedad", label: "Novedad" },
+  { value: "mas_vendido", label: "Más vendido" },
   { value: "edicion_limitada", label: "Edición limitada" },
-  { value: "oferta",           label: "Oferta"           },
+  { value: "oferta", label: "Oferta" },
 ];
 
 const TAG_COLORS: Record<ProductoTag, string> = {
-  novedad:          "bg-[#2C2420] text-white",
-  mas_vendido:      "bg-[#8A7A6E] text-white",
+  novedad: "bg-[#2C2420] text-white",
+  mas_vendido: "bg-[#8A7A6E] text-white",
   edicion_limitada: "bg-[#2C2420] text-white",
-  oferta:           "bg-[#C4956A] text-white",
+  oferta: "bg-[#C4956A] text-white",
 };
 
 const TAG_LABELS: Record<ProductoTag, string> = {
-  novedad:          "NUEVO",
-  mas_vendido:      "MAS VENDIDO",
+  novedad: "NUEVO",
+  mas_vendido: "MAS VENDIDO",
   edicion_limitada: "ED. LIMITADA",
-  oferta:           "OFERTA",
+  oferta: "OFERTA",
 };
 
 // --- Tipos internos ---
 
 type SortField = "nombre" | "precio";
-type SortDir   = "asc" | "desc";
+type SortDir = "asc" | "desc";
 
 interface FormState {
-  nombre:       string;
-  precio:       string;
-  descripcion:  string;
+  nombre: string;
+  precio: string;
+  descripcion: string;
   categoria_id: string;
-  tags:         ProductoTag[];
-  activo:       boolean;
-  imagenes:     string[];
+  tags: ProductoTag[];
+  activo: boolean;
+  imagenes: string[];
 }
 
 const EMPTY_FORM: FormState = {
-  nombre:       "",
-  precio:       "",
-  descripcion:  "",
+  nombre: "",
+  precio: "",
+  descripcion: "",
   categoria_id: "",
-  tags:         [],
-  activo:       true,
-  imagenes:     [],
+  tags: [],
+  activo: true,
+  imagenes: [],
 };
 
 // --- Helpers ---
 
 function buildFormFromProducto(p: ProductoRow): FormState {
   return {
-    nombre:       p.nombre,
-    precio:       String(p.precio),
-    descripcion:  p.descripcion ?? "",
+    nombre: p.nombre,
+    precio: String(p.precio),
+    descripcion: p.descripcion ?? "",
     categoria_id: p.categoria_id ?? "",
-    tags:         p.tags ?? [],
-    activo:       p.activo,
-    imagenes:     p.imagenes.slice(0, MAX_IMAGENES),
+    tags: p.tags ?? [],
+    activo: p.activo,
+    imagenes: p.imagenes.slice(0, MAX_IMAGENES),
   };
 }
 
 async function subirImagen(file: File): Promise<string> {
-  const ext  = file.name.split(".").pop() ?? "jpg";
+  const ext = file.name.split(".").pop() ?? "jpg";
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
   const { error: uploadError } = await supabase.storage
     .from(BUCKET)
@@ -107,13 +116,27 @@ function TableSkeleton() {
     <>
       {[1, 2, 3, 4, 5].map((n) => (
         <tr key={n} className="border-b border-[#E8DDD0] animate-pulse">
-          <td className="px-4 py-3"><div className="w-12 h-12 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-40 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-20 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-32 bg-[#F5EFE6] rounded" /></td>
-          <td className="px-4 py-3"><div className="h-5 w-16 bg-[#F5EFE6] rounded-full" /></td>
-          <td className="px-4 py-3"><div className="h-6 w-10 bg-[#F5EFE6] rounded-full" /></td>
-          <td className="px-4 py-3"><div className="h-4 w-20 bg-[#F5EFE6] rounded" /></td>
+          <td className="px-4 py-3">
+            <div className="w-12 h-12 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-40 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-20 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-32 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-5 w-16 bg-[#F5EFE6] rounded-full" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-6 w-10 bg-[#F5EFE6] rounded-full" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-20 bg-[#F5EFE6] rounded" />
+          </td>
         </tr>
       ))}
     </>
@@ -123,18 +146,18 @@ function TableSkeleton() {
 // --- Formulario ---
 
 interface ProductoFormProps {
-  initial:    FormState;
+  initial: FormState;
   categorias: CategoriaRow[];
-  saving:     boolean;
-  onClose:    () => void;
-  onSave:     (form: FormState) => Promise<void>;
-  titulo:     string;
+  saving: boolean;
+  onClose: () => void;
+  onSave: (form: FormState) => Promise<void>;
+  titulo: string;
 }
 
 function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: ProductoFormProps) {
-  const [form,        setForm]        = useState<FormState>(initial);
-  const [errors,      setErrors]      = useState<Partial<Record<keyof FormState, string>>>({});
-  const [uploading,   setUploading]   = useState<number | null>(null);
+  const [form, setForm] = useState<FormState>(initial);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [uploading, setUploading] = useState<number | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileRef0 = useRef<HTMLInputElement>(null);
   const fileRef1 = useRef<HTMLInputElement>(null);
@@ -148,9 +171,7 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
   function toggleTag(tag: ProductoTag) {
     setForm((prev) => ({
       ...prev,
-      tags: prev.tags.includes(tag)
-        ? prev.tags.filter((t) => t !== tag)
-        : [...prev.tags, tag],
+      tags: prev.tags.includes(tag) ? prev.tags.filter((t) => t !== tag) : [...prev.tags, tag],
     }));
   }
 
@@ -215,18 +236,19 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative bg-white w-full max-w-2xl max-h-[90vh] flex flex-col shadow-xl">
-
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#E8DDD0] flex-shrink-0">
           <h2 className="font-display text-2xl text-[#2C2420]">{titulo}</h2>
-          <button onClick={onClose} className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onClose}
+            className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             <X className="h-5 w-5" strokeWidth={1.5} />
           </button>
         </div>
 
         {/* Body */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
-
           {/* Nombre */}
           <div>
             <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
@@ -239,7 +261,9 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
               placeholder="Ej: Velvet Box Romantico"
               className="w-full h-10 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors"
             />
-            {errors.nombre && <p className="mt-1 font-body text-xs text-red-500">{errors.nombre}</p>}
+            {errors.nombre && (
+              <p className="mt-1 font-body text-xs text-red-500">{errors.nombre}</p>
+            )}
           </div>
 
           {/* Precio */}
@@ -256,7 +280,9 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
               placeholder="0.00"
               className="w-full h-10 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors"
             />
-            {errors.precio && <p className="mt-1 font-body text-xs text-red-500">{errors.precio}</p>}
+            {errors.precio && (
+              <p className="mt-1 font-body text-xs text-red-500">{errors.precio}</p>
+            )}
           </div>
 
           {/* Descripcion */}
@@ -285,10 +311,14 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
             >
               <option value="">Seleccionar categoria...</option>
               {categorias.map((cat) => (
-                <option key={cat.id} value={cat.id}>{cat.nombre}</option>
+                <option key={cat.id} value={cat.id}>
+                  {cat.nombre}
+                </option>
               ))}
             </select>
-            {errors.categoria_id && <p className="mt-1 font-body text-xs text-red-500">{errors.categoria_id}</p>}
+            {errors.categoria_id && (
+              <p className="mt-1 font-body text-xs text-red-500">{errors.categoria_id}</p>
+            )}
           </div>
 
           {/* Tags */}
@@ -318,11 +348,16 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
             <label className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
               Activo
             </label>
-            <button type="button" onClick={() => setField("activo", !form.activo)} className="transition-colors">
-              {form.activo
-                ? <ToggleRight className="h-7 w-7 text-[#C4956A]" strokeWidth={1.5} />
-                : <ToggleLeft  className="h-7 w-7 text-[#8A7A6E]" strokeWidth={1.5} />
-              }
+            <button
+              type="button"
+              onClick={() => setField("activo", !form.activo)}
+              className="transition-colors"
+            >
+              {form.activo ? (
+                <ToggleRight className="h-7 w-7 text-[#C4956A]" strokeWidth={1.5} />
+              ) : (
+                <ToggleLeft className="h-7 w-7 text-[#8A7A6E]" strokeWidth={1.5} />
+              )}
             </button>
           </div>
 
@@ -336,7 +371,11 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
                 <div key={idx}>
                   {url ? (
                     <div className="relative group aspect-square bg-[#F5EFE6] overflow-hidden">
-                      <img src={url} alt={`Imagen ${idx + 1}`} className="w-full h-full object-cover" />
+                      <img
+                        src={url}
+                        alt={`Imagen ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                         <button
                           type="button"
@@ -354,9 +393,14 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
                       )}
                     </div>
                   ) : (
-                    <label className={`flex flex-col items-center justify-center aspect-square border-2 border-dashed transition-colors ${imagenesFull ? "border-[#F0E8DE] bg-[#FDFAF6] opacity-40 cursor-not-allowed" : "border-[#E8DDD0] hover:border-[#C4956A] bg-[#FDFAF6] cursor-pointer"}`}>
+                    <label
+                      className={`flex flex-col items-center justify-center aspect-square border-2 border-dashed transition-colors ${imagenesFull ? "border-[#F0E8DE] bg-[#FDFAF6] opacity-40 cursor-not-allowed" : "border-[#E8DDD0] hover:border-[#C4956A] bg-[#FDFAF6] cursor-pointer"}`}
+                    >
                       {uploading === idx ? (
-                        <Loader2 className="h-6 w-6 text-[#C4956A] animate-spin" strokeWidth={1.5} />
+                        <Loader2
+                          className="h-6 w-6 text-[#C4956A] animate-spin"
+                          strokeWidth={1.5}
+                        />
                       ) : (
                         <>
                           <Upload className="h-5 w-5 text-[#8A7A6E] mb-1.5" strokeWidth={1.5} />
@@ -390,7 +434,6 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
               La primera imagen es la principal. Haz hover sobre una imagen para eliminarla.
             </p>
           </div>
-
         </form>
 
         {/* Footer */}
@@ -413,7 +456,6 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
             Guardar
           </button>
         </div>
-
       </div>
     </div>
   );
@@ -421,7 +463,11 @@ function ProductoForm({ initial, categorias, saving, onClose, onSave, titulo }: 
 
 // --- Confirmacion de eliminacion ---
 
-function ConfirmDelete({ nombre, onConfirm, onCancel }: {
+function ConfirmDelete({
+  nombre,
+  onConfirm,
+  onCancel,
+}: {
   nombre: string;
   onConfirm: () => void;
   onCancel: () => void;
@@ -432,13 +478,20 @@ function ConfirmDelete({ nombre, onConfirm, onCancel }: {
       <div className="relative bg-white w-full max-w-sm p-6 shadow-xl">
         <h3 className="font-display text-xl text-[#2C2420] mb-2">Eliminar producto?</h3>
         <p className="font-body text-sm text-[#8A7A6E] mb-6">
-          Vas a eliminar <strong className="text-[#2C2420]">"{nombre}"</strong>. Esta accion no se puede deshacer.
+          Vas a eliminar <strong className="text-[#2C2420]">"{nombre}"</strong>. Esta accion no se
+          puede deshacer.
         </p>
         <div className="flex gap-3 justify-end">
-          <button onClick={onCancel} className="h-10 px-5 font-body text-xs tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors">
+          <button
+            onClick={onCancel}
+            className="h-10 px-5 font-body text-xs tracking-widest uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+          >
             Cancelar
           </button>
-          <button onClick={onConfirm} className="h-10 px-5 bg-red-600 hover:bg-red-700 text-white font-body text-xs tracking-widest uppercase transition-colors">
+          <button
+            onClick={onConfirm}
+            className="h-10 px-5 bg-red-600 hover:bg-red-700 text-white font-body text-xs tracking-widest uppercase transition-colors"
+          >
             Eliminar
           </button>
         </div>
@@ -450,9 +503,17 @@ function ConfirmDelete({ nombre, onConfirm, onCancel }: {
 // --- Cabecera de columna ordenable ---
 
 function SortHeader({
-  label, field, current, dir, onClick,
+  label,
+  field,
+  current,
+  dir,
+  onClick,
 }: {
-  label: string; field: SortField; current: SortField; dir: SortDir; onClick: (f: SortField) => void;
+  label: string;
+  field: SortField;
+  current: SortField;
+  dir: SortDir;
+  onClick: (f: SortField) => void;
 }) {
   const active = current === field;
   return (
@@ -462,8 +523,12 @@ function SortHeader({
     >
       {label}
       <span className="flex flex-col">
-        <ChevronUp   className={`h-2.5 w-2.5 -mb-0.5 ${active && dir === "asc"  ? "text-[#C4956A]" : "text-[#E8DDD0] group-hover:text-[#8A7A6E]"}`} />
-        <ChevronDown className={`h-2.5 w-2.5 ${active && dir === "desc" ? "text-[#C4956A]" : "text-[#E8DDD0] group-hover:text-[#8A7A6E]"}`} />
+        <ChevronUp
+          className={`h-2.5 w-2.5 -mb-0.5 ${active && dir === "asc" ? "text-[#C4956A]" : "text-[#E8DDD0] group-hover:text-[#8A7A6E]"}`}
+        />
+        <ChevronDown
+          className={`h-2.5 w-2.5 ${active && dir === "desc" ? "text-[#C4956A]" : "text-[#E8DDD0] group-hover:text-[#8A7A6E]"}`}
+        />
       </span>
     </button>
   );
@@ -476,16 +541,16 @@ interface ProductoConCategoria extends ProductoRow {
 }
 
 function ProductosPage() {
-  const [productos,   setProductos]   = useState<ProductoConCategoria[]>([]);
-  const [categorias,  setCategorias]  = useState<CategoriaRow[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [sortField,   setSortField]   = useState<SortField>("nombre");
-  const [sortDir,     setSortDir]     = useState<SortDir>("asc");
-  const [showCreate,  setShowCreate]  = useState(false);
-  const [editando,    setEditando]    = useState<ProductoRow | null>(null);
-  const [eliminando,  setEliminando]  = useState<ProductoRow | null>(null);
-  const [saving,      setSaving]      = useState(false);
-  const [togglingId,  setTogglingId]  = useState<string | null>(null);
+  const [productos, setProductos] = useState<ProductoConCategoria[]>([]);
+  const [categorias, setCategorias] = useState<CategoriaRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [sortField, setSortField] = useState<SortField>("nombre");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
+  const [showCreate, setShowCreate] = useState(false);
+  const [editando, setEditando] = useState<ProductoRow | null>(null);
+  const [eliminando, setEliminando] = useState<ProductoRow | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const cargarDatos = useCallback(async () => {
     setLoading(true);
@@ -507,7 +572,9 @@ function ProductosPage() {
       const catMap = new Map(todasCats.map((c) => [c.id, c.nombre]));
       const mapped: ProductoConCategoria[] = (prods ?? []).map((p: ProductoRow) => ({
         ...p,
-        categoria_nombre: p.categoria_id ? (catMap.get(p.categoria_id) ?? "Sin categoria") : "Sin categoria",
+        categoria_nombre: p.categoria_id
+          ? (catMap.get(p.categoria_id) ?? "Sin categoria")
+          : "Sin categoria",
       }));
       setProductos(mapped);
     } catch (err) {
@@ -517,7 +584,9 @@ function ProductosPage() {
     }
   }, []);
 
-  useEffect(() => { cargarDatos(); }, [cargarDatos]);
+  useEffect(() => {
+    cargarDatos();
+  }, [cargarDatos]);
 
   function handleSort(field: SortField) {
     if (sortField === field) {
@@ -539,14 +608,14 @@ function ProductosPage() {
     setSaving(true);
     try {
       const { error } = await supabase.from("productos").insert({
-        nombre:       form.nombre.trim(),
-        precio:       parseFloat(form.precio),
-        descripcion:  form.descripcion.trim() || null,
+        nombre: form.nombre.trim(),
+        precio: parseFloat(form.precio),
+        descripcion: form.descripcion.trim() || null,
         categoria_id: form.categoria_id || null,
-        tags:         form.tags,
-        activo:       form.activo,
-        imagenes:     form.imagenes.filter(Boolean),
-        orden:        0,
+        tags: form.tags,
+        activo: form.activo,
+        imagenes: form.imagenes.filter(Boolean),
+        orden: 0,
       });
       if (error) throw error;
       setShowCreate(false);
@@ -565,13 +634,13 @@ function ProductosPage() {
       const { error } = await supabase
         .from("productos")
         .update({
-          nombre:       form.nombre.trim(),
-          precio:       parseFloat(form.precio),
-          descripcion:  form.descripcion.trim() || null,
+          nombre: form.nombre.trim(),
+          precio: parseFloat(form.precio),
+          descripcion: form.descripcion.trim() || null,
           categoria_id: form.categoria_id || null,
-          tags:         form.tags,
-          activo:       form.activo,
-          imagenes:     form.imagenes.filter(Boolean),
+          tags: form.tags,
+          activo: form.activo,
+          imagenes: form.imagenes.filter(Boolean),
         })
         .eq("id", editando.id);
       if (error) throw error;
@@ -605,7 +674,7 @@ function ProductosPage() {
         .eq("id", producto.id);
       if (error) throw error;
       setProductos((prev) =>
-        prev.map((p) => p.id === producto.id ? { ...p, activo: !p.activo } : p)
+        prev.map((p) => (p.id === producto.id ? { ...p, activo: !p.activo } : p)),
       );
     } catch (err) {
       console.error(err);
@@ -618,7 +687,6 @@ function ProductosPage() {
 
   return (
     <div className="p-8 md:p-10">
-
       {/* Encabezado */}
       <div className="flex items-end justify-between mb-8">
         <div>
@@ -647,22 +715,42 @@ function ProductosPage() {
             <tr className="border-b border-[#E8DDD0] bg-[#FDFAF6]">
               <th className="px-4 py-3 text-left w-16" />
               <th className="px-4 py-3 text-left">
-                <SortHeader label="Nombre" field="nombre" current={sortField} dir={sortDir} onClick={handleSort} />
+                <SortHeader
+                  label="Nombre"
+                  field="nombre"
+                  current={sortField}
+                  dir={sortDir}
+                  onClick={handleSort}
+                />
               </th>
               <th className="px-4 py-3 text-left">
-                <SortHeader label="Precio" field="precio" current={sortField} dir={sortDir} onClick={handleSort} />
+                <SortHeader
+                  label="Precio"
+                  field="precio"
+                  current={sortField}
+                  dir={sortDir}
+                  onClick={handleSort}
+                />
               </th>
               <th className="px-4 py-3 text-left">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Categoria</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Categoria
+                </span>
               </th>
               <th className="px-4 py-3 text-left">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Tags</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Tags
+                </span>
               </th>
               <th className="px-4 py-3 text-center">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Activo</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Activo
+                </span>
               </th>
               <th className="px-4 py-3 text-right">
-                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">Acciones</span>
+                <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Acciones
+                </span>
               </th>
             </tr>
           </thead>
@@ -677,8 +765,10 @@ function ProductosPage() {
               </tr>
             ) : (
               sorted.map((producto) => (
-                <tr key={producto.id} className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6] transition-colors">
-
+                <tr
+                  key={producto.id}
+                  className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6] transition-colors"
+                >
                   {/* Imagen */}
                   <td className="px-4 py-3">
                     <div className="w-12 h-12 bg-[#F5EFE6] overflow-hidden flex-shrink-0">
@@ -688,7 +778,9 @@ function ProductosPage() {
                           alt={producto.nombre}
                           className="w-full h-full object-cover"
                           loading="lazy"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = "none";
+                          }}
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
@@ -700,7 +792,9 @@ function ProductosPage() {
 
                   {/* Nombre */}
                   <td className="px-4 py-3">
-                    <p className="font-body text-sm text-[#2C2420] font-medium">{producto.nombre}</p>
+                    <p className="font-body text-sm text-[#2C2420] font-medium">
+                      {producto.nombre}
+                    </p>
                   </td>
 
                   {/* Precio */}
@@ -742,7 +836,10 @@ function ProductosPage() {
                       title={producto.activo ? "Desactivar" : "Activar"}
                     >
                       {togglingId === producto.id ? (
-                        <Loader2 className="h-6 w-6 text-[#C4956A] animate-spin mx-auto" strokeWidth={1.5} />
+                        <Loader2
+                          className="h-6 w-6 text-[#C4956A] animate-spin mx-auto"
+                          strokeWidth={1.5}
+                        />
                       ) : producto.activo ? (
                         <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
                       ) : (
@@ -770,7 +867,6 @@ function ProductosPage() {
                       </button>
                     </div>
                   </td>
-
                 </tr>
               ))
             )}
@@ -806,7 +902,6 @@ function ProductosPage() {
           onCancel={() => setEliminando(null)}
         />
       )}
-
     </div>
   );
 }
