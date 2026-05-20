@@ -30,6 +30,41 @@ export function Hero({ banners }: Props) {
     );
   }
 
+  // Caso de banner único: se muestra de forma nativa sin posicionamiento absoluto ni riesgos de recorte
+  if (banners.length === 1) {
+    const ban = banners[0];
+    const img = (
+      <img
+        src={ban.imagen_url}
+        alt={ban.titulo ?? "Banner Florería Miraflores"}
+        className="w-full h-auto block"
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = heroImg;
+        }}
+      />
+    );
+
+    return (
+      <section className="px-0 md:px-10 lg:px-16 md:mt-6 max-w-7xl mx-auto">
+        <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl shadow-sm">
+          {ban.cta_link ? (
+            <a
+              href={ban.cta_link}
+              className="block w-full h-auto"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {img}
+            </a>
+          ) : (
+            img
+          )}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="px-0 md:px-10 lg:px-16 md:mt-6 max-w-7xl mx-auto">
       <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl shadow-sm flex items-center">
@@ -55,8 +90,8 @@ export function Hero({ banners }: Props) {
           const img = (
             <img
               src={ban.imagen_url}
-              alt={ban.titulo ?? "Banner Floreria Miraflores"}
-              className="w-full h-full object-cover block transition-opacity duration-700"
+              alt={ban.titulo ?? "Banner Florería Miraflores"}
+              className="w-full h-full object-fill block transition-opacity duration-700"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = heroImg;
