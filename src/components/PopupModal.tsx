@@ -34,7 +34,7 @@ export function PopupModal({ popup }: Props) {
       onClick={() => setVisible(false)}
     >
       {/* Fondo oscuro */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" aria-hidden />
+      <div className="absolute inset-0 bg-black/60 animate-fade-in" aria-hidden />
 
       {/* Modal */}
       <div

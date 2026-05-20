@@ -55,7 +55,7 @@ export function Faq() {
     <section id="faq" className="px-5 md:px-10 lg:px-16 py-12 md:py-24 bg-[#F5EFE6]/40">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-          <div className="lg:col-span-5 sticky top-24">
+          <div className="lg:col-span-5">
             <p className="font-italic-serif text-[#C4956A] text-sm md:text-lg mb-2">
               — resolvemos sus dudas
             </p>
