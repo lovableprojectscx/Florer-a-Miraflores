@@ -29,7 +29,6 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 - `Novedades.tsx` — sección novedades con badges
 - `Occasions.tsx` — sección ocasiones con iconos
 - `ProductGrid.tsx` — grid reutilizable de cards de producto
-- `Faq.tsx` — accordion de preguntas frecuentes
 - `About.tsx` — sección marca con imagen + bullets
 - `Footer.tsx` — footer con redes y contacto
 - `WhatsappFab.tsx` — botón flotante de WhatsApp
@@ -150,7 +149,6 @@ Construir en este orden:
 /admin/productos               → Gestión de productos — FALTA
 /admin/colecciones-home        → Colecciones en home — FALTA
 /admin/ocasiones               → Ocasiones en home — FALTA
-/admin/faqs                    → Gestión de FAQs — FALTA
 /admin/distritos               → Distritos y delivery — FALTA
 /admin/pedidos                 → Lista de pedidos — FALTA
 /admin/config                  → Config general — FALTA
@@ -388,9 +386,6 @@ Ofertas                    slug: ofertas             ← sin subcategorías
 ### Marca (`About.tsx`)
 - Imagen + título + párrafo + bullets.
 
-### FAQ (`Faq.tsx`)
-- Accordion.
-
 ### Footer (`Footer.tsx`)
 - Logo, contacto, horario, redes, libro de reclamaciones.
 
@@ -519,17 +514,6 @@ CREATE TABLE colecciones_home (
 );
 ```
 
-### `faqs`
-```sql
-CREATE TABLE faqs (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  pregunta text NOT NULL,
-  respuesta text NOT NULL,
-  orden integer DEFAULT 0,
-  activo boolean DEFAULT true
-);
-```
-
 ### `distritos`
 ```sql
 CREATE TABLE distritos (
@@ -566,7 +550,7 @@ CREATE TABLE pedidos (
 ```
 
 ### RLS
-- Lectura pública: `config`, `banners`, `popup`, `categorias`, `productos`, `ocasiones_home`, `colecciones_home`, `faqs`, `distritos`.
+- Lectura pública: `config`, `banners`, `popup`, `categorias`, `productos`, `ocasiones_home`, `colecciones_home`, `distritos`.
 - Escritura solo admin: todas las tablas anteriores.
 - `pedidos`: INSERT público, SELECT/UPDATE solo admin.
 

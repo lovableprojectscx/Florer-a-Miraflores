@@ -6,7 +6,6 @@ import { CategoryShowcase } from "@/components/CategoryShowcase";
 import { Novedades } from "@/components/Novedades";
 import { Occasions } from "@/components/Occasions";
 import { About } from "@/components/About";
-import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { PopupModal } from "@/components/PopupModal";
@@ -88,7 +87,6 @@ function HomePage() {
         <Novedades productos={novedades} />
         <Occasions ocasiones={ocasiones} />
         <About />
-        <Faq />
       </main>
       <Footer config={config} />
       <WhatsappFab />

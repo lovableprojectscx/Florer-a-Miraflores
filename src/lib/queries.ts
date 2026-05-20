@@ -16,7 +16,6 @@ import type {
   ConfigRow,
   BannerRow,
   PopupRow,
-  FaqRow,
   DistritoRow,
   OcasionHomeRow,
   ColeccionConCategoria,

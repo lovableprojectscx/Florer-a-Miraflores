@@ -121,7 +121,7 @@ export function Header({ categorias }: Props) {
                 );
               })}
 
-              {[{ label: "Sobre nosotros", href: "/#about" }, { label: "Preguntas frecuentes", href: "/#faq" }].map(({ label, href }) => (
+              {[{ label: "Sobre nosotros", href: "/#about" }].map(({ label, href }) => (
                 <a key={label} href={href} onClick={close} className="block px-5 py-4 font-display text-foreground text-lg border-b border-border/60">
                   {label}
                 </a>
