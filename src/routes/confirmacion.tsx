@@ -49,13 +49,14 @@ function ConfirmacionPage() {
   const { numero, email } = Route.useSearch();
   const { categorias, config } = Route.useLoaderData();
 
+  const whatsapp = config?.whatsapp ?? "+51 999 600 482";
   const whatsappMsg = encodeURIComponent(`Hola, mi pedido es ${numero}`);
-  const whatsappUrl = `https://wa.me/51999600482?text=${whatsappMsg}`;
+  const whatsappUrl = `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${whatsappMsg}`;
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
       <AnnouncementBar config={config} />
-      <Header categorias={categorias} />
+      <Header categorias={categorias} config={config} />
 
       <main className="max-w-2xl mx-auto px-5 md:px-10 py-16 md:py-24 text-center">
         {/* Ícono de check */}
@@ -113,7 +114,7 @@ function ConfirmacionPage() {
       </main>
 
       <Footer config={config} />
-      <WhatsappFab />
+      <WhatsappFab config={config} />
     </div>
   );
 }

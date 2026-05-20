@@ -82,7 +82,7 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {config?.anuncio_barra && <AnnouncementBar config={config} />}
-      <Header categorias={categorias} />
+      <Header categorias={categorias} config={config} />
       <main>
         <Hero banners={banners} config={config} />
         <CategoryShowcase colecciones={colecciones} />
@@ -92,7 +92,7 @@ function HomePage() {
         <Faq />
       </main>
       <Footer config={config} />
-      <WhatsappFab />
+      <WhatsappFab config={config} />
       {popup && <PopupModal popup={popup} />}
     </div>
   );

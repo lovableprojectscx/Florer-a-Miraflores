@@ -117,13 +117,15 @@ export function Footer({ config }: Props) {
         <p className="font-body font-light text-xs text-muted-foreground">
           &copy; {new Date().getFullYear()} Floreria Miraflores. Todos los derechos reservados.
         </p>
-        <Link
-          to="/libro-de-reclamaciones"
-          className="flex items-center gap-2 font-body font-light text-xs text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} />
-          Libro de Reclamaciones
-        </Link>
+        {config?.libro_reclamaciones_activo !== false && (
+          <Link
+            to="/libro-de-reclamaciones"
+            className="flex items-center gap-2 font-body font-light text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} />
+            Libro de Reclamaciones
+          </Link>
+        )}
       </div>
     </footer>
   );

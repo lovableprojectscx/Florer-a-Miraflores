@@ -17,6 +17,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as AdminReclamacionesRouteImport } from './routes/admin/reclamaciones'
 import { Route as AdminProductosRouteImport } from './routes/admin/productos'
 import { Route as AdminPopupRouteImport } from './routes/admin/popup'
 import { Route as AdminPedidosRouteImport } from './routes/admin/pedidos'
@@ -68,6 +69,11 @@ const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
   id: '/categoria/$slug',
   path: '/categoria/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminReclamacionesRoute = AdminReclamacionesRouteImport.update({
+  id: '/reclamaciones',
+  path: '/reclamaciones',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminProductosRoute = AdminProductosRouteImport.update({
   id: '/productos',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/admin/pedidos': typeof AdminPedidosRoute
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
+  '/admin/reclamaciones': typeof AdminReclamacionesRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/admin/pedidos': typeof AdminPedidosRoute
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
+  '/admin/reclamaciones': typeof AdminReclamacionesRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/admin/pedidos': typeof AdminPedidosRoute
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
+  '/admin/reclamaciones': typeof AdminReclamacionesRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos'
     | '/admin/popup'
     | '/admin/productos'
+    | '/admin/reclamaciones'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/categoria/$slug/$sub'
@@ -229,6 +239,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos'
     | '/admin/popup'
     | '/admin/productos'
+    | '/admin/reclamaciones'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/categoria/$slug/$sub'
@@ -250,6 +261,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos'
     | '/admin/popup'
     | '/admin/productos'
+    | '/admin/reclamaciones'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/categoria/$slug/$sub'
@@ -323,6 +335,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/categoria/$slug'
       preLoaderRoute: typeof CategoriaSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/reclamaciones': {
+      id: '/admin/reclamaciones'
+      path: '/reclamaciones'
+      fullPath: '/admin/reclamaciones'
+      preLoaderRoute: typeof AdminReclamacionesRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/productos': {
       id: '/admin/productos'
@@ -415,6 +434,7 @@ interface AdminRouteChildren {
   AdminPedidosRoute: typeof AdminPedidosRoute
   AdminPopupRoute: typeof AdminPopupRoute
   AdminProductosRoute: typeof AdminProductosRoute
+  AdminReclamacionesRoute: typeof AdminReclamacionesRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -428,6 +448,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPedidosRoute: AdminPedidosRoute,
   AdminPopupRoute: AdminPopupRoute,
   AdminProductosRoute: AdminProductosRoute,
+  AdminReclamacionesRoute: AdminReclamacionesRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

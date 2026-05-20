@@ -129,7 +129,7 @@ function ProductPage() {
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
       <AnnouncementBar config={config} />
-      <Header categorias={categorias} />
+      <Header categorias={categorias} config={config} />
 
       <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-8 md:py-14">
         {/* Breadcrumb */}
@@ -319,7 +319,7 @@ function ProductPage() {
       </main>
 
       <Footer config={config} />
-      <WhatsappFab />
+      <WhatsappFab config={config} />
     </div>
   );
 }

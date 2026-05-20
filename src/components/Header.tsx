@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Search, ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { useCartStore } from "@/store/cart";
-import type { CategoriaRow } from "@/types/database";
+import type { CategoriaRow, ConfigRow } from "@/types/database";
 
 interface Props {
   categorias: CategoriaRow[];
+  config?: ConfigRow | null;
 }
 
 function WhatsappIcon({ className = "h-5 w-5" }: { className?: string }) {
@@ -16,7 +17,7 @@ function WhatsappIcon({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
-export function Header({ categorias }: Props) {
+export function Header({ categorias, config }: Props) {
   const [open, setOpen] = useState(false);
   const [openCat, setOpenCat] = useState<string | null>(null);
   const close = () => {
@@ -63,7 +64,7 @@ export function Header({ categorias }: Props) {
 
         <div className="flex items-center justify-end gap-1">
           <a
-            href="https://wa.me/51999600482"
+            href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
             aria-label="WhatsApp"
             className="p-2 hover:opacity-60 transition-opacity"
             target="_blank"

@@ -55,7 +55,7 @@ function CategoriaPage() {
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
       <AnnouncementBar config={config} />
-      <Header categorias={categorias} />
+      <Header categorias={categorias} config={config} />
 
       <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-10 md:py-16">
         <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-6 flex items-center gap-1.5">
@@ -112,7 +112,7 @@ function CategoriaPage() {
               Estamos preparando la colección. Mientras tanto, consulta por WhatsApp.
             </p>
             <a
-              href="https://wa.me/51999600482"
+              href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-block h-12 px-8 bg-[#2C2420] text-white text-[11px] tracking-widest uppercase font-body font-light leading-[3rem]"
@@ -144,7 +144,7 @@ function CategoriaPage() {
       </main>
 
       <Footer config={config} />
-      <WhatsappFab />
+      <WhatsappFab config={config} />
     </div>
   );
 }

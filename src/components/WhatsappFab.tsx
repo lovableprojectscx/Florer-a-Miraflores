@@ -1,7 +1,14 @@
-export function WhatsappFab() {
+import type { ConfigRow } from "@/types/database";
+
+interface Props {
+  config?: ConfigRow | null;
+}
+
+export function WhatsappFab({ config }: Props) {
+  const whatsapp = config?.whatsapp ?? "+51 999 600 482";
   return (
     <a
-      href="https://wa.me/51999999999"
+      href={`https://wa.me/${whatsapp.replace(/\D/g, "")}`}
       target="_blank"
       rel="noopener"
       aria-label="Chatea por WhatsApp"

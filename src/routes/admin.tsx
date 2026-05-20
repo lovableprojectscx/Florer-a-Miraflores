@@ -40,6 +40,7 @@ const NAV_ITEMS = [
   { to: "/admin/ocasiones", label: "Ocasiones Home", icon: Heart },
   { to: "/admin/distritos", label: "Distritos", icon: MapPin },
   { to: "/admin/pedidos", label: "Pedidos", icon: ShoppingBag },
+  { to: "/admin/reclamaciones", label: "Reclamaciones", icon: HelpCircle },
   { to: "/admin/config", label: "Configuracion", icon: Settings },
 ] as const;
 
