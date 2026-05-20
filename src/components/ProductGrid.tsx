@@ -45,7 +45,7 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
           const badge = firstTag ? BADGE_MAP[firstTag] : null;
 
           return (
-            <article key={p.id} className="group flex flex-col">
+            <article key={p.id} className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0">
               <Link to="/producto/$id" params={{ id: p.id }} className="block">
                 <div className="relative overflow-hidden bg-[#F5EFE6]" style={{ aspectRatio: "1/1" }}>
                   {badge && (
@@ -122,7 +122,7 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-6 md:gap-y-10">
         {defaultProducts.map((p) => (
-          <article key={p.name} className="group flex flex-col">
+          <article key={p.name} className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0">
             <div className="relative overflow-hidden bg-ivory-soft" style={{ aspectRatio: "1/1" }}>
               <img
                 src={p.img}
