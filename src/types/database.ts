@@ -128,6 +128,22 @@ export interface ColeccionConCategoria extends ColeccionHomeRow {
   categoria: Pick<CategoriaRow, "id" | "nombre" | "slug" | "imagen_url"> | null;
 }
 
+// ─── tags ─────────────────────────────────────────────────────────────────────
+
+export interface TagRow {
+  id: string;
+  clave: string;           // 'novedad', 'mas_vendido', etc.
+  nombre: string;          // 'Lanzamientos especiales'
+  descripcion: string | null;
+  color_badge: string;     // color HEX del badge en la card
+  orden: number;
+  activo: boolean;
+  mostrar_en_home: boolean;
+}
+
+export type TagInsert = Omit<TagRow, "id">;
+export type TagUpdate = Partial<TagInsert>;
+
 // ─── faqs ─────────────────────────────────────────────────────────────────────
 
 export interface FaqRow {
@@ -236,6 +252,12 @@ export interface Database {
         Row: ColeccionHomeRow;
         Insert: ColeccionHomeInsert;
         Update: ColeccionHomeUpdate;
+        Relationships: [];
+      };
+      tags: {
+        Row: TagRow;
+        Insert: TagInsert;
+        Update: TagUpdate;
         Relationships: [];
       };
       faqs: {

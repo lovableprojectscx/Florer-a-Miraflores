@@ -17,6 +17,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as AdminTagsRouteImport } from './routes/admin/tags'
 import { Route as AdminReclamacionesRouteImport } from './routes/admin/reclamaciones'
 import { Route as AdminProductosRouteImport } from './routes/admin/productos'
 import { Route as AdminPopupRouteImport } from './routes/admin/popup'
@@ -69,6 +70,11 @@ const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
   id: '/categoria/$slug',
   path: '/categoria/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTagsRoute = AdminTagsRouteImport.update({
+  id: '/tags',
+  path: '/tags',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminReclamacionesRoute = AdminReclamacionesRouteImport.update({
   id: '/reclamaciones',
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/admin/popup'
     | '/admin/productos'
     | '/admin/reclamaciones'
+    | '/admin/tags'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/categoria/$slug/$sub'
@@ -240,6 +250,7 @@ export interface FileRouteTypes {
     | '/admin/popup'
     | '/admin/productos'
     | '/admin/reclamaciones'
+    | '/admin/tags'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/categoria/$slug/$sub'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/admin/popup'
     | '/admin/productos'
     | '/admin/reclamaciones'
+    | '/admin/tags'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/categoria/$slug/$sub'
@@ -335,6 +347,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/categoria/$slug'
       preLoaderRoute: typeof CategoriaSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/tags': {
+      id: '/admin/tags'
+      path: '/tags'
+      fullPath: '/admin/tags'
+      preLoaderRoute: typeof AdminTagsRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/reclamaciones': {
       id: '/admin/reclamaciones'
@@ -435,6 +454,7 @@ interface AdminRouteChildren {
   AdminPopupRoute: typeof AdminPopupRoute
   AdminProductosRoute: typeof AdminProductosRoute
   AdminReclamacionesRoute: typeof AdminReclamacionesRoute
+  AdminTagsRoute: typeof AdminTagsRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -449,6 +469,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPopupRoute: AdminPopupRoute,
   AdminProductosRoute: AdminProductosRoute,
   AdminReclamacionesRoute: AdminReclamacionesRoute,
+  AdminTagsRoute: AdminTagsRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

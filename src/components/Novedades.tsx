@@ -1,19 +1,33 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { useCartStore } from "@/store/cart";
-import type { ProductoRow } from "@/types/database";
+import type { ProductoRow, TagRow } from "@/types/database";
 
 import pampas from "@/assets/product-novedad-pampas.jpg";
 import velvet from "@/assets/product-novedad-velvet.jpg";
 import aurora from "@/assets/product-novedad-aurora.jpg";
 
-const FALLBACK = [
+// ─── Fallback cuando no hay datos en Supabase ────────────────────────────────
+
+const FALLBACK_TAG: TagRow = {
+  id: "fallback",
+  clave: "novedad",
+  nombre: "Lanzamientos especiales",
+  descripcion: "Nuestras creaciones más recientes, elaboradas con las flores de la temporada.",
+  color_badge: "#2C2420",
+  orden: 1,
+  activo: true,
+  mostrar_en_home: true,
+};
+
+const FALLBACK_PRODUCTOS: ProductoRow[] = [
   {
     id: "aurora",
     nombre: "Aurora",
-    descripcion: "Rosas durazno y ranunculos crema",
+    descripcion: "Rosas durazno y ranúnculos crema",
     precio: 165,
     imagenes: [aurora],
-    tags: ["novedad"] as const,
+    tags: ["novedad"],
     categoria_id: null,
     activo: true,
     orden: 0,
@@ -25,7 +39,7 @@ const FALLBACK = [
     descripcion: "Caja redonda con rosas rojas terciopelo",
     precio: 220,
     imagenes: [velvet],
-    tags: ["edicion_limitada"] as const,
+    tags: ["edicion_limitada"],
     categoria_id: null,
     activo: true,
     orden: 1,
@@ -34,10 +48,10 @@ const FALLBACK = [
   {
     id: "pampas-sculpt",
     nombre: "Pampas Sculpt",
-    descripcion: "Pampas, palma seca y orquideas blancas",
+    descripcion: "Pampas, palma seca y orquídeas blancas",
     precio: 280,
     imagenes: [pampas],
-    tags: ["novedad"] as const,
+    tags: ["novedad"],
     categoria_id: null,
     activo: true,
     orden: 2,
@@ -45,92 +59,185 @@ const FALLBACK = [
   },
 ];
 
-const BADGE_MAP: Record<string, string> = {
-  novedad: "Nuevo",
-  edicion_limitada: "Edicion limitada",
-  oferta: "Oferta",
-  mas_vendido: "Mas vendido",
-};
+// ─── Tipos ────────────────────────────────────────────────────────────────────
 
-interface Props {
+export interface TagSeccion {
+  tag: TagRow;
   productos: ProductoRow[];
 }
 
-export function Novedades({ productos }: Props) {
+interface Props {
+  tagSecciones: TagSeccion[];
+}
+
+// ─── Subcomponente: Card de producto ─────────────────────────────────────────
+
+function ProductCard({
+  producto,
+  badgeLabel,
+  badgeColor,
+}: {
+  producto: ProductoRow;
+  badgeLabel: string;
+  badgeColor: string;
+}) {
   const { agregarItem, abrirCarrito } = useCartStore();
-  const items = productos.length > 0 ? productos : (FALLBACK as unknown as ProductoRow[]);
+  const imgSrc = producto.imagenes?.[0] ?? "";
 
   return (
-    <section id="novedades" className="px-5 md:px-10 lg:px-16 py-12 md:py-28 bg-ivory-soft/60">
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-3xl">
-          <p className="font-italic-serif text-rose-accent text-sm md:text-lg mb-1 md:mb-2">
-            -- lanzamientos especiales
+    <article className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0">
+      <Link to="/producto/$id" params={{ id: producto.id }} className="block">
+        <div className="relative overflow-hidden bg-ivory" style={{ aspectRatio: "3/4" }}>
+          {/* Badge del tag */}
+          <span
+            className="absolute top-3 left-3 z-10 text-white text-[9px] tracking-[0.18em] uppercase font-body font-light px-3 py-1.5 leading-none"
+            style={{ backgroundColor: badgeColor }}
+          >
+            {badgeLabel}
+          </span>
+
+          <img
+            src={imgSrc}
+            alt={producto.nombre}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.04]"
+          />
+        </div>
+
+        <div className="mt-4 flex-1 flex flex-col">
+          <p className="font-display text-foreground text-lg md:text-2xl leading-tight">
+            {producto.nombre}
           </p>
-          <h2 className="font-display text-foreground text-3xl md:text-5xl lg:text-6xl leading-tight">
-            Nuestras novedades favoritas.
-          </h2>
+          {producto.descripcion && (
+            <p className="mt-1 font-body font-light text-foreground/60 text-sm line-clamp-2">
+              {producto.descripcion}
+            </p>
+          )}
+          <p className="mt-2 font-body font-medium text-foreground text-sm">
+            S/ {producto.precio.toFixed(2)}
+          </p>
         </div>
+      </Link>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-8 md:gap-y-14 mt-8 md:mt-20">
-          {items.map((p) => {
-            const firstTag = p.tags?.[0];
-            const badgeLabel = firstTag ? BADGE_MAP[firstTag] : null;
-            const imgSrc = p.imagenes?.[0] ?? "";
+      <button
+        onClick={() => {
+          agregarItem({
+            id: producto.id,
+            nombre: producto.nombre,
+            precio: producto.precio,
+            imagen: producto.imagenes?.[0] ?? "",
+            cantidad: 1,
+          });
+          abrirCarrito();
+        }}
+        className="mt-3 w-full h-10 border border-foreground text-foreground font-body text-[10px] tracking-widest uppercase hover:bg-foreground hover:text-background transition-colors duration-200"
+      >
+        Agregar al carrito
+      </button>
+    </article>
+  );
+}
 
-            return (
-              <article
-                key={p.id}
-                className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0"
+// ─── Subcomponente: Sección de un tag ────────────────────────────────────────
+
+function TagSection({ tag, productos }: TagSeccion) {
+  const hayMas = productos.length > 4;
+  const visibles = productos.slice(0, 4);
+
+  return (
+    <section
+      id={`tag-${tag.clave}`}
+      className="px-5 md:px-10 lg:px-16 py-14 md:py-24"
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Encabezado */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-16">
+          <div className="max-w-2xl">
+            {/* Indicador del tag */}
+            <div className="flex items-center gap-2 mb-3">
+              <span
+                className="inline-block w-2 h-2 rounded-full"
+                style={{ backgroundColor: tag.color_badge }}
+              />
+              <span
+                className="font-body text-[10px] tracking-[0.22em] uppercase font-medium"
+                style={{ color: tag.color_badge }}
               >
-                <Link to="/producto/$id" params={{ id: p.id }} className="block">
-                  <div className="relative overflow-hidden bg-ivory" style={{ aspectRatio: "1/1" }}>
-                    {badgeLabel && (
-                      <span className="absolute top-4 left-4 z-10 bg-foreground text-primary-foreground text-[10px] tracking-widest uppercase font-body font-light px-3 py-1">
-                        {badgeLabel}
-                      </span>
-                    )}
-                    <img
-                      src={imgSrc}
-                      alt={p.nombre}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
-                    />
-                  </div>
-                  <div className="mt-4 flex-1 flex flex-col">
-                    <p className="font-display text-foreground text-lg md:text-2xl leading-tight">
-                      {p.nombre}
-                    </p>
-                    {p.descripcion && (
-                      <p className="mt-1 font-body font-light text-foreground/60 text-sm line-clamp-2">
-                        {p.descripcion}
-                      </p>
-                    )}
-                    <p className="mt-2 font-body font-medium text-foreground text-sm">
-                      S/ {p.precio.toFixed(2)}
-                    </p>
-                  </div>
-                </Link>
-                <button
-                  onClick={() => {
-                    agregarItem({
-                      id: p.id,
-                      nombre: p.nombre,
-                      precio: p.precio,
-                      imagen: p.imagenes?.[0] ?? "",
-                      cantidad: 1,
-                    });
-                    abrirCarrito();
-                  }}
-                  className="mt-3 w-full h-10 border border-foreground text-foreground font-body text-[10px] tracking-widest uppercase hover:bg-foreground hover:text-background transition-colors"
-                >
-                  Agregar al carrito
-                </button>
-              </article>
-            );
-          })}
+                {tag.clave.replace(/_/g, " ")}
+              </span>
+            </div>
+
+            <h2 className="font-display text-foreground text-3xl md:text-5xl leading-tight">
+              {tag.nombre}
+            </h2>
+
+            {tag.descripcion && (
+              <p className="mt-3 font-body font-light text-foreground/60 text-sm md:text-base leading-relaxed max-w-lg">
+                {tag.descripcion}
+              </p>
+            )}
+          </div>
+
+          {/* Botón "Ver todos" — solo desktop, si hay más de 4 */}
+          {hayMas && (
+            <Link
+              to="/"
+              className="hidden md:inline-flex items-center gap-2 font-body text-xs tracking-widest uppercase text-foreground/60 hover:text-foreground border-b border-foreground/20 hover:border-foreground/60 pb-0.5 transition-colors group flex-shrink-0"
+            >
+              Ver todos
+              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          )}
         </div>
+
+        {/* Grid de productos */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-10 md:gap-y-16">
+          {visibles.map((p) => (
+            <ProductCard
+              key={p.id}
+              producto={p}
+              badgeLabel={tag.nombre}
+              badgeColor={tag.color_badge}
+            />
+          ))}
+        </div>
+
+        {/* Botón "Ver todos" — solo mobile, si hay más de 4 */}
+        {hayMas && (
+          <div className="mt-10 flex justify-center md:hidden">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 px-8 py-3 border border-foreground/30 text-foreground font-body text-[10px] tracking-widest uppercase hover:bg-foreground hover:text-background transition-colors"
+            >
+              Ver todos los {tag.nombre.toLowerCase()}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
+  );
+}
+
+// ─── Componente principal ─────────────────────────────────────────────────────
+
+export function Novedades({ tagSecciones }: Props) {
+  // Si no hay datos de Supabase, usar el fallback editorial
+  const secciones: TagSeccion[] =
+    tagSecciones.length > 0
+      ? tagSecciones
+      : [{ tag: FALLBACK_TAG, productos: FALLBACK_PRODUCTOS }];
+
+  // Filtrar secciones sin productos para no mostrar bloques vacíos
+  const seccionesConProductos = secciones.filter((s) => s.productos.length > 0);
+
+  if (seccionesConProductos.length === 0) return null;
+
+  return (
+    <div id="novedades" className="bg-ivory-soft/40 divide-y divide-[#E8DDD0]">
+      {seccionesConProductos.map((seccion) => (
+        <TagSection key={seccion.tag.id} tag={seccion.tag} productos={seccion.productos} />
+      ))}
+    </div>
   );
 }

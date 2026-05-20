@@ -22,6 +22,7 @@ import type {
   PedidoInsert,
   PedidoRow,
   PedidoProducto,
+  TagRow,
 } from "@/types/database";
 
 // ─── Helper interno ───────────────────────────────────────────────────────────
@@ -209,6 +210,42 @@ export async function getOcasiones(): Promise<OcasionHomeRow[]> {
     .select("*")
     .eq("activo", true)
     .order("orden", { ascending: true });
+
+  return throwOnError(data, error);
+}
+
+// ─── Tags del home ─────────────────────────────────────────────────────────────────
+
+/**
+ * Devuelve todos los tags activos que se muestran en el home,
+ * ordenados por `orden` ascendente.
+ */
+export async function getTags(): Promise<TagRow[]> {
+  const { data, error } = await supabase
+    .from("tags")
+    .select("*")
+    .eq("activo", true)
+    .eq("mostrar_en_home", true)
+    .order("orden", { ascending: true });
+
+  return throwOnError(data, error);
+}
+
+/**
+ * Devuelve hasta `limit` productos activos que contienen la `clave` del tag
+ * en su array `tags[]`. Pide limit+1 para detectar si hay más.
+ */
+export async function getProductosPorTag(
+  clave: string,
+  limit = 5,
+): Promise<ProductoRow[]> {
+  const { data, error } = await supabase
+    .from("productos")
+    .select("*")
+    .eq("activo", true)
+    .contains("tags", [clave])
+    .order("orden", { ascending: true })
+    .limit(limit);
 
   return throwOnError(data, error);
 }

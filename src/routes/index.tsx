@@ -10,6 +10,7 @@ import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { PopupModal } from "@/components/PopupModal";
+import type { TagSeccion } from "@/components/Novedades";
 
 import {
   getCategorias,
@@ -17,42 +18,36 @@ import {
   getColecciones,
   getOcasiones,
   getBanners,
-  getProductosPorCategoria,
   getPopup,
+  getTags,
+  getProductosPorTag,
 } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     // Fetch paralelo — todos los datos del home en una sola ronda
-    const [categorias, config, colecciones, ocasiones, banners, popup] = await Promise.all([
+    const [categorias, config, colecciones, ocasiones, banners, popup, tags] = await Promise.all([
       getCategorias(),
       getConfig().catch(() => null),
       getColecciones().catch(() => []),
       getOcasiones().catch(() => []),
       getBanners().catch(() => []),
       getPopup().catch(() => null),
+      getTags().catch(() => []),
     ]);
 
-    // Productos con tag novedad: consultamos las categorías raíz (sin parent)
-    // y traemos sus productos, luego filtramos por tag
-    let novedades: Awaited<ReturnType<typeof getProductosPorCategoria>> = [];
-    try {
-      // Obtenemos IDs de todas las categorías (padres e hijas)
-      const catIds = categorias.map((c) => c.id);
-      // Traemos productos de todas las categorías en paralelo y aplanamos
-      const todosLosProductos = (
-        await Promise.all(catIds.map((id) => getProductosPorCategoria(id).catch(() => [])))
-      ).flat();
-
-      // Filtramos por tags novedad o edicion_limitada, máx 6
-      novedades = todosLosProductos
-        .filter((p) => p.tags?.includes("novedad") || p.tags?.includes("edicion_limitada"))
-        .slice(0, 6);
-    } catch {
-      novedades = [];
+    // Para cada tag activo, cargar sus productos en paralelo (máx 5: 4 visibles + 1 para saber si hay más)
+    const tagSecciones: TagSeccion[] = [];
+    if (tags.length > 0) {
+      const resultados = await Promise.all(
+        tags.map((tag) => getProductosPorTag(tag.clave, 5).catch(() => [])),
+      );
+      tags.forEach((tag, i) => {
+        tagSecciones.push({ tag, productos: resultados[i] });
+      });
     }
 
-    return { categorias, config, colecciones, ocasiones, banners, novedades, popup };
+    return { categorias, config, colecciones, ocasiones, banners, popup, tagSecciones };
   },
 
   head: () => ({
@@ -76,7 +71,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { categorias, config, colecciones, ocasiones, banners, novedades, popup } =
+  const { categorias, config, colecciones, ocasiones, banners, popup, tagSecciones } =
     Route.useLoaderData();
 
   return (
@@ -86,7 +81,7 @@ function HomePage() {
       <main>
         <Hero banners={banners} config={config} />
         <CategoryShowcase colecciones={colecciones} />
-        <Novedades productos={novedades} />
+        <Novedades tagSecciones={tagSecciones} />
         <Occasions ocasiones={ocasiones} />
         <About />
         <Faq />
