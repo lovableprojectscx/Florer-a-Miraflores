@@ -19,11 +19,11 @@ export function Hero({ banners }: Props) {
   if (banners.length === 0) {
     return (
       <section className="px-0 md:px-10 lg:px-16 md:mt-6 max-w-7xl mx-auto">
-        <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl shadow-sm">
+        <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] shadow-sm">
           <img
             src={heroImg}
             alt="Arreglo floral de portada"
-            className="w-full h-auto block"
+            className="w-full h-full object-cover object-center block"
           />
         </div>
       </section>
@@ -32,18 +32,12 @@ export function Hero({ banners }: Props) {
 
   return (
     <section className="px-0 md:px-10 lg:px-16 md:mt-6 max-w-7xl mx-auto">
-      <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl shadow-sm flex items-center">
-        {/* Usamos el primer banner como placeholder invisible para darle la altura correcta al contenedor basado en el ratio real de la imagen */}
-        <img
-          src={banners[0]?.imagen_url || heroImg}
-          className="w-full h-auto opacity-0 block pointer-events-none"
-          alt="placeholder"
-        />
+      <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] shadow-sm">
         {banners.map((ban, idx) => {
           const isActive = idx === activeIndex;
           const style = {
             opacity: isActive ? 1 : 0,
-            position: "absolute" as const,
+            position: isActive ? ("relative" as const) : ("absolute" as const),
             top: 0 as const,
             left: 0 as const,
             width: "100%",
@@ -56,7 +50,7 @@ export function Hero({ banners }: Props) {
             <img
               src={ban.imagen_url}
               alt={ban.titulo ?? "Banner Floreria Miraflores"}
-              className="w-full h-full object-cover block transition-opacity duration-700"
+              className="w-full h-full object-cover object-center block transition-opacity duration-700"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = heroImg;
@@ -69,7 +63,7 @@ export function Hero({ banners }: Props) {
               <a
                 key={ban.id}
                 href={ban.cta_link}
-                className="block transition-opacity duration-700"
+                className="block w-full h-full transition-opacity duration-700"
                 style={style}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -80,7 +74,7 @@ export function Hero({ banners }: Props) {
           }
 
           return (
-            <div key={ban.id} className="transition-opacity duration-700" style={style}>
+            <div key={ban.id} className="w-full h-full transition-opacity duration-700" style={style}>
               {img}
             </div>
           );
