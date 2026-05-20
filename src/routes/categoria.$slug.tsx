@@ -3,7 +3,8 @@ import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
-import { getCategoriaPorSlug, getCategorias, getConfig } from "@/lib/queries";
+import { ProductGrid } from "@/components/ProductGrid";
+import { getCategoriaPorSlug, getCategorias, getConfig, getProductosPorCategoria } from "@/lib/queries";
 import type { CategoriaRow } from "@/types/database";
 
 export const Route = createFileRoute("/categoria/$slug")({
@@ -14,7 +15,14 @@ export const Route = createFileRoute("/categoria/$slug")({
       getConfig().catch(() => null),
     ]);
     if (!cat) throw notFound();
-    return { cat, categorias, config };
+
+    // Si la categoría no tiene subcategorías, cargamos sus productos directamente
+    let productos = [];
+    if (cat.hijas.length === 0) {
+      productos = await getProductosPorCategoria(cat.id).catch(() => []);
+    }
+
+    return { cat, categorias, config, productos };
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -45,7 +53,7 @@ export const Route = createFileRoute("/categoria/$slug")({
 });
 
 function CategoriaPage() {
-  const { cat, categorias, config } = Route.useLoaderData();
+  const { cat, categorias, config, productos } = Route.useLoaderData();
   const matches = useMatches();
   const hasChild = matches.some((m) => m.routeId === "/categoria/$slug/$sub");
   if (hasChild) return <Outlet />;
@@ -54,7 +62,7 @@ function CategoriaPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
-      <AnnouncementBar config={config} />
+      {config && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
 
       <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-10 md:py-16">
@@ -104,6 +112,10 @@ function CategoriaPage() {
                 </Link>
               ))}
             </div>
+          </section>
+        ) : productos && productos.length > 0 ? (
+          <section>
+            <ProductGrid products={productos} />
           </section>
         ) : (
           <section className="border border-[#E8DDD0] p-8 md:p-12 bg-[#F5EFE6]/40 text-center">
