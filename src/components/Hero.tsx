@@ -18,8 +18,8 @@ export function Hero({ banners }: Props) {
 
   if (banners.length === 0) {
     return (
-      <section className="px-0 md:px-10 lg:px-16 md:mt-6 max-w-7xl mx-auto">
-        <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl shadow-sm">
+      <section className="w-full">
+        <div className="relative w-full overflow-hidden bg-[#FDFAF6]">
           <img
             src={heroImg}
             alt="Arreglo floral de portada"
@@ -46,8 +46,8 @@ export function Hero({ banners }: Props) {
     );
 
     return (
-      <section className="px-0 md:px-10 lg:px-16 md:mt-6 max-w-7xl mx-auto">
-        <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl shadow-sm">
+      <section className="w-full">
+        <div className="relative w-full overflow-hidden bg-[#FDFAF6]">
           {ban.cta_link ? (
             <a
               href={ban.cta_link}
@@ -66,8 +66,8 @@ export function Hero({ banners }: Props) {
   }
 
   return (
-    <section className="px-0 md:px-10 lg:px-16 md:mt-6 max-w-7xl mx-auto">
-      <div className="relative w-full overflow-hidden bg-[#FDFAF6] rounded-none md:rounded-2xl shadow-sm flex items-center">
+    <section className="w-full">
+      <div className="relative w-full overflow-hidden bg-[#FDFAF6] flex items-center">
         {/* Usamos el primer banner como placeholder invisible para darle la altura correcta al contenedor basado en el ratio real de la imagen */}
         <img
           src={banners[0]?.imagen_url || heroImg}
