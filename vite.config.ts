@@ -21,16 +21,12 @@ export default defineConfig({
               if (id.includes("recharts") || id.includes("d3") || id.includes("react-resize-detector")) {
                 return "vendor-charts";
               }
-              if (id.includes("@supabase") || id.includes("websocket")) {
-                return "vendor-supabase";
-              }
               if (id.includes("lucide-react")) {
                 return "vendor-lucide";
               }
-              if (id.includes("@radix-ui")) {
-                return "vendor-radix";
+              if (id.includes("@supabase/supabase-js") || id.includes("@supabase/postgrest-js") || id.includes("@supabase/gotrue-js") || id.includes("@supabase/storage-js") || id.includes("@supabase/functions-js")) {
+                return "vendor-supabase";
               }
-              return "vendor";
             }
           },
         },
