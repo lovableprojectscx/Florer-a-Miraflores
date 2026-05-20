@@ -16,7 +16,6 @@ import {
   getConfig,
   getColecciones,
   getOcasiones,
-  getFaqs,
   getBanners,
   getProductosPorCategoria,
   getPopup,
@@ -25,13 +24,12 @@ import {
 export const Route = createFileRoute("/")({
   loader: async () => {
     // Fetch paralelo — todos los datos del home en una sola ronda
-    const [categorias, config, colecciones, ocasiones, faqs, banners, popup] =
+    const [categorias, config, colecciones, ocasiones, banners, popup] =
       await Promise.all([
         getCategorias(),
         getConfig().catch(() => null),
         getColecciones().catch(() => []),
         getOcasiones().catch(() => []),
-        getFaqs().catch(() => []),
         getBanners().catch(() => []),
         getPopup().catch(() => null),
       ]);
@@ -58,7 +56,7 @@ export const Route = createFileRoute("/")({
       novedades = [];
     }
 
-    return { categorias, config, colecciones, ocasiones, faqs, banners, novedades, popup };
+    return { categorias, config, colecciones, ocasiones, banners, novedades, popup };
   },
 
   head: () => ({
@@ -78,7 +76,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { categorias, config, colecciones, ocasiones, faqs, banners, novedades, popup } = Route.useLoaderData();
+  const { categorias, config, colecciones, ocasiones, banners, novedades, popup } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-background">
@@ -90,7 +88,7 @@ function HomePage() {
         <Novedades productos={novedades} />
         <Occasions ocasiones={ocasiones} />
         <About />
-        <Faq faqs={faqs} />
+        <Faq />
       </main>
       <Footer config={config} />
       <WhatsappFab />

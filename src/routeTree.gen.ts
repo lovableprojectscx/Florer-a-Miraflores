@@ -21,7 +21,6 @@ import { Route as AdminProductosRouteImport } from './routes/admin/productos'
 import { Route as AdminPopupRouteImport } from './routes/admin/popup'
 import { Route as AdminPedidosRouteImport } from './routes/admin/pedidos'
 import { Route as AdminOcasionesRouteImport } from './routes/admin/ocasiones'
-import { Route as AdminFaqsRouteImport } from './routes/admin/faqs'
 import { Route as AdminDistritosRouteImport } from './routes/admin/distritos'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminConfigRouteImport } from './routes/admin/config'
@@ -90,11 +89,6 @@ const AdminOcasionesRoute = AdminOcasionesRouteImport.update({
   path: '/ocasiones',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminFaqsRoute = AdminFaqsRouteImport.update({
-  id: '/faqs',
-  path: '/faqs',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminDistritosRoute = AdminDistritosRouteImport.update({
   id: '/distritos',
   path: '/distritos',
@@ -144,7 +138,6 @@ export interface FileRoutesByFullPath {
   '/admin/config': typeof AdminConfigRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/distritos': typeof AdminDistritosRoute
-  '/admin/faqs': typeof AdminFaqsRoute
   '/admin/ocasiones': typeof AdminOcasionesRoute
   '/admin/pedidos': typeof AdminPedidosRoute
   '/admin/popup': typeof AdminPopupRoute
@@ -166,7 +159,6 @@ export interface FileRoutesByTo {
   '/admin/config': typeof AdminConfigRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/distritos': typeof AdminDistritosRoute
-  '/admin/faqs': typeof AdminFaqsRoute
   '/admin/ocasiones': typeof AdminOcasionesRoute
   '/admin/pedidos': typeof AdminPedidosRoute
   '/admin/popup': typeof AdminPopupRoute
@@ -189,7 +181,6 @@ export interface FileRoutesById {
   '/admin/config': typeof AdminConfigRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/distritos': typeof AdminDistritosRoute
-  '/admin/faqs': typeof AdminFaqsRoute
   '/admin/ocasiones': typeof AdminOcasionesRoute
   '/admin/pedidos': typeof AdminPedidosRoute
   '/admin/popup': typeof AdminPopupRoute
@@ -213,7 +204,6 @@ export interface FileRouteTypes {
     | '/admin/config'
     | '/admin/dashboard'
     | '/admin/distritos'
-    | '/admin/faqs'
     | '/admin/ocasiones'
     | '/admin/pedidos'
     | '/admin/popup'
@@ -235,7 +225,6 @@ export interface FileRouteTypes {
     | '/admin/config'
     | '/admin/dashboard'
     | '/admin/distritos'
-    | '/admin/faqs'
     | '/admin/ocasiones'
     | '/admin/pedidos'
     | '/admin/popup'
@@ -257,7 +246,6 @@ export interface FileRouteTypes {
     | '/admin/config'
     | '/admin/dashboard'
     | '/admin/distritos'
-    | '/admin/faqs'
     | '/admin/ocasiones'
     | '/admin/pedidos'
     | '/admin/popup'
@@ -364,13 +352,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminOcasionesRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/faqs': {
-      id: '/admin/faqs'
-      path: '/faqs'
-      fullPath: '/admin/faqs'
-      preLoaderRoute: typeof AdminFaqsRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/distritos': {
       id: '/admin/distritos'
       path: '/distritos'
@@ -430,7 +411,6 @@ interface AdminRouteChildren {
   AdminConfigRoute: typeof AdminConfigRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDistritosRoute: typeof AdminDistritosRoute
-  AdminFaqsRoute: typeof AdminFaqsRoute
   AdminOcasionesRoute: typeof AdminOcasionesRoute
   AdminPedidosRoute: typeof AdminPedidosRoute
   AdminPopupRoute: typeof AdminPopupRoute
@@ -444,7 +424,6 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConfigRoute: AdminConfigRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDistritosRoute: AdminDistritosRoute,
-  AdminFaqsRoute: AdminFaqsRoute,
   AdminOcasionesRoute: AdminOcasionesRoute,
   AdminPedidosRoute: AdminPedidosRoute,
   AdminPopupRoute: AdminPopupRoute,

@@ -186,21 +186,6 @@ export async function getPopup(): Promise<PopupRow | null> {
   return data;
 }
 
-// ─── FAQs ─────────────────────────────────────────────────────────────────────
-
-/**
- * Devuelve todas las FAQs activas ordenadas por `orden`.
- */
-export async function getFaqs(): Promise<FaqRow[]> {
-  const { data, error } = await supabase
-    .from("faqs")
-    .select("*")
-    .eq("activo", true)
-    .order("orden", { ascending: true });
-
-  return throwOnError(data, error);
-}
-
 // ─── Distritos ────────────────────────────────────────────────────────────────
 
 /**

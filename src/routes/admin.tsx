@@ -28,7 +28,6 @@ const NAV_ITEMS = [
   { to: "/admin/popup",            label: "Popup",            icon: Megaphone },
   { to: "/admin/colecciones-home", label: "Colecciones Home", icon: LayoutGrid },
   { to: "/admin/ocasiones",        label: "Ocasiones Home",   icon: Heart },
-  { to: "/admin/faqs",             label: "FAQs",             icon: HelpCircle },
   { to: "/admin/distritos",        label: "Distritos",        icon: MapPin },
   { to: "/admin/pedidos",          label: "Pedidos",          icon: ShoppingBag },
   { to: "/admin/config",           label: "Configuracion",    icon: Settings },
