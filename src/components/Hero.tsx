@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import heroImg from "@/assets/hero-flowers.jpg";
 import type { BannerRow, ConfigRow } from "@/types/database";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Props {
   banners: BannerRow[];
@@ -9,12 +10,50 @@ interface Props {
 
 export function Hero({ banners }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (banners.length <= 1) return;
+    if (banners.length <= 1 || isHovered) return;
     const t = setInterval(() => setActiveIndex((n) => (n + 1) % banners.length), 5000);
     return () => clearInterval(t);
-  }, [banners.length]);
+  }, [banners.length, isHovered]);
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveIndex((n) => (n - 1 + banners.length) % banners.length);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveIndex((n) => (n + 1) % banners.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setActiveIndex((n) => (n + 1) % banners.length);
+    } else if (isRightSwipe) {
+      setActiveIndex((n) => (n - 1 + banners.length) % banners.length);
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
 
   if (banners.length === 0) {
     return (
@@ -30,7 +69,7 @@ export function Hero({ banners }: Props) {
     );
   }
 
-  // Caso de banner único: se muestra de forma nativa sin posicionamiento absoluto ni riesgos de recorte
+  // Caso de banner único: se muestra de forma nativa sin carrusel ni controles
   if (banners.length === 1) {
     const ban = banners[0];
     const img = (
@@ -66,32 +105,25 @@ export function Hero({ banners }: Props) {
   }
 
   return (
-    <section className="w-full">
-      <div className="relative w-full overflow-hidden bg-[#FDFAF6] flex items-center">
-        {/* Usamos el primer banner como placeholder invisible para darle la altura correcta al contenedor basado en el ratio real de la imagen */}
-        <img
-          src={banners[0]?.imagen_url || heroImg}
-          className="w-full h-auto opacity-0 block pointer-events-none"
-          alt="placeholder"
-        />
-        {banners.map((ban, idx) => {
-          const isActive = idx === activeIndex;
-          const style = {
-            opacity: isActive ? 1 : 0,
-            position: "absolute" as const,
-            top: 0 as const,
-            left: 0 as const,
-            width: "100%",
-            height: "100%",
-            zIndex: isActive ? 10 : 0,
-            pointerEvents: (isActive ? "auto" : "none") as React.CSSProperties["pointerEvents"],
-          };
-
+    <section 
+      className="w-full relative group overflow-hidden bg-[#FDFAF6]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Slider track (desplazamiento horizontal fluido) */}
+      <div 
+        className="flex transition-transform duration-700 ease-in-out w-full"
+        style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+      >
+        {banners.map((ban) => {
           const img = (
             <img
               src={ban.imagen_url}
               alt={ban.titulo ?? "Banner Florería Miraflores"}
-              className="w-full h-full object-fill block transition-opacity duration-700"
+              className="w-full h-auto block select-none pointer-events-none"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = heroImg;
@@ -99,25 +131,58 @@ export function Hero({ banners }: Props) {
             />
           );
 
-          if (ban.cta_link) {
-            return (
-              <a
-                key={ban.id}
-                href={ban.cta_link}
-                className="block transition-opacity duration-700"
-                style={style}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {img}
-              </a>
-            );
-          }
-
           return (
-            <div key={ban.id} className="transition-opacity duration-700" style={style}>
-              {img}
+            <div 
+              key={ban.id} 
+              className="w-full flex-shrink-0 relative select-none"
+            >
+              {ban.cta_link ? (
+                <a
+                  href={ban.cta_link}
+                  className="block w-full h-auto pointer-events-auto"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {img}
+                </a>
+              ) : (
+                img
+              )}
             </div>
+          );
+        })}
+      </div>
+
+      {/* Flechas de Navegación (Estilo premium y minimalista, ocultas en celular si no hay hover) */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-[#4A3E3D] hover:bg-white/40 active:scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 hidden md:flex shadow-sm cursor-pointer border border-white/30"
+        aria-label="Anterior banner"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+
+      <button
+        onClick={handleNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-[#4A3E3D] hover:bg-white/40 active:scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 hidden md:flex shadow-sm cursor-pointer border border-white/30"
+        aria-label="Siguiente banner"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+
+      {/* Puntos de Navegación (Dots indicativos abajo) */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {banners.map((_, idx) => {
+          const isActive = idx === activeIndex;
+          return (
+            <button
+              key={idx}
+              onClick={() => setActiveIndex(idx)}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                isActive ? "w-6 bg-white shadow-sm" : "w-2 bg-white/50 hover:bg-white/80"
+              }`}
+              aria-label={`Ir al banner ${idx + 1}`}
+            />
           );
         })}
       </div>
