@@ -22,7 +22,7 @@ const FAQS_PREDETERMINADAS: StaticFaq[] = [
     id: "2",
     pregunta: "¿Cuál es el costo y cobertura del delivery?",
     respuesta:
-      "Mantenemos una tarifa fija de S/ 10.00 para todos nuestros distritos de cobertura directa (Miraflores, Surco, Barranco, Lince y San Isidro). Cada arreglo es trasladado en vehículos especialmente acondicionados para preservar su frescura e integridad estructural durante todo el trayecto.",
+      "El costo del delivery varía según el distrito de destino en nuestra zona de cobertura (Miraflores, San Isidro, Surco, Barranco y Lince). El monto exacto se calcula automáticamente al seleccionar su distrito durante el proceso de compra (checkout). Cada uno de nuestros arreglos es trasladado en vehículos especialmente acondicionados para preservar su frescura e integridad estructural en todo momento.",
   },
   {
     id: "3",
