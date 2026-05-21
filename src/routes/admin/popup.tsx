@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Loader2, ToggleLeft, ToggleRight, Upload, X, Save, ImageOff } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { PopupRow } from "@/types/database";
+import { convertToWebP } from "@/lib/image-optimizer";
 
 export const Route = createFileRoute("/admin/popup")({
   head: () => ({ meta: [{ title: "Popup | Admin Florería Miraflores" }] }),
@@ -32,11 +33,18 @@ const EMPTY_FORM: FormState = {
 // --- Helpers de Storage ---
 
 async function subirImagen(file: File): Promise<string> {
-  const ext = file.name.split(".").pop() ?? "jpg";
+  let finalFile = file;
+  try {
+    finalFile = await convertToWebP(file);
+  } catch (err) {
+    console.error("Error al optimizar imagen a WebP:", err);
+  }
+
+  const ext = finalFile.name.split(".").pop() ?? "webp";
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
   const { error: uploadError } = await supabase.storage
     .from(BUCKET)
-    .upload(path, file, { cacheControl: "3600", upsert: false });
+    .upload(path, finalFile, { cacheControl: "31536000", contentType: finalFile.type, upsert: false });
 
   if (uploadError) throw new Error(`Upload: ${uploadError.message}`);
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);

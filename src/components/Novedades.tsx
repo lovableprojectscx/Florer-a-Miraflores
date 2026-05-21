@@ -3,9 +3,9 @@ import { ArrowRight } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import type { ProductoRow, TagRow } from "@/types/database";
 
-import pampas from "@/assets/product-novedad-pampas.jpg";
-import velvet from "@/assets/product-novedad-velvet.jpg";
-import aurora from "@/assets/product-novedad-aurora.jpg";
+import pampas from "@/assets/product-novedad-pampas.webp";
+import velvet from "@/assets/product-novedad-velvet.webp";
+import aurora from "@/assets/product-novedad-aurora.webp";
 
 // ─── Fallback cuando no hay datos en Supabase ────────────────────────────────
 

@@ -1,4 +1,4 @@
-import about from "@/assets/about-boutique.jpg";
+import about from "@/assets/about-boutique.webp";
 
 export function About() {
   return (

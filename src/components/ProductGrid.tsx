@@ -1,9 +1,9 @@
-import primavera from "@/assets/product-ramo-primavera.jpg";
-import especial from "@/assets/product-arreglo-especial.jpg";
-import romantico from "@/assets/product-box-romantico.jpg";
-import corona from "@/assets/product-corona.jpg";
-import tulipanes from "@/assets/product-tulipanes.jpg";
-import sorpresa from "@/assets/product-box-sorpresa.jpg";
+import primavera from "@/assets/product-ramo-primavera.webp";
+import especial from "@/assets/product-arreglo-especial.webp";
+import romantico from "@/assets/product-box-romantico.webp";
+import corona from "@/assets/product-corona.webp";
+import tulipanes from "@/assets/product-tulipanes.webp";
+import sorpresa from "@/assets/product-box-sorpresa.webp";
 import { Link } from "@tanstack/react-router";
 import { useCartStore } from "@/store/cart";
 import type { Product } from "@/data/catalog";

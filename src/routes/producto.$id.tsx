@@ -7,7 +7,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { ProductGrid } from "@/components/ProductGrid";
-import fallbackImg from "@/assets/product-box-romantico.jpg";
+import fallbackImg from "@/assets/product-box-romantico.webp";
 
 import {
   getProductoPorId,

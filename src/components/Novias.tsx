@@ -1,6 +1,6 @@
-import eterna from "@/assets/product-novia-eterna.jpg";
-import jardin from "@/assets/product-novia-jardin.jpg";
-import minimal from "@/assets/product-novia-minimal.jpg";
+import eterna from "@/assets/product-novia-eterna.webp";
+import jardin from "@/assets/product-novia-jardin.webp";
+import minimal from "@/assets/product-novia-minimal.webp";
 
 const bouquets = [
   { name: "Eterna", desc: "Peonías y rosas garden en marfil", price: "Desde S/. 480", img: eterna },

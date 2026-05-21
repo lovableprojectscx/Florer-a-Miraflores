@@ -1,24 +1,24 @@
-import amor from "@/assets/product-box-romantico.jpg";
-import arreglos from "@/assets/product-arreglo-especial.jpg";
-import premium from "@/assets/product-novedad-velvet.jpg";
-import tulipanes from "@/assets/product-tulipanes.jpg";
-import primaverales from "@/assets/product-ramo-primavera.jpg";
-import defuncion from "@/assets/product-corona.jpg";
-import ofertas from "@/assets/product-box-sorpresa.jpg";
+import amor from "@/assets/product-box-romantico.webp";
+import arreglos from "@/assets/product-arreglo-especial.webp";
+import premium from "@/assets/product-novedad-velvet.webp";
+import tulipanes from "@/assets/product-tulipanes.webp";
+import primaverales from "@/assets/product-ramo-primavera.webp";
+import defuncion from "@/assets/product-corona.webp";
+import ofertas from "@/assets/product-box-sorpresa.webp";
 
 // Imports para productos individuales
-import imgVelvet from "@/assets/product-novedad-velvet.jpg";
-import imgAurora from "@/assets/product-novedad-aurora.jpg";
-import imgPampas from "@/assets/product-novedad-pampas.jpg";
-import imgRomantico from "@/assets/product-box-romantico.jpg";
-import imgSorpresa from "@/assets/product-box-sorpresa.jpg";
-import imgPrimavera from "@/assets/product-ramo-primavera.jpg";
-import imgArreglo from "@/assets/product-arreglo-especial.jpg";
-import imgTulipanes from "@/assets/product-tulipanes.jpg";
-import imgCorona from "@/assets/product-corona.jpg";
-import imgNoviaNoviaEterna from "@/assets/product-novia-eterna.jpg";
-import imgNoviaJardin from "@/assets/product-novia-jardin.jpg";
-import imgNoviaMinimal from "@/assets/product-novia-minimal.jpg";
+import imgVelvet from "@/assets/product-novedad-velvet.webp";
+import imgAurora from "@/assets/product-novedad-aurora.webp";
+import imgPampas from "@/assets/product-novedad-pampas.webp";
+import imgRomantico from "@/assets/product-box-romantico.webp";
+import imgSorpresa from "@/assets/product-box-sorpresa.webp";
+import imgPrimavera from "@/assets/product-ramo-primavera.webp";
+import imgArreglo from "@/assets/product-arreglo-especial.webp";
+import imgTulipanes from "@/assets/product-tulipanes.webp";
+import imgCorona from "@/assets/product-corona.webp";
+import imgNoviaNoviaEterna from "@/assets/product-novia-eterna.webp";
+import imgNoviaJardin from "@/assets/product-novia-jardin.webp";
+import imgNoviaMinimal from "@/assets/product-novia-minimal.webp";
 
 export type Subcategory = { slug: string; name: string };
 export type Category = {

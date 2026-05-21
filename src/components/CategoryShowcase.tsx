@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import type { ColeccionConCategoria } from "@/types/database";
 
-import amor from "@/assets/product-box-romantico.jpg";
-import cumple from "@/assets/product-arreglo-especial.jpg";
-import nacimiento from "@/assets/product-novedad-aurora.jpg";
-import tulipanes from "@/assets/product-tulipanes.jpg";
-import rosas from "@/assets/product-novedad-velvet.jpg";
+import amor from "@/assets/product-box-romantico.webp";
+import cumple from "@/assets/product-arreglo-especial.webp";
+import nacimiento from "@/assets/product-novedad-aurora.webp";
+import tulipanes from "@/assets/product-tulipanes.webp";
+import rosas from "@/assets/product-novedad-velvet.webp";
 
 const FALLBACK_IMGS = [amor, cumple, nacimiento, tulipanes, rosas];
 

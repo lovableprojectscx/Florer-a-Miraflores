@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import heroImg from "@/assets/hero-flowers.jpg";
+import heroImg from "@/assets/hero-flowers.webp";
 import type { BannerRow } from "@/types/database";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
