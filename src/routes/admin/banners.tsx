@@ -574,7 +574,7 @@ function BannersPage() {
       )}
 
       {/* Tabla */}
-      <div className="bg-white border border-[#E8DDD0] overflow-x-auto">
+      <div className="hidden md:block bg-white border border-[#E8DDD0] overflow-x-auto">
         <table className="w-full min-w-[800px]">
           <thead>
             <tr className="border-b border-[#E8DDD0] bg-[#FDFAF6]">
@@ -734,6 +734,131 @@ function BannersPage() {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Vista Móvil (Tarjetas) */}
+      <div className="md:hidden mt-4 space-y-4">
+        {loading ? (
+          [1, 2, 3].map((n) => (
+            <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3">
+              <div className="aspect-[21/9] bg-[#F5EFE6] rounded" />
+              <div className="h-4 bg-[#F5EFE6] rounded w-3/4" />
+              <div className="h-3 bg-[#F5EFE6] rounded w-1/2" />
+            </div>
+          ))
+        ) : banners.length === 0 ? (
+          <div className="bg-white border border-[#E8DDD0] p-8 text-center font-body text-sm text-[#8A7A6E] rounded-lg">
+            No hay banners cargados. Agrega uno con el botón superior.
+          </div>
+        ) : (
+          banners.map((ban, idx) => {
+            const isFirst = idx === 0;
+            const isLast = idx === banners.length - 1;
+
+            return (
+              <div key={ban.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
+                {/* Imagen Preview */}
+                <div className="w-full aspect-[21/9] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]/50 rounded-sm">
+                  {ban.imagen_url ? (
+                    <img
+                      src={ban.imagen_url}
+                      alt="Banner Preview"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <ImageOff className="h-5 w-5 text-[#E8DDD0]" strokeWidth={1.5} />
+                    </div>
+                  )}
+                </div>
+
+                {/* Contenido */}
+                <div>
+                  <h3 className="font-body text-sm font-semibold text-[#2C2420]">
+                    {ban.titulo ?? <span className="font-normal italic text-[#8A7A6E]">Sin título</span>}
+                  </h3>
+                  {ban.subtexto && (
+                    <p className="font-body text-xs text-[#8A7A6E] mt-1 line-clamp-2">
+                      {ban.subtexto}
+                    </p>
+                  )}
+                  {ban.cta_texto && (
+                    <div className="mt-2 flex items-center gap-2 flex-wrap">
+                      <span className="inline-flex px-2 py-0.5 font-body text-[10px] tracking-widest uppercase border border-[#2C2420]/30 text-[#2C2420] bg-[#FDFAF6]">
+                        {ban.cta_texto}
+                      </span>
+                      {ban.cta_link && (
+                        <span className="flex items-center gap-1 font-body text-[10px] text-[#C4956A]">
+                          <LinkIcon className="h-3 w-3" />
+                          {ban.cta_link}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Controles de prioridad, estado y acciones */}
+                <div className="flex items-center justify-between border-t border-[#F5EFE6] pt-3 mt-1 flex-wrap gap-2">
+                  <div className="flex items-center gap-3">
+                    {/* Reordenar */}
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleReorder(ban, "up")}
+                        disabled={isFirst}
+                        className="p-1 border border-[#E8DDD0] hover:border-[#C4956A] hover:bg-white text-[#8A7A6E] disabled:opacity-30 disabled:hover:border-[#E8DDD0] transition-colors"
+                      >
+                        <ChevronUp className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={() => handleReorder(ban, "down")}
+                        disabled={isLast}
+                        className="p-1 border border-[#E8DDD0] hover:border-[#C4956A] hover:bg-white text-[#8A7A6E] disabled:opacity-30 disabled:hover:border-[#E8DDD0] transition-colors"
+                      >
+                        <ChevronDown className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+
+                    {/* Activo Toggle */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-body text-xs text-[#8A7A6E]">Activo:</span>
+                      <button
+                        onClick={() => handleToggleActivo(ban)}
+                        disabled={togglingId === ban.id}
+                        className="transition-colors disabled:opacity-50"
+                      >
+                        {togglingId === ban.id ? (
+                          <Loader2 className="h-5 w-5 text-[#C4956A] animate-spin" strokeWidth={1.5} />
+                        ) : ban.activo ? (
+                          <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
+                        ) : (
+                          <ToggleLeft className="h-6 w-6 text-[#8A7A6E]" strokeWidth={1.5} />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setEditando(ban)}
+                      className="flex items-center gap-1 px-2.5 py-1 border border-[#E8DDD0] hover:border-[#C4956A] font-body text-xs text-[#8A7A6E] hover:text-[#C4956A] transition-colors rounded"
+                    >
+                      <Pencil className="h-3.5 w-3.5" strokeWidth={1.5} />
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => setEliminando(ban)}
+                      className="flex items-center gap-1 px-2.5 py-1 border border-red-100 hover:border-red-500 font-body text-xs text-red-400 hover:text-red-500 transition-colors rounded"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" strokeWidth={1.5} />
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
       {/* Modales */}

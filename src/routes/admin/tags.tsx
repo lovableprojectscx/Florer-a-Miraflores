@@ -392,7 +392,6 @@ function AdminTags() {
                 >
                   <Pencil className="h-4 w-4" strokeWidth={1.5} />
                 </button>
-                {!CLAVES_SISTEMA.includes(tag.clave as never) && (
                   <button
                     onClick={() => setDeleteConfirm(tag.id)}
                     className="p-2 text-[#8A7A6E] hover:text-red-500 transition-colors"
@@ -400,7 +399,6 @@ function AdminTags() {
                   >
                     <Trash2 className="h-4 w-4" strokeWidth={1.5} />
                   </button>
-                )}
               </div>
             </div>
           ))}

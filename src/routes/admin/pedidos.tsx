@@ -429,8 +429,8 @@ function PedidosPage() {
           </div>
         )}
 
-        {/* Tabla */}
-        <div className="bg-white border border-[#E8DDD0] overflow-x-auto">
+        {/* Tabla (Escritorio) */}
+        <div className="hidden md:block bg-white border border-[#E8DDD0] overflow-x-auto">
           <table className="w-full border-collapse min-w-[850px]">
             <thead>
               <tr className="border-b border-[#E8DDD0] bg-[#F5EFE6]">
@@ -509,6 +509,68 @@ function PedidosPage() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Vista Móvil (Tarjetas) */}
+        <div className="md:hidden space-y-4">
+          {loading ? (
+            [1, 2, 3].map((n) => (
+              <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3">
+                <div className="flex justify-between">
+                  <div className="h-4 bg-[#F5EFE6] rounded w-24" />
+                  <div className="h-5 bg-[#F5EFE6] rounded-full w-16" />
+                </div>
+                <div className="h-4 bg-[#F5EFE6] rounded w-1/2" />
+                <div className="h-4 bg-[#F5EFE6] rounded w-1/3" />
+              </div>
+            ))
+          ) : filtrados.length === 0 ? (
+            <div className="bg-white border border-[#E8DDD0] p-8 text-center font-body text-sm text-[#8A7A6E] rounded-lg">
+              {filtro === "todos"
+                ? "Aun no hay pedidos."
+                : `No hay pedidos con estado "${ESTADO_LABEL[filtro as EstadoPedido]}".`}
+            </div>
+          ) : (
+            filtrados.map((p) => (
+              <div key={p.id} className="bg-white border border-[#E8DDD0] p-4 rounded-lg flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-body text-sm text-[#2C2420] font-semibold">
+                    {p.numero ?? `#${p.id.slice(0, 8)}`}
+                  </span>
+                  <EstadoBadge estado={p.estado} />
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs font-body border-t border-[#F5EFE6] pt-3">
+                  <div>
+                    <span className="text-[#8A7A6E] block mb-0.5">Cliente:</span>
+                    <span className="text-[#2C2420] font-medium block truncate">{p.nombre_cliente ?? "-"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[#8A7A6E] block mb-0.5">Teléfono:</span>
+                    <span className="text-[#2C2420] block">{p.telefono ?? "-"}</span>
+                  </div>
+                  <div>
+                    <span className="text-[#8A7A6E] block mb-0.5">Entrega:</span>
+                    <span className="text-[#2C2420] block">{formatFecha(p.fecha_entrega)}</span>
+                  </div>
+                  <div>
+                    <span className="text-[#8A7A6E] block mb-0.5">Total:</span>
+                    <span className="text-[#2C2420] font-semibold block">
+                      {p.total != null ? `S/ ${Number(p.total).toFixed(2)}` : "-"}
+                    </span>
+                  </div>
+                </div>
+                <div className="border-t border-[#F5EFE6] pt-2.5 flex justify-end">
+                  <button
+                    onClick={() => setDetalle(p)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 border border-[#E8DDD0] hover:border-[#C4956A] font-body text-xs text-[#8A7A6E] hover:text-[#C4956A] transition-colors rounded w-full justify-center"
+                  >
+                    <Eye className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    Ver detalle
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 

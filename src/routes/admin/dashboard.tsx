@@ -203,24 +203,33 @@ function DashboardPage() {
         ) : (
           <div className="divide-y divide-[#E8DDD0]">
             {recientes.map((p) => (
-              <div key={p.id} className="px-6 py-4 flex items-center gap-4">
-                <p className="font-body text-sm text-[#2C2420] font-medium w-28 flex-shrink-0">
-                  {p.numero ?? `#${p.id.slice(0, 8)}`}
-                </p>
+              <div key={p.id} className="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                <div className="flex items-center justify-between sm:justify-start gap-4 sm:w-28 sm:flex-shrink-0">
+                  <p className="font-body text-sm text-[#2C2420] font-medium">
+                    {p.numero ?? `#${p.id.slice(0, 8)}`}
+                  </p>
+                  <span
+                    className={`inline-flex sm:hidden px-2 py-0.5 text-[9px] tracking-widest uppercase font-body font-medium rounded-full ${ESTADO_BADGE[p.estado] ?? "bg-gray-100 text-gray-600"}`}
+                  >
+                    {ESTADO_LABEL[p.estado] ?? p.estado}
+                  </span>
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-body text-sm text-[#2C2420] truncate">
                     {p.nombre_cliente ?? "-"}
                   </p>
-                  <p className="font-body text-xs text-[#8A7A6E]">{formatFecha(p.created_at)}</p>
+                  <p className="font-body text-xs text-[#8A7A6E] mt-0.5 sm:mt-0">{formatFecha(p.created_at)}</p>
                 </div>
-                <p className="font-body text-sm text-[#2C2420] font-medium flex-shrink-0">
-                  {p.total != null ? `S/ ${Number(p.total).toFixed(2)}` : "-"}
-                </p>
-                <span
-                  className={`inline-flex px-2.5 py-1 text-[10px] tracking-widest uppercase font-body font-medium rounded-full flex-shrink-0 ${ESTADO_BADGE[p.estado] ?? "bg-gray-100 text-gray-600"}`}
-                >
-                  {ESTADO_LABEL[p.estado] ?? p.estado}
-                </span>
+                <div className="flex items-center justify-between sm:justify-end gap-4 sm:flex-shrink-0">
+                  <p className="font-body text-sm text-[#2C2420] font-medium">
+                    {p.total != null ? `S/ ${Number(p.total).toFixed(2)}` : "-"}
+                  </p>
+                  <span
+                    className={`hidden sm:inline-flex px-2.5 py-1 text-[10px] tracking-widest uppercase font-body font-medium rounded-full ${ESTADO_BADGE[p.estado] ?? "bg-gray-100 text-gray-600"}`}
+                  >
+                    {ESTADO_LABEL[p.estado] ?? p.estado}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

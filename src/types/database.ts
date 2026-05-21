@@ -78,7 +78,7 @@ export interface CategoriaConHijas extends CategoriaRow {
 
 // ─── productos ────────────────────────────────────────────────────────────────
 
-export type ProductoTag = "novedad" | "mas_vendido" | "edicion_limitada" | "oferta";
+export type ProductoTag = string;
 
 export interface ProductoRow {
   id: string;

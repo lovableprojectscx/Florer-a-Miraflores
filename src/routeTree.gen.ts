@@ -15,6 +15,7 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as AdminLoginRouteImport } from './routes/admin-login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TagKeyRouteImport } from './routes/tag.$key'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as AdminTagsRouteImport } from './routes/admin/tags'
@@ -59,6 +60,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TagKeyRoute = TagKeyRouteImport.update({
+  id: '/tag/$key',
+  path: '/tag/$key',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductoIdRoute = ProductoIdRouteImport.update({
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/admin/tags': typeof AdminTagsRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
+  '/tag/$key': typeof TagKeyRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
 }
 export interface FileRoutesByTo {
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/admin/tags': typeof AdminTagsRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
+  '/tag/$key': typeof TagKeyRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
 }
 export interface FileRoutesById {
@@ -205,6 +213,7 @@ export interface FileRoutesById {
   '/admin/tags': typeof AdminTagsRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
+  '/tag/$key': typeof TagKeyRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
 }
 export interface FileRouteTypes {
@@ -230,6 +239,7 @@ export interface FileRouteTypes {
     | '/admin/tags'
     | '/categoria/$slug'
     | '/producto/$id'
+    | '/tag/$key'
     | '/categoria/$slug/$sub'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -253,6 +263,7 @@ export interface FileRouteTypes {
     | '/admin/tags'
     | '/categoria/$slug'
     | '/producto/$id'
+    | '/tag/$key'
     | '/categoria/$slug/$sub'
   id:
     | '__root__'
@@ -276,6 +287,7 @@ export interface FileRouteTypes {
     | '/admin/tags'
     | '/categoria/$slug'
     | '/producto/$id'
+    | '/tag/$key'
     | '/categoria/$slug/$sub'
   fileRoutesById: FileRoutesById
 }
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   LibroDeReclamacionesRoute: typeof LibroDeReclamacionesRoute
   CategoriaSlugRoute: typeof CategoriaSlugRouteWithChildren
   ProductoIdRoute: typeof ProductoIdRoute
+  TagKeyRoute: typeof TagKeyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -332,6 +345,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tag/$key': {
+      id: '/tag/$key'
+      path: '/tag/$key'
+      fullPath: '/tag/$key'
+      preLoaderRoute: typeof TagKeyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/producto/$id': {
@@ -495,6 +515,7 @@ const rootRouteChildren: RootRouteChildren = {
   LibroDeReclamacionesRoute: LibroDeReclamacionesRoute,
   CategoriaSlugRoute: CategoriaSlugRouteWithChildren,
   ProductoIdRoute: ProductoIdRoute,
+  TagKeyRoute: TagKeyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

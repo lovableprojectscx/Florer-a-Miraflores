@@ -80,9 +80,9 @@ function HomePage() {
       {config?.anuncio_barra && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
       <main>
-        <Hero banners={banners} config={config} />
-        <CategoryShowcase colecciones={colecciones} />
+        <Hero banners={banners} />
         <Novedades tagSecciones={tagSecciones} />
+        <CategoryShowcase colecciones={colecciones} />
         <Occasions ocasiones={ocasiones} />
         <About />
         <DeliveryZones />

@@ -16,7 +16,8 @@ import {
   getConfig,
 } from "@/lib/queries";
 import { useCartStore } from "@/store/cart";
-import type { CategoriaRow, ProductoRow } from "@/types/database";
+import type { CategoriaRow, ProductoRow, TagRow } from "@/types/database";
+import { supabase } from "@/lib/supabase";
 
 // ─── Badge helper ─────────────────────────────────────────────────────────────
 
@@ -31,10 +32,14 @@ const BADGE_MAP: Record<string, { label: string; className: string }> = {
 
 export const Route = createFileRoute("/producto/$id")({
   loader: async ({ params }) => {
-    const [product, categorias, config] = await Promise.all([
+    const [product, categorias, config, tags] = await Promise.all([
       getProductoPorId(params.id),
       getCategorias(),
       getConfig().catch(() => null),
+      supabase
+        .from("tags")
+        .select("*")
+        .then(({ data }: { data: any }) => (data ?? []) as TagRow[]),
     ]);
 
     if (!product) throw redirect({ to: "/" });
@@ -58,7 +63,7 @@ export const Route = createFileRoute("/producto/$id")({
       ? categorias.find((c: CategoriaRow) => c.id === subcat.parent_id)
       : null;
 
-    return { product, relacionados, categorias, config, subcat, parentCat };
+    return { product, relacionados, categorias, config, subcat, parentCat, tags };
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -93,7 +98,7 @@ export const Route = createFileRoute("/producto/$id")({
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 function ProductPage() {
-  const { product, relacionados, categorias, config, subcat, parentCat } = Route.useLoaderData();
+  const { product, relacionados, categorias, config, subcat, parentCat, tags } = Route.useLoaderData();
   const navigate = useNavigate();
   const { agregarItem, abrirCarrito } = useCartStore();
 
@@ -101,7 +106,10 @@ function ProductPage() {
   const [activeImg, setActiveImg] = useState(0);
 
   const firstTag = product.tags?.[0];
-  const badge = firstTag ? BADGE_MAP[firstTag] : null;
+  const tagObj = tags?.find((t: TagRow) => t.clave === firstTag);
+  const label = tagObj ? tagObj.nombre.toUpperCase() : (firstTag ? (BADGE_MAP[firstTag]?.label ?? firstTag.toUpperCase()) : null);
+  const color = tagObj ? tagObj.color_badge : null;
+  const fallbackClass = firstTag ? (BADGE_MAP[firstTag]?.className ?? "bg-[#2C2420] text-white") : "";
   const imagenes = product.imagenes ?? [];
 
   const handleAgregar = () => {
@@ -173,11 +181,12 @@ function ProductPage() {
               className="relative overflow-hidden bg-[#F5EFE6] rounded-xl"
               style={{ aspectRatio: "4/5" }}
             >
-              {badge && (
+              {label && (
                 <span
-                  className={`absolute top-4 left-4 z-10 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${badge.className}`}
+                  className={`absolute top-4 left-4 z-10 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${color ? "text-white" : fallbackClass}`}
+                  style={color ? { backgroundColor: color } : undefined}
                 >
-                  {badge.label}
+                  {label}
                 </span>
               )}
               {imagenes[activeImg] && (
@@ -223,11 +232,12 @@ function ProductPage() {
 
           {/* Info (40%) */}
           <div className="w-full lg:w-[40%] flex flex-col">
-            {badge && (
+            {label && (
               <span
-                className={`lg:hidden self-start mb-3 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${badge.className}`}
+                className={`lg:hidden self-start mb-3 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${color ? "text-white" : fallbackClass}`}
+                style={color ? { backgroundColor: color } : undefined}
               >
-                {badge.label}
+                {label}
               </span>
             )}
 

@@ -254,6 +254,34 @@ export async function getProductosPorTag(
   return throwOnError(data, error);
 }
 
+/**
+ * Devuelve un tag por su clave.
+ */
+export async function getTagPorClave(clave: string): Promise<TagRow | null> {
+  const { data, error } = await supabase
+    .from("tags")
+    .select("*")
+    .eq("clave", clave)
+    .maybeSingle();
+
+  if (error) throw new Error(`[Supabase] ${error.message}`);
+  return data;
+}
+
+/**
+ * Devuelve todos los productos activos asociados a un tag específico.
+ */
+export async function getTodosProductosPorTag(clave: string): Promise<ProductoRow[]> {
+  const { data, error } = await supabase
+    .from("productos")
+    .select("*")
+    .eq("activo", true)
+    .contains("tags", [clave])
+    .order("orden", { ascending: true });
+
+  return throwOnError(data, error);
+}
+
 // ─── Colecciones home ─────────────────────────────────────────────────────────
 
 /**

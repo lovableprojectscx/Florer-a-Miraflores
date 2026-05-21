@@ -76,21 +76,23 @@ function ProductCard({
   producto,
   badgeLabel,
   badgeColor,
+  className = "flex",
 }: {
   producto: ProductoRow;
   badgeLabel: string;
   badgeColor: string;
+  className?: string;
 }) {
   const { agregarItem, abrirCarrito } = useCartStore();
   const imgSrc = producto.imagenes?.[0] ?? "";
 
   return (
-    <article className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0">
+    <article className={`group flex-col flex-shrink-0 w-[240px] md:w-full md:max-w-[290px] mx-auto md:mx-0 snap-start bg-white border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${className}`}>
       <Link to="/producto/$id" params={{ id: producto.id }} className="block">
         <div className="relative overflow-hidden bg-ivory" style={{ aspectRatio: "3/4" }}>
           {/* Badge del tag */}
           <span
-            className="absolute top-3 left-3 z-10 text-white text-[9px] tracking-[0.18em] uppercase font-body font-light px-3 py-1.5 leading-none"
+            className="absolute top-3 left-3 z-10 text-white text-[9px] tracking-[0.18em] uppercase font-body font-light px-3 py-1.5 leading-none rounded-sm"
             style={{ backgroundColor: badgeColor }}
           >
             {badgeLabel}
@@ -104,36 +106,42 @@ function ProductCard({
           />
         </div>
 
-        <div className="mt-4 flex-1 flex flex-col">
-          <p className="font-display text-foreground text-lg md:text-2xl leading-tight">
-            {producto.nombre}
-          </p>
-          {producto.descripcion && (
-            <p className="mt-1 font-body font-light text-foreground/60 text-sm line-clamp-2">
-              {producto.descripcion}
-            </p>
-          )}
-          <p className="mt-2 font-body font-medium text-foreground text-sm">
+        <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+          <div>
+            <h3 className="font-display text-[#2C2420] text-base md:text-lg leading-snug group-hover:text-[#C4956A] transition-colors duration-200 line-clamp-1">
+              {producto.nombre}
+            </h3>
+            {producto.descripcion ? (
+              <p className="mt-1 font-body font-light text-[#8A7A6E] text-xs line-clamp-2 min-h-[2rem]">
+                {producto.descripcion}
+              </p>
+            ) : (
+              <div className="mt-1 min-h-[2rem]" />
+            )}
+          </div>
+          <p className="mt-3 font-body font-semibold text-[#2C2420] text-sm md:text-base">
             S/ {producto.precio.toFixed(2)}
           </p>
         </div>
       </Link>
 
-      <button
-        onClick={() => {
-          agregarItem({
-            id: producto.id,
-            nombre: producto.nombre,
-            precio: producto.precio,
-            imagen: producto.imagenes?.[0] ?? "",
-            cantidad: 1,
-          });
-          abrirCarrito();
-        }}
-        className="mt-3 w-full h-10 border border-foreground text-foreground font-body text-[10px] tracking-widest uppercase hover:bg-foreground hover:text-background transition-colors duration-200"
-      >
-        Agregar al carrito
-      </button>
+      <div className="px-3 pb-3 sm:px-4 sm:pb-4 mt-auto">
+        <button
+          onClick={() => {
+            agregarItem({
+              id: producto.id,
+              nombre: producto.nombre,
+              precio: producto.precio,
+              imagen: producto.imagenes?.[0] ?? "",
+              cantidad: 1,
+            });
+            abrirCarrito();
+          }}
+          className="w-full h-10 border border-[#2C2420] text-[#2C2420] font-body text-[9px] sm:text-[10px] tracking-wider sm:tracking-widest uppercase hover:bg-[#2C2420] hover:text-white transition-colors duration-300 rounded-md"
+        >
+          Agregar al carrito
+        </button>
+      </div>
     </article>
   );
 }
@@ -141,13 +149,14 @@ function ProductCard({
 // ─── Subcomponente: Sección de un tag ────────────────────────────────────────
 
 function TagSection({ tag, productos }: TagSeccion) {
-  const hayMas = productos.length > 4;
-  const visibles = productos.slice(0, 4);
+  const visibles = productos.slice(0, 6);
+  const mostrarBoton = productos.length > 4;
+  const hayMasMobile = productos.length > 5;
 
   return (
     <section
       id={`tag-${tag.clave}`}
-      className="px-5 md:px-10 lg:px-16 py-14 md:py-24"
+      className="px-5 md:px-10 lg:px-16 py-14 md:py-24 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
         {/* Encabezado */}
@@ -179,9 +188,10 @@ function TagSection({ tag, productos }: TagSeccion) {
           </div>
 
           {/* Botón "Ver todos" — solo desktop, si hay más de 4 */}
-          {hayMas && (
+          {mostrarBoton && (
             <Link
-              to="/"
+              to="/tag/$key"
+              params={{ key: tag.clave }}
               className="hidden md:inline-flex items-center gap-2 font-body text-xs tracking-widest uppercase text-foreground/60 hover:text-foreground border-b border-foreground/20 hover:border-foreground/60 pb-0.5 transition-colors group flex-shrink-0"
             >
               Ver todos
@@ -190,27 +200,47 @@ function TagSection({ tag, productos }: TagSeccion) {
           )}
         </div>
 
-        {/* Grid de productos */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-10 md:gap-y-16">
-          {visibles.map((p) => (
+        {/* Slider horizontal en móvil y PC para mantener tamaño original de tarjetas */}
+        <div className="flex overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0 gap-x-4 md:gap-x-8 pb-4 snap-x snap-mandatory scrollbar-none">
+          {visibles.map((p, idx) => (
             <ProductCard
               key={p.id}
               producto={p}
               badgeLabel={tag.nombre}
               badgeColor={tag.color_badge}
+              className={idx === 5 ? "hidden md:flex" : "flex"}
             />
           ))}
+
+          {hayMasMobile && (
+            <Link
+              to="/tag/$key"
+              params={{ key: tag.clave }}
+              className="md:hidden flex-shrink-0 w-[240px] flex flex-col justify-center items-center p-6 border border-dashed border-[#C4956A]/60 bg-[#F5EFE6]/30 hover:bg-[#F5EFE6]/60 hover:border-[#C4956A] transition-colors snap-start text-center group self-stretch min-h-[300px]"
+            >
+              <span className="font-italic-serif text-rose-accent text-xs mb-1">
+                Colección completa
+              </span>
+              <span className="font-display text-xl text-[#2C2420] mb-4">
+                Ver todos
+              </span>
+              <div className="w-10 h-10 rounded-full bg-[#2C2420] text-white flex items-center justify-center group-hover:bg-[#C4956A] transition-colors duration-300">
+                <ArrowRight className="h-5 w-5" />
+              </div>
+            </Link>
+          )}
         </div>
 
-        {/* Botón "Ver todos" — solo mobile, si hay más de 4 */}
-        {hayMas && (
-          <div className="mt-10 flex justify-center md:hidden">
+        {/* Botón premium de ver catálogo completo */}
+        {mostrarBoton && (
+          <div className="flex justify-center mt-10 md:mt-16">
             <Link
-              to="/"
-              className="inline-flex items-center gap-2 px-8 py-3 border border-foreground/30 text-foreground font-body text-[10px] tracking-widest uppercase hover:bg-foreground hover:text-background transition-colors"
+              to="/tag/$key"
+              params={{ key: tag.clave }}
+              className="inline-flex items-center justify-center px-8 py-3.5 border border-[#2C2420] text-[#2C2420] font-body text-xs tracking-widest uppercase hover:bg-[#2C2420] hover:text-white transition-colors duration-300 rounded-md"
             >
-              Ver todos los {tag.nombre.toLowerCase()}
-              <ArrowRight className="h-3.5 w-3.5" />
+              Ver catálogo completo
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </div>
         )}

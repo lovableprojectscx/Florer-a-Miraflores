@@ -7,7 +7,9 @@ import sorpresa from "@/assets/product-box-sorpresa.webp";
 import { Link } from "@tanstack/react-router";
 import { useCartStore } from "@/store/cart";
 import type { Product } from "@/data/catalog";
-import type { ProductoRow } from "@/types/database";
+import type { ProductoRow, TagRow } from "@/types/database";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 // Data estática del home — se mantiene para compatibilidad
 const defaultProducts = [
@@ -35,30 +37,44 @@ const BADGE_MAP: Record<string, { label: string; className: string }> = {
 
 export function ProductGrid({ products: externalProducts, title }: ProductGridProps = {}) {
   const { agregarItem, abrirCarrito } = useCartStore();
+  const [tags, setTags] = useState<TagRow[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("tags")
+      .select("*")
+      .then(({ data }: { data: any }) => {
+        if (data) setTags(data);
+      });
+  }, []);
 
   // ── Modo externo: productos reales pasados como prop
   if (externalProducts && externalProducts.length > 0) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 md:gap-x-5 gap-y-6 md:gap-y-10">
         {externalProducts.map((p) => {
-          const firstTag = p.tags[0];
-          const badge = firstTag ? BADGE_MAP[firstTag] : null;
+          const firstTag = p.tags?.[0];
+          const tagObj = tags.find((t) => t.clave === firstTag);
+          const label = tagObj ? tagObj.nombre.toUpperCase() : (firstTag ? (BADGE_MAP[firstTag]?.label ?? firstTag.toUpperCase()) : null);
+          const color = tagObj ? tagObj.color_badge : null;
+          const fallbackClass = firstTag ? (BADGE_MAP[firstTag]?.className ?? "bg-[#2C2420] text-white") : "";
 
           return (
             <article
               key={p.id}
-              className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0"
+              className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0 bg-white border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
             >
               <Link to="/producto/$id" params={{ id: p.id }} className="block">
                 <div
                   className="relative overflow-hidden bg-ivory-soft"
                   style={{ aspectRatio: "1/1" }}
                 >
-                  {badge && (
+                  {label && (
                     <span
-                      className={`absolute top-3 left-3 z-10 px-2 py-1 text-[9px] tracking-widest uppercase font-body font-medium ${badge.className}`}
+                      className={`absolute top-3 left-3 z-10 px-2 py-1 text-[9px] tracking-widest uppercase font-body font-medium ${color ? "text-white" : fallbackClass}`}
+                      style={color ? { backgroundColor: color } : undefined}
                     >
-                      {badge.label}
+                      {label}
                     </span>
                   )}
                   <img
@@ -72,32 +88,36 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
                     }}
                   />
                 </div>
-                <div className="pt-4">
-                  <p className="text-[10px] tracking-wider-2 uppercase font-body font-light text-[#8A7A6E]">
-                    Miraflores Boutique
-                  </p>
-                  <div className="flex items-baseline justify-between mt-1.5">
-                    <h3 className="font-body font-light text-base text-[#2C2420]">{p.nombre}</h3>
-                    <span className="font-body font-light text-[#2C2420] ml-2 flex-shrink-0">
-                      S/ {p.precio.toFixed(2)}
-                    </span>
+                <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <p className="text-[10px] tracking-wider-2 uppercase font-body font-light text-[#8A7A6E] mb-1">
+                      Miraflores Boutique
+                    </p>
+                    <h3 className="font-body font-medium text-base text-[#2C2420] group-hover:text-[#C4956A] transition-colors duration-200 line-clamp-1">
+                      {p.nombre}
+                    </h3>
                   </div>
+                  <span className="font-body font-semibold text-[#2C2420] mt-2 block">
+                    S/ {p.precio.toFixed(2)}
+                  </span>
                 </div>
               </Link>
-              <button
-                onClick={() => {
-                  agregarItem({
-                    id: p.id,
-                    nombre: p.nombre,
-                    precio: p.precio,
-                    imagen: p.imagenes[0],
-                  });
-                  abrirCarrito();
-                }}
-                className="mt-4 w-full h-11 border border-[#2C2420]/80 text-[#2C2420] text-[11px] tracking-wider-2 uppercase font-body font-light hover:bg-[#2C2420] hover:text-white transition-colors duration-300"
-              >
-                Agregar al carrito
-              </button>
+              <div className="px-3 pb-3 sm:px-4 sm:pb-4 mt-auto">
+                <button
+                  onClick={() => {
+                    agregarItem({
+                      id: p.id,
+                      nombre: p.nombre,
+                      precio: p.precio,
+                      imagen: p.imagenes[0],
+                    });
+                    abrirCarrito();
+                  }}
+                  className="w-full h-10 border border-[#2C2420] text-[#2C2420] text-[9px] sm:text-[10px] tracking-wider sm:tracking-widest uppercase font-body hover:bg-[#2C2420] hover:text-white transition-colors duration-300 rounded-md"
+                >
+                  Agregar al carrito
+                </button>
+              </div>
             </article>
           );
         })}
@@ -130,7 +150,7 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
           {defaultProducts.map((p) => (
             <article
               key={p.name}
-              className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0"
+              className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0 bg-white border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
             >
               <div
                 className="relative overflow-hidden bg-ivory-soft"
@@ -143,12 +163,14 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
                   className="w-full h-full object-cover transition-transform duration-[600ms] ease-out md:group-hover:scale-[1.04] will-change-transform"
                 />
               </div>
-              <div className="mt-5">
-                <p className="font-body font-light text-[11px] tracking-widest uppercase text-muted-foreground mb-1.5">
-                  Floreria Miraflores
-                </p>
-                <p className="font-display text-xl text-foreground leading-tight">{p.name}</p>
-                <p className="mt-2 font-body font-light text-muted-foreground text-sm">{p.price}</p>
+              <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+                <div>
+                  <p className="font-body font-light text-[10px] tracking-wider-2 uppercase text-[#8A7A6E] mb-1.5">
+                    Floreria Miraflores
+                  </p>
+                  <p className="font-display text-lg text-foreground leading-tight">{p.name}</p>
+                </div>
+                <p className="mt-3 font-body font-semibold text-[#2C2420] text-sm">{p.price}</p>
               </div>
             </article>
           ))}

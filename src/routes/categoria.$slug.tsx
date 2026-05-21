@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { ProductGrid } from "@/components/ProductGrid";
 import { getCategoriaPorSlug, getCategorias, getConfig, getProductosPorCategoria } from "@/lib/queries";
-import type { CategoriaRow } from "@/types/database";
+import type { CategoriaRow, ProductoRow } from "@/types/database";
 
 export const Route = createFileRoute("/categoria/$slug")({
   loader: async ({ params }) => {
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/categoria/$slug")({
     if (!cat) throw notFound();
 
     // Si la categoría no tiene subcategorías, cargamos sus productos directamente
-    let productos = [];
+    let productos: ProductoRow[] = [];
     if (cat.hijas.length === 0) {
       productos = await getProductosPorCategoria(cat.id).catch(() => []);
     }

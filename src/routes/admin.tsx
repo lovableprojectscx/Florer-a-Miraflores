@@ -68,7 +68,7 @@ function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#FDFAF6]">
+    <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col md:flex-row bg-[#FDFAF6]">
       {/* Mobile Header */}
       <header className="md:hidden h-16 bg-[#2C2420] text-white flex items-center justify-between px-4 border-b border-white/10 z-40 sticky top-0">
         <div className="flex items-center gap-3">
@@ -79,7 +79,7 @@ function AdminLayout() {
           >
             <Menu className="h-6 w-6" strokeWidth={1.5} />
           </button>
-          <img src={logoImg} alt="Miraflores Admin" className="h-6 w-auto object-contain invert brightness-200" />
+          <img src={logoImg} alt="Miraflores Admin" className="h-10 w-auto object-contain invert brightness-200" />
           <span className="text-[8px] tracking-widest uppercase font-body font-light text-white/50 bg-white/15 px-1.5 py-0.5 rounded ml-2">
             admin
           </span>
@@ -98,12 +98,12 @@ function AdminLayout() {
       <aside
         className={`fixed inset-y-0 left-0 w-64 bg-[#2C2420] flex flex-col z-50 transform transition-transform duration-300 md:relative md:translate-x-0 md:z-auto ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        } flex-shrink-0 min-h-screen`}
+        } flex-shrink-0 h-screen md:h-full`}
       >
         {/* Logo */}
         <div className="px-6 py-7 border-b border-white/10 flex items-center justify-between">
           <div className="flex flex-col">
-            <img src={logoImg} alt="Miraflores Admin" className="h-8 w-auto object-contain invert brightness-200 self-start" />
+            <img src={logoImg} alt="Miraflores Admin" className="h-11 w-auto object-contain invert brightness-200 self-start" />
             <p className="mt-2 text-[9px] tracking-widest uppercase font-body font-light text-white/50">
               panel admin
             </p>

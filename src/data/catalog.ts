@@ -112,7 +112,7 @@ export const getSubcategory = (catSlug: string, subSlug: string) => {
 
 // ─── Productos ────────────────────────────────────────────────────────────────
 
-export type ProductTag = "novedad" | "mas_vendido" | "edicion_limitada" | "oferta";
+export type ProductTag = string;
 
 export interface Product {
   id: string;

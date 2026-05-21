@@ -48,8 +48,8 @@ export async function convertToWebP(file: File, quality = 0.88): Promise<File> {
             return;
           }
 
-          // Dibujar la imagen original en el canvas
-          ctx.drawImage(img, 0, 0);
+          // Dibujar la imagen original en el canvas con las nuevas dimensiones escaladas
+          ctx.drawImage(img, 0, 0, width, height);
 
           // Convertir a WebP con calidad configurable (0.88 es excelente)
           canvas.toBlob(

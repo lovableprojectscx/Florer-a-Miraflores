@@ -306,7 +306,7 @@ function OcasionesPage() {
         )}
 
         {/* Tabla */}
-        <div className="bg-white border border-[#E8DDD0] overflow-x-auto">
+        <div className="hidden sm:block bg-white border border-[#E8DDD0] overflow-x-auto">
           <table className="w-full border-collapse min-w-[600px]">
             <thead>
               <tr className="border-b border-[#E8DDD0] bg-[#F5EFE6]">
@@ -418,6 +418,91 @@ function OcasionesPage() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Vista Móvil (Tarjetas) */}
+        <div className="sm:hidden mt-4 space-y-4">
+          {loading ? (
+            [1, 2, 3].map((n) => (
+              <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-2">
+                <div className="h-4 bg-[#F5EFE6] rounded w-1/2" />
+                <div className="h-3 bg-[#F5EFE6] rounded w-1/3" />
+              </div>
+            ))
+          ) : ocasiones.length === 0 ? (
+            <div className="bg-white border border-[#E8DDD0] p-8 text-center font-body text-sm text-[#8A7A6E] rounded-lg">
+              No hay ocasiones. Agrega una.
+            </div>
+          ) : (
+            ocasiones.map((oc, idx) => {
+              const detail = ICON_DETAILS.find((i) => i.value === oc.icono);
+              const IconComp = detail?.Icon ?? Star;
+              const label = detail ? detail.label.split(" / ")[0] : (oc.icono ?? "-");
+
+              return (
+                <div key={oc.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
+                  <div className="flex justify-between items-start">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex items-center justify-center h-8 w-8 rounded-sm bg-[#FDFAF6] border border-[#E8DDD0] text-[#C4956A]">
+                        <IconComp className="h-4 w-4" strokeWidth={1.5} />
+                      </div>
+                      <div>
+                        <h3 className="font-body text-sm font-semibold text-[#2C2420]">
+                          {oc.nombre}
+                        </h3>
+                        <p className="font-body text-xs text-[#8A7A6E] mt-0.5">
+                          Icono: {label}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-[#F5EFE6] pt-3 mt-1 flex-wrap gap-2">
+                    <div className="flex items-center gap-3">
+                      {/* Orden */}
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleMove(idx, -1)}
+                          disabled={idx === 0}
+                          className="p-1 border border-[#E8DDD0] hover:border-[#C4956A] hover:bg-white text-[#8A7A6E] disabled:opacity-30 disabled:hover:border-[#E8DDD0] transition-colors"
+                        >
+                          <ChevronUp className="h-3.5 w-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleMove(idx, 1)}
+                          disabled={idx === ocasiones.length - 1}
+                          className="p-1 border border-[#E8DDD0] hover:border-[#C4956A] hover:bg-white text-[#8A7A6E] disabled:opacity-30 disabled:hover:border-[#E8DDD0] transition-colors"
+                        >
+                          <ChevronDown className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+
+                      {/* Activo Toggle */}
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-body text-xs text-[#8A7A6E]">Activo:</span>
+                        <button
+                          onClick={() => handleToggle(oc)}
+                          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${oc.activo ? "bg-[#C4956A]" : "bg-[#E8DDD0]"}`}
+                        >
+                          <span
+                            className={`inline-block h-3.5 w-3.5 rounded-full bg-white shadow transition-transform ${oc.activo ? "translate-x-[18px]" : "translate-x-[3px]"}`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => handleDelete(oc.id)}
+                      className="flex items-center gap-1 px-2.5 py-1 border border-red-100 hover:border-red-500 font-body text-xs text-red-400 hover:text-red-500 transition-colors rounded"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" strokeWidth={1.5} />
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
 
