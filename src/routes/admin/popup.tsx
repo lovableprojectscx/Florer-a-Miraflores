@@ -195,7 +195,7 @@ function PopupPage() {
   // --- Render ---
 
   return (
-    <div className="p-8 md:p-10 max-w-2xl">
+    <div className="p-4 sm:p-8 md:p-10 max-w-2xl">
       {/* Encabezado */}
       <div className="mb-8">
         <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1">Admin</p>

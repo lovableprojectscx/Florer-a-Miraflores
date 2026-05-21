@@ -694,16 +694,16 @@ function ProductosPage() {
   const categoriasParaForm = categorias.filter((c) => c.activo);
 
   return (
-    <div className="p-8 md:p-10">
+    <div className="p-4 sm:p-8 md:p-10">
       {/* Encabezado */}
-      <div className="flex items-end justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
           <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1">Admin</p>
           <h1 className="font-display text-3xl md:text-4xl text-[#2C2420]">Productos</h1>
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 h-10 px-5 bg-[#2C2420] hover:bg-[#2C2420]/80 text-white font-body text-[11px] tracking-widest uppercase transition-colors"
+          className="flex items-center gap-2 h-10 px-5 bg-[#2C2420] hover:bg-[#2C2420]/80 text-white font-body text-[11px] tracking-widest uppercase transition-colors self-start sm:self-auto"
         >
           <Plus className="h-4 w-4" strokeWidth={1.5} />
           Nuevo producto

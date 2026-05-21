@@ -515,7 +515,7 @@ function ReclamacionesPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-8">
         {/* Titulo */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -555,7 +555,7 @@ function ReclamacionesPage() {
 
         {/* Tabla */}
         <div className="bg-white border border-[#E8DDD0] overflow-x-auto shadow-sm">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse min-w-[800px]">
             <thead>
               <tr className="border-b border-[#E8DDD0] bg-[#F5EFE6]">
                 <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">

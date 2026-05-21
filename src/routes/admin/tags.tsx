@@ -138,9 +138,9 @@ function AdminTags() {
 
   /* ── UI ── */
   return (
-    <div className="p-6 md:p-10 max-w-5xl">
+    <div className="p-4 sm:p-8 md:p-10 max-w-5xl">
       {/* Encabezado */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="font-display italic text-3xl text-[#2C2420]">Tags</h1>
           <p className="font-body text-sm text-[#8A7A6E] mt-1">
@@ -150,7 +150,7 @@ function AdminTags() {
         {!showForm && (
           <button
             onClick={() => { setShowForm(true); setEditId(null); setForm(EMPTY_FORM); }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#2C2420] text-white font-body text-xs tracking-widest uppercase hover:bg-[#2C2420]/80 transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#2C2420] text-white font-body text-xs tracking-widest uppercase hover:bg-[#2C2420]/80 transition-colors self-start sm:self-auto"
           >
             <Plus className="h-4 w-4" /> Nuevo tag
           </button>

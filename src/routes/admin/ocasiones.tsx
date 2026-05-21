@@ -278,9 +278,9 @@ function OcasionesPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 md:py-8">
         {/* Titulo */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="font-display text-3xl text-[#2C2420]">Ocasiones Home</h1>
             <p className="font-body text-sm text-[#8A7A6E] mt-1">
@@ -289,7 +289,7 @@ function OcasionesPage() {
           </div>
           <button
             onClick={() => setModal(true)}
-            className="h-10 px-5 bg-[#2C2420] text-white font-body text-[11px] tracking-widest uppercase hover:bg-[#2C2420]/80 transition-colors flex items-center gap-2"
+            className="h-10 px-5 bg-[#2C2420] text-white font-body text-[11px] tracking-widest uppercase hover:bg-[#2C2420]/80 transition-colors flex items-center gap-2 self-start sm:self-auto"
           >
             <Plus className="h-4 w-4" strokeWidth={1.5} />
             Agregar
@@ -306,8 +306,8 @@ function OcasionesPage() {
         )}
 
         {/* Tabla */}
-        <div className="bg-white border border-[#E8DDD0]">
-          <table className="w-full border-collapse">
+        <div className="bg-white border border-[#E8DDD0] overflow-x-auto">
+          <table className="w-full border-collapse min-w-[600px]">
             <thead>
               <tr className="border-b border-[#E8DDD0] bg-[#F5EFE6]">
                 <th className="px-4 py-3 text-left font-body text-[10px] tracking-widest uppercase text-[#8A7A6E]">

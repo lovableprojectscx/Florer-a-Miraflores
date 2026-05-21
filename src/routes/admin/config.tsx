@@ -161,7 +161,7 @@ function ConfigPage() {
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
-      <div className="max-w-2xl mx-auto px-6 py-8">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 md:py-8">
         {/* Titulo */}
         <div className="mb-8">
           <h1 className="font-display text-3xl text-[#2C2420]">Configuracion General</h1>
