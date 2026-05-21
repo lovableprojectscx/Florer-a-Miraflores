@@ -42,10 +42,17 @@ export function Footer({ config }: Props) {
         <div>
           <h4 className="font-display text-lg mb-5 text-foreground">Tienda</h4>
           <ul className="space-y-3 font-body font-light text-sm text-muted-foreground">
-            {["Ramos", "Box Florales", "Arreglos", "Coronas", "Ocasiones", "Delivery"].map((l) => (
-              <li key={l}>
-                <a href="/#catalogo" className="hover:text-foreground transition-colors">
-                  {l}
+            {[
+              { label: "Ramos", href: "/#categorias" },
+              { label: "Box Florales", href: "/#categorias" },
+              { label: "Arreglos", href: "/#categorias" },
+              { label: "Coronas", href: "/#categorias" },
+              { label: "Ocasiones", href: "/#novedades" },
+              { label: "Delivery", href: "/#delivery" },
+            ].map((l) => (
+              <li key={l.label}>
+                <a href={l.href} className="hover:text-foreground transition-colors">
+                  {l.label}
                 </a>
               </li>
             ))}

@@ -52,17 +52,17 @@ const FAQS_PREDETERMINADAS: StaticFaq[] = [
 
 export function Faq() {
   return (
-    <section id="faq" className="px-5 md:px-10 lg:px-16 py-12 md:py-24 bg-[#F5EFE6]/40">
+    <section id="faq" className="px-5 md:px-10 lg:px-16 py-12 md:py-24 bg-ivory-soft/40">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           <div className="lg:col-span-5">
-            <p className="font-italic-serif text-[#C4956A] text-sm md:text-lg mb-2">
+            <p className="font-italic-serif text-rose-accent text-sm md:text-lg mb-2">
               — resolvemos sus dudas
             </p>
-            <h2 className="font-display text-[#2C2420] text-3xl md:text-5xl lg:text-6xl leading-[1.1]">
+            <h2 className="font-display text-foreground text-3xl md:text-5xl lg:text-6xl leading-[1.1]">
               Preguntas frecuentes.
             </h2>
-            <p className="mt-4 md:mt-6 font-body font-light text-[#2C2420]/80 max-w-md text-sm md:text-base leading-relaxed">
+            <p className="mt-4 md:mt-6 font-body font-light text-foreground/80 max-w-md text-sm md:text-base leading-relaxed">
               Descubra todo lo que necesita saber para asegurar una experiencia de compra impecable
               en nuestra boutique. Si requiere asistencia inmediata, nuestro equipo está siempre
               disponible para ayudarle.
@@ -75,12 +75,12 @@ export function Faq() {
                 <AccordionItem
                   key={item.id}
                   value={`item-${i}`}
-                  className="border-b border-[#2C2420]/10"
+                  className="border-b border-border/10"
                 >
-                  <AccordionTrigger className="text-left font-display text-base md:text-xl text-[#2C2420] hover:text-[#C4956A] hover:no-underline py-4 md:py-6 transition-colors">
+                  <AccordionTrigger className="text-left font-display text-base md:text-xl text-foreground hover:text-rose-accent hover:no-underline py-4 md:py-6 transition-colors">
                     {item.pregunta}
                   </AccordionTrigger>
-                  <AccordionContent className="font-body font-light text-[#2C2420]/70 text-sm md:text-base pb-4 md:pb-6 leading-relaxed">
+                  <AccordionContent className="font-body font-light text-foreground/70 text-sm md:text-base pb-4 md:pb-6 leading-relaxed">
                     {item.respuesta}
                   </AccordionContent>
                 </AccordionItem>

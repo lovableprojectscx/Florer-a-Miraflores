@@ -51,7 +51,7 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
             >
               <Link to="/producto/$id" params={{ id: p.id }} className="block">
                 <div
-                  className="relative overflow-hidden bg-[#F5EFE6]"
+                  className="relative overflow-hidden bg-ivory-soft"
                   style={{ aspectRatio: "1/1" }}
                 >
                   {badge && (

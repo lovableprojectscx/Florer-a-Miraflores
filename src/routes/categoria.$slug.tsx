@@ -94,7 +94,7 @@ function CategoriaPage() {
                   key={sub.id}
                   to="/categoria/$slug/$sub"
                   params={{ slug: cat.slug, sub: sub.slug }}
-                  className="group relative overflow-hidden bg-[#F5EFE6] aspect-[4/3] flex items-end p-4 md:p-6 border border-[#E8DDD0] hover:border-[#C4956A] transition-colors"
+                  className="group relative overflow-hidden bg-ivory-soft aspect-[4/3] flex items-end p-4 md:p-6 border border-[#E8DDD0] hover:border-[#C4956A] transition-colors"
                 >
                   {sub.imagen_url && (
                     <img

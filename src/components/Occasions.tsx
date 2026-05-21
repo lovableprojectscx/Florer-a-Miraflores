@@ -1,8 +1,9 @@
+import { type ElementType } from "react";
 import { Link } from "@tanstack/react-router";
 import { Cake, Heart, Gem, Flower2, GraduationCap, Briefcase, Star } from "lucide-react";
 import type { OcasionHomeRow } from "@/types/database";
 
-const ICON_MAP: Record<string, React.ElementType> = {
+const ICON_MAP: Record<string, ElementType> = {
   Cake,
   Heart,
   Gem,
@@ -53,19 +54,19 @@ export function Occasions({ ocasiones }: Props) {
         </h2>
       </div>
 
-      <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+      <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-5">
         {items.map((item) => {
           const IconComp = item.icono ? (ICON_MAP[item.icono] ?? Star) : Star;
           const cls =
-            "group bg-ivory border border-border aspect-square flex flex-col items-center justify-center gap-2 md:gap-4 hover:border-rose-accent transition-colors duration-300";
+            "group bg-card border border-border/80 aspect-square flex flex-col items-center justify-center gap-2 md:gap-4 hover:border-rose-accent/30 rounded-2xl hover:-translate-y-1.5 hover:shadow-[0_12px_30px_-8px_rgba(196,132,138,0.15)] transition-all duration-500";
 
           const inner = (
             <>
               <IconComp
-                className="h-5 w-5 md:h-7 md:w-7 text-foreground/80 group-hover:text-rose-accent transition-colors"
-                strokeWidth={1.2}
+                className="h-5 w-5 md:h-7 md:w-7 text-foreground/70 group-hover:text-rose-accent transform group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300"
+                strokeWidth={1.1}
               />
-              <span className="text-[9px] md:text-[11px] tracking-wider-2 uppercase font-body font-light text-foreground text-center px-1">
+              <span className="text-[9px] md:text-[11px] tracking-wider-2 uppercase font-body font-light text-foreground/90 group-hover:text-foreground transition-colors text-center px-1">
                 {item.nombre}
               </span>
             </>

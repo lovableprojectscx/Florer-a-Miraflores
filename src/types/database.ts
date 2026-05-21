@@ -125,7 +125,9 @@ export type ColeccionHomeUpdate = Partial<ColeccionHomeInsert>;
 
 /** Colección con el nombre y slug de la categoría asociada (join) */
 export interface ColeccionConCategoria extends ColeccionHomeRow {
-  categoria: Pick<CategoriaRow, "id" | "nombre" | "slug" | "imagen_url"> | null;
+  categoria: Pick<CategoriaRow, "id" | "nombre" | "slug" | "imagen_url" | "parent_id"> & {
+    padre?: Pick<CategoriaRow, "slug"> | null;
+  } | null;
 }
 
 // ─── tags ─────────────────────────────────────────────────────────────────────

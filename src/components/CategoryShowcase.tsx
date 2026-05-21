@@ -17,7 +17,7 @@ export function CategoryShowcase({ colecciones }: Props) {
   if (colecciones.length === 0) return null;
 
   return (
-    <section id="categorias" className="px-5 md:px-10 lg:px-16 py-10 md:py-14">
+    <section id="categorias" className="px-5 md:px-10 lg:px-16 py-10 md:py-14 animate-fade-in-up">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-6 md:mb-10">
           <div className="max-w-xl">
@@ -42,28 +42,26 @@ export function CategoryShowcase({ colecciones }: Props) {
             const img =
               col.imagen_custom_url ?? cat.imagen_url ?? FALLBACK_IMGS[i % FALLBACK_IMGS.length];
 
-            return (
-              <Link
-                key={col.id}
-                to="/categoria/$slug"
-                params={{ slug: cat.slug }}
-                className={`group relative overflow-hidden bg-ivory-soft rounded-xl ${
-                  i === 0
-                    ? "col-span-2 md:row-span-2 aspect-[4/3] md:aspect-auto md:h-full"
-                    : "col-span-1 aspect-[4/3] md:aspect-square"
-                }`}
-              >
+            const parentSlug = cat.padre?.slug ?? null;
+            const cardClasses = `group relative overflow-hidden bg-ivory-soft rounded-xl ${
+              i === 0
+                ? "col-span-2 md:row-span-2 aspect-[4/3] md:aspect-auto md:h-full"
+                : "col-span-1 aspect-[4/3] md:aspect-square"
+            }`;
+
+            const inner = (
+              <>
                 <img
                   src={img}
                   alt={cat.nombre}
                   loading={i === 0 ? undefined : "lazy"}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.04]"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] ease-out group-hover:scale-105"
                   onError={(e) => {
-                    e.currentTarget.onerror = null; // Prevent infinite loop if fallback also fails
+                    e.currentTarget.onerror = null;
                     e.currentTarget.src = FALLBACK_IMGS[i % FALLBACK_IMGS.length];
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/15 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent group-hover:from-foreground/90 transition-all duration-500" />
                 <div className="absolute inset-0 p-4 md:p-7 flex flex-col justify-end text-primary-foreground">
                   <p className="text-[9px] md:text-[10px] tracking-wider-2 uppercase font-body font-light opacity-80">
                     Colección
@@ -79,6 +77,31 @@ export function CategoryShowcase({ colecciones }: Props) {
                     Ver colección <span aria-hidden>→</span>
                   </span>
                 </div>
+              </>
+            );
+
+            // Si es subcategoría, navegar a /categoria/:padre/:slug
+            if (parentSlug) {
+              return (
+                <Link
+                  key={col.id}
+                  to="/categoria/$slug/$sub"
+                  params={{ slug: parentSlug, sub: cat.slug }}
+                  className={cardClasses}
+                >
+                  {inner}
+                </Link>
+              );
+            }
+
+            return (
+              <Link
+                key={col.id}
+                to="/categoria/$slug"
+                params={{ slug: cat.slug }}
+                className={cardClasses}
+              >
+                {inner}
               </Link>
             );
           })}

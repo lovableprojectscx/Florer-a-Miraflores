@@ -6,6 +6,7 @@ import { CategoryShowcase } from "@/components/CategoryShowcase";
 import { Novedades } from "@/components/Novedades";
 import { Occasions } from "@/components/Occasions";
 import { About } from "@/components/About";
+import { DeliveryZones } from "@/components/DeliveryZones";
 import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
@@ -84,6 +85,7 @@ function HomePage() {
         <Novedades tagSecciones={tagSecciones} />
         <Occasions ocasiones={ocasiones} />
         <About />
+        <DeliveryZones />
         <Faq />
       </main>
       <Footer config={config} />

@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import heroImg from "@/assets/hero-flowers.jpg";
-import type { BannerRow, ConfigRow } from "@/types/database";
+import type { BannerRow } from "@/types/database";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Props {
   banners: BannerRow[];
-  config: ConfigRow | null;
 }
 
 export function Hero({ banners }: Props) {
@@ -57,7 +56,7 @@ export function Hero({ banners }: Props) {
 
   // Altura responsiva profesional: 260px en móvil, 350px en tablet, 450px en PC estándar y 480px en pantallas grandes
   const containerClasses =
-    "relative w-full overflow-hidden bg-[#FDFAF6] h-[260px] sm:h-[350px] md:h-[450px] lg:h-[480px] xl:h-[500px]";
+    "relative w-full overflow-hidden bg-background h-[260px] sm:h-[350px] md:h-[450px] lg:h-[480px] xl:h-[500px]";
 
   if (banners.length === 0) {
     return (
@@ -88,20 +87,51 @@ export function Hero({ banners }: Props) {
       />
     );
 
+    const content = (
+      <>
+        {img}
+        {(ban.titulo || ban.subtexto) && (
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-white">
+            <div className="max-w-2xl animate-fade-in-up">
+              {ban.titulo && (
+                <h2 className="font-display italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-2 md:mb-4">
+                  {ban.titulo}
+                </h2>
+              )}
+              {ban.subtexto && (
+                <p className="font-body font-light text-xs sm:text-sm md:text-base opacity-90 mb-4 md:mb-8 max-w-md leading-relaxed">
+                  {ban.subtexto}
+                </p>
+              )}
+              {ban.cta_texto && (
+                <span
+                  className="inline-block px-6 py-2.5 sm:px-8 sm:py-3.5 border border-white text-white text-[10px] sm:text-[11px] tracking-widest uppercase font-body font-light hover:bg-white hover:text-black transition-colors duration-300"
+                >
+                  {ban.cta_texto}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+      </>
+    );
+
     return (
       <section className="w-full">
         <div className={containerClasses}>
           {ban.cta_link ? (
             <a
               href={ban.cta_link}
-              className="block w-full h-full pointer-events-auto"
+              className="block w-full h-full pointer-events-auto relative"
               target="_blank"
               rel="noopener noreferrer"
             >
-              {img}
+              {content}
             </a>
           ) : (
-            img
+            <div className="w-full h-full relative">
+              {content}
+            </div>
           )}
         </div>
       </section>
@@ -110,7 +140,7 @@ export function Hero({ banners }: Props) {
 
   return (
     <section
-      className="w-full relative group overflow-hidden bg-[#FDFAF6]"
+      className="w-full relative group overflow-hidden bg-background"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
@@ -135,6 +165,35 @@ export function Hero({ banners }: Props) {
             />
           );
 
+          const content = (
+            <>
+              {img}
+              {(ban.titulo || ban.subtexto) && (
+                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-white">
+                  <div className="max-w-2xl animate-fade-in-up">
+                    {ban.titulo && (
+                      <h2 className="font-display italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-2 md:mb-4">
+                        {ban.titulo}
+                      </h2>
+                    )}
+                    {ban.subtexto && (
+                      <p className="font-body font-light text-xs sm:text-sm md:text-base opacity-90 mb-4 md:mb-8 max-w-md leading-relaxed">
+                        {ban.subtexto}
+                      </p>
+                    )}
+                    {ban.cta_texto && (
+                      <span
+                        className="inline-block px-6 py-2.5 sm:px-8 sm:py-3.5 border border-white text-white text-[10px] sm:text-[11px] tracking-widest uppercase font-body font-light hover:bg-white hover:text-black transition-colors duration-300"
+                      >
+                        {ban.cta_texto}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+            </>
+          );
+
           return (
             <div
               key={ban.id}
@@ -143,14 +202,16 @@ export function Hero({ banners }: Props) {
               {ban.cta_link ? (
                 <a
                   href={ban.cta_link}
-                  className="block w-full h-full pointer-events-auto"
+                  className="block w-full h-full pointer-events-auto relative"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {img}
+                  {content}
                 </a>
               ) : (
-                img
+                <div className="w-full h-full relative">
+                  {content}
+                </div>
               )}
             </div>
           );

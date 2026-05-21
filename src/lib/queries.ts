@@ -62,7 +62,9 @@ export async function getCategoriaPorSlug(slug: string): Promise<CategoriaConHij
     .eq("activo", true)
     .maybeSingle();
 
-  if (catError) throw new Error(`[Supabase] ${catError.message}`);
+  if (catError) {
+    throw new Error(`[Supabase] ${catError.message}`);
+  }
   if (!cat) return null;
 
   // 2. Obtener sus hijas
@@ -73,7 +75,9 @@ export async function getCategoriaPorSlug(slug: string): Promise<CategoriaConHij
     .eq("activo", true)
     .order("orden", { ascending: true });
 
-  if (hijasError) throw new Error(`[Supabase] ${hijasError.message}`);
+  if (hijasError) {
+    throw new Error(`[Supabase] ${hijasError.message}`);
+  }
 
   return { ...cat, hijas: hijas ?? [] };
 }
@@ -257,6 +261,7 @@ export async function getProductosPorTag(
  * Útil para renderizar el CategoryShowcase con nombre, slug e imagen real.
  */
 export async function getColecciones(): Promise<ColeccionConCategoria[]> {
+  // Paso 1: traer colecciones con datos de la categoría (incluyendo parent_id)
   const { data, error } = await supabase
     .from("colecciones_home")
     .select(
@@ -266,7 +271,8 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
         id,
         nombre,
         slug,
-        imagen_url
+        imagen_url,
+        parent_id
       )
     `,
     )
@@ -275,8 +281,40 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
 
-  // Supabase devuelve el join anidado — casteamos al tipo esperado
-  return (data ?? []) as ColeccionConCategoria[];
+  const colecciones = (data ?? []) as ColeccionConCategoria[];
+
+  // Paso 2: recopilar los parent_ids únicos y buscar sus slugs
+  const parentIds = [
+    ...new Set(
+      colecciones
+        .map((c) => (c.categoria as { parent_id?: string | null })?.parent_id)
+        .filter(Boolean) as string[],
+    ),
+  ];
+
+  if (parentIds.length === 0) return colecciones;
+
+  const { data: padres } = await supabase
+    .from("categorias")
+    .select("id, slug")
+    .in("id", parentIds);
+
+  const padreMap: Record<string, string> = {};
+  (padres ?? []).forEach((p: { id: string; slug: string }) => {
+    padreMap[p.id] = p.slug;
+  });
+
+  // Paso 3: inyectar el slug del padre en cada colección
+  return colecciones.map((col) => {
+    const parentId = (col.categoria as { parent_id?: string | null })?.parent_id;
+    if (!parentId || !padreMap[parentId]) return col;
+    return {
+      ...col,
+      categoria: col.categoria
+        ? { ...col.categoria, padre: { slug: padreMap[parentId] } }
+        : null,
+    };
+  });
 }
 
 // ─── Pedidos ──────────────────────────────────────────────────────────────────

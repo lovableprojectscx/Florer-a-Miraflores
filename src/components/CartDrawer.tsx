@@ -60,7 +60,7 @@ export function CartDrawer() {
               {items.map((item) => (
                 <li key={item.id} className="flex gap-4 px-6 py-4">
                   {/* Imagen */}
-                  <div className="w-20 h-20 flex-shrink-0 bg-[#F5EFE6] rounded-xl overflow-hidden">
+                  <div className="w-20 h-20 flex-shrink-0 bg-ivory-soft rounded-xl overflow-hidden">
                     <img
                       src={item.imagen}
                       alt={item.nombre}
