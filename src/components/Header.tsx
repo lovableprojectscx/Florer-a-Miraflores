@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Search, ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import type { CategoriaRow, ConfigRow } from "@/types/database";
+import logoImg from "@/assets/logo-miraflores.webp";
 
 interface Props {
   categorias: CategoriaRow[];
@@ -53,13 +54,8 @@ export function Header({ categorias, config }: Props) {
           </button>
         </div>
 
-        <Link to="/" className="flex flex-col items-center justify-center text-center leading-none">
-          <span className="font-display italic font-bold text-3xl md:text-4xl tracking-tight">
-            Miraflores
-          </span>
-          <span className="mt-1 text-[10px] tracking-widest uppercase font-body font-light text-muted-foreground">
-            boutique floral
-          </span>
+        <Link to="/" className="flex items-center justify-center">
+          <img src={logoImg} alt="Florería Miraflores" className="h-10 md:h-12 w-auto object-contain" />
         </Link>
 
         <div className="flex items-center justify-end gap-1">

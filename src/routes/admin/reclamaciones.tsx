@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import logoImg from "@/assets/logo-miraflores.webp";
 import { Eye, X, Loader2, Search, Printer } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -100,8 +101,7 @@ function DetalleModal({ claim, onClose }: DetalleModalProps) {
         <table class="header-table">
           <tr>
             <td>
-              <div class="logo-title">Miraflores</div>
-              <div class="logo-sub">Boutique Floral</div>
+              <img src="${logoImg}" alt="Florería Miraflores" style="height: 42px; width: auto; display: block; margin-bottom: 4px;" />
             </td>
             <td>
               <div class="doc-title">LIBRO DE RECLAMACIONES</div>

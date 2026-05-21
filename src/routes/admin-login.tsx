@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/lib/supabase";
+import logoImg from "@/assets/logo-miraflores.webp";
 
 export const Route = createFileRoute("/admin-login")({
   head: () => ({
@@ -61,9 +62,9 @@ function AdminLoginPage() {
     <div className="min-h-screen bg-[#FDFAF6] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <div className="text-center mb-10">
-          <span className="font-display italic font-bold text-4xl text-[#2C2420]">Miraflores</span>
-          <p className="mt-1 text-[9px] tracking-widest uppercase font-body font-light text-[#8A7A6E]">
+        <div className="text-center mb-10 flex flex-col items-center">
+          <img src={logoImg} alt="Florería Miraflores" className="h-14 w-auto object-contain" />
+          <p className="mt-2 text-[9px] tracking-widest uppercase font-body font-light text-[#8A7A6E]">
             panel de administración
           </p>
         </div>

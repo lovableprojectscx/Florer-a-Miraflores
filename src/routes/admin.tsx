@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import logoImg from "@/assets/logo-miraflores.webp";
 
 // Auth guard — corre ANTES que los loaders de rutas hijas
 export const Route = createFileRoute("/admin")({
@@ -78,8 +79,8 @@ function AdminLayout() {
           >
             <Menu className="h-6 w-6" strokeWidth={1.5} />
           </button>
-          <span className="font-display italic font-bold text-xl text-white">Miraflores</span>
-          <span className="text-[8px] tracking-widest uppercase font-body font-light text-white/50 bg-white/15 px-1.5 py-0.5 rounded ml-1">
+          <img src={logoImg} alt="Miraflores Admin" className="h-6 w-auto object-contain invert brightness-200" />
+          <span className="text-[8px] tracking-widest uppercase font-body font-light text-white/50 bg-white/15 px-1.5 py-0.5 rounded ml-2">
             admin
           </span>
         </div>
@@ -101,9 +102,9 @@ function AdminLayout() {
       >
         {/* Logo */}
         <div className="px-6 py-7 border-b border-white/10 flex items-center justify-between">
-          <div>
-            <span className="font-display italic font-bold text-2xl text-white">Miraflores</span>
-            <p className="mt-1 text-[9px] tracking-widest uppercase font-body font-light text-white/50">
+          <div className="flex flex-col">
+            <img src={logoImg} alt="Miraflores Admin" className="h-8 w-auto object-contain invert brightness-200 self-start" />
+            <p className="mt-2 text-[9px] tracking-widest uppercase font-body font-light text-white/50">
               panel admin
             </p>
           </div>

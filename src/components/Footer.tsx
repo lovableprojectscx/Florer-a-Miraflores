@@ -1,6 +1,7 @@
 import { Instagram, Facebook, BookOpen } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import type { ConfigRow } from "@/types/database";
+import logoImg from "@/assets/logo-miraflores.webp";
 
 interface Props {
   config: ConfigRow | null;
@@ -28,10 +29,7 @@ export function Footer({ config }: Props) {
         {/* Marca */}
         <div>
           <div className="flex flex-col leading-none">
-            <span className="font-display italic font-bold text-3xl">Miraflores</span>
-            <span className="mt-1 text-[10px] tracking-widest uppercase font-body font-light text-muted-foreground">
-              boutique floral
-            </span>
+            <img src={logoImg} alt="Florería Miraflores" className="h-10 w-auto object-contain self-start" />
           </div>
           <p className="mt-6 font-italic-serif text-foreground/80 text-lg max-w-xs">
             Flores frescas, arreglos hechos con amor en el corazon de Lima.
