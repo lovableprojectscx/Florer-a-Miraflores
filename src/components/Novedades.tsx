@@ -98,9 +98,9 @@ function ProductCard({
 
           <img
             src={imgSrc}
-            alt={producto.nombre}
+            alt=""
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.04]"
+            className="w-full h-full object-cover transition-transform duration-[600ms] ease-out md:group-hover:scale-[1.04] will-change-transform"
           />
         </div>
 

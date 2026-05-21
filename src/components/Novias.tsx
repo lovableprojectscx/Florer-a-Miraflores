@@ -51,11 +51,11 @@ export function Novias() {
               >
                 <img
                   src={b.img}
-                  alt={`Bouquet de novia ${b.name}`}
+                  alt=""
                   loading="lazy"
                   width={800}
                   height={1000}
-                  className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
+                  className="w-full h-full object-cover transition-transform duration-[600ms] ease-out md:group-hover:scale-[1.03] will-change-transform"
                 />
               </div>
               <div className="pt-5">

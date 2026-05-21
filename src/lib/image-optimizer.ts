@@ -25,9 +25,21 @@ export async function convertToWebP(file: File, quality = 0.88): Promise<File> {
         try {
           const canvas = document.createElement("canvas");
           
-          // Mantener la resolución original
-          canvas.width = img.width;
-          canvas.height = img.height;
+          // Redimensionar si supera el límite de 1000px (manteniendo la relación de aspecto)
+          const MAX_LIMIT = 1000;
+          let width = img.width;
+          let height = img.height;
+          if (width > MAX_LIMIT || height > MAX_LIMIT) {
+            if (width > height) {
+              height = Math.round((height * MAX_LIMIT) / width);
+              width = MAX_LIMIT;
+            } else {
+              width = Math.round((width * MAX_LIMIT) / height);
+              height = MAX_LIMIT;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
           
           const ctx = canvas.getContext("2d");
           if (!ctx) {

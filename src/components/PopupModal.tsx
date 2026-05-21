@@ -26,11 +26,23 @@ export function PopupModal({ popup }: Props) {
     return () => clearTimeout(t);
   }, [popup]);
 
+  // Bloquear scroll del body cuando el popup está visible para evitar lag y repaints
+  useEffect(() => {
+    if (visible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [visible]);
+
   if (!visible || !popup) return null;
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center px-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center px-4 touch-none"
       onClick={() => setVisible(false)}
     >
       {/* Fondo oscuro */}

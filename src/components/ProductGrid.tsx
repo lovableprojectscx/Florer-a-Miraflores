@@ -63,9 +63,9 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
                   )}
                   <img
                     src={p.imagenes[0]}
-                    alt={p.nombre}
+                    alt=""
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover transition-transform duration-[600ms] ease-out md:group-hover:scale-[1.03] will-change-transform"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = romantico;
@@ -138,9 +138,9 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
               >
                 <img
                   src={p.img}
-                  alt={p.name}
+                  alt=""
                   loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.04]"
+                  className="w-full h-full object-cover transition-transform duration-[600ms] ease-out md:group-hover:scale-[1.04] will-change-transform"
                 />
               </div>
               <div className="mt-5">
