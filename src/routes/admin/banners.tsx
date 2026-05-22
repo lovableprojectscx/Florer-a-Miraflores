@@ -52,7 +52,8 @@ const EMPTY_FORM: FormState = {
 async function subirImagen(file: File): Promise<string> {
   let finalFile = file;
   try {
-    finalFile = await convertToWebP(file);
+    // Para banners de portada, usamos una resolución máxima de 2000px y una calidad de 0.92 para mantener una nitidez excelente
+    finalFile = await convertToWebP(file, 0.92, 2000);
   } catch (err) {
     console.error("Error al optimizar imagen a WebP:", err);
   }

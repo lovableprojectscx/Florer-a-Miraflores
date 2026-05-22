@@ -54,9 +54,10 @@ export function Hero({ banners }: Props) {
     setTouchEnd(null);
   };
 
-  // Altura responsiva profesional: 260px en móvil, 350px en tablet, 450px en PC estándar y 480px en pantallas grandes
+  // Proporción fluida e idéntica a la recomendada para los banners (1920x800, es decir, 12/5 o 2.4)
+  // para que la imagen se vea completa en cualquier dispositivo sin recortarse.
   const containerClasses =
-    "relative w-full overflow-hidden bg-background h-[260px] sm:h-[350px] md:h-[450px] lg:h-[480px] xl:h-[500px]";
+    "relative w-full overflow-hidden bg-background aspect-[1920/800]";
 
   if (banners.length === 0) {
     return (
@@ -91,21 +92,21 @@ export function Hero({ banners }: Props) {
       <>
         {img}
         {(ban.titulo || ban.subtexto) && (
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-white">
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex flex-col justify-center px-4 sm:px-12 md:px-16 lg:px-24 text-white">
             <div className="max-w-2xl animate-fade-in-up">
               {ban.titulo && (
-                <h2 className="font-display italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-2 md:mb-4">
+                <h2 className="font-display italic text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-1 sm:mb-2 md:mb-4">
                   {ban.titulo}
                 </h2>
               )}
               {ban.subtexto && (
-                <p className="font-body font-light text-xs sm:text-sm md:text-base opacity-90 mb-4 md:mb-8 max-w-md leading-relaxed">
+                <p className="font-body font-light text-[9px] sm:text-xs md:text-sm lg:text-base opacity-90 mb-2 sm:mb-4 md:mb-8 max-w-md leading-relaxed">
                   {ban.subtexto}
                 </p>
               )}
               {ban.cta_texto && (
                 <span
-                  className="inline-block px-6 py-2.5 sm:px-8 sm:py-3.5 border border-white text-white text-[10px] sm:text-[11px] tracking-widest uppercase font-body font-light hover:bg-white hover:text-black transition-colors duration-300"
+                  className="inline-block px-3 py-1.5 sm:px-8 sm:py-3.5 border border-white text-white text-[8px] sm:text-[11px] tracking-widest uppercase font-body font-light hover:bg-white hover:text-black transition-colors duration-300"
                 >
                   {ban.cta_texto}
                 </span>
@@ -169,21 +170,21 @@ export function Hero({ banners }: Props) {
             <>
               {img}
               {(ban.titulo || ban.subtexto) && (
-                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-white">
+                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent flex flex-col justify-center px-4 sm:px-12 md:px-16 lg:px-24 text-white">
                   <div className="max-w-2xl animate-fade-in-up">
                     {ban.titulo && (
-                      <h2 className="font-display italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-2 md:mb-4">
+                      <h2 className="font-display italic text-lg sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-1 sm:mb-2 md:mb-4">
                         {ban.titulo}
                       </h2>
                     )}
                     {ban.subtexto && (
-                      <p className="font-body font-light text-xs sm:text-sm md:text-base opacity-90 mb-4 md:mb-8 max-w-md leading-relaxed">
+                      <p className="font-body font-light text-[9px] sm:text-xs md:text-sm lg:text-base opacity-90 mb-2 sm:mb-4 md:mb-8 max-w-md leading-relaxed">
                         {ban.subtexto}
                       </p>
                     )}
                     {ban.cta_texto && (
                       <span
-                        className="inline-block px-6 py-2.5 sm:px-8 sm:py-3.5 border border-white text-white text-[10px] sm:text-[11px] tracking-widest uppercase font-body font-light hover:bg-white hover:text-black transition-colors duration-300"
+                        className="inline-block px-3 py-1.5 sm:px-8 sm:py-3.5 border border-white text-white text-[8px] sm:text-[11px] tracking-widest uppercase font-body font-light hover:bg-white hover:text-black transition-colors duration-300"
                       >
                         {ban.cta_texto}
                       </span>

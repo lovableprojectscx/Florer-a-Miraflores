@@ -6,7 +6,7 @@
  * @param file El archivo original (File)
  * @param quality Calidad del WebP resultante (de 0.0 a 1.0). Por defecto 0.88 para calidad premium.
  */
-export async function convertToWebP(file: File, quality = 0.88): Promise<File> {
+export async function convertToWebP(file: File, quality = 0.88, maxDimension = 1200): Promise<File> {
   // Si ya es webp, no hacemos conversión
   if (file.type === "image/webp") {
     return file;
@@ -25,17 +25,16 @@ export async function convertToWebP(file: File, quality = 0.88): Promise<File> {
         try {
           const canvas = document.createElement("canvas");
           
-          // Redimensionar si supera el límite de 1000px (manteniendo la relación de aspecto)
-          const MAX_LIMIT = 1000;
+          // Redimensionar si supera el límite especificado (manteniendo la relación de aspecto)
           let width = img.width;
           let height = img.height;
-          if (width > MAX_LIMIT || height > MAX_LIMIT) {
+          if (width > maxDimension || height > maxDimension) {
             if (width > height) {
-              height = Math.round((height * MAX_LIMIT) / width);
-              width = MAX_LIMIT;
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
             } else {
-              width = Math.round((width * MAX_LIMIT) / height);
-              height = MAX_LIMIT;
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
             }
           }
           canvas.width = width;
