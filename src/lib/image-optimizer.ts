@@ -6,7 +6,7 @@
  * @param file El archivo original (File)
  * @param quality Calidad del WebP resultante (de 0.0 a 1.0). Por defecto 0.88 para calidad premium.
  */
-export async function convertToWebP(file: File, quality = 0.88, maxDimension = 1200): Promise<File> {
+export async function convertToWebP(file: File, quality = 0.92, maxDimension = 2000): Promise<File> {
   // Si ya es webp, no hacemos conversión
   if (file.type === "image/webp") {
     return file;
