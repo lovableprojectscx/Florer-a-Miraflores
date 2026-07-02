@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import type { ProductoRow, TagRow } from "@/types/database";
+import { slugify } from "@/lib/utils";
 
 import pampas from "@/assets/product-novedad-pampas.webp";
 import velvet from "@/assets/product-novedad-velvet.webp";
@@ -88,7 +89,7 @@ function ProductCard({
 
   return (
     <article className={`group flex-col flex-shrink-0 w-[240px] md:w-full md:max-w-[290px] mx-auto md:mx-0 snap-start bg-white border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${className}`}>
-      <Link to="/producto/$id" params={{ id: producto.id }} className="block">
+      <Link to="/producto/$id" params={{ id: `${slugify(producto.nombre)}-${producto.id}` }} className="block">
         <div className="relative overflow-hidden bg-ivory" style={{ aspectRatio: "3/4" }}>
           {/* Badge del tag */}
           <span

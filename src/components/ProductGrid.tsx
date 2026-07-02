@@ -10,6 +10,7 @@ import type { Product } from "@/data/catalog";
 import type { ProductoRow, TagRow } from "@/types/database";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { slugify } from "@/lib/utils";
 
 // Data estática del home — se mantiene para compatibilidad
 const defaultProducts = [
@@ -64,7 +65,7 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
               key={p.id}
               className="group flex flex-col w-full max-w-[290px] mx-auto md:mx-0 bg-white border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
             >
-              <Link to="/producto/$id" params={{ id: p.id }} className="block">
+              <Link to="/producto/$id" params={{ id: `${slugify(p.nombre)}-${p.id}` }} className="block">
                 <div
                   className="relative overflow-hidden bg-ivory-soft"
                   style={{ aspectRatio: "1/1" }}

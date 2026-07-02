@@ -18,6 +18,7 @@ import {
 import { useCartStore } from "@/store/cart";
 import type { CategoriaRow, ProductoRow, TagRow } from "@/types/database";
 import { supabase } from "@/lib/supabase";
+import { slugify, extractIdFromSlug } from "@/lib/utils";
 
 // ─── Badge helper ─────────────────────────────────────────────────────────────
 
@@ -32,8 +33,9 @@ const BADGE_MAP: Record<string, { label: string; className: string }> = {
 
 export const Route = createFileRoute("/producto/$id")({
   loader: async ({ params }) => {
+    const realId = extractIdFromSlug(params.id);
     const [product, categorias, config, tags] = await Promise.all([
-      getProductoPorId(params.id),
+      getProductoPorId(realId),
       getCategorias(),
       getConfig().catch(() => null),
       supabase
@@ -43,6 +45,16 @@ export const Route = createFileRoute("/producto/$id")({
     ]);
 
     if (!product) throw redirect({ to: "/" });
+
+    // Redirección canónica si el parámetro no coincide con el slug del producto + ID
+    const canonicalId = `${slugify(product.nombre)}-${product.id}`;
+    if (params.id !== canonicalId) {
+      throw redirect({
+        to: "/producto/$id",
+        params: { id: canonicalId },
+        replace: true,
+      });
+    }
 
     // Productos relacionados — misma categoría, excluir el actual
     let relacionados: ProductoRow[] = [];
