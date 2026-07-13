@@ -173,7 +173,18 @@ export type DistritoUpdate = Partial<DistritoInsert>;
 
 // ─── pedidos ──────────────────────────────────────────────────────────────────
 
-export type EstadoPedido = "pendiente" | "pagado" | "en_camino" | "entregado" | "cancelado";
+/**
+ * Flujo prometido en la cotizacion: Recibido -> En preparacion -> En camino -> Entregado.
+ * "pendiente" es el valor en BD para "Recibido" (default de la tabla).
+ * "pagado" y "cancelado" son estados auxiliares (IZIPay / gestion interna).
+ */
+export type EstadoPedido =
+  | "pendiente"
+  | "pagado"
+  | "en_preparacion"
+  | "en_camino"
+  | "entregado"
+  | "cancelado";
 
 export interface PedidoProducto {
   id: string;

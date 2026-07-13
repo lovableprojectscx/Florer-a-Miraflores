@@ -139,12 +139,12 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
               {title ?? "Lo más pedido"}
             </h2>
           </div>
-          <a
-            href="#"
+          <Link
+            to="/catalogo"
             className="hidden md:inline-block text-[12px] tracking-wider-2 uppercase font-body font-light text-muted-foreground hover:text-foreground transition-colors"
           >
             Ver todos →
-          </a>
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-6 md:gap-y-10">

@@ -4,7 +4,13 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { ProductGrid } from "@/components/ProductGrid";
-import { getCategoriaPorSlug, getCategorias, getConfig, getProductosPorCategoria } from "@/lib/queries";
+import { ProductFiltersBar, useProductFilters } from "@/components/ProductFilters";
+import {
+  getCategoriaPorSlug,
+  getCategorias,
+  getConfig,
+  getProductosPorCategoria,
+} from "@/lib/queries";
 import type { CategoriaRow, ProductoRow } from "@/types/database";
 
 export const Route = createFileRoute("/categoria/$slug")({
@@ -56,6 +62,10 @@ function CategoriaPage() {
   const { cat, categorias, config, productos } = Route.useLoaderData();
   const matches = useMatches();
   const hasChild = matches.some((m) => m.routeId === "/categoria/$slug/$sub");
+
+  // Filtros de precio y orden (caso B: categoría sin subcategorías)
+  const { filtrados, orden, setOrden, rango, setRango } = useProductFilters(productos);
+
   if (hasChild) return <Outlet />;
 
   const hermanas = categorias.filter((c: CategoriaRow) => !c.parent_id && c.slug !== cat.slug);
@@ -117,9 +127,22 @@ function CategoriaPage() {
             </div>
           </section>
         ) : productos && productos.length > 0 ? (
-          // Caso B: No tiene subcategorías pero tiene productos -> Mostramos la grilla de productos directamente
+          // Caso B: No tiene subcategorías pero tiene productos -> Filtros + grilla de productos
           <section>
-            <ProductGrid products={productos} />
+            <ProductFiltersBar
+              total={filtrados.length}
+              orden={orden}
+              onOrdenChange={setOrden}
+              rango={rango}
+              onRangoChange={setRango}
+            />
+            {filtrados.length > 0 ? (
+              <ProductGrid products={filtrados} />
+            ) : (
+              <p className="font-body font-light text-sm text-[#8A7A6E] py-8 text-center">
+                No hay productos en ese rango de precio.
+              </p>
+            )}
           </section>
         ) : (
           // Caso C: No tiene subcategorías ni productos -> Mostramos próximamente

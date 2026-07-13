@@ -99,6 +99,20 @@ export async function getProductosPorCategoria(categoriaId: string): Promise<Pro
   return throwOnError(data, error);
 }
 
+/**
+ * Devuelve todos los productos activos ordenados por `orden`.
+ * Se usa en /catalogo para el catalogo completo con filtros.
+ */
+export async function getProductosActivos(): Promise<ProductoRow[]> {
+  const { data, error } = await supabase
+    .from("productos")
+    .select("*")
+    .eq("activo", true)
+    .order("orden", { ascending: true });
+
+  return throwOnError(data, error);
+}
+
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /**

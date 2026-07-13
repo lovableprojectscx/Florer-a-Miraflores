@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { ProductGrid } from "@/components/ProductGrid";
+import { ProductFiltersBar, useProductFilters } from "@/components/ProductFilters";
 import { getTagPorClave, getTodosProductosPorTag, getCategorias, getConfig } from "@/lib/queries";
 
 export const Route = createFileRoute("/tag/$key")({
@@ -25,7 +26,9 @@ export const Route = createFileRoute("/tag/$key")({
           { title: `${loaderData.tag.nombre} | Florería Miraflores` },
           {
             name: "description",
-            content: loaderData.tag.descripcion || `Explora la colección ${loaderData.tag.nombre} en Florería Miraflores. Delivery en Lima.`,
+            content:
+              loaderData.tag.descripcion ||
+              `Explora la colección ${loaderData.tag.nombre} en Florería Miraflores. Delivery en Lima.`,
           },
         ]
       : [],
@@ -49,6 +52,9 @@ export const Route = createFileRoute("/tag/$key")({
 
 function TagPage() {
   const { tag, categorias, config, productos } = Route.useLoaderData();
+
+  // Filtros de precio y orden
+  const { filtrados, orden, setOrden, rango, setRango } = useProductFilters(productos);
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
@@ -82,7 +88,20 @@ function TagPage() {
 
         {productos && productos.length > 0 ? (
           <section>
-            <ProductGrid products={productos} />
+            <ProductFiltersBar
+              total={filtrados.length}
+              orden={orden}
+              onOrdenChange={setOrden}
+              rango={rango}
+              onRangoChange={setRango}
+            />
+            {filtrados.length > 0 ? (
+              <ProductGrid products={filtrados} />
+            ) : (
+              <p className="font-body font-light text-sm text-[#8A7A6E] py-8 text-center">
+                No hay productos en ese rango de precio.
+              </p>
+            )}
           </section>
         ) : (
           <section className="border border-[#E8DDD0] p-8 md:p-12 bg-[#F5EFE6]/40 text-center">

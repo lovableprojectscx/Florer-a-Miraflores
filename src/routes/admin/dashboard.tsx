@@ -32,14 +32,16 @@ interface PedidoReciente {
 const ESTADO_BADGE: Record<string, string> = {
   pendiente: "bg-amber-100 text-amber-700",
   pagado: "bg-blue-100 text-blue-700",
-  en_camino: "bg-purple-100 text-purple-700",
+  en_preparacion: "bg-purple-100 text-purple-700",
+  en_camino: "bg-indigo-100 text-indigo-700",
   entregado: "bg-green-100 text-green-700",
   cancelado: "bg-red-100 text-red-700",
 };
 
 const ESTADO_LABEL: Record<string, string> = {
-  pendiente: "Pendiente",
+  pendiente: "Recibido",
   pagado: "Pagado",
+  en_preparacion: "En preparación",
   en_camino: "En camino",
   entregado: "Entregado",
   cancelado: "Cancelado",
@@ -112,7 +114,7 @@ function DashboardPage() {
           link: "/admin/productos",
         },
         {
-          label: "Pedidos pendientes",
+          label: "Pedidos recibidos (por atender)",
           value: stats.pedidosPendientes,
           icon: ShoppingBag,
           color:

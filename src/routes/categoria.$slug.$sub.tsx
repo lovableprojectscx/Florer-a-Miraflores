@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { ProductGrid } from "@/components/ProductGrid";
+import { ProductFiltersBar, useProductFilters } from "@/components/ProductFilters";
 import {
   getCategoriaPorSlug,
   getCategorias,
@@ -62,6 +63,9 @@ export const Route = createFileRoute("/categoria/$slug/$sub")({
 function SubPage() {
   const { cat, subcat, categorias, config, productos } = Route.useLoaderData();
 
+  // Filtros de precio y orden
+  const { filtrados, orden, setOrden, rango, setRango } = useProductFilters(productos);
+
   // Otras hijas de la misma categoría padre
   const otrasSubs = cat.hijas.filter((s: CategoriaRow) => s.slug !== subcat.slug);
 
@@ -97,9 +101,24 @@ function SubPage() {
           </h1>
         </header>
 
-        {/* Grid de productos */}
+        {/* Filtros + grid de productos */}
         {productos.length > 0 ? (
-          <ProductGrid products={productos} />
+          <>
+            <ProductFiltersBar
+              total={filtrados.length}
+              orden={orden}
+              onOrdenChange={setOrden}
+              rango={rango}
+              onRangoChange={setRango}
+            />
+            {filtrados.length > 0 ? (
+              <ProductGrid products={filtrados} />
+            ) : (
+              <p className="font-body font-light text-sm text-[#8A7A6E] py-8 text-center">
+                No hay productos en ese rango de precio.
+              </p>
+            )}
+          </>
         ) : (
           <section className="border border-[#E8DDD0] p-8 md:p-16 bg-[#F5EFE6]/40 text-center">
             <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>

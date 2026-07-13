@@ -11,10 +11,12 @@ export const Route = createFileRoute("/admin/pedidos")({
 
 // --- Constantes ---
 
+// Flujo del pedido: Recibido -> En preparacion -> En camino -> Entregado
 const ESTADOS: { value: EstadoPedido | "todos"; label: string }[] = [
   { value: "todos", label: "Todos" },
-  { value: "pendiente", label: "Pendiente" },
+  { value: "pendiente", label: "Recibido" },
   { value: "pagado", label: "Pagado" },
+  { value: "en_preparacion", label: "En preparación" },
   { value: "en_camino", label: "En camino" },
   { value: "entregado", label: "Entregado" },
   { value: "cancelado", label: "Cancelado" },
@@ -23,14 +25,16 @@ const ESTADOS: { value: EstadoPedido | "todos"; label: string }[] = [
 const ESTADO_BADGE: Record<EstadoPedido, string> = {
   pendiente: "bg-amber-100 text-amber-700 border-amber-200",
   pagado: "bg-green-100 text-green-700 border-green-200",
+  en_preparacion: "bg-purple-100 text-purple-700 border-purple-200",
   en_camino: "bg-blue-100 text-blue-700 border-blue-200",
   entregado: "bg-gray-100 text-gray-600 border-gray-200",
   cancelado: "bg-red-100 text-red-700 border-red-200",
 };
 
 const ESTADO_LABEL: Record<EstadoPedido, string> = {
-  pendiente: "Pendiente",
+  pendiente: "Recibido",
   pagado: "Pagado",
+  en_preparacion: "En preparación",
   en_camino: "En camino",
   entregado: "Entregado",
   cancelado: "Cancelado",
