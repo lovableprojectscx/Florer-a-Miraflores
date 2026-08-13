@@ -54,11 +54,10 @@ export function Hero({ banners }: Props) {
     setTouchEnd(null);
   };
 
-  // En móviles regresamos a la altura fija original de 260px (a petición del usuario),
-  // y a partir de sm (tablet/PC) usamos la proporción fluida 1920x800 (aspect-[1920/800])
-  // para ver la imagen de portada completa y con excelente nitidez.
+  // Mantiene la proporción exacta 2560x960 px en todos los dispositivos (móvil, tablet y PC)
+  // para que el banner y sus textos integrados se vean completos sin recortarse.
   const containerClasses =
-    "relative w-full overflow-hidden bg-background h-[260px] sm:h-auto sm:aspect-[1920/800]";
+    "relative w-full overflow-hidden bg-background aspect-[2560/960]";
 
   if (banners.length === 0) {
     return (

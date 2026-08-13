@@ -24,7 +24,7 @@ export const Route = createFileRoute("/admin/categorias")({
 
 // --- Constantes ---
 
-const MAX_SIZE_BYTES = 5 * 1024 * 1024;
+const MAX_SIZE_BYTES = 30 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const BUCKET = "categorias";
 
@@ -157,7 +157,7 @@ function CategoriaForm({ initial, parents, saving, onClose, onSave, titulo }: Ca
       return;
     }
     if (file.size > MAX_SIZE_BYTES) {
-      setUploadError("El archivo supera el límite de 5 MB.");
+      setUploadError("El archivo supera el límite inicial de 30 MB.");
       return;
     }
     setUploading(true);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ConfigRow } from "@/types/database";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const FALLBACK_MESSAGES = [
   "Pide hasta las 6 PM y recibelo el mismo dia!",
@@ -25,11 +26,45 @@ export function AnnouncementBar({ config }: Props) {
     return () => clearInterval(t);
   }, [finalMessages.length]);
 
+  const handlePrev = () => {
+    setIdx((n) => (n - 1 + finalMessages.length) % finalMessages.length);
+  };
+
+  const handleNext = () => {
+    setIdx((n) => (n + 1) % finalMessages.length);
+  };
+
   return (
-    <div className="bg-[#C4956A] text-white text-center py-2 px-4">
-      <p className="font-body text-[11px] tracking-widest uppercase font-light">
-        {finalMessages[idx]}
-      </p>
+    <div className="bg-[#F77278] text-white py-2 px-3 sm:px-6 relative flex items-center justify-between select-none">
+      {finalMessages.length > 1 ? (
+        <button
+          onClick={handlePrev}
+          aria-label="Anuncio anterior"
+          className="p-1 hover:bg-white/20 rounded-full transition-colors cursor-pointer text-white flex-shrink-0"
+        >
+          <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+        </button>
+      ) : (
+        <div className="w-6" />
+      )}
+
+      <div className="flex-1 text-center px-2 overflow-hidden">
+        <p className="font-body text-[11px] sm:text-xs tracking-widest uppercase font-light truncate">
+          {finalMessages[idx]}
+        </p>
+      </div>
+
+      {finalMessages.length > 1 ? (
+        <button
+          onClick={handleNext}
+          aria-label="Siguiente anuncio"
+          className="p-1 hover:bg-white/20 rounded-full transition-colors cursor-pointer text-white flex-shrink-0"
+        >
+          <ChevronRight className="h-4 w-4" strokeWidth={2} />
+        </button>
+      ) : (
+        <div className="w-6" />
+      )}
     </div>
   );
 }

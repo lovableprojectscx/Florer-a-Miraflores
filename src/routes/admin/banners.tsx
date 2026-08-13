@@ -25,7 +25,7 @@ export const Route = createFileRoute("/admin/banners")({
 
 // --- Constantes ---
 
-const MAX_SIZE_BYTES = 5 * 1024 * 1024;
+const MAX_SIZE_BYTES = 30 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const BUCKET = "banners";
 
@@ -52,8 +52,8 @@ const EMPTY_FORM: FormState = {
 async function subirImagen(file: File): Promise<string> {
   let finalFile = file;
   try {
-    // Para banners de portada, usamos una resolución máxima de 2000px y una calidad de 0.92 para mantener una nitidez excelente
-    finalFile = await convertToWebP(file, 0.92, 2000);
+    // Para banners de portada, usamos una resolución máxima de 2560px y una calidad de 0.92 para mantener una nitidez excelente
+    finalFile = await convertToWebP(file, 0.92, 2560);
   } catch (err) {
     console.error("Error al optimizar imagen a WebP:", err);
   }
@@ -87,7 +87,7 @@ function TableSkeleton() {
       {[1, 2, 3].map((n) => (
         <tr key={n} className="border-b border-[#E8DDD0] animate-pulse">
           <td className="px-4 py-4 w-44">
-            <div className="aspect-[21/9] bg-[#F5EFE6] rounded" />
+            <div className="aspect-[2560/960] bg-[#F5EFE6] rounded" />
           </td>
           <td className="px-4 py-4">
             <div className="h-4 w-32 bg-[#F5EFE6] rounded mb-1" />
@@ -141,7 +141,7 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
       return;
     }
     if (file.size > MAX_SIZE_BYTES) {
-      setUploadError("El archivo supera el límite de 5 MB.");
+      setUploadError("El archivo supera el límite inicial de 30 MB.");
       return;
     }
     setUploading(true);
@@ -202,7 +202,7 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
               Imagen del Banner *
             </label>
             {form.imagen_url ? (
-              <div className="relative group w-full aspect-[21/9] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]">
+              <div className="relative group w-full aspect-[2560/960] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]">
                 <img src={form.imagen_url} alt="Banner" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                   <button
@@ -215,7 +215,7 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
                 </div>
               </div>
             ) : (
-              <label className="flex flex-col items-center justify-center w-full aspect-[21/9] border-2 border-dashed border-[#E8DDD0] hover:border-[#C4956A] bg-[#FDFAF6] cursor-pointer transition-colors">
+              <label className="flex flex-col items-center justify-center w-full aspect-[2560/960] border-2 border-dashed border-[#E8DDD0] hover:border-[#C4956A] bg-[#FDFAF6] cursor-pointer transition-colors">
                 {uploading ? (
                   <Loader2 className="h-6 w-6 text-[#C4956A] animate-spin" strokeWidth={1.5} />
                 ) : (
@@ -225,7 +225,7 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
                       Subir imagen de Banner
                     </span>
                     <span className="font-body text-[10px] text-[#C4956A] mt-1 text-center px-4">
-                      Medida recomendada: 1920x800 px (o proporción similar, ej. 1600x660).
+                      Medida recomendada: 2560x960 px.
                     </span>
                     <span className="font-body text-[9px] text-[#8A7A6E] mt-0.5 text-center px-4 leading-normal">
                       Sube la imagen con el diseño y texto ya incorporados. En móviles y PC se
@@ -620,7 +620,7 @@ function BannersPage() {
                   >
                     {/* Vista Previa */}
                     <td className="px-4 py-4 w-52">
-                      <div className="w-48 aspect-[21/9] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]/50 rounded-sm">
+                      <div className="w-48 aspect-[2560/960] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]/50 rounded-sm">
                         {ban.imagen_url ? (
                           <img
                             src={ban.imagen_url}
@@ -742,7 +742,7 @@ function BannersPage() {
         {loading ? (
           [1, 2, 3].map((n) => (
             <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3">
-              <div className="aspect-[21/9] bg-[#F5EFE6] rounded" />
+              <div className="aspect-[2560/960] bg-[#F5EFE6] rounded" />
               <div className="h-4 bg-[#F5EFE6] rounded w-3/4" />
               <div className="h-3 bg-[#F5EFE6] rounded w-1/2" />
             </div>
@@ -759,7 +759,7 @@ function BannersPage() {
             return (
               <div key={ban.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
                 {/* Imagen Preview */}
-                <div className="w-full aspect-[21/9] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]/50 rounded-sm">
+                <div className="w-full aspect-[2560/960] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]/50 rounded-sm">
                   {ban.imagen_url ? (
                     <img
                       src={ban.imagen_url}

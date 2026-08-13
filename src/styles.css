@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Jost:wght@200;300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@200;300;400;500&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -37,35 +37,35 @@
   --color-ivory-soft: var(--ivory-soft);
 
   --font-display: "Playfair Display", serif;
-  --font-italic: "Cormorant Garamond", serif;
+  --font-italic: "Playfair Display", serif;
   --font-body: "Jost", sans-serif;
 }
 
 :root {
   --radius: 0.25rem;
 
-  /* Warm neutral palette */
-  --background: oklch(0.99 0.003 70); /* #FCFAF8 - Muy luminoso y limpio */
-  --ivory: oklch(0.99 0.003 70);
-  --ivory-soft: oklch(0.965 0.007 70); /* #F6F3EE - Suave contraste para secciones */
+  /* Warm neutral palette - Clarificado a blanco marfil ultra luminoso */
+  --background: oklch(0.998 0 0); /* #FFFFFF */
+  --ivory: oklch(0.998 0 0); /* #FFFFFF */
+  --ivory-soft: oklch(0.985 0.003 70); /* #FAF8F6 - Contraste suave y clarito para secciones */
   --foreground: oklch(0.18 0 0); /* #1A1A1A */
   --card: oklch(1.0 0 0); /* Blanco puro para cards */
   --card-foreground: oklch(0.18 0 0);
   --popover: oklch(1.0 0 0);
   --popover-foreground: oklch(0.18 0 0);
   --primary: oklch(0.18 0 0);
-  --primary-foreground: oklch(0.99 0.003 70);
-  --secondary: oklch(0.965 0.007 70);
+  --primary-foreground: oklch(0.998 0 0);
+  --secondary: oklch(0.985 0.003 70);
   --secondary-foreground: oklch(0.18 0 0);
-  --muted: oklch(0.965 0.007 70);
+  --muted: oklch(0.985 0.003 70);
   --muted-foreground: oklch(0.55 0.008 80); /* #8C8A84 */
-  --accent: oklch(0.965 0.007 70);
+  --accent: oklch(0.985 0.003 70);
   --accent-foreground: oklch(0.18 0 0);
   --rose-accent: oklch(0.66 0.078 17); /* #C4848A */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0 0);
-  --border: oklch(0 0 0 / 0.07); /* Bordes más finos y sutiles */
-  --input: oklch(0 0 0 / 0.07);
+  --border: oklch(0 0 0 / 0.06); /* Bordes más finos y sutiles */
+  --input: oklch(0 0 0 / 0.06);
   --ring: oklch(0.66 0.078 17);
 }
 

@@ -30,7 +30,7 @@ export const Route = createFileRoute("/admin/productos")({
 // --- Constantes ---
 
 const MAX_IMAGENES = 2;
-const MAX_SIZE_BYTES = 5 * 1024 * 1024;
+const MAX_SIZE_BYTES = 30 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const BUCKET = "productos";
 
@@ -176,7 +176,7 @@ function ProductoForm({ initial, categorias, tags, saving, onClose, onSave, titu
       return;
     }
     if (file.size > MAX_SIZE_BYTES) {
-      setUploadError("El archivo supera el limite de 5 MB.");
+      setUploadError("El archivo supera el limite inicial de 30 MB.");
       return;
     }
     setUploading(idx);
@@ -561,7 +561,7 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
       let errorMsg: string | undefined = undefined;
       if (f.size > MAX_SIZE_BYTES) {
         status = "error";
-        errorMsg = "El archivo supera el límite de 5 MB.";
+        errorMsg = "El archivo supera el límite de 30 MB.";
       }
 
       newItems.push({

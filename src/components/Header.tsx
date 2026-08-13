@@ -75,7 +75,7 @@ export function Header({ categorias, config }: Props) {
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.25} />
             {itemCount > 0 && (
-              <span className="absolute top-1 right-1 min-w-[16px] h-4 px-0.5 flex items-center justify-center bg-[#C4956A] text-white text-[9px] font-body font-medium rounded-full leading-none">
+              <span className="absolute top-1 right-1 min-w-[16px] h-4 px-0.5 flex items-center justify-center bg-[#F77278] text-white text-[9px] font-body font-medium rounded-full leading-none">
                 {itemCount > 99 ? "99+" : itemCount}
               </span>
             )}
