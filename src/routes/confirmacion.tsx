@@ -97,7 +97,7 @@ function ConfirmacionPage() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 h-13 px-8 py-4 bg-[#25D366] hover:bg-[#1fba59] text-white text-[12px] tracking-widest uppercase font-body font-medium transition-colors"
+            className="flex items-center justify-center gap-2 h-13 px-8 py-4 bg-[#25D366] hover:bg-[#1fba59] text-white text-[11px] tracking-widest uppercase font-body font-medium rounded-md transition-colors shadow-xs"
           >
             <WhatsappIcon />
             Escribir por WhatsApp
@@ -106,7 +106,7 @@ function ConfirmacionPage() {
           {/* Seguir comprando */}
           <Link
             to="/"
-            className="flex items-center justify-center h-13 px-8 py-4 border border-[#C4956A] text-[#C4956A] hover:bg-[#C4956A] hover:text-white text-[12px] tracking-widest uppercase font-body font-medium transition-colors"
+            className="flex items-center justify-center h-13 px-8 py-4 border border-[#2C2420] text-[#2C2420] hover:bg-[#2C2420] hover:text-white text-[11px] tracking-widest uppercase font-body font-medium rounded-md transition-colors shadow-xs"
           >
             Seguir comprando
           </Link>

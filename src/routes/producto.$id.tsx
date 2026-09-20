@@ -151,7 +151,7 @@ function ProductPage() {
       <AnnouncementBar config={config} />
       <Header categorias={categorias} config={config} />
 
-      <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-8 md:py-14">
+      <main className="max-w-[1536px] mx-auto px-5 md:px-12 lg:px-16 py-8 md:py-14">
         {/* Breadcrumb */}
         <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-8 flex flex-wrap items-center gap-1.5">
           <Link to="/" className="hover:text-[#2C2420] transition-colors">
@@ -182,20 +182,20 @@ function ProductPage() {
             </>
           )}
           <span>/</span>
-          <span className="text-[#2C2420]">{product.nombre}</span>
+          <span className="text-[#2C2420] font-normal">{product.nombre}</span>
         </nav>
 
-        {/* Layout principal */}
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
-          {/* Imágenes (60%) */}
-          <div className="w-full lg:w-[60%] flex flex-col gap-3">
+        {/* Layout principal con galería sticky en Desktop */}
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+          {/* Imágenes (Sticky 55%) */}
+          <div className="w-full lg:w-[55%] flex flex-col gap-3 lg:sticky lg:top-36">
             <div
-              className="relative overflow-hidden bg-[#F5EFE6] rounded-xl"
+              className="relative overflow-hidden bg-[#FAF8F5] rounded-2xl border border-[#E8DDD0]/50"
               style={{ aspectRatio: "4/5" }}
             >
               {label && (
                 <span
-                  className={`absolute top-4 left-4 z-10 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${color ? "text-white" : fallbackClass}`}
+                  className={`absolute top-4 left-4 z-10 px-3 py-1.5 text-[10px] tracking-widest uppercase font-body font-medium rounded-sm shadow-xs ${color ? "text-white" : fallbackClass}`}
                   style={color ? { backgroundColor: color } : undefined}
                 >
                   {label}
@@ -205,7 +205,7 @@ function ProductPage() {
                 <img
                   src={imagenes[activeImg]}
                   alt={product.nombre}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = fallbackImg;
@@ -214,16 +214,16 @@ function ProductPage() {
               )}
             </div>
             {imagenes.length > 1 && (
-              <div className="flex gap-3">
+              <div className="flex gap-3 overflow-x-auto pb-1">
                 {imagenes.map((img: string, i: number) => (
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
                     aria-label={`Ver imagen ${i + 1}`}
-                    className={`w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
+                    className={`w-20 h-20 flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all cursor-pointer ${
                       activeImg === i
-                        ? "border-[#C4956A]"
-                        : "border-transparent hover:border-[#E8DDD0]"
+                        ? "border-[#2C2420] shadow-sm"
+                        : "border-[#E8DDD0]/70 hover:border-[#2C2420]/50 opacity-75 hover:opacity-100"
                     }`}
                   >
                     <img
@@ -242,84 +242,89 @@ function ProductPage() {
             )}
           </div>
 
-          {/* Info (40%) */}
-          <div className="w-full lg:w-[40%] flex flex-col">
+          {/* Info del producto (45%) */}
+          <div className="w-full lg:w-[45%] flex flex-col pt-2">
             {label && (
               <span
-                className={`lg:hidden self-start mb-3 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium ${color ? "text-white" : fallbackClass}`}
+                className={`lg:hidden self-start mb-3 px-3 py-1 text-[10px] tracking-widest uppercase font-body font-medium rounded-sm ${color ? "text-white" : fallbackClass}`}
                 style={color ? { backgroundColor: color } : undefined}
               >
                 {label}
               </span>
             )}
 
-            <h1 className="font-display italic text-4xl md:text-5xl text-[#2C2420] leading-tight">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl text-[#2C2420] font-normal leading-tight">
               {product.nombre}
             </h1>
-            <p className="mt-4 font-body text-2xl font-light text-[#C4956A]">
-              S/ {product.precio.toFixed(2)}
+            <p className="mt-3 font-body text-2xl sm:text-3xl font-semibold text-[#2C2420]">
+              S/. {product.precio.toFixed(2)} <span className="text-sm font-normal text-[#8A7A6E]">PEN</span>
             </p>
 
-            <div className="my-6 border-t border-[#E8DDD0]" />
+            <div className="my-6 border-t border-[#E8DDD0]/80" />
 
             {product.descripcion && (
-              <p className="font-body font-light text-[#2C2420]/80 leading-relaxed">
-                {product.descripcion}
-              </p>
+              <div className="prose text-[#2C2420]/80 font-body font-light text-sm sm:text-base leading-relaxed">
+                <p>{product.descripcion}</p>
+              </div>
             )}
 
-            {/* Selector cantidad */}
+            {/* Selector de cantidad */}
             <div className="mt-8">
-              <p className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-3">
+              <p className="font-body text-xs tracking-[0.16em] uppercase text-[#8A7A6E] mb-3 font-medium">
                 Cantidad
               </p>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <button
                   onClick={() => setCantidad((q) => Math.max(1, q - 1))}
                   aria-label="Reducir cantidad"
-                  className="w-10 h-10 flex items-center justify-center border border-[#E8DDD0] text-[#8A7A6E] hover:border-[#C4956A] hover:text-[#C4956A] transition-colors rounded-lg"
+                  className="w-10 h-10 flex items-center justify-center border border-[#E8DDD0] text-[#2C2420] hover:bg-[#FAF8F5] transition-colors rounded-lg cursor-pointer"
                 >
                   <Minus className="h-4 w-4" strokeWidth={1.5} />
                 </button>
-                <span className="font-body text-lg w-8 text-center text-[#2C2420]">{cantidad}</span>
+                <span className="font-body text-base font-medium w-8 text-center text-[#2C2420]">
+                  {cantidad}
+                </span>
                 <button
                   onClick={() => setCantidad((q) => q + 1)}
                   aria-label="Aumentar cantidad"
-                  className="w-10 h-10 flex items-center justify-center border border-[#E8DDD0] text-[#8A7A6E] hover:border-[#C4956A] hover:text-[#C4956A] transition-colors rounded-lg"
+                  className="w-10 h-10 flex items-center justify-center border border-[#E8DDD0] text-[#2C2420] hover:bg-[#FAF8F5] transition-colors rounded-lg cursor-pointer"
                 >
                   <Plus className="h-4 w-4" strokeWidth={1.5} />
                 </button>
               </div>
             </div>
 
-            {/* Botones */}
+            {/* Botones de acción */}
             <div className="mt-8 flex flex-col gap-3">
               <button
                 onClick={handleAgregar}
-                className="flex items-center justify-center gap-2 w-full h-14 bg-[#2C2420] text-white text-[12px] tracking-widest uppercase font-body font-medium hover:bg-[#2C2420]/80 transition-colors"
+                className="flex items-center justify-center gap-2 w-full h-14 bg-[#2C2420] hover:bg-[#1A1A1A] text-white text-[11px] sm:text-xs tracking-widest uppercase font-body font-medium rounded-md shadow-sm transition-all duration-300 cursor-pointer"
               >
                 <ShoppingBag className="h-4 w-4" strokeWidth={1.5} />
                 Agregar al carrito
               </button>
               <button
                 onClick={handleComprarAhora}
-                className="flex items-center justify-center gap-2 w-full h-14 border border-[#C4956A] text-[#C4956A] text-[12px] tracking-widest uppercase font-body font-medium hover:bg-[#C4956A] hover:text-white transition-colors"
+                className="flex items-center justify-center gap-2 w-full h-14 border border-[#2C2420] text-[#2C2420] hover:bg-[#FAF8F5] text-[11px] sm:text-xs tracking-widest uppercase font-body font-medium rounded-md transition-all duration-300 cursor-pointer"
               >
                 <Zap className="h-4 w-4" strokeWidth={1.5} />
                 Comprar ahora
               </button>
             </div>
 
-            {/* Nota delivery */}
-            <div className="mt-6 flex items-start gap-2 p-4 bg-[#F5EFE6] rounded-xl">
-              <MapPin className="h-4 w-4 text-[#C4956A] mt-0.5 flex-shrink-0" strokeWidth={1.5} />
-              <p className="font-body text-xs text-[#8A7A6E] leading-relaxed">
-                Delivery disponible en{" "}
-                <span className="text-[#2C2420]">
-                  Miraflores, Surco, Barranco, Lince y San Isidro
-                </span>
-                . Coordina tu hora de entrega en el checkout.
-              </p>
+            {/* Tarjeta informativa de delivery */}
+            <div className="mt-8 p-5 bg-[#FAF8F5] border border-[#E8DDD0]/80 rounded-xl flex items-start gap-3.5">
+              <div className="w-8 h-8 rounded-full bg-white border border-[#E8DDD0] flex items-center justify-center shrink-0 shadow-xs">
+                <MapPin className="h-4 w-4 text-[#2C2420]" strokeWidth={1.5} />
+              </div>
+              <div>
+                <p className="font-body font-medium text-xs sm:text-sm text-[#2C2420]">
+                  Delivery el mismo día en Lima y Callao
+                </p>
+                <p className="font-body font-light text-xs text-[#8A7A6E] mt-0.5 leading-relaxed">
+                  Miraflores, San Isidro, Surco, Barranco, Lince y más distritos. Elige tu fecha y rango horario en el checkout.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -328,11 +333,11 @@ function ProductPage() {
         {relacionados.length > 0 && (
           <section className="mt-20 md:mt-28 border-t border-[#E8DDD0] pt-14">
             <div className="mb-10">
-              <p className="font-display italic text-[#C4956A] text-base mb-1">
-                — también te puede gustar
+              <p className="font-body text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
+                — También te puede interesar
               </p>
-              <h2 className="font-display text-3xl md:text-4xl text-[#2C2420]">
-                Productos relacionados
+              <h2 className="font-display text-3xl md:text-4xl text-[#2C2420] font-normal">
+                Arreglos relacionados
               </h2>
             </div>
             <ProductGrid products={relacionados} />

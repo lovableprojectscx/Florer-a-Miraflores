@@ -35,21 +35,21 @@ export function AnnouncementBar({ config }: Props) {
   };
 
   return (
-    <div className="bg-[#F77278] text-white py-2 px-3 sm:px-6 relative flex items-center justify-between select-none">
+    <div className="bg-[#FAF8F5] text-[#2C2420] border-b border-[#E8DDD0]/70 py-2.5 px-3 sm:px-8 relative flex items-center justify-between select-none transition-colors duration-300">
       {finalMessages.length > 1 ? (
         <button
           onClick={handlePrev}
           aria-label="Anuncio anterior"
-          className="p-1 hover:bg-white/20 rounded-full transition-colors cursor-pointer text-white flex-shrink-0"
+          className="p-1 text-[#2C2420]/60 hover:text-[#2C2420] hover:bg-black/5 rounded-full transition-colors cursor-pointer flex-shrink-0"
         >
-          <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+          <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={1.5} />
         </button>
       ) : (
-        <div className="w-6" />
+        <div className="w-5" />
       )}
 
       <div className="flex-1 text-center px-2 overflow-hidden">
-        <p className="font-body text-[11px] sm:text-xs tracking-widest uppercase font-light truncate">
+        <p className="font-body text-[11px] sm:text-xs tracking-[0.2em] uppercase font-normal text-[#2C2420]/90 truncate">
           {finalMessages[idx]}
         </p>
       </div>
@@ -58,12 +58,12 @@ export function AnnouncementBar({ config }: Props) {
         <button
           onClick={handleNext}
           aria-label="Siguiente anuncio"
-          className="p-1 hover:bg-white/20 rounded-full transition-colors cursor-pointer text-white flex-shrink-0"
+          className="p-1 text-[#2C2420]/60 hover:text-[#2C2420] hover:bg-black/5 rounded-full transition-colors cursor-pointer flex-shrink-0"
         >
-          <ChevronRight className="h-4 w-4" strokeWidth={2} />
+          <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={1.5} />
         </button>
       ) : (
-        <div className="w-6" />
+        <div className="w-5" />
       )}
     </div>
   );

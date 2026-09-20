@@ -37,11 +37,11 @@ export const Route = createFileRoute("/")({
       getTags().catch(() => []),
     ]);
 
-    // Para cada tag activo, cargar sus productos en paralelo (máx 5: 4 visibles + 1 para saber si hay más)
+    // Para cada tag activo, cargar sus productos en paralelo para el slider
     const tagSecciones: TagSeccion[] = [];
     if (tags.length > 0) {
       const resultados = await Promise.all(
-        tags.map((tag) => getProductosPorTag(tag.clave, 5).catch(() => [])),
+        tags.map((tag) => getProductosPorTag(tag.clave, 16).catch(() => [])),
       );
       tags.forEach((tag, i) => {
         tagSecciones.push({ tag, productos: resultados[i] });

@@ -20,7 +20,11 @@ function WhatsappIcon({ className = "h-5 w-5" }: { className?: string }) {
 
 export function Header({ categorias, config }: Props) {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [openCat, setOpenCat] = useState<string | null>(null);
+  const [hoveredCat, setHoveredCat] = useState<string | null>(null);
+
   const close = () => {
     setOpen(false);
     setOpenCat(null);
@@ -35,47 +39,109 @@ export function Header({ categorias, config }: Props) {
     return acc;
   }, {});
 
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    window.location.href = `/catalogo`;
+  };
+
   return (
-    <header className="bg-ivory">
-      <div className="px-6 md:px-10 h-20 grid grid-cols-3 items-center">
+    <header className="bg-[#FFFFFF] sticky top-0 z-30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+      {/* Search overlay drawer */}
+      {searchOpen && (
+        <div className="absolute inset-x-0 top-0 bg-[#FFFFFF] border-b border-[#E8DDD0] z-40 py-4 px-6 md:px-12 animate-fadeIn shadow-md">
+          <form onSubmit={handleSearchSubmit} className="max-w-3xl mx-auto flex items-center gap-3">
+            <Search className="h-5 w-5 text-[#8A7A6E]" strokeWidth={1.5} />
+            <input
+              type="text"
+              placeholder="Buscar ramos, flores, ocasiones..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              autoFocus
+              className="flex-1 bg-transparent border-none outline-none font-body text-sm md:text-base text-[#2C2420] placeholder-[#8A7A6E]/70 py-1"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="text-[#8A7A6E] hover:text-[#2C2420] text-xs font-body uppercase tracking-wider"
+              >
+                Limpiar
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setSearchOpen(false)}
+              className="p-1 text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+              aria-label="Cerrar búsqueda"
+            >
+              <X className="h-5 w-5" strokeWidth={1.5} />
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* Top tier */}
+      <div className="px-5 md:px-12 h-20 md:h-24 grid grid-cols-3 items-center">
+        {/* Left: Mobile hamburger or Desktop search */}
         <div className="flex items-center">
           <button
-            aria-label="Abrir menu"
+            aria-label="Abrir menú"
             onClick={() => setOpen(true)}
-            className="md:hidden p-2 -ml-2 hover:opacity-60 transition-opacity"
+            className="md:hidden p-2 -ml-2 text-[#2C2420] hover:opacity-70 transition-opacity"
           >
             <Menu className="h-6 w-6" strokeWidth={1.25} />
           </button>
           <button
             aria-label="Buscar"
-            className="hidden md:inline-flex p-2 -ml-2 hover:opacity-60 transition-opacity"
+            onClick={() => setSearchOpen(true)}
+            className="hidden md:inline-flex items-center gap-2 p-2 -ml-2 text-[#2C2420]/80 hover:text-[#2C2420] hover:opacity-80 transition-all cursor-pointer group"
           >
-            <Search className="h-5 w-5" strokeWidth={1.25} />
+            <Search className="h-5 w-5 text-[#2C2420]/70 group-hover:text-[#2C2420]" strokeWidth={1.25} />
+            <span className="text-[11px] tracking-widest uppercase font-body font-light text-[#2C2420]/70 group-hover:text-[#2C2420]">
+              Buscar
+            </span>
           </button>
         </div>
 
-        <Link to="/" className="flex items-center justify-center">
-          <img src={logoImg} alt="Florería Miraflores" className="h-10 md:h-12 w-auto object-contain" />
+        {/* Center: Brand Logo */}
+        <Link to="/" className="flex flex-col items-center justify-center text-center group">
+          <img
+            src={logoImg}
+            alt="Florería Miraflores"
+            className="h-9 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+          />
         </Link>
 
-        <div className="flex items-center justify-end gap-1">
+        {/* Right: Contact & Cart */}
+        <div className="flex items-center justify-end gap-2 md:gap-3">
+          <button
+            aria-label="Buscar"
+            onClick={() => setSearchOpen(true)}
+            className="md:hidden p-2 text-[#2C2420] hover:opacity-70 transition-opacity"
+          >
+            <Search className="h-5 w-5" strokeWidth={1.25} />
+          </button>
           <a
             href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
             aria-label="WhatsApp"
-            className="p-2 hover:opacity-60 transition-opacity"
+            className="hidden sm:flex items-center gap-1.5 p-2 text-[#2C2420]/80 hover:text-[#2C2420] transition-opacity"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <WhatsappIcon className="h-5 w-5" />
+            <WhatsappIcon className="h-4 w-4" />
+            <span className="hidden lg:inline text-[11px] tracking-wider uppercase font-body font-light">
+              WhatsApp
+            </span>
           </a>
           <button
             aria-label={`Carrito${itemCount > 0 ? ` (${itemCount} items)` : ""}`}
             onClick={abrirCarrito}
-            className="relative p-2 -mr-2 hover:opacity-60 transition-opacity"
+            className="relative p-2 -mr-2 text-[#2C2420] hover:opacity-70 transition-opacity cursor-pointer"
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.25} />
             {itemCount > 0 && (
-              <span className="absolute top-1 right-1 min-w-[16px] h-4 px-0.5 flex items-center justify-center bg-[#F77278] text-white text-[9px] font-body font-medium rounded-full leading-none">
+              <span className="absolute top-1 right-1 min-w-[17px] h-[17px] px-1 flex items-center justify-center bg-[#2C2420] text-white text-[9px] font-body font-medium rounded-full leading-none shadow-sm">
                 {itemCount > 99 ? "99+" : itemCount}
               </span>
             )}
@@ -83,61 +149,126 @@ export function Header({ categorias, config }: Props) {
         </div>
       </div>
 
-      {/* Desktop nav */}
-      <nav className="hidden md:block border-t border-b border-border">
-        <ul className="px-6 md:px-10 flex gap-6 md:gap-8 justify-center items-center h-12 whitespace-nowrap text-[12px] tracking-widest uppercase font-body font-light">
+      {/* Desktop Nav (Bottom Tier) */}
+      <nav className="hidden md:block border-t border-[#E8DDD0]/60">
+        <ul className="px-6 md:px-12 flex gap-7 lg:gap-10 justify-center items-center h-12 whitespace-nowrap text-[11px] lg:text-[12px] tracking-[0.16em] uppercase font-body font-light">
           <li>
-            <Link to="/" className="text-foreground hover:opacity-70 transition-opacity">
+            <Link
+              to="/"
+              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+              activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
+            >
               Inicio
             </Link>
           </li>
-          {padres.map((c) => (
-            <li key={c.slug}>
-              <Link
-                to="/categoria/$slug"
-                params={{ slug: c.slug }}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                activeProps={{ className: "text-foreground" }}
+          {padres.map((c) => {
+            const hijas = hijasMap[c.id] ?? [];
+            const hasSub = hijas.length > 0;
+            return (
+              <li
+                key={c.slug}
+                className="relative py-3 group"
+                onMouseEnter={() => setHoveredCat(c.id)}
+                onMouseLeave={() => setHoveredCat(null)}
               >
-                {c.nombre}
-              </Link>
-            </li>
-          ))}
+                <Link
+                  to="/categoria/$slug"
+                  params={{ slug: c.slug }}
+                  className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors inline-flex items-center gap-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform"
+                  activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
+                >
+                  {c.nombre}
+                  {hasSub && <ChevronDown className="h-3 w-3 opacity-60 group-hover:opacity-100 transition-opacity" />}
+                </Link>
+
+                {/* Dropdown for subcategories */}
+                {hasSub && hoveredCat === c.id && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 min-w-[200px] bg-white border border-[#E8DDD0] shadow-lg py-2 z-50 animate-fadeIn rounded-sm">
+                    {hijas.map((sub) => (
+                      <Link
+                        key={sub.id}
+                        to="/categoria/$slug/$sub"
+                        params={{ slug: c.slug, sub: sub.slug }}
+                        className="block px-5 py-2.5 text-[11px] tracking-wider uppercase font-body font-light text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] transition-colors text-left"
+                      >
+                        {sub.nombre}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </li>
+            );
+          })}
+          <li>
+            <Link
+              to="/catalogo"
+              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+              activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
+            >
+              Catálogo
+            </Link>
+          </li>
+          <li>
+            <a
+              href="/#about"
+              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+            >
+              Nosotros
+            </a>
+          </li>
+          <li>
+            <a
+              href="/#faq"
+              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+            >
+              Preguntas
+            </a>
+          </li>
         </ul>
       </nav>
 
-      {/* Mobile drawer */}
+      {/* Mobile Drawer */}
       {open && (
         <>
           <div
-            className="md:hidden fixed inset-0 bg-foreground/40 z-40"
+            className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 animate-fadeIn"
             onClick={close}
             aria-hidden
           />
-          <div className="md:hidden fixed top-0 left-0 bottom-0 w-[86%] max-w-sm bg-background z-50 shadow-xl flex flex-col">
-            <div className="flex items-center justify-between h-16 px-5 border-b border-border">
-              <span className="font-italic-serif text-rose-accent text-lg">Catalogo</span>
+          <div className="md:hidden fixed top-0 left-0 bottom-0 w-[86%] max-w-sm bg-white z-50 shadow-2xl flex flex-col animate-fade-in">
+            <div className="flex items-center justify-between h-16 px-5 border-b border-[#E8DDD0]">
+              <span className="font-display text-[#2C2420] text-lg italic">Menú</span>
               <button
-                aria-label="Cerrar"
+                aria-label="Cerrar menú"
                 onClick={close}
-                className="p-2 -mr-2 text-foreground hover:opacity-70"
+                className="p-2 -mr-2 text-[#2C2420] hover:opacity-70"
               >
                 <X className="h-5 w-5" strokeWidth={1.25} />
               </button>
             </div>
 
             <nav className="flex-1 overflow-y-auto">
+              <div className="border-b border-[#E8DDD0]/60">
+                <Link
+                  to="/"
+                  onClick={close}
+                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420] hover:bg-[#FAF8F5]"
+                >
+                  Inicio
+                </Link>
+              </div>
+
               {padres.map((c) => {
                 const isOpen = openCat === c.id;
                 const hijas = hijasMap[c.id] ?? [];
                 return (
-                  <div key={c.id} className="border-b border-border/60">
+                  <div key={c.id} className="border-b border-[#E8DDD0]/60">
                     <div className="flex items-stretch">
                       <Link
                         to="/categoria/$slug"
                         params={{ slug: c.slug }}
                         onClick={close}
-                        className="flex-1 px-5 py-4 font-display text-foreground text-lg"
+                        className="flex-1 px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420] hover:bg-[#FAF8F5]"
                       >
                         {c.nombre}
                       </Link>
@@ -146,24 +277,24 @@ export function Header({ categorias, config }: Props) {
                           aria-label={`Expandir ${c.nombre}`}
                           aria-expanded={isOpen}
                           onClick={() => setOpenCat(isOpen ? null : c.id)}
-                          className="px-5 text-muted-foreground hover:text-foreground"
+                          className="px-5 text-[#8A7A6E] hover:text-[#2C2420]"
                         >
                           <ChevronDown
-                            className={`h-5 w-5 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                            className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                             strokeWidth={1.5}
                           />
                         </button>
                       )}
                     </div>
                     {hijas.length > 0 && isOpen && (
-                      <ul className="bg-ivory-soft/60 pb-2">
+                      <ul className="bg-[#FAF8F5] pb-2 border-t border-[#E8DDD0]/40">
                         {hijas.map((s) => (
                           <li key={s.id}>
                             <Link
                               to="/categoria/$slug/$sub"
                               params={{ slug: c.slug, sub: s.slug }}
                               onClick={close}
-                              className="block px-8 py-3 text-[13px] font-body font-light text-foreground/80 hover:text-foreground"
+                              className="block px-8 py-2.5 text-[12px] font-body font-light text-[#2C2420]/80 hover:text-[#2C2420]"
                             >
                               {s.nombre}
                             </Link>
@@ -175,20 +306,43 @@ export function Header({ categorias, config }: Props) {
                 );
               })}
 
+              <div className="border-b border-[#E8DDD0]/60">
+                <Link
+                  to="/catalogo"
+                  onClick={close}
+                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420] hover:bg-[#FAF8F5]"
+                >
+                  Catálogo Completo
+                </Link>
+              </div>
+
               {[
                 { label: "Sobre nosotros", href: "/#about" },
+                { label: "Zonas de delivery", href: "/#delivery" },
                 { label: "Preguntas frecuentes", href: "/#faq" },
               ].map(({ label, href }) => (
                 <a
                   key={label}
                   href={href}
                   onClick={close}
-                  className="block px-5 py-4 font-display text-foreground text-lg border-b border-border/60"
+                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] border-b border-[#E8DDD0]/60"
                 >
                   {label}
                 </a>
               ))}
             </nav>
+
+            <div className="p-5 border-t border-[#E8DDD0] bg-[#FAF8F5]">
+              <a
+                href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full h-11 bg-[#2C2420] text-white text-xs font-body tracking-wider uppercase rounded-md shadow-sm"
+              >
+                <WhatsappIcon className="h-4 w-4" />
+                Contactar por WhatsApp
+              </a>
+            </div>
           </div>
         </>
       )}

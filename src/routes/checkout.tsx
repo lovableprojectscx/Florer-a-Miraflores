@@ -152,7 +152,7 @@ function CheckoutPage() {
       <AnnouncementBar config={config} />
       <Header categorias={categorias} config={config} />
 
-      <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-10 md:py-16">
+      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-16">
         {/* Título */}
         <h1 className="font-display italic text-4xl md:text-5xl text-[#2C2420] mb-10">Checkout</h1>
 
@@ -182,7 +182,7 @@ function CheckoutPage() {
                     autoComplete="name"
                     placeholder="María García"
                     {...register("nombre")}
-                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#C4956A] ${
+                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#2C2420] rounded-md shadow-xs ${
                       errors.nombre ? "border-red-400" : "border-[#E8DDD0]"
                     }`}
                   />
@@ -200,7 +200,7 @@ function CheckoutPage() {
                     Teléfono <span className="text-[#C4956A]">*</span>
                   </label>
                   <div className="flex">
-                    <span className="flex-shrink-0 flex items-center px-3 h-12 bg-[#F5EFE6] border border-r-0 border-[#E8DDD0] font-body text-sm text-[#8A7A6E]">
+                    <span className="flex-shrink-0 flex items-center px-3 h-12 bg-[#F5EFE6] border border-r-0 border-[#E8DDD0] font-body text-sm text-[#8A7A6E] rounded-l-md">
                       +51
                     </span>
                     <input
@@ -210,7 +210,7 @@ function CheckoutPage() {
                       autoComplete="tel"
                       placeholder="999 600 482"
                       {...register("telefono")}
-                      className={`flex-1 h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#C4956A] ${
+                      className={`flex-1 h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#2C2420] rounded-r-md shadow-xs ${
                         errors.telefono ? "border-red-400" : "border-[#E8DDD0]"
                       }`}
                     />
@@ -233,7 +233,7 @@ function CheckoutPage() {
                     autoComplete="email"
                     placeholder="maria@correo.com"
                     {...register("email")}
-                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#C4956A] ${
+                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#2C2420] rounded-md shadow-xs ${
                       errors.email ? "border-red-400" : "border-[#E8DDD0]"
                     }`}
                   />
@@ -261,7 +261,7 @@ function CheckoutPage() {
                   <select
                     id="distrito_id"
                     {...register("distrito_id")}
-                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] outline-none transition-colors focus:border-[#C4956A] appearance-none cursor-pointer ${
+                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] outline-none transition-colors focus:border-[#2C2420] appearance-none cursor-pointer rounded-md shadow-xs ${
                       errors.distrito_id ? "border-red-400" : "border-[#E8DDD0]"
                     }`}
                   >
@@ -293,7 +293,7 @@ function CheckoutPage() {
                     autoComplete="street-address"
                     placeholder="Av. Larco 1234, piso 3"
                     {...register("direccion")}
-                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#C4956A] ${
+                    className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#2C2420] rounded-md shadow-xs ${
                       errors.direccion ? "border-red-400" : "border-[#E8DDD0]"
                     }`}
                   />
@@ -317,7 +317,7 @@ function CheckoutPage() {
                     type="text"
                     placeholder="Frente al parque, edificio azul…"
                     {...register("referencia")}
-                    className="w-full h-12 px-4 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#C4956A]"
+                    className="w-full h-12 px-4 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#2C2420] rounded-md shadow-xs"
                   />
                 </div>
 
@@ -336,7 +336,7 @@ function CheckoutPage() {
                       type="date"
                       min={getFechaMinima()}
                       {...register("fecha_entrega")}
-                      className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] outline-none transition-colors focus:border-[#C4956A] cursor-pointer ${
+                      className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] outline-none transition-colors focus:border-[#2C2420] cursor-pointer rounded-md shadow-xs ${
                         errors.fecha_entrega ? "border-red-400" : "border-[#E8DDD0]"
                       }`}
                     />
@@ -358,7 +358,7 @@ function CheckoutPage() {
                     <select
                       id="hora_entrega"
                       {...register("hora_entrega")}
-                      className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] outline-none transition-colors focus:border-[#C4956A] appearance-none cursor-pointer ${
+                      className={`w-full h-12 px-4 bg-white border font-body text-sm text-[#2C2420] outline-none transition-colors focus:border-[#2C2420] appearance-none cursor-pointer rounded-md shadow-xs ${
                         errors.hora_entrega ? "border-red-400" : "border-[#E8DDD0]"
                       }`}
                     >
@@ -385,7 +385,7 @@ function CheckoutPage() {
                     rows={3}
                     placeholder="Indicaciones especiales, dedicatoria, color preferido…"
                     {...register("notas")}
-                    className="w-full px-4 py-3 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#C4956A] resize-none"
+                    className="w-full px-4 py-3 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] placeholder:text-[#8A7A6E]/60 outline-none transition-colors focus:border-[#2C2420] resize-none rounded-md shadow-xs"
                   />
                 </div>
               </div>
@@ -393,7 +393,7 @@ function CheckoutPage() {
 
             {/* ── Error global ── */}
             {submitError && (
-              <div className="p-4 bg-red-50 border border-red-200 text-red-600 font-body text-sm">
+              <div className="p-4 bg-red-50 border border-red-200 text-red-600 font-body text-sm rounded-md">
                 {submitError}
               </div>
             )}
@@ -402,12 +402,12 @@ function CheckoutPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-14 bg-[#C4956A] hover:bg-[#9E7347] disabled:opacity-60 text-white text-[12px] tracking-widest uppercase font-body font-medium transition-colors flex items-center justify-center gap-2"
+              className="w-full h-14 bg-[#2C2420] hover:bg-[#1A1513] disabled:opacity-60 text-white text-[11px] tracking-widest uppercase font-body font-medium transition-colors duration-200 flex items-center justify-center gap-2 rounded-md shadow-sm cursor-pointer"
             >
               <ShoppingBag className="h-4 w-4" strokeWidth={1.5} />
               {isSubmitting
                 ? "Procesando…"
-                : `Pagar con IZIPay — S/ ${totalConDelivery !== null ? totalConDelivery.toFixed(2) : subtotal.toFixed(2)}`}
+                : `Pagar con IZIPay — S/ ${totalConDelivery !== null ? totalConDelivery.toFixed(2) : subtotal.toFixed(2)} PEN`}
             </button>
 
             <p className="text-center font-body text-xs text-[#8A7A6E]">
@@ -420,14 +420,14 @@ function CheckoutPage() {
               Aparece ARRIBA en mobile (flex-col-reverse)
           ══════════════════════════════════════════ */}
           <aside className="w-full lg:w-[40%] lg:sticky lg:top-8">
-            <div className="bg-[#F5EFE6] p-6 md:p-8">
+            <div className="bg-[#FAF8F5] border border-[#E8DDD0]/80 p-6 md:p-8 rounded-2xl shadow-xs">
               <h2 className="font-display italic text-2xl text-[#2C2420] mb-6">Tu pedido</h2>
 
               {/* Lista de items */}
               <ul className="space-y-4 mb-6">
                 {items.map((item) => (
                   <li key={item.id} className="flex items-center gap-4">
-                    <div className="w-14 h-14 flex-shrink-0 bg-white overflow-hidden rounded-lg">
+                    <div className="w-14 h-14 flex-shrink-0 bg-white overflow-hidden rounded-lg border border-[#E8DDD0]/60">
                       <img
                         src={item.imagen}
                         alt={item.nombre}
@@ -436,10 +436,10 @@ function CheckoutPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-body text-sm text-[#2C2420] truncate">{item.nombre}</p>
-                      <p className="font-body text-xs text-[#8A7A6E]">x{item.cantidad}</p>
+                      <p className="font-body text-sm font-medium text-[#2C2420] truncate">{item.nombre}</p>
+                      <p className="font-body text-xs text-[#8A7A6E]">Cantidad: {item.cantidad}</p>
                     </div>
-                    <p className="font-body text-sm text-[#2C2420] flex-shrink-0">
+                    <p className="font-body text-sm font-semibold text-[#2C2420] flex-shrink-0">
                       S/ {(item.precio * item.cantidad).toFixed(2)}
                     </p>
                   </li>
@@ -458,14 +458,14 @@ function CheckoutPage() {
                     {delivery !== null ? (
                       `S/ ${delivery.toFixed(2)}`
                     ) : (
-                      <span className="italic">Selecciona un distrito</span>
+                      <span className="italic text-xs">Selecciona un distrito</span>
                     )}
                   </span>
                 </div>
-                <div className="flex justify-between font-body text-base font-medium text-[#2C2420] pt-2 border-t border-[#E8DDD0]">
+                <div className="flex justify-between font-body text-base font-semibold text-[#2C2420] pt-2.5 border-t border-[#E8DDD0]">
                   <span>Total</span>
                   <span>
-                    {totalConDelivery !== null ? `S/ ${totalConDelivery.toFixed(2)}` : "—"}
+                    {totalConDelivery !== null ? `S/ ${totalConDelivery.toFixed(2)} PEN` : "—"}
                   </span>
                 </div>
               </div>
@@ -473,7 +473,7 @@ function CheckoutPage() {
               {/* Editar carrito */}
               <Link
                 to="/"
-                className="mt-5 block text-center font-body text-xs text-[#8A7A6E] hover:text-[#C4956A] transition-colors underline underline-offset-2"
+                className="mt-6 block text-center font-body text-xs text-[#8A7A6E] hover:text-[#2C2420] transition-colors underline underline-offset-4"
               >
                 ← Seguir comprando
               </Link>
@@ -494,12 +494,12 @@ function CheckoutPage() {
           <div className="absolute inset-0 bg-black/50" />
 
           {/* Card */}
-          <div className="relative w-full max-w-md bg-[#FDFAF6] p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-md bg-[#FDFAF6] p-8 rounded-2xl border border-[#E8DDD0] shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             {/* Botón cerrar */}
             <button
               onClick={irAConfirmacion}
               aria-label="Cerrar"
-              className="absolute top-4 right-4 p-1 text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+              className="absolute top-4 right-4 p-1 text-[#8A7A6E] hover:text-[#2C2420] transition-colors cursor-pointer"
             >
               <X className="h-5 w-5" strokeWidth={1.5} />
             </button>
@@ -523,9 +523,9 @@ function CheckoutPage() {
             </p>
 
             {/* Aviso integración */}
-            <div className="bg-[#F5EFE6] border border-[#E8DDD0] p-4 mb-6 text-center">
+            <div className="bg-[#FAF8F5] border border-[#E8DDD0] p-4 mb-6 text-center rounded-xl">
               <p className="font-body text-sm text-[#2C2420] font-medium mb-1">
-                Integracion de pago IZIPay
+                Integración de pago IZIPay
               </p>
               <p className="font-body text-xs text-[#8A7A6E]">
                 Tu pedido ha sido registrado. Nos pondremos en contacto contigo para coordinar el
@@ -538,13 +538,13 @@ function CheckoutPage() {
               href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}?text=Hola!%20Mi%20pedido%20es%20${numeroPedido}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full h-11 flex items-center justify-center bg-[#2C2420] text-white font-body text-[11px] tracking-widest uppercase hover:bg-[#2C2420]/80 transition-colors mb-3"
+              className="w-full h-12 flex items-center justify-center bg-[#2C2420] text-white font-body text-[11px] tracking-widest uppercase hover:bg-[#1A1513] transition-colors duration-200 rounded-md mb-3 shadow-xs"
             >
               Confirmar por WhatsApp
             </a>
             <button
               onClick={irAConfirmacion}
-              className="w-full h-11 border border-[#E8DDD0] text-[#8A7A6E] font-body text-[11px] tracking-widest uppercase hover:border-[#C4956A] hover:text-[#2C2420] transition-colors"
+              className="w-full h-12 border border-[#E8DDD0] text-[#8A7A6E] font-body text-[11px] tracking-widest uppercase hover:border-[#2C2420] hover:text-[#2C2420] transition-colors duration-200 rounded-md cursor-pointer"
             >
               Ver resumen del pedido
             </button>

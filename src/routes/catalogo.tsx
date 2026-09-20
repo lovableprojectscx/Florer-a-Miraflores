@@ -79,7 +79,7 @@ function CatalogoPage() {
       {config && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
 
-      <main className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 py-10 md:py-16">
+      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-16">
         {/* Breadcrumb */}
         <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-6 flex items-center gap-1.5">
           <Link to="/" className="hover:text-[#2C2420] transition-colors">

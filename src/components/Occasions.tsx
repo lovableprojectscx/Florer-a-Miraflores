@@ -44,53 +44,67 @@ export function Occasions({ ocasiones }: Props) {
   const items = ocasiones.length > 0 ? ocasiones : (FALLBACK as OcasionHomeRow[]);
 
   return (
-    <section className="bg-ivory-soft px-5 md:px-10 lg:px-16 py-12 md:py-28">
-      <div className="text-center mb-8 md:mb-20">
-        <p className="font-italic-serif text-rose-accent text-sm md:text-lg mb-1 md:mb-2">
-          -- ocasiones
-        </p>
-        <h2 className="font-display text-foreground text-3xl md:text-5xl lg:text-6xl">
-          Flores para cada momento
-        </h2>
-      </div>
+    <section className="bg-[#FAF8F5]/70 px-5 md:px-12 lg:px-16 py-16 md:py-24">
+      <div className="max-w-[1536px] mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
+          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
+            — Momentos especiales
+          </p>
+          <h2 className="font-display text-[#2C2420] text-3xl md:text-5xl lg:text-6xl font-normal leading-tight">
+            Flores para cada momento
+          </h2>
+          <p className="mt-3 font-body font-light text-[#2C2420]/70 text-sm md:text-base leading-relaxed">
+            Encuentra el arreglo perfecto diseñado para celebrar, agradecer o sorprender a quien más quieres.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-5">
-        {items.map((item) => {
-          const IconComp = item.icono ? (ICON_MAP[item.icono] ?? Star) : Star;
-          const cls =
-            "group bg-card border border-border/80 aspect-square flex flex-col items-center justify-center gap-2 md:gap-4 md:hover:border-rose-accent/30 rounded-2xl md:hover:-translate-y-1.5 md:hover:shadow-[0_12px_30px_-8px_rgba(196,132,138,0.15)] transition-all duration-500";
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 md:gap-5">
+          {items.map((item) => {
+            const IconComp = item.icono ? (ICON_MAP[item.icono] ?? Star) : Star;
+            const cls =
+              "group bg-white border border-[#E8DDD0]/80 hover:border-[#2C2420] p-6 sm:p-7 flex flex-col items-center justify-center text-center rounded-xl shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer min-h-[160px] sm:min-h-[180px]";
 
-          const inner = (
-            <>
-              <IconComp
-                className="h-5 w-5 md:h-7 md:w-7 text-foreground/70 md:group-hover:text-rose-accent transform md:group-hover:scale-110 md:group-hover:-rotate-6 transition-all duration-300"
-                strokeWidth={1.1}
-              />
-              <span className="text-[9px] md:text-[11px] tracking-wider-2 uppercase font-body font-light text-foreground/90 md:group-hover:text-foreground transition-colors text-center px-1">
-                {item.nombre}
-              </span>
-            </>
-          );
+            const inner = (
+              <>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#FAF8F5] group-hover:bg-[#2C2420] flex items-center justify-center transition-all duration-300 mb-3 sm:mb-4 shadow-xs">
+                  <IconComp
+                    className="h-5 w-5 sm:h-6 sm:w-6 text-[#2C2420] group-hover:text-white transition-colors duration-300"
+                    strokeWidth={1.25}
+                  />
+                </div>
+                <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase font-body font-normal text-[#2C2420] group-hover:text-[#2C2420] transition-colors">
+                  {item.nombre}
+                </span>
+                <span className="text-[10px] font-body font-light text-[#8A7A6E] tracking-wider uppercase mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Explorar →
+                </span>
+              </>
+            );
 
-          if (item.categoria_id) {
+            if (item.categoria_id) {
+              return (
+                <Link
+                  key={item.id}
+                  to="/categoria/$slug"
+                  params={{ slug: item.categoria_id }}
+                  className={cls}
+                >
+                  {inner}
+                </Link>
+              );
+            }
+
             return (
               <Link
                 key={item.id}
-                to="/categoria/$slug"
-                params={{ slug: item.categoria_id }}
+                to="/catalogo"
                 className={cls}
               >
                 {inner}
               </Link>
             );
-          }
-
-          return (
-            <div key={item.id} className={cls}>
-              {inner}
-            </div>
-          );
-        })}
+          })}
+        </div>
       </div>
     </section>
   );

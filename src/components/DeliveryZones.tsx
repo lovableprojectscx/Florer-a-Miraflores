@@ -15,63 +15,76 @@ export function DeliveryZones() {
   return (
     <section
       id="delivery"
-      className="px-5 md:px-10 lg:px-16 py-14 md:py-24 bg-ivory"
+      className="px-5 md:px-12 lg:px-16 py-16 md:py-24 bg-[#FAF8F5]/60"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1536px] mx-auto">
         {/* Encabezado */}
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           <div>
-            <p className="font-italic-serif text-rose-accent text-sm md:text-lg mb-2">
-              — llevamos tus flores
+            <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2.5 font-normal">
+              — Llevamos tus flores
             </p>
-            <h2 className="font-display text-foreground text-3xl md:text-5xl lg:text-6xl leading-tight">
+            <h2 className="font-display text-[#2C2420] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-tight">
               Delivery el mismo día en Lima.
             </h2>
-            <p className="mt-4 md:mt-8 font-body font-light text-foreground/70 text-sm md:text-base leading-relaxed max-w-lg">
-              Cada arreglo viaja en condiciones especiales para preservar su frescura. Realizá tu
-              pedido antes de las 5:00 p.m. y llegará ese mismo día.
+            <p className="mt-4 md:mt-6 font-body font-light text-[#2C2420]/75 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg">
+              Cada arreglo viaja en condiciones especiales de hidratación y cuidado para preservar su frescura intacta. Realiza tu pedido antes de las 5:00 p.m. y llegará ese mismo día.
             </p>
 
             {/* Íconos informativos */}
-            <div className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-6 md:gap-10">
+            <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-6 md:gap-8">
               <div className="flex items-start gap-3">
-                <Truck className="h-5 w-5 text-rose-accent mt-0.5 shrink-0" strokeWidth={1.3} />
+                <div className="w-10 h-10 rounded-full bg-white border border-[#E8DDD0] flex items-center justify-center shrink-0 shadow-xs">
+                  <Truck className="h-5 w-5 text-[#2C2420]" strokeWidth={1.25} />
+                </div>
                 <div>
-                  <p className="font-body text-xs tracking-widest uppercase text-foreground/60 mb-1">
+                  <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
                     Entrega
                   </p>
-                  <p className="font-display text-foreground text-base">Mismo día</p>
+                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">Mismo día</p>
                 </div>
               </div>
+
               <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-rose-accent mt-0.5 shrink-0" strokeWidth={1.3} />
+                <div className="w-10 h-10 rounded-full bg-white border border-[#E8DDD0] flex items-center justify-center shrink-0 shadow-xs">
+                  <Clock className="h-5 w-5 text-[#2C2420]" strokeWidth={1.25} />
+                </div>
                 <div>
-                  <p className="font-body text-xs tracking-widest uppercase text-foreground/60 mb-1">
+                  <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
                     Hora límite
                   </p>
-                  <p className="font-display text-foreground text-base">Antes de las 5 p.m.</p>
+                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">Antes de las 5 p.m.</p>
                 </div>
               </div>
+
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-rose-accent mt-0.5 shrink-0" strokeWidth={1.3} />
+                <div className="w-10 h-10 rounded-full bg-white border border-[#E8DDD0] flex items-center justify-center shrink-0 shadow-xs">
+                  <MapPin className="h-5 w-5 text-[#2C2420]" strokeWidth={1.25} />
+                </div>
                 <div>
-                  <p className="font-body text-xs tracking-widest uppercase text-foreground/60 mb-1">
+                  <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
                     Cobertura
                   </p>
-                  <p className="font-display text-foreground text-base">Lima Metropolitana</p>
+                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">Lima y Callao</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Grid de distritos */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-3.5">
             {ZONES.map((z) => (
               <div
                 key={z}
-                className="border border-border/70 p-4 md:p-5 hover:border-rose-accent/40 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-8px_rgba(196,132,138,0.12)] transition-all duration-300"
+                className="bg-white border border-[#E8DDD0]/80 rounded-xl p-4 sm:p-5 flex items-center justify-between hover:border-[#2C2420] hover:shadow-xs transition-all duration-300 group cursor-default"
               >
-                <p className="font-display text-foreground text-base md:text-lg">{z}</p>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-[#A7A18C] group-hover:bg-[#2C2420] transition-colors" />
+                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">{z}</p>
+                </div>
+                <span className="text-[10px] tracking-wider uppercase font-body font-light text-[#8A7A6E] opacity-0 group-hover:opacity-100 transition-opacity hidden sm:inline">
+                  Activo
+                </span>
               </div>
             ))}
           </div>

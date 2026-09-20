@@ -65,7 +65,7 @@ export function FilterSelect({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full sm:w-auto h-10 pl-3 pr-9 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors duration-200 appearance-none cursor-pointer"
+          className="w-full sm:w-auto h-10 pl-3.5 pr-9 bg-white border border-[#E8DDD0] font-body text-xs text-[#2C2420] outline-none focus:border-[#2C2420] transition-colors duration-200 appearance-none cursor-pointer rounded-md shadow-xs hover:border-[#2C2420]/50"
         >
           {options.map((o) => (
             <option key={o.value} value={o.value}>
@@ -74,7 +74,7 @@ export function FilterSelect({
           ))}
         </select>
         <ChevronDown
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#8A7A6E] pointer-events-none"
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#8A7A6E] pointer-events-none"
           strokeWidth={1.5}
         />
       </span>
@@ -103,11 +103,11 @@ export function ProductFiltersBar({
   children,
 }: ProductFiltersBarProps) {
   return (
-    <div className="mb-8 md:mb-10 border-y border-[#E8DDD0] py-4 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-      <p className="font-body font-light text-sm text-[#8A7A6E] sm:pb-2.5">
-        {total} producto{total !== 1 ? "s" : ""}
+    <div className="mb-8 md:mb-12 border-y border-[#E8DDD0]/70 py-4 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <p className="font-body font-light text-xs md:text-sm text-[#8A7A6E] sm:pb-2.5 tracking-wide">
+        Mostrando <span className="font-medium text-[#2C2420]">{total}</span> producto{total !== 1 ? "s" : ""}
       </p>
-      <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-end gap-3 sm:gap-4">
         {children}
         <FilterSelect
           label="Precio"

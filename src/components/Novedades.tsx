@@ -1,6 +1,6 @@
+import { useState, useRef, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
-import { useCartStore } from "@/store/cart";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ProductoRow, TagRow } from "@/types/database";
 import { slugify } from "@/lib/utils";
 
@@ -13,8 +13,8 @@ import aurora from "@/assets/product-novedad-aurora.webp";
 const FALLBACK_TAG: TagRow = {
   id: "fallback",
   clave: "novedad",
-  nombre: "Lanzamientos especiales",
-  descripcion: "Nuestras creaciones más recientes, elaboradas con las flores de la temporada.",
+  nombre: "Descubre lo nuevo en tienda",
+  descripcion: "Actualizamos esta selección constantemente con las flores más frescas.",
   color_badge: "#2C2420",
   orden: 1,
   activo: true,
@@ -60,8 +60,6 @@ const FALLBACK_PRODUCTOS: ProductoRow[] = [
   },
 ];
 
-// ─── Tipos ────────────────────────────────────────────────────────────────────
-
 export interface TagSeccion {
   tag: TagRow;
   productos: ProductoRow[];
@@ -71,180 +69,128 @@ interface Props {
   tagSecciones: TagSeccion[];
 }
 
-// ─── Subcomponente: Card de producto ─────────────────────────────────────────
+// ─── Subcomponente: Card limpia estilo Lima Floral ──────────────────────────
 
-function ProductCard({
-  producto,
-  badgeLabel,
-  badgeColor,
-  className = "flex",
-}: {
-  producto: ProductoRow;
-  badgeLabel: string;
-  badgeColor: string;
-  className?: string;
-}) {
-  const { agregarItem, abrirCarrito } = useCartStore();
+function ProductCard({ producto }: { producto: ProductoRow }) {
   const imgSrc = producto.imagenes?.[0] ?? "";
 
   return (
-    <article className={`group flex-col flex-shrink-0 w-[240px] md:w-full md:max-w-[290px] mx-auto md:mx-0 snap-start bg-white border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 ${className}`}>
-      <Link to="/producto/$id" params={{ id: `${slugify(producto.nombre)}-${producto.id}` }} className="block">
-        <div className="relative overflow-hidden bg-ivory" style={{ aspectRatio: "3/4" }}>
-          {/* Badge del tag */}
-          <span
-            className="absolute top-3 left-3 z-10 text-white text-[9px] tracking-[0.18em] uppercase font-body font-light px-3 py-1.5 leading-none rounded-sm"
-            style={{ backgroundColor: badgeColor }}
-          >
-            {badgeLabel}
-          </span>
-
+    <article className="group flex-shrink-0 w-[145px] sm:w-[170px] md:w-[195px] lg:w-[220px] xl:w-[240px] select-none">
+      <Link
+        to="/producto/$id"
+        params={{ id: `${slugify(producto.nombre)}-${producto.id}` }}
+        className="block"
+      >
+        {/* Imagen cuadrada limpia sin bordes pesados */}
+        <div className="relative overflow-hidden bg-[#FAF8F5] aspect-square rounded-lg">
           <img
             src={imgSrc}
-            alt=""
+            alt={producto.nombre}
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[600ms] ease-out md:group-hover:scale-[1.04] will-change-transform"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
           />
         </div>
 
-        <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
-          <div>
-            <h3 className="font-display text-[#2C2420] text-base md:text-lg leading-snug group-hover:text-[#C4956A] transition-colors duration-200 line-clamp-1">
-              {producto.nombre}
-            </h3>
-            {producto.descripcion ? (
-              <p className="mt-1 font-body font-light text-[#8A7A6E] text-xs line-clamp-2 min-h-[2rem]">
-                {producto.descripcion}
-              </p>
-            ) : (
-              <div className="mt-1 min-h-[2rem]" />
-            )}
-          </div>
-          <p className="mt-3 font-body font-semibold text-[#2C2420] text-sm md:text-base">
-            S/ {producto.precio.toFixed(2)}
+        {/* Información del producto */}
+        <div className="pt-2 sm:pt-2.5 pb-1">
+          <h3 className="font-body text-[#2C2420] text-xs sm:text-sm font-normal leading-snug line-clamp-1 group-hover:text-[#8A7A6E] transition-colors">
+            {producto.nombre}
+          </h3>
+          <p className="mt-0.5 sm:mt-1 font-body font-medium text-[#2C2420] text-xs sm:text-sm">
+            S/. {producto.precio.toFixed(2)} <span className="text-[9px] sm:text-[10px] font-normal text-[#8A7A6E]">PEN</span>
           </p>
         </div>
       </Link>
-
-      <div className="px-3 pb-3 sm:px-4 sm:pb-4 mt-auto">
-        <button
-          onClick={() => {
-            agregarItem({
-              id: producto.id,
-              nombre: producto.nombre,
-              precio: producto.precio,
-              imagen: producto.imagenes?.[0] ?? "",
-              cantidad: 1,
-            });
-            abrirCarrito();
-          }}
-          className="w-full h-10 border border-[#2C2420] text-[#2C2420] font-body text-[9px] sm:text-[10px] tracking-wider sm:tracking-widest uppercase hover:bg-[#2C2420] hover:text-white transition-colors duration-300 rounded-md"
-        >
-          Agregar al carrito
-        </button>
-      </div>
     </article>
   );
 }
 
-// ─── Subcomponente: Sección de un tag ────────────────────────────────────────
+// ─── Subcomponente: Sección Slider estilo Lima Floral ────────────────────────
 
 function TagSection({ tag, productos }: TagSeccion) {
-  const visibles = productos.slice(0, 6);
-  const mostrarBoton = productos.length > 4;
-  const hayMasMobile = productos.length > 5;
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [currentIdx, setCurrentIdx] = useState(1);
+  const total = productos.length;
+
+  const updateCurrentIndex = () => {
+    if (!sliderRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+    if (scrollWidth <= clientWidth) {
+      setCurrentIdx(1);
+      return;
+    }
+    const maxScroll = scrollWidth - clientWidth;
+    const progress = Math.min(1, Math.max(0, scrollLeft / maxScroll));
+    const idx = Math.min(total, Math.max(1, Math.round(progress * (total - 1)) + 1));
+    setCurrentIdx(idx);
+  };
+
+  const handlePrev = () => {
+    if (!sliderRef.current) return;
+    sliderRef.current.scrollBy({ left: -sliderRef.current.clientWidth * 0.75, behavior: "smooth" });
+  };
+
+  const handleNext = () => {
+    if (!sliderRef.current) return;
+    sliderRef.current.scrollBy({ left: sliderRef.current.clientWidth * 0.75, behavior: "smooth" });
+  };
 
   return (
-    <section
-      id={`tag-${tag.clave}`}
-      className="px-5 md:px-10 lg:px-16 py-14 md:py-24 overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto">
-        {/* Encabezado */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-16">
-          <div className="max-w-2xl">
-            {/* Indicador del tag */}
-            <div className="flex items-center gap-2 mb-3">
-              <span
-                className="inline-block w-2 h-2 rounded-full"
-                style={{ backgroundColor: tag.color_badge }}
-              />
-              <span
-                className="font-body text-[10px] tracking-[0.22em] uppercase font-medium"
-                style={{ color: tag.color_badge }}
-              >
-                {tag.clave.replace(/_/g, " ")}
-              </span>
-            </div>
+    <section id={`tag-${tag.clave}`} className="py-10 md:py-14 overflow-hidden">
+      {/* Encabezado con márgenes alineados */}
+      <div className="px-4 sm:px-6 md:px-12 mb-4 sm:mb-6">
+        <h2 className="font-display text-[#2C2420] text-xl sm:text-2xl md:text-3xl font-normal leading-tight">
+          {tag.nombre}
+        </h2>
+        {tag.descripcion && (
+          <p className="mt-1 font-body font-light text-[#8A7A6E] text-xs sm:text-sm">
+            {tag.descripcion}
+          </p>
+        )}
+      </div>
 
-            <h2 className="font-display text-foreground text-3xl md:text-5xl leading-tight">
-              {tag.nombre}
-            </h2>
+      {/* Slider que ocupa de extremo a extremo (mostrando ~2.5 productos en móvil y ~5 en desktop) */}
+      <div
+        ref={sliderRef}
+        onScroll={updateCurrentIndex}
+        className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2.5 sm:gap-3.5 md:gap-4 pb-3 snap-x snap-mandatory scrollbar-none w-full"
+      >
+        {productos.map((p) => (
+          <ProductCard key={p.id} producto={p} />
+        ))}
+      </div>
 
-            {tag.descripcion && (
-              <p className="mt-3 font-body font-light text-foreground/60 text-sm md:text-base leading-relaxed max-w-lg">
-                {tag.descripcion}
-              </p>
-            )}
-          </div>
-
-          {/* Botón "Ver todos" — solo desktop, si hay más de 4 */}
-          {mostrarBoton && (
-            <Link
-              to="/tag/$key"
-              params={{ key: tag.clave }}
-              className="hidden md:inline-flex items-center gap-2 font-body text-xs tracking-widest uppercase text-foreground/60 hover:text-foreground border-b border-foreground/20 hover:border-foreground/60 pb-0.5 transition-colors group flex-shrink-0"
+      {/* Controles de paginación y botón "Ver más productos" */}
+      <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 mt-4 sm:mt-6">
+        {total > 1 && (
+          <div className="flex items-center gap-3 text-xs font-body text-[#8A7A6E] select-none">
+            <button
+              onClick={handlePrev}
+              aria-label="Anterior"
+              className="p-1 hover:text-[#2C2420] transition-colors cursor-pointer"
             >
-              Ver todos
-              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-          )}
-        </div>
-
-        {/* Slider horizontal en móvil y PC para mantener tamaño original de tarjetas */}
-        <div className="flex overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0 gap-x-4 md:gap-x-8 pb-4 snap-x snap-mandatory scrollbar-none">
-          {visibles.map((p, idx) => (
-            <ProductCard
-              key={p.id}
-              producto={p}
-              badgeLabel={tag.nombre}
-              badgeColor={tag.color_badge}
-              className={idx === 5 ? "hidden md:flex" : "flex"}
-            />
-          ))}
-
-          {hayMasMobile && (
-            <Link
-              to="/tag/$key"
-              params={{ key: tag.clave }}
-              className="md:hidden flex-shrink-0 w-[240px] flex flex-col justify-center items-center p-6 border border-dashed border-[#C4956A]/60 bg-[#F5EFE6]/30 hover:bg-[#F5EFE6]/60 hover:border-[#C4956A] transition-colors snap-start text-center group self-stretch min-h-[300px]"
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <span className="tracking-wider">
+              {currentIdx} / {total}
+            </span>
+            <button
+              onClick={handleNext}
+              aria-label="Siguiente"
+              className="p-1 hover:text-[#2C2420] transition-colors cursor-pointer"
             >
-              <span className="font-italic-serif text-rose-accent text-xs mb-1">
-                Colección completa
-              </span>
-              <span className="font-display text-xl text-[#2C2420] mb-4">
-                Ver todos
-              </span>
-              <div className="w-10 h-10 rounded-full bg-[#2C2420] text-white flex items-center justify-center group-hover:bg-[#C4956A] transition-colors duration-300">
-                <ArrowRight className="h-5 w-5" />
-              </div>
-            </Link>
-          )}
-        </div>
-
-        {/* Botón premium de ver catálogo completo */}
-        {mostrarBoton && (
-          <div className="flex justify-center mt-10 md:mt-16">
-            <Link
-              to="/tag/$key"
-              params={{ key: tag.clave }}
-              className="inline-flex items-center justify-center px-8 py-3.5 border border-[#2C2420] text-[#2C2420] font-body text-xs tracking-widest uppercase hover:bg-[#2C2420] hover:text-white transition-colors duration-300 rounded-md"
-            >
-              Ver catálogo completo
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
         )}
+
+        <Link
+          to="/tag/$key"
+          params={{ key: tag.clave }}
+          className="inline-flex items-center justify-center px-7 sm:px-8 py-2.5 sm:py-3 bg-[#A7A18C] hover:bg-[#96907C] text-white text-[11px] tracking-widest uppercase font-body font-normal rounded-md transition-colors duration-300 shadow-xs"
+        >
+          Ver más productos
+        </Link>
       </div>
     </section>
   );
@@ -253,19 +199,17 @@ function TagSection({ tag, productos }: TagSeccion) {
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export function Novedades({ tagSecciones }: Props) {
-  // Si no hay datos de Supabase, usar el fallback editorial
   const secciones: TagSeccion[] =
     tagSecciones.length > 0
       ? tagSecciones
       : [{ tag: FALLBACK_TAG, productos: FALLBACK_PRODUCTOS }];
 
-  // Filtrar secciones sin productos para no mostrar bloques vacíos
   const seccionesConProductos = secciones.filter((s) => s.productos.length > 0);
 
   if (seccionesConProductos.length === 0) return null;
 
   return (
-    <div id="novedades" className="bg-ivory-soft/40 divide-y divide-[#E8DDD0]">
+    <div id="novedades" className="bg-[#FFFFFF] divide-y divide-[#E8DDD0]/50">
       {seccionesConProductos.map((seccion) => (
         <TagSection key={seccion.tag.id} tag={seccion.tag} productos={seccion.productos} />
       ))}
