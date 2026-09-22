@@ -75,14 +75,14 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
   const imgSrc = producto.imagenes?.[0] ?? "";
 
   return (
-    <article className="group flex-shrink-0 w-[145px] sm:w-[170px] md:w-[195px] lg:w-[220px] xl:w-[240px] select-none">
+    <article className="group flex-shrink-0 w-[160px] sm:w-[210px] md:w-[260px] lg:w-[295px] xl:w-[325px] 2xl:w-[345px] select-none">
       <Link
         to="/producto/$id"
         params={{ id: `${slugify(producto.nombre)}-${producto.id}` }}
-        className="block"
+        className="block overflow-hidden transition-all duration-300 hover:shadow-sm"
       >
-        {/* Imagen cuadrada limpia sin bordes pesados */}
-        <div className="relative overflow-hidden bg-[#FAF8F5] aspect-square rounded-lg">
+        {/* Imagen cuadrada limpia sin bordes que ocupa todo el ancho */}
+        <div className="relative overflow-hidden bg-[#FAF8F5] aspect-square">
           <img
             src={imgSrc}
             alt={producto.nombre}
@@ -91,13 +91,13 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
           />
         </div>
 
-        {/* Información del producto */}
-        <div className="pt-2 sm:pt-2.5 pb-1">
-          <h3 className="font-body text-[#2C2420] text-xs sm:text-sm font-normal leading-snug line-clamp-1 group-hover:text-[#8A7A6E] transition-colors">
+        {/* Información del producto: panel gris claro idéntico a Lima Floral */}
+        <div className="bg-[#F7F7F7] px-3.5 py-3 sm:px-4 sm:py-3.5">
+          <h3 className="font-body text-[#222222] text-xs sm:text-[13px] md:text-sm font-normal leading-snug line-clamp-1 group-hover:text-[#666666] transition-colors">
             {producto.nombre}
           </h3>
-          <p className="mt-0.5 sm:mt-1 font-body font-medium text-[#2C2420] text-xs sm:text-sm">
-            S/. {producto.precio.toFixed(2)} <span className="text-[9px] sm:text-[10px] font-normal text-[#8A7A6E]">PEN</span>
+          <p className="mt-1 font-body text-[#222222] text-xs sm:text-[13px] md:text-sm font-normal">
+            S/. {producto.precio.toFixed(2)} PEN
           </p>
         </div>
       </Link>
@@ -137,23 +137,33 @@ function TagSection({ tag, productos }: TagSeccion) {
 
   return (
     <section id={`tag-${tag.clave}`} className="py-10 md:py-14 overflow-hidden">
-      {/* Encabezado con márgenes alineados */}
-      <div className="px-4 sm:px-6 md:px-12 mb-4 sm:mb-6">
-        <h2 className="font-display text-[#2C2420] text-xl sm:text-2xl md:text-3xl font-normal leading-tight">
+      {/* Encabezado con tipografía aesthetic minimalista idéntico a Lima Floral */}
+      <div className="px-4 sm:px-6 md:px-12 mb-5 sm:mb-6">
+        <h2 className="font-display text-[#1E1E1D] text-2xl sm:text-3xl md:text-[34px] font-light md:font-normal leading-tight tracking-tight">
           {tag.nombre}
         </h2>
         {tag.descripcion && (
-          <p className="mt-1 font-body font-light text-[#8A7A6E] text-xs sm:text-sm">
+          <p className="mt-1.5 font-body text-[#736B63] text-xs sm:text-sm md:text-[15px] font-light">
             {tag.descripcion}
           </p>
         )}
+        <div className="mt-1">
+          <Link
+            to="/tag/$key"
+            params={{ key: tag.clave }}
+            className="inline-flex items-center text-xs sm:text-sm text-[#3E3834] hover:text-[#1E1E1D] font-normal transition-colors group/link"
+          >
+            <span>Reserva tu favorito</span>
+            <span className="ml-1 text-[13px] group-hover/link:translate-x-0.5 transition-transform">›</span>
+          </Link>
+        </div>
       </div>
 
-      {/* Slider que ocupa de extremo a extremo (mostrando ~2.5 productos en móvil y ~5 en desktop) */}
+      {/* Slider que ocupa de extremo a extremo con fotos más grandes y generosas */}
       <div
         ref={sliderRef}
         onScroll={updateCurrentIndex}
-        className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2.5 sm:gap-3.5 md:gap-4 pb-3 snap-x snap-mandatory scrollbar-none w-full"
+        className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2 sm:gap-2.5 md:gap-3 lg:gap-3.5 pb-3 snap-x snap-mandatory scrollbar-none w-full"
       >
         {productos.map((p) => (
           <ProductCard key={p.id} producto={p} />
@@ -161,23 +171,23 @@ function TagSection({ tag, productos }: TagSeccion) {
       </div>
 
       {/* Controles de paginación y botón "Ver más productos" */}
-      <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 mt-4 sm:mt-6">
+      <div className="flex flex-col items-center justify-center gap-3.5 sm:gap-4 mt-6 sm:mt-8">
         {total > 1 && (
-          <div className="flex items-center gap-3 text-xs font-body text-[#8A7A6E] select-none">
+          <div className="flex items-center gap-3 text-xs font-body text-[#736B63] select-none">
             <button
               onClick={handlePrev}
               aria-label="Anterior"
-              className="p-1 hover:text-[#2C2420] transition-colors cursor-pointer"
+              className="p-1 hover:text-[#1E1E1D] transition-colors cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
-            <span className="tracking-wider">
+            <span className="tracking-widest text-[11px] sm:text-xs">
               {currentIdx} / {total}
             </span>
             <button
               onClick={handleNext}
               aria-label="Siguiente"
-              className="p-1 hover:text-[#2C2420] transition-colors cursor-pointer"
+              className="p-1 hover:text-[#1E1E1D] transition-colors cursor-pointer"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -187,7 +197,7 @@ function TagSection({ tag, productos }: TagSeccion) {
         <Link
           to="/tag/$key"
           params={{ key: tag.clave }}
-          className="inline-flex items-center justify-center px-7 sm:px-8 py-2.5 sm:py-3 bg-[#A7A18C] hover:bg-[#96907C] text-white text-[11px] tracking-widest uppercase font-body font-normal rounded-md transition-colors duration-300 shadow-xs"
+          className="inline-flex items-center justify-center px-8 py-3 bg-[#9C9381] hover:bg-[#8A816F] text-white text-[11px] tracking-[0.18em] uppercase font-body font-normal rounded-md transition-colors duration-300 shadow-xs"
         >
           Ver más productos
         </Link>

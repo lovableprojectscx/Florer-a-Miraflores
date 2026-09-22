@@ -36,9 +36,9 @@
   --color-ivory: var(--ivory);
   --color-ivory-soft: var(--ivory-soft);
 
-  --font-display: "Playfair Display", serif;
-  --font-italic: "Playfair Display", serif;
-  --font-body: "Jost", sans-serif;
+  --font-display: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-italic: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {
@@ -92,7 +92,8 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    font-weight: 400;
   }
 }
 
