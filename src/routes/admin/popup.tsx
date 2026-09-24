@@ -13,7 +13,6 @@ export const Route = createFileRoute("/admin/popup")({
 // --- Constantes ---
 
 const BUCKET = "popup";
-const MAX_SIZE_BYTES = 30 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 interface FormState {
@@ -129,10 +128,6 @@ function PopupPage() {
 
     if (!ACCEPTED_TYPES.includes(file.type)) {
       setUploadError("Solo se aceptan imágenes JPG, PNG o WebP.");
-      return;
-    }
-    if (file.size > MAX_SIZE_BYTES) {
-      setUploadError("El archivo supera el límite inicial de 30 MB.");
       return;
     }
 
@@ -273,7 +268,7 @@ function PopupPage() {
                       Recomendado: 600×600 px o 800×600 px
                     </span>
                     <span className="font-body text-[9px] text-[#8A7A6E] mt-0.5">
-                      JPG, PNG, WebP · máx. 30 MB
+                      JPG, PNG, WebP · Optimización automática a WebP
                     </span>
                   </>
                 )}

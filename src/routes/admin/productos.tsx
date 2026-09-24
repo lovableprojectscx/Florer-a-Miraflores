@@ -30,7 +30,6 @@ export const Route = createFileRoute("/admin/productos")({
 // --- Constantes ---
 
 const MAX_IMAGENES = 2;
-const MAX_SIZE_BYTES = 30 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 const BUCKET = "productos";
 
@@ -173,10 +172,6 @@ function ProductoForm({ initial, categorias, tags, saving, onClose, onSave, titu
     setUploadError(null);
     if (!ACCEPTED_TYPES.includes(file.type)) {
       setUploadError("Solo se aceptan imagenes JPG, PNG o WebP.");
-      return;
-    }
-    if (file.size > MAX_SIZE_BYTES) {
-      setUploadError("El archivo supera el limite inicial de 30 MB.");
       return;
     }
     setUploading(idx);
@@ -559,10 +554,6 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
 
       let status: BulkFileItem["status"] = "idle";
       let errorMsg: string | undefined = undefined;
-      if (f.size > MAX_SIZE_BYTES) {
-        status = "error";
-        errorMsg = "El archivo supera el límite de 30 MB.";
-      }
 
       newItems.push({
         id: `${Date.now()}-${i}-${Math.random().toString(36).slice(2)}`,
