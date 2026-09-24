@@ -74,10 +74,10 @@ export function Hero({ banners }: Props) {
     setTouchEnd(null);
   };
 
-  // Proporción exacta de banner largo/panorámico estilo Lima Floral (aprox 3.22:1 / 2560x796 px)
-  // en todos los dispositivos (móvil, tablet y PC) para que el banner se vea completo de extremo a extremo sin recortarse.
+  // Proporción exacta de banner 2560x960 px (ratio 8:3)
+  // en todos los dispositivos para que el banner se vea 100% completo sin recortes verticales ni horizontales.
   const containerClasses =
-    "relative w-full overflow-hidden bg-background aspect-[2560/796]";
+    "relative w-full overflow-hidden bg-background aspect-[2560/960]";
 
   return (
     <section className="w-full bg-white">

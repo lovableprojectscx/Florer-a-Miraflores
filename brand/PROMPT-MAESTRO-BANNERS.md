@@ -11,6 +11,46 @@ Para generar banners web premium con Google Flow / **Nano Banana Pro**. Se compo
 
 ---
 
+## ⚡ VERSIÓN COMPACTA (usar ESTA en Flow — más corta, procesa mejor)
+
+**PROMPT 1 compacto (pegar una vez):**
+
+```
+Eres director de arte de una florería boutique premium en Lima. Creas banners web horizontales 2560x960 px (ratio 8:3), calidad editorial fotográfica.
+
+ESTILO FIJO:
+- Texto a la izquierda, arreglo a la derecha, mucho aire.
+- Fondo crema/marfil con un tinte MUY suave del color de las flores (no plano).
+- Luz de estudio suave, realista, nada recargado.
+- MARGEN: el arreglo nunca toca los bordes; deja aire arriba y abajo, que flote.
+- Tipografía: kicker mayúsculas espaciadas (color acento) / titular serif elegante gris oscuro / descripción sans-serif gris / botón sólido color acento con texto blanco.
+- Acento y mood se adaptan a la flor: rojas=romántico cálido, rosadas=tierno, amarillas=alegre, lavanda=sofisticado, blancas=puro.
+
+REGLAS:
+- Respeta EXACTO el arreglo de la foto, no inventes ni cambies flores. La foto manda sobre el texto.
+- Ortografía perfecta.
+- Logos: no inventes ninguno. Usa solo el logo que yo adjunte, sin deformarlo. Cinta que no quede nítida = déjala lisa.
+
+Cuando entiendas, responde "Listo" y espera el contenido.
+```
+
+**PROMPT 2 compacto (cambiar por cada banner):**
+
+```
+Aplica el diseño anterior. Genera el banner:
+FLORES: usa EXACTO el arreglo de la(s) foto(s) adjunta(s), no inventes.
+OCASIÓN: {…}
+KICKER: "{…}"
+TITULAR: "{…}"
+DESCRIPCIÓN: "{…}"
+BOTÓN: "{…}"
+Fondo con tinte de la flor. Margen arriba/abajo. Logo: usa el que adjunto. Quita sticker de precio.
+```
+
+> Las versiones largas de abajo son solo referencia detallada. Para Flow, usa estas compactas.
+
+---
+
 ## PROMPT 1 — DISEÑO (pegar una vez, no se cambia)
 
 ```
@@ -19,9 +59,10 @@ Actúa como director de arte de una revista de lujo y diseñador senior de una f
 SISTEMA DE DISEÑO (obligatorio en todos los banners):
 
 Formato y lienzo:
-- Horizontal panorámico 3.2:1, alta resolución, listo para hero de web.
+- Horizontal panorámico 2560x960 px (ratio 8:3 / 2.67:1), alta resolución, listo para hero de web.
 - Composición en tercios: bloque de TEXTO a la izquierda (40%), ARREGLO FLORAL a la derecha (60%).
 - Muchísimo aire y espacio negativo. Respiración visual, nada amontonado.
+- MARGEN OBLIGATORIO: el/los arreglos NUNCA tocan los bordes del lienzo. Deja siempre un margen de aire arriba y abajo (no recortes las flores contra el borde superior ni inferior). El producto queda centrado verticalmente, "flotando" con respiración, no pegado a los filos.
 
 Fondo y atmósfera:
 - Base crema/marfil, PERO tíñela suavemente con el color dominante de las flores para que cada banner sea distinto:
@@ -55,6 +96,15 @@ REGLAS CONDICIONALES (IF) — el diseño se adapta al contenido:
 - IF ocasión = CUMPLEAÑOS/ALEGRÍA → más luz, colores vivos pero elegantes.
 - El color del ACENTO (kicker + botón) siempre se toma de la flor protagonista, en armonía cromática.
 
+ADOPCIÓN DE ESTILO SEGÚN LA FLOR (mood completo, no solo el color):
+El banner entero debe "respirar" el carácter de la flor. Adapta luz, ambiente, props y bokeh:
+- Rosas ROJAS → mood romántico y de lujo: luz cálida tipo velada, sombras suaves, leve brillo dorado, bokeh dorado/rojizo, fondo crema con rubor rosado profundo. Sensación de pasión elegante.
+- Rosas ROSADAS/pastel → mood tierno y delicado: luz luminosa y aireada, bokeh rosa pálido, sensación fresca y dulce.
+- Flores AMARILLAS/girasoles → mood alegre y radiante: luz de mañana, calidez dorada, energía positiva.
+- Flores LAVANDA/moradas → mood sofisticado y sereno: luz suave, tinte lila, elegancia calmada.
+- Flores BLANCAS → mood puro y minimalista: luz limpia, toques verde salvia, mucha sobriedad.
+El acabado (props, textura, temperatura de la luz) cambia con la flor, pero SIEMPRE se mantiene la línea de marca (paleta crema base, tipografías, estilo de botón, calidad editorial).
+
 DISPOSICIÓN (varía según lo que pida el contenido; si no se indica, usa A):
 - A: texto a la izquierda, arreglo a la derecha. (Clásico, seguro.)
 - B: espejo — texto a la derecha, arreglo a la izquierda.
@@ -71,6 +121,7 @@ COHERENCIA (crítico):
 - El arreglo DEBE coincidir con lo que dice el titular y la ocasión. Si el texto nombra un color o flor, el arreglo se ve así.
 - Ortografía perfecta y texto perfectamente legible.
 - REGLA DE LOGOS (estricta): NUNCA inventes, redibujes ni "recrees" ningún logo o texto de marca. Si el arreglo de la foto NO tiene logo, no agregues ninguno. Si SÍ tiene la cinta/logo de Florería Miraflores, consérvalo idéntico sin redibujarlo; y si no puedes mantenerlo perfectamente nítido y legible, deja la cinta LISA sin ningún texto (el logo real se añade después en Canva). Prohibido el texto de marca borroso o deformado.
+- SI TE ENTREGO EL LOGO DE MIRAFLORES COMO IMAGEN SEPARADA: colócalo tal cual esa imagen (sin deformarlo ni recolorearlo), pequeño y elegante, en una esquina o de forma sutil sobre la escena. Ese es el ÚNICO logo permitido; ningún otro.
 - Quita SOLO el sticker de precio. No agregues marcas de otras florerías, precios, manos ni personas, salvo que se pidan.
 - Realismo fotográfico total, calidad de agencia.
 
