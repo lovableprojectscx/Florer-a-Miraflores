@@ -98,6 +98,21 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 | RF-068 | Upload de imágenes a Storage con preview | Media | ✅ | CLAUDE §13 |
 | RF-069 | Reordenamiento con flechas ↑↓ y toggle activo inline | Baja | ✅ | CLAUDE §13 |
 
+## 7.1. Promociones, Popup y Fidelización
+
+| ID | Requisito | Prioridad | Estado | Fuente |
+| --- | --- | --- | --- | --- |
+| RF-064a | Listón lateral permanente de suscripción en color rosa característico Miraflores (`#C4848A`) | Media | ✅ | Solicitud Cliente (Fidelización) |
+| RF-064b | Popup modal de captura de celular (+51) con control de frecuencia (máx 1 vez por sesión) y prevención de duplicados | Media | ✅ | Solicitud Cliente (Fidelización) |
+
+> **Detalle RF-064a (Listón lateral rosa):** Elemento visual permanente posicionado en el lateral izquierdo (`fixed left-0 top-1/2 -translate-y-1/2 z-40`) con el color rosa distintivo de Florería Miraflores (`#C4848A` / `--rose-accent`). Muestra verticalmente el llamado *"Suscríbete para recibir ofertas y novedades"* con ícono de regalo. Al hacer clic, abre de inmediato el popup modal de suscripción, permitiendo a los clientes acceder a las promociones en cualquier momento sin depender de la apertura automática.
+>
+> **Detalle RF-064b (Popup de captura de celular y frecuencia):**
+> 1. **Control de frecuencia:** El popup solo se abrirá automáticamente 1 vez por sesión de navegación (`sessionStorage.getItem("fm_popup_seen")`), con una espera no intrusiva de 3 segundos tras cargar la página. No vuelve a abrirse al cambiar de ruta (`/` ↔ `/catalogo`) ni tras refrescar en la misma sesión.
+> 2. **Captura de número móvil:** Permite al visitante registrar su teléfono peruano de 9 dígitos (+51) para unirse a la lista de ofertas y promociones exclusivas vía WhatsApp o SMS.
+> 3. **Estado de éxito y cupón:** Al registrarse, el modal entrega un cupón de bienvenida con opción de copiado rápido y un botón directo a WhatsApp para canjearlo con atención personalizada.
+> 4. **Persistencia de suscriptor:** Si el usuario ya se suscribió, se almacena en `localStorage` (`fm_subscribed`) para no volver a interrumpirlo de forma automática jamás.
+
 ## 8. Estados del pedido
 
 | ID | Requisito | Prioridad | Estado | Fuente |
@@ -156,6 +171,8 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 **Nuevas solicitudes de UI / Conversión (Home):**
 - RF-017 — **Agregar al carrito** directo desde tarjeta en carrusel de Home.
 - RF-018 — **Compartir** producto desde tarjeta en carrusel de Home (Web Share API / Portapapeles).
+- RF-064a — **Listón lateral rosa** permanente en borde izquierdo (`#C4848A`) para invocar promociones en cualquier momento.
+- RF-064b — **Popup de captura de celular** (+51) con frecuencia optimizada (1 sola vez por sesión, sin duplicación).
 
 **Por auditar (⚠️):** SEO (RNF-03/04), lazy-load y alts (RNF-06), manejo de errores (RNF-07).
 

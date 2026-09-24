@@ -66,6 +66,7 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 | Conexión Supabase      | —                 | ✓ Completado (Fila única, CRUD admin) |
 | IZIPay                 | —                 | ⚠️ Flujo Manual / Pendiente credenciales |
 | Acciones en cards Home (Carrito + Compartir) | Home (`Novedades.tsx`) | ⏳ En planificación (RF-017, RF-018) |
+| Listón lateral rosa + Popup de celular | Home / Global (`PopupModal.tsx`) | ✓ Completado (RF-064a, RF-064b) |
 
 ### Fases del proyecto
 

@@ -44,6 +44,7 @@ Se crearon las 10 tablas requeridas en el esquema `public`, utilizando `uuid` co
 | `faqs`             | Preguntas frecuentes. Campos: `pregunta`, `respuesta`, `orden`, `activo`.                                                                                                                                                                                                                    |
 | `distritos`        | Zonas de cobertura y costos de delivery. Campos: `nombre`, `precio_delivery`, `activo`.                                                                                                                                                                                                      |
 | `pedidos`          | Órdenes de los clientes. Campos: `numero` (único), `nombre_cliente`, `telefono`, `email`, `distrito_id`, `direccion`, `referencia`, `fecha_entrega`, `hora_entrega`, `productos` (jsonb), desglose de precios (subtotal, delivery, total), `estado`, `izi_transaction_id` (Izipay), `notas`. |
+| `suscriptores`     | Leads capturados vía popup y listón lateral. Campos: `id`, `telefono`, `origen`, `created_at`.                                                                                                                                                                                              |
 
 ### Relaciones (Claves Foráneas)
 
@@ -57,13 +58,13 @@ Se crearon las 10 tablas requeridas en el esquema `public`, utilizando `uuid` co
 
 ## 4. Políticas de Seguridad (RLS - Row Level Security)
 
-Se habilitó RLS (`ENABLE ROW LEVEL SECURITY`) de manera global en las 10 tablas para prevenir modificaciones no autorizadas por parte del cliente.
+Se habilitó RLS (`ENABLE ROW LEVEL SECURITY`) de manera global en las tablas para prevenir modificaciones no autorizadas por parte del cliente.
 
 ### 4.1. Permisos para Clientes (Público / Anónimos)
 
 - **Lectura (SELECT):** Acceso libre a las tablas `config`, `banners`, `popup`, `categorias`, `productos`, `ocasiones_home`, `colecciones_home`, `faqs`, y `distritos`.
-- **Escritura (INSERT):** Permiso exclusivo para insertar nuevas filas en la tabla `pedidos` (con `CHECK (true)`).
-- **Prohibido:** El público no puede consultar (`SELECT`), modificar (`UPDATE`) ni borrar (`DELETE`) el listado de pedidos realizados. Tampoco pueden modificar los productos ni configuraciones.
+- **Escritura (INSERT):** Permiso exclusivo para insertar nuevas filas en las tablas `pedidos` y `suscriptores` (con `CHECK (true)`).
+- **Prohibido:** El público no puede consultar (`SELECT`), modificar (`UPDATE`) ni borrar (`DELETE`) el listado de pedidos realizados ni de suscriptores. Tampoco pueden modificar los productos ni configuraciones.
 
 ### 4.2. Permisos para Administrador (Auth UID válido)
 

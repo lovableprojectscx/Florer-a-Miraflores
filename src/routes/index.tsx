@@ -90,7 +90,7 @@ function HomePage() {
       </main>
       <Footer config={config} />
       <WhatsappFab config={config} />
-      {popup && <PopupModal popup={popup} />}
+      <PopupModal popup={popup} config={config} />
     </div>
   );
 }

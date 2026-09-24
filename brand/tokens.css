@@ -1,0 +1,29 @@
+/* Florería Miraflores — Design Tokens (marca real, refleja src/styles.css)
+   Fuente única de referencia de color, tipografía y radios. */
+
+:root {
+  /* Color — neutros marfil */
+  --fm-bg:            #FFFFFF; /* fondo principal */
+  --fm-ivory-soft:    #FAF8F6; /* secciones alternadas / cards suaves */
+  --fm-text:          #1A1A1A; /* texto principal */
+  --fm-text-muted:    #8C8A84; /* texto secundario */
+
+  /* Color — acento de marca */
+  --fm-accent:        #C4848A; /* rosa — CTAs, focos, detalles */
+
+  /* Bordes y estados */
+  --fm-border:        rgba(0, 0, 0, 0.06);
+  --fm-destructive:   #D64545;
+
+  /* Tipografía */
+  --fm-font-display:  "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --fm-font-body:     "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Disponibles (importadas, no cableadas): "Playfair Display", "Montserrat", "Jost" */
+
+  --fm-tracking-display: -0.02em;
+  --fm-weight-display: 400;
+  --fm-weight-body: 300;
+
+  /* Forma */
+  --fm-radius: 0.25rem;
+}
