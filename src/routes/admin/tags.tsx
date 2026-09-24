@@ -55,11 +55,33 @@ function AdminTags() {
     setError(null);
 
     if (editId) {
+      const tagAnterior = tags.find((t) => t.id === editId);
       const { error } = await supabase
         .from("tags")
         .update({ ...form })
         .eq("id", editId);
       if (error) { setError(error.message); setSaving(false); return; }
+
+      // Si cambió la clave del tag, actualizar automáticamente los productos asociados
+      if (tagAnterior && tagAnterior.clave !== form.clave) {
+        try {
+          const { data: prods } = await supabase
+            .from("productos")
+            .select("id, tags")
+            .contains("tags", [tagAnterior.clave]);
+
+          if (prods && prods.length > 0) {
+            await Promise.all(
+              prods.map((p: { id: string; tags: string[] }) => {
+                const nuevosTags = p.tags.map((t) => (t === tagAnterior.clave ? form.clave : t));
+                return supabase.from("productos").update({ tags: nuevosTags }).eq("id", p.id);
+              })
+            );
+          }
+        } catch (syncErr) {
+          console.warn("[AdminTags] Error sincronizando productos:", syncErr);
+        }
+      }
     } else {
       const orden = tags.length > 0 ? Math.max(...tags.map((t) => t.orden)) + 1 : 1;
       const { error } = await supabase.from("tags").insert({ ...form, orden });

@@ -250,18 +250,38 @@ export async function getTags(): Promise<TagRow[]> {
 }
 
 /**
+ * Normaliza y expande claves de tags para soportar nombres históricos o renombrados
+ * (ej: globos_para_enamorar <-> flores_y_globos_para_sorprender).
+ */
+function resolverClavesTag(clave: string): string[] {
+  const claves = [clave];
+  const c = clave.toLowerCase();
+  if (
+    c === "globos_para_enamorar" ||
+    c === "flores_y_globos_para_sorprender" ||
+    c === "globos" ||
+    c.includes("globo") ||
+    c.includes("balon")
+  ) {
+    claves.push("globos_para_enamorar", "flores_y_globos_para_sorprender", "globos");
+  }
+  return [...new Set(claves)];
+}
+
+/**
  * Devuelve hasta `limit` productos activos que contienen la `clave` del tag
- * en su array `tags[]`. Pide limit+1 para detectar si hay más.
+ * (o sus variantes históricas) en su array `tags[]`.
  */
 export async function getProductosPorTag(
   clave: string,
   limit = 5,
 ): Promise<ProductoRow[]> {
+  const claves = resolverClavesTag(clave);
   const { data, error } = await supabase
     .from("productos")
     .select("*")
     .eq("activo", true)
-    .contains("tags", [clave])
+    .overlaps("tags", claves)
     .order("orden", { ascending: true })
     .limit(limit);
 
@@ -286,11 +306,12 @@ export async function getTagPorClave(clave: string): Promise<TagRow | null> {
  * Devuelve todos los productos activos asociados a un tag específico.
  */
 export async function getTodosProductosPorTag(clave: string): Promise<ProductoRow[]> {
+  const claves = resolverClavesTag(clave);
   const { data, error } = await supabase
     .from("productos")
     .select("*")
     .eq("activo", true)
-    .contains("tags", [clave])
+    .overlaps("tags", claves)
     .order("orden", { ascending: true });
 
   return throwOnError(data, error);

@@ -160,10 +160,22 @@ function ProductoForm({ initial, categorias, tags, saving, onClose, onSave, titu
     setErrors((prev) => ({ ...prev, [key]: undefined }));
   }
 
+  function isTagSelected(clave: string): boolean {
+    if (form.tags.includes(clave)) return true;
+    if (
+      (clave === "globos_para_enamorar" || clave === "flores_y_globos_para_sorprender") &&
+      (form.tags.includes("globos_para_enamorar") || form.tags.includes("flores_y_globos_para_sorprender"))
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   function toggleTag(tag: ProductoTag) {
+    const active = isTagSelected(tag);
     setForm((prev) => ({
       ...prev,
-      tags: prev.tags.includes(tag) ? [] : [tag],
+      tags: active ? [] : [tag],
     }));
   }
 
@@ -316,7 +328,7 @@ function ProductoForm({ initial, categorias, tags, saving, onClose, onSave, titu
             </label>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => {
-                const active = form.tags.includes(tag.clave);
+                const active = isTagSelected(tag.clave);
                 return (
                   <button
                     key={tag.id}
