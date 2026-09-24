@@ -65,6 +65,7 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 | Panel admin            | `/admin/*`        | ✓ Completado                         |
 | Conexión Supabase      | —                 | ✓ Completado (Fila única, CRUD admin) |
 | IZIPay                 | —                 | ⚠️ Flujo Manual / Pendiente credenciales |
+| Acciones en cards Home (Carrito + Compartir) | Home (`Novedades.tsx`) | ⏳ En planificación (RF-017, RF-018) |
 
 ### Fases del proyecto
 

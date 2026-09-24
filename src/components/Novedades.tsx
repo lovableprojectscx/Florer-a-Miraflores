@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingBag, Share2, Check } from "lucide-react";
+import { useCartStore } from "@/store/cart";
 import type { ProductoRow, TagRow } from "@/types/database";
 import { slugify } from "@/lib/utils";
 
@@ -73,13 +74,63 @@ interface Props {
 
 function ProductCard({ producto }: { producto: ProductoRow }) {
   const imgSrc = producto.imagenes?.[0] ?? "";
+  const { agregarItem, abrirCarrito } = useCartStore();
+  const [copied, setCopied] = useState(false);
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    agregarItem({
+      id: producto.id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      imagen: imgSrc,
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+    abrirCarrito();
+  };
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const productSlug = `${slugify(producto.nombre)}-${producto.id}`;
+    const shareUrl =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/producto/${productSlug}`
+        : "";
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share({
+          title: `${producto.nombre} | Florería Miraflores`,
+          text: `Mira este hermoso arreglo "${producto.nombre}" en Florería Miraflores:`,
+          url: shareUrl,
+        });
+        return;
+      } catch (err: any) {
+        if (err?.name === "AbortError") return;
+      }
+    }
+
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        // Fallback silencioso
+      }
+    }
+  };
 
   return (
-    <article className="group flex-shrink-0 w-[160px] sm:w-[210px] md:w-[260px] lg:w-[295px] xl:w-[325px] 2xl:w-[345px] select-none">
+    <article className="group flex-shrink-0 w-[160px] sm:w-[210px] md:w-[260px] lg:w-[295px] xl:w-[325px] 2xl:w-[345px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-xs">
       <Link
         to="/producto/$id"
         params={{ id: `${slugify(producto.nombre)}-${producto.id}` }}
-        className="block overflow-hidden transition-all duration-300 hover:shadow-sm"
+        className="block"
       >
         {/* Imagen cuadrada limpia sin bordes que ocupa todo el ancho */}
         <div className="relative overflow-hidden bg-[#FAF8F5] aspect-square">
@@ -91,8 +142,8 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
           />
         </div>
 
-        {/* Información del producto: panel gris claro idéntico a Lima Floral */}
-        <div className="bg-[#F7F7F7] px-3.5 py-3 sm:px-4 sm:py-3.5">
+        {/* Información del producto */}
+        <div className="bg-[#F7F7F7] px-3.5 pt-3 sm:px-4 sm:pt-3.5 pb-2">
           <h3 className="font-body text-[#222222] text-xs sm:text-[13px] md:text-sm font-normal leading-snug line-clamp-1 group-hover:text-[#666666] transition-colors">
             {producto.nombre}
           </h3>
@@ -101,6 +152,48 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
           </p>
         </div>
       </Link>
+
+      {/* Botones de acción rápida: Agregar al carrito y Compartir */}
+      <div className="px-3.5 pb-3.5 sm:px-4 sm:pb-4 pt-1 bg-[#F7F7F7] flex items-center gap-1.5 sm:gap-2 mt-auto">
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className="flex-1 h-8 sm:h-9 bg-[#2C2420] hover:bg-[#433934] active:scale-[0.98] text-white text-[10px] sm:text-[11px] font-body tracking-wider uppercase rounded-xs transition-all duration-200 flex items-center justify-center gap-1.5 font-medium cursor-pointer shadow-xs"
+          title="Agregar al carrito"
+        >
+          {added ? (
+            <>
+              <Check className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+              <span>¡Listo!</span>
+            </>
+          ) : (
+            <>
+              <ShoppingBag className="w-3.5 h-3.5" strokeWidth={1.75} />
+              <span>Agregar</span>
+            </>
+          )}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleShare}
+          className="h-8 w-8 sm:h-9 sm:w-9 shrink-0 bg-white hover:bg-[#FAF8F5] active:scale-[0.96] border border-[#E0DCD6] hover:border-[#2C2420] text-[#2C2420] rounded-xs transition-all duration-200 flex items-center justify-center cursor-pointer relative"
+          title={copied ? "¡Enlace copiado!" : "Compartir producto"}
+          aria-label="Compartir producto"
+        >
+          {copied ? (
+            <Check className="w-3.5 h-3.5 text-[#4E7A43]" strokeWidth={2.5} />
+          ) : (
+            <Share2 className="w-3.5 h-3.5 text-[#2C2420]" strokeWidth={1.75} />
+          )}
+
+          {copied && (
+            <span className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#2C2420] text-white text-[9px] px-1.5 py-0.5 rounded-xs shadow whitespace-nowrap pointer-events-none animate-fadeIn">
+              ¡Copiado!
+            </span>
+          )}
+        </button>
+      </div>
     </article>
   );
 }
