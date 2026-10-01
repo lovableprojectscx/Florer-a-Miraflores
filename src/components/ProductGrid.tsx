@@ -11,6 +11,7 @@ import type { ProductoRow, TagRow } from "@/types/database";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { slugify } from "@/lib/utils";
+import { getTagBadgeInfo } from "@/lib/tag-utils";
 
 // Data estática del home — se mantiene para compatibilidad
 const defaultProducts = [
@@ -55,10 +56,10 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
         {externalProducts.map((p) => {
           const firstTag = p.tags?.[0];
-          const tagObj = tags.find((t) => t.clave === firstTag);
-          const label = tagObj ? tagObj.nombre.toUpperCase() : (firstTag ? (BADGE_MAP[firstTag]?.label ?? firstTag.toUpperCase()) : null);
-          const color = tagObj ? tagObj.color_badge : null;
-          const fallbackClass = firstTag ? (BADGE_MAP[firstTag]?.className ?? "bg-[#2C2420] text-white") : "";
+          const badgeInfo = getTagBadgeInfo(tags, firstTag);
+          const label = badgeInfo?.label ?? null;
+          const color = badgeInfo?.color ?? null;
+          const fallbackClass = "bg-[#2C2420] text-white";
 
           return (
             <article

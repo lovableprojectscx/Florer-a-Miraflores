@@ -21,6 +21,7 @@ import {
 import { supabase } from "@/lib/supabase";
 import type { ProductoRow, ProductoTag, CategoriaRow, TagRow } from "@/types/database";
 import { convertToWebP } from "@/lib/image-optimizer";
+import { findTagByClave, resolverClavesTag } from "@/lib/tag-utils";
 
 export const Route = createFileRoute("/admin/productos")({
   head: () => ({ meta: [{ title: "Productos | Admin Florería Miraflores" }] }),
@@ -35,7 +36,7 @@ const BUCKET = "productos";
 
 // --- Tipos internos ---
 
-type SortField = "nombre" | "precio";
+type SortField = "nombre" | "precio" | "created_at";
 type SortDir = "asc" | "desc";
 
 interface FormState {
@@ -162,13 +163,8 @@ function ProductoForm({ initial, categorias, tags, saving, onClose, onSave, titu
 
   function isTagSelected(clave: string): boolean {
     if (form.tags.includes(clave)) return true;
-    if (
-      (clave === "globos_para_enamorar" || clave === "flores_y_globos_para_sorprender") &&
-      (form.tags.includes("globos_para_enamorar") || form.tags.includes("flores_y_globos_para_sorprender"))
-    ) {
-      return true;
-    }
-    return false;
+    const equivalentes = resolverClavesTag(clave);
+    return form.tags.some((t) => equivalentes.includes(t));
   }
 
   function toggleTag(tag: ProductoTag) {
@@ -973,6 +969,8 @@ function ProductosPage() {
   const [filterCategoria, setFilterCategoria] = useState("todos");
   const [filterEstado, setFilterEstado] = useState("todos");
   const [filterTag, setFilterTag] = useState("todos");
+  const [lastEditedId, setLastEditedId] = useState<string | null>(null);
+  const [successNotice, setSuccessNotice] = useState<string | null>(null);
 
   const cargarDatos = useCallback(async () => {
     setLoading(true);
@@ -998,9 +996,28 @@ function ProductosPage() {
         .order("nombre", { ascending: true });
       if (prodsError) throw prodsError;
 
+      // Auto-migración silenciosa de tags históricos en la base de datos
+      const legacyTagProds = (prods ?? []).filter((p: ProductoRow) =>
+        p.tags?.includes("flores_y_globos_para_sorprender" as any)
+      );
+      if (legacyTagProds.length > 0) {
+        void Promise.all(
+          legacyTagProds.map((p: ProductoRow) => {
+            const nuevosTags = p.tags.map((t) =>
+              t === "flores_y_globos_para_sorprender" ? "globos_para_enamorar" : t
+            );
+            return supabase.from("productos").update({ tags: nuevosTags }).eq("id", p.id);
+          })
+        );
+      }
+
       const catMap = new Map(todasCats.map((c) => [c.id, c.nombre]));
       const mapped: ProductoConCategoria[] = (prods ?? []).map((p: ProductoRow) => ({
         ...p,
+        // Si el producto aún tiene el tag histórico en memoria, mostrarlo normalizado
+        tags: p.tags?.map((t) =>
+          t === "flores_y_globos_para_sorprender" ? "globos_para_enamorar" : t
+        ) ?? [],
         categoria_nombre: p.categoria_id
           ? (catMap.get(p.categoria_id) ?? "Sin categoria")
           : "Sin categoria",
@@ -1022,7 +1039,7 @@ function ProductosPage() {
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
       setSortField(field);
-      setSortDir("asc");
+      setSortDir(field === "created_at" ? "desc" : "asc");
     }
   }
 
@@ -1056,7 +1073,9 @@ function ProductosPage() {
       if (filterTag === "sin_tags") {
         if (producto.tags && producto.tags.length > 0) return false;
       } else {
-        if (!producto.tags || !producto.tags.includes(filterTag as ProductoTag)) return false;
+        const clavesEquivalentes = resolverClavesTag(filterTag);
+        const hasMatch = producto.tags?.some((t) => clavesEquivalentes.includes(t));
+        if (!hasMatch) return false;
       }
     }
 
@@ -1067,14 +1086,20 @@ function ProductosPage() {
     let cmp = 0;
     if (sortField === "nombre") cmp = a.nombre.localeCompare(b.nombre, "es");
     if (sortField === "precio") cmp = a.precio - b.precio;
+    if (sortField === "created_at") {
+      const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+      const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+      cmp = dateA - dateB;
+    }
     return sortDir === "asc" ? cmp : -cmp;
   });
 
   async function handleCreate(form: FormState) {
     setSaving(true);
+    const nombreProd = form.nombre.trim();
     try {
-      const { error } = await supabase.from("productos").insert({
-        nombre: form.nombre.trim(),
+      const { data, error } = await supabase.from("productos").insert({
+        nombre: nombreProd,
         precio: parseFloat(form.precio),
         descripcion: form.descripcion.trim() || null,
         categoria_id: form.categoria_id || null,
@@ -1082,10 +1107,23 @@ function ProductosPage() {
         activo: form.activo,
         imagenes: form.imagenes.filter(Boolean),
         orden: 0,
-      });
+      }).select("id").single();
       if (error) throw error;
       setShowCreate(false);
+      const newId = data?.id;
+      if (newId) setLastEditedId(newId);
+      setSuccessNotice(`Producto "${nombreProd}" creado exitosamente.`);
       await cargarDatos();
+      if (newId) {
+        setTimeout(() => {
+          const el = document.getElementById(`prod-row-${newId}`);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 200);
+      }
+      setTimeout(() => {
+        setSuccessNotice(null);
+        setLastEditedId(null);
+      }, 6000);
     } catch (err) {
       console.error(err);
     } finally {
@@ -1096,11 +1134,13 @@ function ProductosPage() {
   async function handleEdit(form: FormState) {
     if (!editando) return;
     setSaving(true);
+    const editedId = editando.id;
+    const editedNombre = form.nombre.trim();
     try {
       const { error } = await supabase
         .from("productos")
         .update({
-          nombre: form.nombre.trim(),
+          nombre: editedNombre,
           precio: parseFloat(form.precio),
           descripcion: form.descripcion.trim() || null,
           categoria_id: form.categoria_id || null,
@@ -1108,10 +1148,20 @@ function ProductosPage() {
           activo: form.activo,
           imagenes: form.imagenes.filter(Boolean),
         })
-        .eq("id", editando.id);
+        .eq("id", editedId);
       if (error) throw error;
       setEditando(null);
+      setLastEditedId(editedId);
+      setSuccessNotice(`Producto "${editedNombre}" actualizado correctamente.`);
       await cargarDatos();
+      setTimeout(() => {
+        const el = document.getElementById(`prod-row-${editedId}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 200);
+      setTimeout(() => {
+        setSuccessNotice(null);
+        setLastEditedId(null);
+      }, 6000);
     } catch (err) {
       console.error(err);
     } finally {
@@ -1264,6 +1314,28 @@ function ProductosPage() {
               </select>
             </div>
 
+            {/* Orden */}
+            <div className="flex items-center bg-[#FDFAF6] border border-[#E8DDD0] h-10 px-2.5">
+              <span className="font-body text-[10px] text-[#8A7A6E] mr-2 uppercase tracking-wider hidden sm:inline">
+                Orden:
+              </span>
+              <select
+                value={`${sortField}-${sortDir}`}
+                onChange={(e) => {
+                  const [f, d] = e.target.value.split("-") as [SortField, SortDir];
+                  setSortField(f);
+                  setSortDir(d);
+                }}
+                className="bg-transparent font-body text-xs text-[#2C2420] outline-none cursor-pointer pr-4"
+              >
+                <option value="created_at-desc">Más recientes primero</option>
+                <option value="nombre-asc">Nombre (A - Z)</option>
+                <option value="nombre-desc">Nombre (Z - A)</option>
+                <option value="precio-asc">Precio (Menor a Mayor)</option>
+                <option value="precio-desc">Precio (Mayor a Menor)</option>
+              </select>
+            </div>
+
             {/* Reset button */}
             {hasActiveFilters && (
               <button
@@ -1279,6 +1351,24 @@ function ProductosPage() {
               </button>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Banner de confirmación visual al editar o crear */}
+      {successNotice && (
+        <div className="mb-6 p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs sm:text-sm font-body flex items-center justify-between rounded-md shadow-xs animate-fade-in">
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center flex-shrink-0">
+              <Check className="w-4 h-4" strokeWidth={2.5} />
+            </div>
+            <span className="font-medium">{successNotice}</span>
+          </div>
+          <button
+            onClick={() => setSuccessNotice(null)}
+            className="p-1 text-emerald-700 hover:text-emerald-950 transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       )}
 
@@ -1358,7 +1448,12 @@ function ProductosPage() {
               sorted.map((producto) => (
                 <tr
                   key={producto.id}
-                  className="border-b border-[#E8DDD0] hover:bg-[#FDFAF6] transition-colors"
+                  id={`prod-row-${producto.id}`}
+                  className={`border-b border-[#E8DDD0] transition-all duration-500 ${
+                    producto.id === lastEditedId
+                      ? "bg-amber-50/90 ring-2 ring-amber-400 font-medium"
+                      : "hover:bg-[#FDFAF6]"
+                  }`}
                 >
                   {/* Imagen */}
                   <td className="px-4 py-3">
@@ -1407,8 +1502,8 @@ function ProductosPage() {
                         <span className="font-body text-xs text-[#C4956A]/30">sin tags</span>
                       ) : (
                         producto.tags.map((tag) => {
-                          const tagObj = tags.find((t) => t.clave === tag);
-                          const label = tagObj ? tagObj.nombre : tag;
+                          const tagObj = findTagByClave(tags, tag);
+                          const label = tagObj ? tagObj.nombre : tag.replace(/_/g, " ");
                           const color = tagObj ? tagObj.color_badge : "#2C2420";
                           return (
                             <span
@@ -1492,7 +1587,15 @@ function ProductosPage() {
           </div>
         ) : (
           sorted.map((producto) => (
-            <div key={producto.id} className="bg-white border border-[#E8DDD0] p-4 rounded-lg flex flex-col gap-3">
+            <div
+              key={producto.id}
+              id={`prod-row-mobile-${producto.id}`}
+              className={`border border-[#E8DDD0] p-4 rounded-lg flex flex-col gap-3 transition-all duration-500 ${
+                producto.id === lastEditedId
+                  ? "bg-amber-50/90 ring-2 ring-amber-400 font-medium"
+                  : "bg-white"
+              }`}
+            >
               <div className="flex gap-3">
                 {/* Imagen */}
                 <div className="w-20 h-20 bg-[#F5EFE6] overflow-hidden flex-shrink-0 rounded-md">
@@ -1525,8 +1628,8 @@ function ProductosPage() {
                       S/ {Number(producto.precio).toFixed(2)}
                     </p>
                     {producto.tags.map((tag) => {
-                      const tagObj = tags.find((t) => t.clave === tag);
-                      const label = tagObj ? tagObj.nombre : tag;
+                      const tagObj = findTagByClave(tags, tag);
+                      const label = tagObj ? tagObj.nombre : tag.replace(/_/g, " ");
                       const color = tagObj ? tagObj.color_badge : "#2C2420";
                       return (
                         <span

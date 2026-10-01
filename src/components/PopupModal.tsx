@@ -167,16 +167,28 @@ export function PopupModal({ popup, config }: Props) {
   );
   const waUrl = `https://wa.me/${floristPhone}?text=${waMessage}`;
 
+  // Filtro de seguridad para evitar textos heredados que mencionen descuentos no solicitados
+  const isLegacyOrUnwantedText = (t?: string | null) => {
+    if (!t) return true;
+    return (
+      t.includes("BCP") ||
+      t.includes("Interbank") ||
+      t.includes("30% en ramos") ||
+      t.includes("Aprovecha cupones") ||
+      t.includes("tarjetas seleccionadas")
+    );
+  };
+
   return (
     <>
-      {/* ─── Listón lateral permanente a la izquierda (Rosa Miraflores #C4848A) ─── */}
+      {/* ─── Listón lateral permanente a la derecha (Rosa Miraflores #C4848A) ─── */}
       {!isOpen && (
         <button
           type="button"
           onClick={handleOpenFromRibbon}
-          aria-label="Suscríbete para recibir ofertas y novedades"
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-40 flex items-center justify-center bg-gradient-to-b from-[#C4848A] to-[#B76E79] text-white py-3.5 sm:py-4 px-2 sm:px-2.5 rounded-r-2xl shadow-lg shadow-[#C4848A]/35 hover:translate-x-1 hover:shadow-xl active:scale-95 transition-all duration-300 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-[#C4848A]/50"
-          title="Suscríbete para recibir ofertas y novedades"
+          aria-label="Suscríbete para recibir promociones"
+          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center justify-center bg-gradient-to-b from-[#C4848A] to-[#B76E79] text-white py-3.5 sm:py-4 px-2 sm:px-2.5 rounded-l-2xl shadow-lg shadow-[#C4848A]/35 hover:-translate-x-1 hover:shadow-xl active:scale-95 transition-all duration-300 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-[#C4848A]/50"
+          title="Suscríbete para recibir promociones"
         >
           <div className="flex flex-col items-center gap-2">
             <Gift className="w-4 h-4 text-white/95 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
@@ -184,10 +196,9 @@ export function PopupModal({ popup, config }: Props) {
               className="text-[10px] sm:text-[11px] font-body font-medium tracking-widest uppercase select-none text-white drop-shadow-xs"
               style={{
                 writingMode: "vertical-rl",
-                transform: "rotate(180deg)",
               }}
             >
-              Suscríbete para recibir ofertas y novedades
+              Suscríbete para recibir promociones
             </span>
           </div>
         </button>
@@ -235,22 +246,28 @@ export function PopupModal({ popup, config }: Props) {
                   Club Florería Miraflores
                 </span>
                 <h3 className="font-display text-2xl sm:text-3xl text-[#2C2420] mt-1 font-normal">
-                  Ofertas y Novedades
+                  Suscríbete para recibir promociones
                 </h3>
               </div>
             )}
 
-            {/* Texto de promoción o subtítulo */}
+            {/* Texto de suscripción */}
             <div className="px-6 pt-5 pb-2 text-center">
-              {popup?.texto ? (
-                <p className="font-body text-sm sm:text-base text-[#2C2420] leading-relaxed">
-                  {popup.texto}
-                </p>
-              ) : (
-                <p className="font-body text-xs sm:text-sm text-[#8C8A84] leading-relaxed">
-                  Suscríbete con tu celular para recibir ofertas flash exclusivas, recordatorios de fechas especiales y un beneficio de bienvenida en tu primer arreglo floral.
-                </p>
+              {popup?.imagen_url && (
+                <>
+                  <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#C4848A] block mb-1">
+                    Club Florería Miraflores
+                  </span>
+                  <h3 className="font-display text-xl sm:text-2xl text-[#2C2420] font-normal mb-2">
+                    Suscríbete para recibir promociones
+                  </h3>
+                </>
               )}
+              <p className="font-body text-xs sm:text-sm text-[#8C8A84] leading-relaxed">
+                {popup?.texto && !isLegacyOrUnwantedText(popup.texto)
+                  ? popup.texto
+                  : "Suscríbete con tu celular o WhatsApp para recibir promociones exclusivas, novedades y recordatorios de fechas especiales."}
+              </p>
             </div>
 
             {/* Contenido: Formulario vs Estado Suscrito */}
@@ -306,13 +323,13 @@ export function PopupModal({ popup, config }: Props) {
                   ) : (
                     <>
                       <Sparkles className="w-4 h-4" />
-                      <span>Quiero recibir ofertas</span>
+                      <span>Quiero recibir promociones</span>
                     </>
                   )}
                 </button>
 
                 <p className="text-[11px] text-center text-[#8C8A84] font-light leading-snug">
-                  🔒 Sin spam. Solo descuentos exclusivos y novedades florales.
+                  🔒 Sin spam. Solo promociones exclusivas y novedades de Florería Miraflores.
                 </p>
               </form>
             ) : (

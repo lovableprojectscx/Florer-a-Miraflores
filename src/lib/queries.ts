@@ -24,6 +24,7 @@ import type {
   PedidoProducto,
   TagRow,
 } from "@/types/database";
+import { resolverClavesTag } from "@/lib/tag-utils";
 
 // ─── Helper interno ───────────────────────────────────────────────────────────
 
@@ -247,25 +248,6 @@ export async function getTags(): Promise<TagRow[]> {
     .order("orden", { ascending: true });
 
   return throwOnError(data, error);
-}
-
-/**
- * Normaliza y expande claves de tags para soportar nombres históricos o renombrados
- * (ej: globos_para_enamorar <-> flores_y_globos_para_sorprender).
- */
-function resolverClavesTag(clave: string): string[] {
-  const claves = [clave];
-  const c = clave.toLowerCase();
-  if (
-    c === "globos_para_enamorar" ||
-    c === "flores_y_globos_para_sorprender" ||
-    c === "globos" ||
-    c.includes("globo") ||
-    c.includes("balon")
-  ) {
-    claves.push("globos_para_enamorar", "flores_y_globos_para_sorprender", "globos");
-  }
-  return [...new Set(claves)];
 }
 
 /**

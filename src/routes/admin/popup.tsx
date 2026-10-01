@@ -300,18 +300,18 @@ function PopupPage() {
               htmlFor="popup-texto"
               className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-2"
             >
-              Texto del Popup
+              Texto del Popup (Subtítulo de suscripción)
             </label>
             <textarea
               id="popup-texto"
               rows={4}
               value={form.texto}
               onChange={(e) => setField("texto", e.target.value)}
-              placeholder="Ej: ¡Usa el código FLORES10 y obtén 10% de descuento en tu primer pedido!"
+              placeholder="Ej: Suscríbete con tu celular o WhatsApp para recibir promociones exclusivas, novedades y recordatorios de fechas especiales."
               className="w-full p-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors resize-none"
             />
             <p className="mt-1 font-body text-[10px] text-[#8A7A6E]">
-              Puedes incluir mensajes de cupones, anuncios de temporada o información importante.
+              Mensaje explicativo para invitar a los clientes a suscribirse con su número celular.
             </p>
           </div>
 

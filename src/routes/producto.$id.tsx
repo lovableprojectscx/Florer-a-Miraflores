@@ -19,6 +19,7 @@ import { useCartStore } from "@/store/cart";
 import type { CategoriaRow, ProductoRow, TagRow } from "@/types/database";
 import { supabase } from "@/lib/supabase";
 import { slugify, extractIdFromSlug } from "@/lib/utils";
+import { getTagBadgeInfo } from "@/lib/tag-utils";
 
 // ─── Badge helper ─────────────────────────────────────────────────────────────
 
@@ -118,10 +119,10 @@ function ProductPage() {
   const [activeImg, setActiveImg] = useState(0);
 
   const firstTag = product.tags?.[0];
-  const tagObj = tags?.find((t: TagRow) => t.clave === firstTag);
-  const label = tagObj ? tagObj.nombre.toUpperCase() : (firstTag ? (BADGE_MAP[firstTag]?.label ?? firstTag.toUpperCase()) : null);
-  const color = tagObj ? tagObj.color_badge : null;
-  const fallbackClass = firstTag ? (BADGE_MAP[firstTag]?.className ?? "bg-[#2C2420] text-white") : "";
+  const badgeInfo = getTagBadgeInfo(tags, firstTag);
+  const label = badgeInfo?.label ?? null;
+  const color = badgeInfo?.color ?? null;
+  const fallbackClass = "bg-[#2C2420] text-white";
   const imagenes = product.imagenes ?? [];
 
   const handleAgregar = () => {

@@ -105,13 +105,28 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 | RF-064a | Listón lateral permanente de suscripción en color rosa característico Miraflores (`#C4848A`) | Media | ✅ | Solicitud Cliente (Fidelización) |
 | RF-064b | Popup modal de captura de celular (+51) con control de frecuencia (máx 1 vez por sesión) y prevención de duplicados | Media | ✅ | Solicitud Cliente (Fidelización) |
 
-> **Detalle RF-064a (Listón lateral rosa):** Elemento visual permanente posicionado en el lateral izquierdo (`fixed left-0 top-1/2 -translate-y-1/2 z-40`) con el color rosa distintivo de Florería Miraflores (`#C4848A` / `--rose-accent`). Muestra verticalmente el llamado *"Suscríbete para recibir ofertas y novedades"* con ícono de regalo. Al hacer clic, abre de inmediato el popup modal de suscripción, permitiendo a los clientes acceder a las promociones en cualquier momento sin depender de la apertura automática.
+> **Detalle RF-064a (Listón lateral rosa):** Elemento visual permanente posicionado en el lateral derecho (`fixed right-0 top-1/2 -translate-y-1/2 z-40`) con el color rosa distintivo de Florería Miraflores (`#C4848A` / `--rose-accent`). Muestra verticalmente el llamado *"Suscríbete para recibir promociones"* con ícono de regalo. Al hacer clic, abre de inmediato el popup modal de suscripción, permitiendo a los clientes registrar su número móvil o WhatsApp para acceder a beneficios exclusivos sin depender de la apertura automática.
 >
-> **Detalle RF-064b (Popup de captura de celular y frecuencia):**
+> **Detalle RF-064b (Popup de captura de celular y suscripción):**
 > 1. **Control de frecuencia:** El popup solo se abrirá automáticamente 1 vez por sesión de navegación (`sessionStorage.getItem("fm_popup_seen")`), con una espera no intrusiva de 3 segundos tras cargar la página. No vuelve a abrirse al cambiar de ruta (`/` ↔ `/catalogo`) ni tras refrescar en la misma sesión.
-> 2. **Captura de número móvil:** Permite al visitante registrar su teléfono peruano de 9 dígitos (+51) para unirse a la lista de ofertas y promociones exclusivas vía WhatsApp o SMS.
+> 2. **Captura de número móvil:** Permite al visitante registrar su teléfono peruano de 9 dígitos (+51) para unirse a la lista de promociones exclusivas vía WhatsApp o SMS.
 > 3. **Estado de éxito y cupón:** Al registrarse, el modal entrega un cupón de bienvenida con opción de copiado rápido y un botón directo a WhatsApp para canjearlo con atención personalizada.
 > 4. **Persistencia de suscriptor:** Si el usuario ya se suscribió, se almacena en `localStorage` (`fm_subscribed`) para no volver a interrumpirlo de forma automática jamás.
+
+## 7.2. Resolución de Incidencias y Usabilidad en Catálogo
+
+| ID | Requisito | Prioridad | Estado | Fuente |
+| --- | --- | --- | --- | --- |
+| RF-064c | Resolución y unificación de alias de tags (`globos_para_enamorar` / `flores_y_globos_para_sorprender`) para reflejar colores dinámicos en tienda y admin | Alta | ✅ | Incidencia Reportada |
+| RF-061a | Feedback visual inmediato al guardar/editar producto (banner de éxito, resalte de fila y orden por fecha reciente) | Alta | ✅ | Incidencia Reportada (Usabilidad) |
+
+> **Detalle RF-064c (Unificación de Tags y Color de Insignias):**
+> 1. **Causa del problema:** Al renombrar el tag en el panel de Tags a *"Globos para enamorar"* (`globos_para_enamorar`), los productos guardados en la base de datos conservaban la clave histórica `flores_y_globos_para_sorprender`. El buscador de insignias no hacía match exacto y recurría al fallback negro (`#2C2420`) con el nombre crudo en mayúsculas.
+> 2. **Solución:** Se implementó `tag-utils.ts` con normalización bidireccional y resolución automática de alias tanto en el catálogo, detalle de producto y panel administrativo. Adicionalmente, al abrir el listado de productos como administrador, se ejecuta la migración automática y silenciosa de las claves históricas en Supabase.
+>
+> **Detalle RF-061a (Estabilidad y feedback tras editar productos):**
+> 1. **Causa del problema:** La tabla del panel de productos se ordenaba estrictamente por `nombre ASC`. Al editar un producto cuyo nombre inicial era *"Borrador..."* y cambiarlo por un nombre con letras posteriores (ej. *"Ramillete..."* o *"Box..."*), el producto se desplazaba hacia el final de la lista, generando la falsa impresión de haberse eliminado.
+> 2. **Solución:** Se añadió un selector de ordenamiento en cabecera (`created_at-desc` para *"Más recientes primero"*), un banner de confirmación visual flotante (`Producto actualizado con éxito`) y un resalte animado de 5 segundos con auto-scroll centrado en la fila del producto editado.
 
 ## 8. Estados del pedido
 
