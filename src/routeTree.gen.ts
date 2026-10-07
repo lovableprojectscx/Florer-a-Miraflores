@@ -16,6 +16,7 @@ import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ConfirmacionRouteImport } from './routes/confirmacion'
 import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-reclamaciones'
+import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as AdminBannersRouteImport } from './routes/admin/banners'
 import { Route as AdminCategoriasRouteImport } from './routes/admin/categorias'
 import { Route as AdminColeccionesHomeRouteImport } from './routes/admin/colecciones-home'
@@ -66,6 +67,11 @@ const ConfirmacionRoute = ConfirmacionRouteImport.update({
 const LibroDeReclamacionesRoute = LibroDeReclamacionesRouteImport.update({
   id: '/libro-de-reclamaciones',
   path: '/libro-de-reclamaciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NosotrosRoute = NosotrosRouteImport.update({
+  id: '/nosotros',
+  path: '/nosotros',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminBannersRoute = AdminBannersRouteImport.update({
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/confirmacion': typeof ConfirmacionRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/nosotros': typeof NosotrosRoute
   '/admin/banners': typeof AdminBannersRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/colecciones-home': typeof AdminColeccionesHomeRoute
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/confirmacion': typeof ConfirmacionRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/nosotros': typeof NosotrosRoute
   '/admin/banners': typeof AdminBannersRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/colecciones-home': typeof AdminColeccionesHomeRoute
@@ -208,6 +216,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/confirmacion': typeof ConfirmacionRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/nosotros': typeof NosotrosRoute
   '/admin/banners': typeof AdminBannersRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/colecciones-home': typeof AdminColeccionesHomeRoute
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/confirmacion'
     | '/libro-de-reclamaciones'
+    | '/nosotros'
     | '/admin/banners'
     | '/admin/categorias'
     | '/admin/colecciones-home'
@@ -260,6 +270,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/confirmacion'
     | '/libro-de-reclamaciones'
+    | '/nosotros'
     | '/admin/banners'
     | '/admin/categorias'
     | '/admin/colecciones-home'
@@ -285,6 +296,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/confirmacion'
     | '/libro-de-reclamaciones'
+    | '/nosotros'
     | '/admin/banners'
     | '/admin/categorias'
     | '/admin/colecciones-home'
@@ -311,6 +323,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ConfirmacionRoute: typeof ConfirmacionRoute
   LibroDeReclamacionesRoute: typeof LibroDeReclamacionesRoute
+  NosotrosRoute: typeof NosotrosRoute
   CategoriaSlugRoute: typeof CategoriaSlugRouteWithChildren
   ProductoIdRoute: typeof ProductoIdRoute
   TagKeyRoute: typeof TagKeyRoute
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       path: '/libro-de-reclamaciones'
       fullPath: '/libro-de-reclamaciones'
       preLoaderRoute: typeof LibroDeReclamacionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nosotros': {
+      id: '/nosotros'
+      path: '/nosotros'
+      fullPath: '/nosotros'
+      preLoaderRoute: typeof NosotrosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/banners': {
@@ -534,6 +554,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ConfirmacionRoute: ConfirmacionRoute,
   LibroDeReclamacionesRoute: LibroDeReclamacionesRoute,
+  NosotrosRoute: NosotrosRoute,
   CategoriaSlugRoute: CategoriaSlugRouteWithChildren,
   ProductoIdRoute: ProductoIdRoute,
   TagKeyRoute: TagKeyRoute,

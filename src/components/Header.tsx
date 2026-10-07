@@ -209,12 +209,13 @@ export function Header({ categorias, config }: Props) {
             </Link>
           </li>
           <li>
-            <a
-              href="/#about"
+            <Link
+              to="/nosotros"
               className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+              activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
             >
               Nosotros
-            </a>
+            </Link>
           </li>
           <li className="hidden xl:block">
             <a
@@ -346,8 +347,17 @@ export function Header({ categorias, config }: Props) {
                 </Link>
               </div>
 
+              <div className="border-b border-[#E8DDD0]/60">
+                <Link
+                  to="/nosotros"
+                  onClick={close}
+                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420] hover:bg-[#FAF8F5]"
+                >
+                  Sobre Nosotros
+                </Link>
+              </div>
+
               {[
-                { label: "Sobre nosotros", href: "/#about" },
                 { label: "Zonas de delivery", href: "/#delivery" },
                 { label: "Preguntas frecuentes", href: "/#faq" },
               ].map(({ label, href }) => (

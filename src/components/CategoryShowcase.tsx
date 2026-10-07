@@ -40,8 +40,8 @@ export function CategoryShowcase({ colecciones }: Props) {
           </div>
         </div>
 
-        {/* Grid centrado de tarjetas fotográficas con proporción vertical editorial 3:4 */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-7">
+        {/* Grid equilibrado de tarjetas fotográficas con proporción vertical editorial 3:4 */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-5 lg:gap-6">
           {colecciones.map((col, i) => {
             const cat = col.categoria;
             if (!cat) return null;
@@ -51,7 +51,7 @@ export function CategoryShowcase({ colecciones }: Props) {
 
             const parentSlug = cat.padre?.slug ?? null;
             const cardClasses =
-              "group relative overflow-hidden bg-[#E8DDD0]/20 rounded-lg aspect-[3/4] shadow-sm hover:shadow-md transition-all duration-500 block w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-[280px] xl:w-[310px]";
+              "group relative overflow-hidden bg-[#E8DDD0]/20 rounded-xl aspect-[3/4] shadow-xs hover:shadow-md transition-all duration-500 block";
 
             const inner = (
               <>

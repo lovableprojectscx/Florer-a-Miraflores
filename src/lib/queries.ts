@@ -326,7 +326,36 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
 
-  const colecciones = (data ?? []) as ColeccionConCategoria[];
+  let colecciones = (data ?? []) as ColeccionConCategoria[];
+
+  // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas
+  if (colecciones.length < 6) {
+    const existingCatIds = new Set(
+      colecciones.map((c) => (c.categoria as { id?: string })?.id).filter(Boolean),
+    );
+    const targetSlugs = ["cumpleanos", "nacimientos", "tulipanes", "arreglos-florales", "box-luxury"];
+    const { data: extras } = await supabase
+      .from("categorias")
+      .select("id, nombre, slug, imagen_url, parent_id")
+      .in("slug", targetSlugs)
+      .eq("activo", true);
+
+    if (extras) {
+      for (const ext of extras) {
+        if (!existingCatIds.has(ext.id) && colecciones.length < 6) {
+          existingCatIds.add(ext.id);
+          colecciones.push({
+            id: `extra-${ext.id}`,
+            categoria_id: ext.id,
+            imagen_custom_url: null,
+            orden: colecciones.length,
+            activo: true,
+            categoria: ext,
+          } as ColeccionConCategoria);
+        }
+      }
+    }
+  }
 
   // Paso 2: recopilar los parent_ids únicos y buscar sus slugs
   const parentIds = [

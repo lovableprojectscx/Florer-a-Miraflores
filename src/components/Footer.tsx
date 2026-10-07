@@ -66,7 +66,6 @@ export function Footer({ config }: Props) {
                 { label: "Box Florales de Lujo", href: "/#categorias" },
                 { label: "Arreglos Especiales", href: "/#categorias" },
                 { label: "Novedades de Temporada", href: "/#novedades" },
-                { label: "Flores para Ocasiones", href: "/#ocasiones" },
                 { label: "Catálogo Completo", href: "/catalogo" },
               ].map((l) => (
                 <li key={l.label}>
@@ -87,8 +86,15 @@ export function Footer({ config }: Props) {
               Sobre Nosotros
             </h4>
             <ul className="space-y-2.5 font-body font-light text-xs sm:text-sm text-[#2C2420]/75">
+              <li>
+                <Link
+                  to="/nosotros"
+                  className="hover:text-[#2C2420] hover:translate-x-1 inline-block transition-all duration-200"
+                >
+                  Nuestro Atelier
+                </Link>
+              </li>
               {[
-                { label: "Nuestro Atelier", href: "/#about" },
                 { label: "Zonas de Delivery y Cobertura", href: "/#delivery" },
                 { label: "Preguntas Frecuentes", href: "/#faq" },
                 { label: "Términos del Servicio", href: "/#faq" },

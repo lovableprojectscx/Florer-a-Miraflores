@@ -4,8 +4,6 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { CategoryShowcase } from "@/components/CategoryShowcase";
 import { Novedades } from "@/components/Novedades";
-import { Occasions } from "@/components/Occasions";
-import { About } from "@/components/About";
 import { DeliveryZones } from "@/components/DeliveryZones";
 import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
@@ -17,7 +15,6 @@ import {
   getCategorias,
   getConfig,
   getColecciones,
-  getOcasiones,
   getBanners,
   getPopup,
   getTags,
@@ -27,11 +24,10 @@ import {
 export const Route = createFileRoute("/")({
   loader: async () => {
     // Fetch paralelo — todos los datos del home en una sola ronda
-    const [categorias, config, colecciones, ocasiones, banners, popup, tags] = await Promise.all([
+    const [categorias, config, colecciones, banners, popup, tags] = await Promise.all([
       getCategorias(),
       getConfig().catch(() => null),
       getColecciones().catch(() => []),
-      getOcasiones().catch(() => []),
       getBanners().catch(() => []),
       getPopup().catch(() => null),
       getTags().catch(() => []),
@@ -48,7 +44,7 @@ export const Route = createFileRoute("/")({
       });
     }
 
-    return { categorias, config, colecciones, ocasiones, banners, popup, tagSecciones };
+    return { categorias, config, colecciones, banners, popup, tagSecciones };
   },
 
   head: () => ({
@@ -72,7 +68,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { categorias, config, colecciones, ocasiones, banners, popup, tagSecciones } =
+  const { categorias, config, colecciones, banners, popup, tagSecciones } =
     Route.useLoaderData();
 
   return (
@@ -83,8 +79,6 @@ function HomePage() {
         <Hero banners={banners} />
         <Novedades tagSecciones={tagSecciones} />
         <CategoryShowcase colecciones={colecciones} />
-        <Occasions ocasiones={ocasiones} />
-        <About />
         <DeliveryZones />
         <Faq />
       </main>
