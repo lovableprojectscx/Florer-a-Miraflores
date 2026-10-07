@@ -40,8 +40,8 @@ export function CategoryShowcase({ colecciones }: Props) {
           </div>
         </div>
 
-        {/* Grid equilibrado de tarjetas fotográficas con proporción vertical editorial 3:4 */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-5 lg:gap-6">
+        {/* Grid Collage Bento Editorial Asimétrico */}
+        <div className="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
           {colecciones.map((col, i) => {
             const cat = col.categoria;
             if (!cat) return null;
@@ -50,33 +50,120 @@ export function CategoryShowcase({ colecciones }: Props) {
               col.imagen_custom_url ?? cat.imagen_url ?? FALLBACK_IMGS[i % FALLBACK_IMGS.length];
 
             const parentSlug = cat.padre?.slug ?? null;
-            const cardClasses =
-              "group relative overflow-hidden bg-[#E8DDD0]/20 rounded-xl aspect-[3/4] shadow-xs hover:shadow-md transition-all duration-500 block";
+
+            // Bento responsive classes according to position
+            let gridSpan = "";
+            let cardHeight = "";
+            const isHero = i === 0;
+            const isVerticalSide = i === 1;
+
+            if (isHero) {
+              gridSpan = "col-span-12 lg:col-span-8";
+              cardHeight = "h-[340px] sm:h-[400px] lg:h-[480px]";
+            } else if (isVerticalSide) {
+              gridSpan = "col-span-12 sm:col-span-6 lg:col-span-4";
+              cardHeight = "h-[260px] sm:h-[340px] lg:h-[480px]";
+            } else if (i === 5 || (i === colecciones.length - 1 && (colecciones.length - 2) % 2 !== 0)) {
+              // Cierre armonioso en pantallas móviles pequeñas para evitar tarjeta huérfana
+              gridSpan = "col-span-12 sm:col-span-6 lg:col-span-3";
+              cardHeight = "h-[200px] sm:h-[280px] lg:h-[320px]";
+            } else {
+              gridSpan = "col-span-6 lg:col-span-3";
+              cardHeight = "h-[240px] sm:h-[280px] lg:h-[320px]";
+            }
+
+            const cardClasses = `group relative overflow-hidden bg-[#E8DDD0]/25 rounded-2xl shadow-xs hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500 block ${gridSpan} ${cardHeight}`;
 
             const inner = (
               <>
                 <img
                   src={img}
                   alt={cat.nombre}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                  loading={i < 2 ? "eager" : "lazy"}
+                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = FALLBACK_IMGS[i % FALLBACK_IMGS.length];
                   }}
                 />
-                {/* Gradiente sutil para legibilidad de texto */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent group-hover:from-black/85 transition-colors duration-500" />
-                <div className="absolute inset-0 p-4 sm:p-5 md:p-6 flex flex-col justify-end text-white">
-                  <p className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body font-light opacity-80 mb-1">
-                    Colección
+
+                {/* Gradiente dinámico según jerarquía */}
+                <div
+                  className={`absolute inset-0 transition-colors duration-500 ${
+                    isHero
+                      ? "bg-gradient-to-t from-black/85 via-black/35 to-black/10 group-hover:from-black/90"
+                      : "bg-gradient-to-t from-black/80 via-black/25 to-transparent group-hover:from-black/85"
+                  }`}
+                />
+
+                {/* Badge editorial superior para las primeras tarjetas */}
+                {isHero && (
+                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
+                    <span className="px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-body font-medium text-white border border-white/30 shadow-xs">
+                      Colección Destacada
+                    </span>
+                  </div>
+                )}
+
+                {isVerticalSide && (
+                  <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5">
+                    <span className="px-3 py-1 rounded-full bg-black/35 backdrop-blur-md text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body text-white/95 border border-white/20 shadow-xs">
+                      Exclusivo
+                    </span>
+                  </div>
+                )}
+
+                {/* Contenido textual adaptado al tamaño */}
+                <div
+                  className={`absolute inset-0 flex flex-col justify-end text-white ${
+                    isHero
+                      ? "p-6 sm:p-8 lg:p-10"
+                      : isVerticalSide
+                      ? "p-5 sm:p-6 lg:p-8"
+                      : "p-4 sm:p-5"
+                  }`}
+                >
+                  <p
+                    className={`uppercase font-body font-light opacity-80 mb-1 ${
+                      isHero
+                        ? "text-[10px] sm:text-xs tracking-[0.22em]"
+                        : "text-[9px] sm:text-[10px] tracking-[0.2em]"
+                    }`}
+                  >
+                    {isHero ? "Edición de Autor" : "Colección"}
                   </p>
-                  <h3 className="font-display text-lg sm:text-xl md:text-2xl font-normal leading-snug drop-shadow-sm">
+
+                  <h3
+                    className={`font-display font-normal leading-snug drop-shadow-sm ${
+                      isHero
+                        ? "text-2xl sm:text-3xl lg:text-4xl"
+                        : isVerticalSide
+                        ? "text-xl sm:text-2xl lg:text-3xl"
+                        : "text-base sm:text-lg lg:text-xl line-clamp-1"
+                    }`}
+                  >
                     {cat.nombre}
                   </h3>
-                  <span className="mt-2.5 inline-flex items-center gap-1.5 text-[10px] tracking-[0.18em] uppercase font-body font-light text-white/90 group-hover:text-white transition-all">
-                    Explorar <span className="transition-transform group-hover:translate-x-1">→</span>
-                  </span>
+
+                  {isHero && (
+                    <p className="mt-2 font-body text-xs sm:text-sm text-white/85 font-light line-clamp-2 max-w-lg hidden sm:block">
+                      Diseños florales concebidos con armonía, sensibilidad y las rosas más frescas de la boutique.
+                    </p>
+                  )}
+
+                  <div className="mt-2.5 sm:mt-3 flex items-center">
+                    {isHero ? (
+                      <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#2C2420] text-xs font-body uppercase tracking-[0.16em] font-medium rounded-xl shadow-md group-hover:bg-[#FAF8F5] group-hover:translate-x-1 transition-all">
+                        <span>Explorar Colección</span>
+                        <span className="transition-transform group-hover:translate-x-1">→</span>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs tracking-[0.16em] uppercase font-body font-light text-white/90 group-hover:text-white transition-all">
+                        <span>Explorar</span>
+                        <span className="transition-transform group-hover:translate-x-1">→</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
               </>
             );

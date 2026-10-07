@@ -357,6 +357,15 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
     }
   }
 
+  // Priorizar "amor-aniversario" como primera colección destacada (Hero Bento) si existe
+  colecciones.sort((a, b) => {
+    const slugA = (a.categoria as { slug?: string } | undefined)?.slug;
+    const slugB = (b.categoria as { slug?: string } | undefined)?.slug;
+    if (slugA === "amor-aniversario") return -1;
+    if (slugB === "amor-aniversario") return 1;
+    return (a.orden ?? 0) - (b.orden ?? 0);
+  });
+
   // Paso 2: recopilar los parent_ids únicos y buscar sus slugs
   const parentIds = [
     ...new Set(
