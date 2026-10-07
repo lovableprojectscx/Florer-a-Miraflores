@@ -151,7 +151,7 @@ export function Header({ categorias, config }: Props) {
 
       {/* Desktop Nav (Bottom Tier) */}
       <nav className="hidden lg:block border-t border-[#E8DDD0]/60">
-        <ul className="max-w-[1700px] mx-auto px-3 xl:px-6 2xl:px-10 flex gap-2 min-[1150px]:gap-3.5 xl:gap-5 2xl:gap-8 justify-center items-center h-12 whitespace-nowrap text-[10px] min-[1150px]:text-[11px] xl:text-[11.5px] 2xl:text-[12px] tracking-[0.05em] min-[1150px]:tracking-[0.08em] xl:tracking-[0.12em] 2xl:tracking-[0.16em] uppercase font-body font-light [justify-content:safe_center]">
+        <ul className="max-w-[1700px] mx-auto px-3 lg:px-4 xl:px-8 flex gap-2.5 lg:gap-3.5 xl:gap-6 2xl:gap-8 justify-center items-center h-12 whitespace-nowrap text-[10.5px] lg:text-[11px] xl:text-[11.5px] 2xl:text-[12px] tracking-[0.06em] lg:tracking-[0.09em] xl:tracking-[0.14em] uppercase font-body font-light">
           <li className="hidden 2xl:block">
             <Link
               to="/"
@@ -216,7 +216,7 @@ export function Header({ categorias, config }: Props) {
               Nosotros
             </a>
           </li>
-          <li className="hidden min-[1200px]:block">
+          <li className="hidden xl:block">
             <a
               href="/#faq"
               className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
@@ -225,7 +225,7 @@ export function Header({ categorias, config }: Props) {
             </a>
           </li>
           <li
-            className="min-[1200px]:hidden relative py-3 group"
+            className="xl:hidden relative py-3 group"
             onMouseEnter={() => setHoveredCat("more-links")}
             onMouseLeave={() => setHoveredCat(null)}
           >

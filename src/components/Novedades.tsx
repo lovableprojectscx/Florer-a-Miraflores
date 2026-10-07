@@ -257,7 +257,7 @@ function TagSection({ tag, productos }: TagSeccion) {
         <div
           ref={sliderRef}
           onScroll={updateCurrentIndex}
-          className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2.5 sm:gap-3 md:gap-3.5 lg:gap-4 pb-3 snap-x snap-mandatory scrollbar-none w-full [justify-content:safe_center]"
+          className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2.5 sm:gap-3 md:gap-3.5 lg:gap-4 pb-3 snap-x snap-mandatory scrollbar-none w-full"
         >
           {productos.map((p) => (
             <ProductCard key={p.id} producto={p} />
