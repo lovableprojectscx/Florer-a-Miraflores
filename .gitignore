@@ -40,3 +40,7 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Bun lockfiles (forzar npm en Vercel CI)
+bun.lock
+bunfig.toml
