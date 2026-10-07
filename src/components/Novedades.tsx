@@ -143,7 +143,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
         </div>
 
         {/* Información del producto */}
-        <div className="bg-[#F7F7F7] px-3.5 pt-3 sm:px-4 sm:pt-3.5 pb-2">
+        <div className="bg-[#F7F7F7] px-3.5 pt-3 sm:px-4 sm:pt-3.5 pb-2 text-center">
           <h3 className="font-body text-[#222222] text-xs sm:text-[13px] md:text-sm font-normal leading-snug line-clamp-1 group-hover:text-[#666666] transition-colors">
             {producto.nombre}
           </h3>
@@ -229,18 +229,18 @@ function TagSection({ tag, productos }: TagSeccion) {
   };
 
   return (
-    <section id={`tag-${tag.clave}`} className="py-10 md:py-14 overflow-hidden">
-      {/* Encabezado con tipografía aesthetic minimalista idéntico a Lima Floral */}
-      <div className="px-4 sm:px-6 md:px-12 mb-5 sm:mb-6">
+    <section id={`tag-${tag.clave}`} className="py-12 md:py-16 overflow-hidden">
+      {/* Encabezado centrado estéticamente */}
+      <div className="max-w-2xl mx-auto text-center px-4 sm:px-6 mb-7 sm:mb-9">
         <h2 className="font-display text-[#1E1E1D] text-2xl sm:text-3xl md:text-[34px] font-light md:font-normal leading-tight tracking-tight">
           {tag.nombre}
         </h2>
         {tag.descripcion && (
-          <p className="mt-1.5 font-body text-[#736B63] text-xs sm:text-sm md:text-[15px] font-light">
+          <p className="mt-2 font-body text-[#736B63] text-xs sm:text-sm md:text-[15px] font-light max-w-lg mx-auto leading-relaxed">
             {tag.descripcion}
           </p>
         )}
-        <div className="mt-1">
+        <div className="mt-2.5">
           <Link
             to="/tag/$key"
             params={{ key: tag.clave }}
@@ -252,15 +252,17 @@ function TagSection({ tag, productos }: TagSeccion) {
         </div>
       </div>
 
-      {/* Slider que ocupa de extremo a extremo con fotos más grandes y generosas */}
-      <div
-        ref={sliderRef}
-        onScroll={updateCurrentIndex}
-        className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2 sm:gap-2.5 md:gap-3 lg:gap-3.5 pb-3 snap-x snap-mandatory scrollbar-none w-full"
-      >
-        {productos.map((p) => (
-          <ProductCard key={p.id} producto={p} />
-        ))}
+      {/* Slider centrado con fotos generosas */}
+      <div className="max-w-[1700px] mx-auto w-full">
+        <div
+          ref={sliderRef}
+          onScroll={updateCurrentIndex}
+          className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2.5 sm:gap-3 md:gap-3.5 lg:gap-4 pb-3 snap-x snap-mandatory scrollbar-none w-full [justify-content:safe_center]"
+        >
+          {productos.map((p) => (
+            <ProductCard key={p.id} producto={p} />
+          ))}
+        </div>
       </div>
 
       {/* Controles de paginación y botón "Ver más productos" */}

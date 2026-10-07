@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { X, Gift, Sparkles, Check, Copy, Loader2 } from "lucide-react";
+import { X, Sparkles, Check, Copy, Loader2 } from "lucide-react";
 import type { PopupRow, ConfigRow } from "@/types/database";
 import { supabase } from "@/lib/supabase";
 
@@ -100,15 +100,6 @@ export function PopupModal({ popup, config }: Props) {
     }
   };
 
-  const handleOpenFromRibbon = () => {
-    setIsOpen(true);
-    try {
-      sessionStorage.setItem(POPUP_SEEN_KEY, "1");
-    } catch {
-      // storage no disponible
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -181,29 +172,6 @@ export function PopupModal({ popup, config }: Props) {
 
   return (
     <>
-      {/* ─── Listón lateral permanente a la derecha (Rosa Miraflores #C4848A) ─── */}
-      {!isOpen && (
-        <button
-          type="button"
-          onClick={handleOpenFromRibbon}
-          aria-label="Suscríbete para recibir promociones"
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center justify-center bg-gradient-to-b from-[#C4848A] to-[#B76E79] text-white py-3.5 sm:py-4 px-2 sm:px-2.5 rounded-l-2xl shadow-lg shadow-[#C4848A]/35 hover:-translate-x-1 hover:shadow-xl active:scale-95 transition-all duration-300 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-[#C4848A]/50"
-          title="Suscríbete para recibir promociones"
-        >
-          <div className="flex flex-col items-center gap-2">
-            <Gift className="w-4 h-4 text-white/95 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
-            <span
-              className="text-[10px] sm:text-[11px] font-body font-medium tracking-widest uppercase select-none text-white drop-shadow-xs"
-              style={{
-                writingMode: "vertical-rl",
-              }}
-            >
-              Suscríbete para recibir promociones
-            </span>
-          </div>
-        </button>
-      )}
-
       {/* ─── Modal Popup de Captura y Promoción ─── */}
       {isOpen && (
         <div

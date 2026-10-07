@@ -19,30 +19,29 @@ export function CategoryShowcase({ colecciones }: Props) {
   return (
     <section id="categorias" className="px-5 md:px-12 lg:px-16 py-14 md:py-20 animate-fade-in-up bg-[#FAF8F5]/60">
       <div className="max-w-[1536px] mx-auto">
-        <div className="flex items-end justify-between flex-wrap gap-6 mb-8 md:mb-12">
-          <div className="max-w-xl">
-            <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
-              — Colecciones exclusivas
-            </p>
-            <h2 className="font-display text-[#2C2420] text-3xl md:text-5xl lg:text-6xl leading-tight font-normal">
-              Explora nuestras colecciones.
-            </h2>
-            <p className="mt-3 md:mt-4 font-body font-light text-[#2C2420]/75 text-sm md:text-base leading-relaxed">
-              Cada ocasión merece una flor distinta. Diseños pensados para emocionar y sorprender.
-            </p>
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
+            — Colecciones exclusivas
+          </p>
+          <h2 className="font-display text-[#2C2420] text-3xl md:text-5xl lg:text-6xl leading-tight font-normal">
+            Explora nuestras colecciones.
+          </h2>
+          <p className="mt-3 md:mt-4 font-body font-light text-[#2C2420]/75 text-sm md:text-base leading-relaxed">
+            Cada ocasión merece una flor distinta. Diseños pensados para emocionar y sorprender.
+          </p>
+          <div className="mt-4">
+            <Link
+              to="/catalogo"
+              className="inline-flex items-center gap-2 font-body text-xs tracking-[0.16em] uppercase text-[#2C2420]/70 hover:text-[#2C2420] border-b border-[#2C2420]/30 hover:border-[#2C2420] pb-1 transition-all group"
+            >
+              Ver todo el catálogo
+              <span className="transition-transform group-hover:translate-x-1">→</span>
+            </Link>
           </div>
-
-          <Link
-            to="/catalogo"
-            className="inline-flex items-center gap-2 font-body text-xs tracking-[0.16em] uppercase text-[#2C2420]/70 hover:text-[#2C2420] border-b border-[#2C2420]/30 hover:border-[#2C2420] pb-1 transition-all group"
-          >
-            Ver todo el catálogo
-            <span className="transition-transform group-hover:translate-x-1">→</span>
-          </Link>
         </div>
 
-        {/* Grid equilibrado de tarjetas fotográficas con proporción vertical editorial 3:4 */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3.5 sm:gap-5 md:gap-6">
+        {/* Grid centrado de tarjetas fotográficas con proporción vertical editorial 3:4 */}
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-7">
           {colecciones.map((col, i) => {
             const cat = col.categoria;
             if (!cat) return null;
@@ -52,7 +51,7 @@ export function CategoryShowcase({ colecciones }: Props) {
 
             const parentSlug = cat.padre?.slug ?? null;
             const cardClasses =
-              "group relative overflow-hidden bg-[#E8DDD0]/20 rounded-lg aspect-[3/4] shadow-sm hover:shadow-md transition-all duration-500 block";
+              "group relative overflow-hidden bg-[#E8DDD0]/20 rounded-lg aspect-[3/4] shadow-sm hover:shadow-md transition-all duration-500 block w-[calc(50%-8px)] sm:w-[calc(33.333%-16px)] lg:w-[280px] xl:w-[310px]";
 
             const inner = (
               <>

@@ -49,7 +49,7 @@ export function Header({ categorias, config }: Props) {
     <header className="bg-[#FFFFFF] sticky top-0 z-30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
       {/* Search overlay drawer */}
       {searchOpen && (
-        <div className="absolute inset-x-0 top-0 bg-[#FFFFFF] border-b border-[#E8DDD0] z-40 py-4 px-6 md:px-12 animate-fadeIn shadow-md">
+        <div className="absolute inset-x-0 top-0 bg-[#FFFFFF] border-b border-[#E8DDD0] z-40 py-4 px-4 sm:px-6 lg:px-12 animate-fadeIn shadow-md">
           <form onSubmit={handleSearchSubmit} className="max-w-3xl mx-auto flex items-center gap-3">
             <Search className="h-5 w-5 text-[#8A7A6E]" strokeWidth={1.5} />
             <input
@@ -58,7 +58,7 @@ export function Header({ categorias, config }: Props) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoFocus
-              className="flex-1 bg-transparent border-none outline-none font-body text-sm md:text-base text-[#2C2420] placeholder-[#8A7A6E]/70 py-1"
+              className="flex-1 bg-transparent border-none outline-none font-body text-sm lg:text-base text-[#2C2420] placeholder-[#8A7A6E]/70 py-1"
             />
             {searchQuery && (
               <button
@@ -82,20 +82,20 @@ export function Header({ categorias, config }: Props) {
       )}
 
       {/* Top tier */}
-      <div className="px-5 md:px-12 h-20 md:h-24 grid grid-cols-3 items-center">
+      <div className="px-4 sm:px-6 lg:px-12 h-16 sm:h-20 lg:h-24 grid grid-cols-3 items-center">
         {/* Left: Mobile hamburger or Desktop search */}
         <div className="flex items-center">
           <button
             aria-label="Abrir menú"
             onClick={() => setOpen(true)}
-            className="md:hidden p-2 -ml-2 text-[#2C2420] hover:opacity-70 transition-opacity"
+            className="lg:hidden p-2 -ml-2 text-[#2C2420] hover:opacity-70 transition-opacity"
           >
             <Menu className="h-6 w-6" strokeWidth={1.25} />
           </button>
           <button
             aria-label="Buscar"
             onClick={() => setSearchOpen(true)}
-            className="hidden md:inline-flex items-center gap-2 p-2 -ml-2 text-[#2C2420]/80 hover:text-[#2C2420] hover:opacity-80 transition-all cursor-pointer group"
+            className="hidden lg:inline-flex items-center gap-2 p-2 -ml-2 text-[#2C2420]/80 hover:text-[#2C2420] hover:opacity-80 transition-all cursor-pointer group"
           >
             <Search className="h-5 w-5 text-[#2C2420]/70 group-hover:text-[#2C2420]" strokeWidth={1.25} />
             <span className="text-[11px] tracking-widest uppercase font-body font-light text-[#2C2420]/70 group-hover:text-[#2C2420]">
@@ -109,16 +109,16 @@ export function Header({ categorias, config }: Props) {
           <img
             src={logoImg}
             alt="Florería Miraflores"
-            className="h-9 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+            className="h-8 sm:h-10 lg:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </Link>
 
         {/* Right: Contact & Cart */}
-        <div className="flex items-center justify-end gap-2 md:gap-3">
+        <div className="flex items-center justify-end gap-2 lg:gap-3">
           <button
             aria-label="Buscar"
             onClick={() => setSearchOpen(true)}
-            className="md:hidden p-2 text-[#2C2420] hover:opacity-70 transition-opacity"
+            className="lg:hidden p-2 text-[#2C2420] hover:opacity-70 transition-opacity"
           >
             <Search className="h-5 w-5" strokeWidth={1.25} />
           </button>
@@ -130,7 +130,7 @@ export function Header({ categorias, config }: Props) {
             rel="noopener noreferrer"
           >
             <WhatsappIcon className="h-4 w-4" />
-            <span className="hidden lg:inline text-[11px] tracking-wider uppercase font-body font-light">
+            <span className="hidden xl:inline text-[11px] tracking-wider uppercase font-body font-light">
               WhatsApp
             </span>
           </a>
@@ -150,9 +150,9 @@ export function Header({ categorias, config }: Props) {
       </div>
 
       {/* Desktop Nav (Bottom Tier) */}
-      <nav className="hidden md:block border-t border-[#E8DDD0]/60">
-        <ul className="px-6 md:px-12 flex gap-7 lg:gap-10 justify-center items-center h-12 whitespace-nowrap text-[11px] lg:text-[12px] tracking-[0.16em] uppercase font-body font-light">
-          <li>
+      <nav className="hidden lg:block border-t border-[#E8DDD0]/60">
+        <ul className="max-w-[1700px] mx-auto px-3 xl:px-6 2xl:px-10 flex gap-2 min-[1150px]:gap-3.5 xl:gap-5 2xl:gap-8 justify-center items-center h-12 whitespace-nowrap text-[10px] min-[1150px]:text-[11px] xl:text-[11.5px] 2xl:text-[12px] tracking-[0.05em] min-[1150px]:tracking-[0.08em] xl:tracking-[0.12em] 2xl:tracking-[0.16em] uppercase font-body font-light [justify-content:safe_center]">
+          <li className="hidden 2xl:block">
             <Link
               to="/"
               className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
@@ -174,11 +174,11 @@ export function Header({ categorias, config }: Props) {
                 <Link
                   to="/categoria/$slug"
                   params={{ slug: c.slug }}
-                  className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors inline-flex items-center gap-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform"
+                  className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors inline-flex items-center gap-0.5 xl:gap-1 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform"
                   activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
                 >
                   {c.nombre}
-                  {hasSub && <ChevronDown className="h-3 w-3 opacity-60 group-hover:opacity-100 transition-opacity" />}
+                  {hasSub && <ChevronDown className="h-2.5 w-2.5 xl:h-3 xl:w-3 opacity-60 group-hover:opacity-100 transition-opacity" />}
                 </Link>
 
                 {/* Dropdown for subcategories */}
@@ -216,13 +216,43 @@ export function Header({ categorias, config }: Props) {
               Nosotros
             </a>
           </li>
-          <li>
+          <li className="hidden min-[1200px]:block">
             <a
               href="/#faq"
               className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
             >
               Preguntas
             </a>
+          </li>
+          <li
+            className="min-[1200px]:hidden relative py-3 group"
+            onMouseEnter={() => setHoveredCat("more-links")}
+            onMouseLeave={() => setHoveredCat(null)}
+          >
+            <button
+              type="button"
+              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors inline-flex items-center gap-0.5 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform cursor-pointer"
+            >
+              Más
+              <ChevronDown className="h-2.5 w-2.5 opacity-60 group-hover:opacity-100 transition-opacity" />
+            </button>
+
+            {hoveredCat === "more-links" && (
+              <div className="absolute top-full right-0 min-w-[190px] bg-white border border-[#E8DDD0] shadow-lg py-2 z-50 animate-fadeIn rounded-sm">
+                <a
+                  href="/#faq"
+                  className="block px-5 py-2.5 text-[11px] tracking-wider uppercase font-body font-light text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] transition-colors text-left"
+                >
+                  Preguntas Frecuentes
+                </a>
+                <a
+                  href="/#delivery"
+                  className="block px-5 py-2.5 text-[11px] tracking-wider uppercase font-body font-light text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] transition-colors text-left"
+                >
+                  Zonas de Delivery
+                </a>
+              </div>
+            )}
           </li>
         </ul>
       </nav>
@@ -231,11 +261,11 @@ export function Header({ categorias, config }: Props) {
       {open && (
         <>
           <div
-            className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 animate-fadeIn"
+            className="lg:hidden fixed inset-0 bg-black/40 backdrop-blur-[2px] z-40 animate-fadeIn"
             onClick={close}
             aria-hidden
           />
-          <div className="md:hidden fixed top-0 left-0 bottom-0 w-[86%] max-w-sm bg-white z-50 shadow-2xl flex flex-col animate-fade-in">
+          <div className="lg:hidden fixed top-0 left-0 bottom-0 w-[86%] max-w-sm bg-white z-50 shadow-2xl flex flex-col animate-fade-in">
             <div className="flex items-center justify-between h-16 px-5 border-b border-[#E8DDD0]">
               <span className="font-display text-[#2C2420] text-lg italic">Menú</span>
               <button
