@@ -126,7 +126,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
   };
 
   return (
-    <article className="group flex-shrink-0 w-[160px] sm:w-[210px] md:w-[260px] lg:w-[295px] xl:w-[325px] 2xl:w-[345px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-xs">
+    <article className="group flex-shrink-0 w-[160px] sm:w-[185px] md:w-[210px] lg:w-[230px] xl:w-[245px] 2xl:w-[260px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-lg border border-[#E8DDD0]/50">
       <Link
         to="/producto/$id"
         params={{ id: `${slugify(producto.nombre)}-${producto.id}` }}
@@ -252,12 +252,12 @@ function TagSection({ tag, productos }: TagSeccion) {
         </div>
       </div>
 
-      {/* Slider centrado con fotos generosas */}
-      <div className="max-w-[1700px] mx-auto w-full">
+      {/* Slider centrado con fotos balanceadas y márgenes elegantes */}
+      <div className="max-w-[1400px] mx-auto w-full px-5 sm:px-8 lg:px-12">
         <div
           ref={sliderRef}
           onScroll={updateCurrentIndex}
-          className="flex overflow-x-auto px-4 sm:px-6 md:px-12 gap-2.5 sm:gap-3 md:gap-3.5 lg:gap-4 pb-3 snap-x snap-mandatory scrollbar-none w-full"
+          className="flex overflow-x-auto gap-3 sm:gap-4 md:gap-4.5 pb-3.5 snap-x snap-mandatory scrollbar-none w-full"
         >
           {productos.map((p) => (
             <ProductCard key={p.id} producto={p} />

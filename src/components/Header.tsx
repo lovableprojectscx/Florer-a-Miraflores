@@ -82,7 +82,7 @@ export function Header({ categorias, config }: Props) {
       )}
 
       {/* Top tier */}
-      <div className="px-4 sm:px-6 lg:px-12 h-16 sm:h-20 lg:h-24 grid grid-cols-3 items-center">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 h-16 sm:h-20 lg:h-24 grid grid-cols-3 items-center">
         {/* Left: Mobile hamburger or Desktop search */}
         <div className="flex items-center">
           <button
@@ -151,7 +151,7 @@ export function Header({ categorias, config }: Props) {
 
       {/* Desktop Nav (Bottom Tier) */}
       <nav className="hidden lg:block border-t border-[#E8DDD0]/60">
-        <ul className="max-w-[1700px] mx-auto px-3 lg:px-4 xl:px-8 flex gap-2.5 lg:gap-3.5 xl:gap-6 2xl:gap-8 justify-center items-center h-12 whitespace-nowrap text-[10.5px] lg:text-[11px] xl:text-[11.5px] 2xl:text-[12px] tracking-[0.06em] lg:tracking-[0.09em] xl:tracking-[0.14em] uppercase font-body font-light">
+        <ul className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 flex gap-2 lg:gap-2.5 xl:gap-3.5 2xl:gap-5 justify-center items-center h-12 whitespace-nowrap text-[10.5px] lg:text-[11px] xl:text-[11px] 2xl:text-[11.5px] tracking-[0.05em] lg:tracking-[0.06em] xl:tracking-[0.08em] uppercase font-body font-light">
           <li className="hidden 2xl:block">
             <Link
               to="/"

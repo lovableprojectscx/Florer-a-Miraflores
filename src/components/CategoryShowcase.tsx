@@ -36,7 +36,7 @@ export function CategoryShowcase({ colecciones }: Props) {
 
   return (
     <section id="categorias" className="px-5 md:px-12 lg:px-16 py-14 md:py-20 animate-fade-in-up bg-[#FAF8F5]/60">
-      <div className="max-w-[1536px] mx-auto">
+      <div className="max-w-[1380px] mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
           <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
             — Colecciones exclusivas
@@ -80,17 +80,17 @@ export function CategoryShowcase({ colecciones }: Props) {
 
             if (isHero) {
               gridSpan = "col-span-12 lg:col-span-8";
-              cardHeight = "h-[340px] sm:h-[400px] lg:h-[480px]";
+              cardHeight = "h-[300px] sm:h-[360px] lg:h-[410px]";
             } else if (isVerticalSide) {
               gridSpan = "col-span-12 sm:col-span-6 lg:col-span-4";
-              cardHeight = "h-[260px] sm:h-[340px] lg:h-[480px]";
+              cardHeight = "h-[240px] sm:h-[300px] lg:h-[410px]";
             } else if (i === 5 || (i === colecciones.length - 1 && (colecciones.length - 2) % 2 !== 0)) {
               // Cierre armonioso en pantallas móviles pequeñas para evitar tarjeta huérfana
               gridSpan = "col-span-12 sm:col-span-6 lg:col-span-3";
-              cardHeight = "h-[200px] sm:h-[280px] lg:h-[320px]";
+              cardHeight = "h-[200px] sm:h-[240px] lg:h-[280px]";
             } else {
               gridSpan = "col-span-6 lg:col-span-3";
-              cardHeight = "h-[240px] sm:h-[280px] lg:h-[320px]";
+              cardHeight = "h-[220px] sm:h-[240px] lg:h-[280px]";
             }
 
             const cardClasses = `group relative overflow-hidden bg-[#E8DDD0]/25 rounded-2xl shadow-xs hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500 block ${gridSpan} ${cardHeight}`;
