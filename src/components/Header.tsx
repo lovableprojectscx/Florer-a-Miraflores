@@ -151,8 +151,8 @@ export function Header({ categorias, config }: Props) {
 
       {/* Desktop Nav (Bottom Tier) */}
       <nav className="hidden lg:block border-t border-[#E8DDD0]/60">
-        <ul className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 flex gap-2 lg:gap-2.5 xl:gap-3.5 2xl:gap-5 justify-center items-center h-12 whitespace-nowrap text-[10.5px] lg:text-[11px] xl:text-[11px] 2xl:text-[11.5px] tracking-[0.05em] lg:tracking-[0.06em] xl:tracking-[0.08em] uppercase font-body font-light">
-          <li className="hidden 2xl:block">
+        <ul className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 flex gap-3 lg:gap-4 xl:gap-6 2xl:gap-8 justify-center items-center h-12 whitespace-nowrap text-[11px] lg:text-[11.5px] xl:text-[12px] 2xl:text-[12.5px] tracking-[0.06em] xl:tracking-[0.08em] uppercase font-body font-light">
+          <li>
             <Link
               to="/"
               className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
@@ -199,62 +199,6 @@ export function Header({ categorias, config }: Props) {
               </li>
             );
           })}
-          <li>
-            <Link
-              to="/catalogo"
-              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-              activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
-            >
-              Catálogo
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/nosotros"
-              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-              activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
-            >
-              Nosotros
-            </Link>
-          </li>
-          <li className="hidden xl:block">
-            <a
-              href="/#faq"
-              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-            >
-              Preguntas
-            </a>
-          </li>
-          <li
-            className="xl:hidden relative py-3 group"
-            onMouseEnter={() => setHoveredCat("more-links")}
-            onMouseLeave={() => setHoveredCat(null)}
-          >
-            <button
-              type="button"
-              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors inline-flex items-center gap-0.5 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform cursor-pointer"
-            >
-              Más
-              <ChevronDown className="h-2.5 w-2.5 opacity-60 group-hover:opacity-100 transition-opacity" />
-            </button>
-
-            {hoveredCat === "more-links" && (
-              <div className="absolute top-full right-0 min-w-[190px] bg-white border border-[#E8DDD0] shadow-lg py-2 z-50 animate-fadeIn rounded-sm">
-                <a
-                  href="/#faq"
-                  className="block px-5 py-2.5 text-[11px] tracking-wider uppercase font-body font-light text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] transition-colors text-left"
-                >
-                  Preguntas Frecuentes
-                </a>
-                <a
-                  href="/#delivery"
-                  className="block px-5 py-2.5 text-[11px] tracking-wider uppercase font-body font-light text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] transition-colors text-left"
-                >
-                  Zonas de Delivery
-                </a>
-              </div>
-            )}
-          </li>
         </ul>
       </nav>
 
@@ -338,38 +282,14 @@ export function Header({ categorias, config }: Props) {
               })}
 
               <div className="border-b border-[#E8DDD0]/60">
-                <Link
-                  to="/catalogo"
-                  onClick={close}
-                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420] hover:bg-[#FAF8F5]"
-                >
-                  Catálogo Completo
-                </Link>
-              </div>
-
-              <div className="border-b border-[#E8DDD0]/60">
-                <Link
-                  to="/nosotros"
-                  onClick={close}
-                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420] hover:bg-[#FAF8F5]"
-                >
-                  Sobre Nosotros
-                </Link>
-              </div>
-
-              {[
-                { label: "Zonas de delivery", href: "/#delivery" },
-                { label: "Preguntas frecuentes", href: "/#faq" },
-              ].map(({ label, href }) => (
                 <a
-                  key={label}
-                  href={href}
+                  href="/#delivery"
                   onClick={close}
-                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] border-b border-[#E8DDD0]/60"
+                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5]"
                 >
-                  {label}
+                  Zonas de Delivery
                 </a>
-              ))}
+              </div>
             </nav>
 
             <div className="p-5 border-t border-[#E8DDD0] bg-[#FAF8F5]">

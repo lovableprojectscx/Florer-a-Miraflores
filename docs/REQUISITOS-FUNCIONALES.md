@@ -20,6 +20,7 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 | RF-004 | Categorías sin subcategoría (Arreglos Premium, Ofertas) muestran productos directo | Media | ✅ | CLAUDE §7 |
 | RF-005 | Nav desktop con dropdown de subcategorías y mobile con acordeón | Media | ✅ | CLAUDE §8 |
 | RF-005a | Header con desplazamiento natural (scroll no estático / `relative`) que sube y se oculta con el scroll | Media | ✅ | Solicitud Cliente (v1.4.0) |
+| RF-005b | Menú de navegación principal enfocado exclusivamente en categorías florales e Inicio (retiro de accesos a Catálogo, Nosotros y Preguntas de la cabecera) | Media | ✅ | Solicitud Cliente (v1.4.1) |
 | RF-006 | Filtro por rango de precio y búsqueda en listados | Media | ✅ | Cotización 3.1 |
 | RF-006a | Subfiltro interactivo de subcategorías en catálogo `/catalogo` al filtrar por una categoría padre | Media | ✅ | Solicitud Cliente (v1.3.0) |
 | RF-007 | Ordenamiento de productos (más recientes, recomendados, precio asc/desc) | Media | ✅ | Cotización 3.1 |

@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.4.1** | 2026-10-08 | **UI / Navbar** | Retiro de botones "Catálogo", "Nosotros" y "Preguntas" del menú superior del Header para una vista limpia y enfocada en flores. |
 | **v1.4.0** | 2026-10-08 | **UX / Layout** | Header con scroll natural (des-anclaje de sticky) y calibración de galería de producto. |
 | **v1.3.5** | 2026-10-08 | **Responsive** | Escala y proporción armónica para laptops en slider de novedades y colecciones. |
 | **v1.3.0** | 2026-10-08 | **Catálogo / Home** | Reemplazo de colecciones de baja densidad por "Cumpleaños" y "Ramos", fotos HD y filtros de subcategorías. |
@@ -22,6 +23,27 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.4.1] — 2026-10-08: Retiro de Botones "Catálogo", "Nosotros" y "Preguntas" del Menú del Header
+
+#### Solicitud del Cliente
+> *"Quita de la vista de la landing el botón de nosotros, preguntas y catálogo."*
+
+#### Contexto y Diagnóstico
+En la barra de navegación del Header (`Header.tsx`), los enlaces directos a `Catálogo`, `Nosotros` y `Preguntas` ocupaban espacio horizontal al final de la lista de categorías florales. Al acumularse 12 elementos en una sola línea, la cabecera se percibía densa y comprimida en resoluciones de laptop y escritorio.
+
+#### Solución Técnica Implementada
+1. **Despeje de la barra de navegación de escritorio (`src/components/Header.tsx`):**
+   - Se removieron los elementos `<li>` correspondientes a `/catalogo`, `/nosotros`, `/#faq` y el dropdown colapsable `Más`.
+   - La barra ahora se dedica con exclusividad al descubrimiento de flores: **Inicio** + las 8 categorías padre oficiales (*Ocasión, Arreglos Florales, Arreglos Premium, Tulipanes, Primaverales, Defunción, Novedades, Ofertas*).
+   - Se otorgó un espaciado más amplio y refinado (`gap-3 lg:gap-4 xl:gap-6 2xl:gap-8`) y tipografía con mayor legibilidad (`text-[11px] lg:text-[11.5px] xl:text-[12px] 2xl:text-[12.5px]`).
+   - El botón **Inicio** ahora se muestra de forma consistente en todos los anchos de escritorio (`lg:block`).
+2. **Sincronización del menú móvil:**
+   - Se removieron igualmente los enlaces directos a "Catálogo Completo", "Sobre Nosotros" y "Preguntas frecuentes" del cajón deslizable móvil, manteniendo el menú enfocado en categorías y zonas de despacho.
+3. **Persistencia institucional:**
+   - La información institucional de la empresa ("Sobre nosotros"), las "Preguntas frecuentes" y el catálogo completo continúan estando plenamente disponibles y accesibles en el pie de página (`Footer.tsx`).
+
+---
 
 ### [v1.4.0] — 2026-10-08: Header con Scroll Natural y Des-anclaje de Barra Fija
 
