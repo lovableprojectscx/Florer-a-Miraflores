@@ -189,7 +189,7 @@ function ProductPage() {
         {/* Layout principal con galería sticky en Desktop */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
           {/* Imágenes (Sticky 55%) */}
-          <div className="w-full lg:w-[55%] flex flex-col gap-3 lg:sticky lg:top-36">
+          <div className="w-full lg:w-[55%] flex flex-col gap-3 lg:sticky lg:top-8">
             <div
               className="relative overflow-hidden bg-[#FAF8F5] rounded-2xl border border-[#E8DDD0]/50"
               style={{ aspectRatio: "4/5" }}

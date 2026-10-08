@@ -46,7 +46,7 @@ export function Header({ categorias, config }: Props) {
   };
 
   return (
-    <header className="bg-[#FFFFFF] sticky top-0 z-30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+    <header className="bg-[#FFFFFF] relative z-30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
       {/* Search overlay drawer */}
       {searchOpen && (
         <div className="absolute inset-x-0 top-0 bg-[#FFFFFF] border-b border-[#E8DDD0] z-40 py-4 px-4 sm:px-6 lg:px-12 animate-fadeIn shadow-md">
