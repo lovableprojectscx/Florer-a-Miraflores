@@ -101,6 +101,21 @@ export async function getProductosPorCategoria(categoriaId: string): Promise<Pro
 }
 
 /**
+ * Devuelve todos los productos activos pertenecientes a un conjunto de IDs de categoría.
+ */
+export async function getProductosPorCategorias(categoriaIds: string[]): Promise<ProductoRow[]> {
+  if (categoriaIds.length === 0) return [];
+  const { data, error } = await supabase
+    .from("productos")
+    .select("*")
+    .in("categoria_id", categoriaIds)
+    .eq("activo", true)
+    .order("orden", { ascending: true });
+
+  return throwOnError(data, error);
+}
+
+/**
  * Devuelve todos los productos activos ordenados por `orden`.
  * Se usa en /catalogo para el catalogo completo con filtros.
  */
@@ -333,7 +348,7 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
     const existingCatIds = new Set(
       colecciones.map((c) => (c.categoria as { id?: string })?.id).filter(Boolean),
     );
-    const targetSlugs = ["cumpleanos", "nacimientos", "tulipanes", "arreglos-florales", "box-luxury"];
+    const targetSlugs = ["cumpleanos", "ramos", "tulipanes", "girasoles", "arreglos-florales"];
     const { data: extras } = await supabase
       .from("categorias")
       .select("id, nombre, slug, imagen_url, parent_id")
@@ -357,12 +372,27 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
     }
   }
 
-  // Priorizar "amor-aniversario" como primera colección destacada (Hero Bento) si existe
+  // Orden equilibrado para el Bento Collage:
+  // 0: Hero Bento (Amor / Aniversario)
+  // 1: Vertical Bento (Graduación)
+  // 2, 3, 4, 5: Cuarteto inferior (Cumpleaños, Ramos, Tulipanes, Ofertas)
+  const preferredOrder = [
+    "amor-aniversario",
+    "graduacion",
+    "cumpleanos",
+    "ramos",
+    "tulipanes",
+    "ofertas",
+  ];
+
   colecciones.sort((a, b) => {
-    const slugA = (a.categoria as { slug?: string } | undefined)?.slug;
-    const slugB = (b.categoria as { slug?: string } | undefined)?.slug;
-    if (slugA === "amor-aniversario") return -1;
-    if (slugB === "amor-aniversario") return 1;
+    const slugA = (a.categoria as { slug?: string } | undefined)?.slug ?? "";
+    const slugB = (b.categoria as { slug?: string } | undefined)?.slug ?? "";
+    const idxA = preferredOrder.indexOf(slugA);
+    const idxB = preferredOrder.indexOf(slugB);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
     return (a.orden ?? 0) - (b.orden ?? 0);
   });
 

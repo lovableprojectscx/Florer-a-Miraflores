@@ -49,28 +49,36 @@ function CatalogoPage() {
 
   const [catFiltro, setCatFiltro] = useState("todas");
   const [ocasionFiltro, setOcasionFiltro] = useState("todas");
+  const [subFiltro, setSubFiltro] = useState("todas");
 
-  // Filtro por categoría: el producto pertenece si su categoria_id es el padre
-  // seleccionado o una de sus subcategorías.
+  // Subcategorías de la categoría padre seleccionada (si aplica)
+  const subcategorias = useMemo(() => {
+    if (catFiltro === "todas") return [];
+    return categorias.filter((c: CategoriaRow) => c.parent_id === catFiltro && c.activo);
+  }, [catFiltro, categorias]);
+
+  // Filtro por categoría y subcategoría
   const porCategoria = useMemo(() => {
     let out = productos;
 
     if (catFiltro !== "todas") {
-      const idsValidos = new Set([
-        catFiltro,
-        ...categorias
-          .filter((c: CategoriaRow) => c.parent_id === catFiltro)
-          .map((c: CategoriaRow) => c.id),
-      ]);
-      out = out.filter((p) => p.categoria_id && idsValidos.has(p.categoria_id));
-    }
-
-    if (ocasionFiltro !== "todas") {
+      if (subFiltro !== "todas") {
+        out = out.filter((p) => p.categoria_id === subFiltro);
+      } else {
+        const idsValidos = new Set([
+          catFiltro,
+          ...categorias
+            .filter((c: CategoriaRow) => c.parent_id === catFiltro)
+            .map((c: CategoriaRow) => c.id),
+        ]);
+        out = out.filter((p) => p.categoria_id && idsValidos.has(p.categoria_id));
+      }
+    } else if (ocasionFiltro !== "todas") {
       out = out.filter((p) => p.categoria_id === ocasionFiltro);
     }
 
     return out;
-  }, [productos, categorias, catFiltro, ocasionFiltro]);
+  }, [productos, categorias, catFiltro, subFiltro, ocasionFiltro]);
 
   const { filtrados, orden, setOrden, rango, setRango } = useProductFilters(porCategoria);
 
@@ -99,7 +107,7 @@ function CatalogoPage() {
           </h1>
         </header>
 
-        {/* Filtros: categoría, ocasión y precio */}
+        {/* Filtros: categoría, subcategoría/ocasión y precio */}
         <ProductFiltersBar
           total={filtrados.length}
           orden={orden}
@@ -112,7 +120,7 @@ function CatalogoPage() {
             value={catFiltro}
             onChange={(v) => {
               setCatFiltro(v);
-              // Ocasión es una categoría: al elegir otra colección, limpiamos ese filtro
+              setSubFiltro("todas");
               if (v !== "todas" && v !== ocasionPadre?.id) setOcasionFiltro("todas");
             }}
             options={[
@@ -120,20 +128,30 @@ function CatalogoPage() {
               ...padres.map((c: CategoriaRow) => ({ value: c.id, label: c.nombre })),
             ]}
           />
-          {ocasiones.length > 0 && (
+
+          {subcategorias.length > 0 ? (
+            <FilterSelect
+              label="Subcategoría"
+              value={subFiltro}
+              onChange={setSubFiltro}
+              options={[
+                { value: "todas", label: "Todas las opciones" },
+                ...subcategorias.map((c: CategoriaRow) => ({ value: c.id, label: c.nombre })),
+              ]}
+            />
+          ) : ocasiones.length > 0 && catFiltro === "todas" ? (
             <FilterSelect
               label="Ocasión"
               value={ocasionFiltro}
               onChange={(v) => {
                 setOcasionFiltro(v);
-                if (v !== "todas" && ocasionPadre) setCatFiltro(ocasionPadre.id);
               }}
               options={[
                 { value: "todas", label: "Todas las ocasiones" },
                 ...ocasiones.map((c: CategoriaRow) => ({ value: c.id, label: c.nombre })),
               ]}
             />
-          )}
+          ) : null}
         </ProductFiltersBar>
 
         {/* Grid de productos */}

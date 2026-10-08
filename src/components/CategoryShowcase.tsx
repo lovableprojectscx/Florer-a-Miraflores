@@ -9,6 +9,24 @@ import rosas from "@/assets/product-novedad-velvet.webp";
 
 const FALLBACK_IMGS = [amor, cumple, nacimiento, tulipanes, rosas];
 
+// Fotografías de alta resolución oficiales de la boutique por categoría
+const DEFAULT_CATEGORY_IMAGES: Record<string, string> = {
+  "amor-aniversario":
+    "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/categorias/1779372409571-r2k4cqrh1ke.webp",
+  "graduacion":
+    "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/categorias/1779373176544-az43foce4l.webp",
+  "ofertas":
+    "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/categorias/1779373331339-of9a7hhkfe.webp",
+  "cumpleanos":
+    "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791156553038-2cwu53lgo9o.webp",
+  "ramos":
+    "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791253748676-oaj7j18ejmf.webp",
+  "tulipanes":
+    "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791156588496-nkqw1n2xy1.webp",
+  "girasoles":
+    "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791156580844-o6v4btnji5p.webp",
+};
+
 interface Props {
   colecciones: ColeccionConCategoria[];
 }
@@ -47,7 +65,10 @@ export function CategoryShowcase({ colecciones }: Props) {
             if (!cat) return null;
 
             const img =
-              col.imagen_custom_url ?? cat.imagen_url ?? FALLBACK_IMGS[i % FALLBACK_IMGS.length];
+              col.imagen_custom_url ??
+              cat.imagen_url ??
+              DEFAULT_CATEGORY_IMAGES[cat.slug] ??
+              FALLBACK_IMGS[i % FALLBACK_IMGS.length];
 
             const parentSlug = cat.padre?.slug ?? null;
 

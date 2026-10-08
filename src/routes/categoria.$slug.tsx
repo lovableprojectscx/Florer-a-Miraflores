@@ -9,7 +9,7 @@ import {
   getCategoriaPorSlug,
   getCategorias,
   getConfig,
-  getProductosPorCategoria,
+  getProductosPorCategorias,
 } from "@/lib/queries";
 import type { CategoriaRow, ProductoRow } from "@/types/database";
 
@@ -22,11 +22,9 @@ export const Route = createFileRoute("/categoria/$slug")({
     ]);
     if (!cat) throw notFound();
 
-    // Si la categoría no tiene subcategorías, cargamos sus productos directamente
-    let productos: ProductoRow[] = [];
-    if (cat.hijas.length === 0) {
-      productos = await getProductosPorCategoria(cat.id).catch(() => []);
-    }
+    // Cargamos tanto productos directos como los de sus subcategorías
+    const allIds = [cat.id, ...cat.hijas.map((h) => h.id)];
+    const productos: ProductoRow[] = await getProductosPorCategorias(allIds).catch(() => []);
 
     return { cat, categorias, config, productos };
   },
@@ -95,39 +93,44 @@ function CategoriaPage() {
           </h1>
         </header>
 
-        {cat.hijas.length > 0 ? (
-          // Caso A: Tiene subcategorías -> Mostramos las tarjetas visuales originales con fotos
-          <section>
+        {cat.hijas.length > 0 && (
+          // Subcategorías como tarjetas visuales
+          <section className="mb-12">
+            <h2 className="font-display text-xl sm:text-2xl text-[#2C2420] mb-5">
+              Variedades y Subcategorías
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {cat.hijas.map((sub: CategoriaRow) => (
                 <Link
                   key={sub.id}
                   to="/categoria/$slug/$sub"
                   params={{ slug: cat.slug, sub: sub.slug }}
-                  className="group relative overflow-hidden bg-ivory-soft aspect-[4/3] flex items-end p-4 md:p-6 border border-[#E8DDD0] hover:border-[#C4956A] transition-colors"
+                  className="group relative overflow-hidden bg-ivory-soft rounded-xl aspect-[16/10] flex items-end p-4 md:p-5 border border-[#E8DDD0] hover:border-[#C4956A] transition-all hover:shadow-md"
                 >
                   {sub.imagen_url && (
                     <img
                       src={sub.imagen_url}
                       alt={sub.nombre}
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 transition-opacity"
+                      className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-500"
                     />
                   )}
                   <div className="relative z-10">
-                    <h3 className="font-display text-lg md:text-2xl text-[#2C2420] leading-tight">
+                    <h3 className="font-display text-base md:text-xl text-[#2C2420] leading-tight drop-shadow-xs">
                       {sub.nombre}
                     </h3>
-                    <span className="mt-2 inline-flex items-center gap-1 text-[10px] tracking-widest uppercase font-body font-light text-[#8A7A6E] group-hover:text-[#C4956A] transition-colors">
-                      Ver <span aria-hidden>→</span>
+                    <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-widest uppercase font-body font-light text-[#8A7A6E] group-hover:text-[#2C2420] transition-colors">
+                      Ver colección <span aria-hidden>→</span>
                     </span>
                   </div>
                 </Link>
               ))}
             </div>
           </section>
-        ) : productos && productos.length > 0 ? (
-          // Caso B: No tiene subcategorías pero tiene productos -> Filtros + grilla de productos
+        )}
+
+        {/* Grilla de productos con filtros siempre disponible */}
+        {productos && productos.length > 0 ? (
           <section>
             <ProductFiltersBar
               total={filtrados.length}
@@ -144,8 +147,8 @@ function CategoriaPage() {
               </p>
             )}
           </section>
-        ) : (
-          // Caso C: No tiene subcategorías ni productos -> Mostramos próximamente
+        ) : cat.hijas.length === 0 ? (
+          // Sin subcategorías ni productos -> Mostramos próximamente
           <section className="border border-[#E8DDD0] p-8 md:p-12 bg-[#F5EFE6]/40 text-center">
             <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>
             <p className="font-body font-light text-[#2C2420]/75">
@@ -160,7 +163,7 @@ function CategoriaPage() {
               Consultar
             </a>
           </section>
-        )}
+        ) : null}
 
         {hermanas.length > 0 && (
           <section className="mt-16 md:mt-24 border-t border-[#E8DDD0] pt-10">
