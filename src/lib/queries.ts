@@ -386,6 +386,14 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
   ];
 
   colecciones.sort((a, b) => {
+    const isExtraA = String(a.id).startsWith("extra-");
+    const isExtraB = String(b.id).startsWith("extra-");
+    if (!isExtraA && !isExtraB) {
+      return (a.orden ?? 0) - (b.orden ?? 0);
+    }
+    if (!isExtraA && isExtraB) return -1;
+    if (isExtraA && !isExtraB) return 1;
+
     const slugA = (a.categoria as { slug?: string } | undefined)?.slug ?? "";
     const slugB = (b.categoria as { slug?: string } | undefined)?.slug ?? "";
     const idxA = preferredOrder.indexOf(slugA);

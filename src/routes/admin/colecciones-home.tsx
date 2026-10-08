@@ -31,6 +31,8 @@ interface ColeccionRow {
 interface ColeccionConCategoria extends ColeccionRow {
   categoria_nombre: string;
   categoria_slug: string;
+  es_subcategoria?: boolean;
+  padre_nombre?: string | null;
 }
 
 // --- Helpers ---
@@ -81,12 +83,30 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Solo mostrar categorias que no estan ya agregadas
+  // Solo mostrar categorias y subcategorias que no estan ya agregadas
   const disponibles = categorias.filter((c) => c.activo && !colExistentes.includes(c.id));
+  const catMap = new Map(categorias.map((c) => [c.id, c]));
+
+  // Categorías principales disponibles
+  const padresDisponibles = disponibles.filter((c) => !c.parent_id);
+
+  // Subcategorías disponibles agrupadas por su categoría padre
+  const hijasPorPadre = new Map<string, { padreNombre: string; hijas: CategoriaRow[] }>();
+  disponibles
+    .filter((c) => c.parent_id)
+    .forEach((hija) => {
+      const padre = catMap.get(hija.parent_id!);
+      const padreId = hija.parent_id!;
+      const padreNombre = padre?.nombre ?? "Otras";
+      if (!hijasPorPadre.has(padreId)) {
+        hijasPorPadre.set(padreId, { padreNombre, hijas: [] });
+      }
+      hijasPorPadre.get(padreId)!.hijas.push(hija);
+    });
 
   async function handleSave() {
     if (!categoriaId) {
-      setError("Selecciona una categoria.");
+      setError("Selecciona una categoría o subcategoría.");
       return;
     }
     setSaving(true);
@@ -102,9 +122,9 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative bg-white w-full max-w-sm shadow-xl">
+      <div className="relative bg-white w-full max-w-md shadow-xl rounded-sm">
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#E8DDD0]">
-          <h2 className="font-display text-2xl text-[#2C2420]">Agregar coleccion</h2>
+          <h2 className="font-display text-2xl text-[#2C2420]">Agregar Colección al Home</h2>
           <button
             onClick={onClose}
             className="text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
@@ -116,11 +136,11 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
         <div className="px-6 py-6 space-y-4">
           <div>
             <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
-              Categoria *
+              Categoría o Subcategoría *
             </label>
             {disponibles.length === 0 ? (
               <p className="font-body text-sm text-[#8A7A6E]">
-                Todas las categorias activas ya estan en el home.
+                Todas las categorías y subcategorías activas ya están en el home.
               </p>
             ) : (
               <select
@@ -129,21 +149,36 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
                   setCategoriaId(e.target.value);
                   setError(null);
                 }}
-                className="w-full h-10 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors"
+                className="w-full h-11 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors rounded-sm"
               >
-                <option value="">Seleccionar...</option>
-                {disponibles.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.nombre}
-                  </option>
+                <option value="">Seleccionar categoría o subcategoría...</option>
+
+                {padresDisponibles.length > 0 && (
+                  <optgroup label="── CATEGORÍAS PRINCIPALES ──">
+                    {padresDisponibles.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.nombre} (Principal)
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+
+                {Array.from(hijasPorPadre.entries()).map(([padreId, { padreNombre, hijas }]) => (
+                  <optgroup key={padreId} label={`── SUBCATEGORÍAS DE ${padreNombre.toUpperCase()} ──`}>
+                    {hijas.map((sub) => (
+                      <option key={sub.id} value={sub.id}>
+                        ↳ {sub.nombre} (de {padreNombre})
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             )}
-            {error && <p className="mt-1 font-body text-xs text-red-500">{error}</p>}
+            {error && <p className="mt-1.5 font-body text-xs text-red-500">{error}</p>}
           </div>
-          <p className="font-body text-[10px] text-[#8A7A6E]">
-            La coleccion usara la imagen de la categoria. Puedes agregar una imagen personalizada
-            despues desde la tabla.
+
+          <p className="font-body text-[11px] text-[#8A7A6E] leading-relaxed bg-[#FAF8F5] p-3 rounded border border-[#E8DDD0]/50">
+            ✓ <strong>Permite tanto categorías principales como subcategorías:</strong> Puedes elegir una categoría general (ej. <em>Arreglos Florales</em>) o una subcategoría específica (ej. <em>Girasoles</em>, <em>Cumpleaños</em>, <em>Coronas Fúnebres</em>). En el Home enlazará automáticamente a su página correspondiente.
           </p>
         </div>
 
@@ -196,10 +231,13 @@ function ColeccionesHomePage() {
       const catMap = new Map(todasCats.map((c) => [c.id, c]));
       const mapped: ColeccionConCategoria[] = ((cols ?? []) as ColeccionRow[]).map((col) => {
         const cat = col.categoria_id ? catMap.get(col.categoria_id) : undefined;
+        const padre = cat?.parent_id ? catMap.get(cat.parent_id) : undefined;
         return {
           ...col,
           categoria_nombre: cat?.nombre ?? "Sin categoria",
           categoria_slug: cat?.slug ?? "",
+          es_subcategoria: !!cat?.parent_id,
+          padre_nombre: padre?.nombre ?? null,
         };
       });
       setColecciones(mapped);
@@ -311,7 +349,7 @@ function ColeccionesHomePage() {
               </th>
               <th className="px-4 py-3 text-left">
                 <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
-                  Categoria
+                  Colección / Tipo
                 </span>
               </th>
               <th className="px-4 py-3 text-left">
@@ -366,11 +404,22 @@ function ColeccionesHomePage() {
                     </div>
                   </td>
 
-                  {/* Nombre */}
+                  {/* Nombre y Tipo */}
                   <td className="px-4 py-3">
-                    <p className="font-body text-sm text-[#2C2420] font-medium">
-                      {col.categoria_nombre}
-                    </p>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="font-body text-sm text-[#2C2420] font-medium">
+                        {col.categoria_nombre}
+                      </p>
+                      {col.es_subcategoria ? (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-body tracking-wider uppercase font-medium bg-[#C4956A]/15 text-[#9E7347] border border-[#C4956A]/30">
+                          Subcategoría {col.padre_nombre ? `de ${col.padre_nombre}` : ""}
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-body tracking-wider uppercase font-medium bg-[#F5EFE6] text-[#8A7A6E] border border-[#E8DDD0]">
+                          Principal
+                        </span>
+                      )}
+                    </div>
                   </td>
 
                   {/* Slug */}
@@ -438,9 +487,20 @@ function ColeccionesHomePage() {
             return (
               <div key={col.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
                 <div>
-                  <h3 className="font-body text-sm font-semibold text-[#2C2420]">
-                    {col.categoria_nombre}
-                  </h3>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-body text-sm font-semibold text-[#2C2420]">
+                      {col.categoria_nombre}
+                    </h3>
+                    {col.es_subcategoria ? (
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-body tracking-wider uppercase font-medium bg-[#C4956A]/15 text-[#9E7347] border border-[#C4956A]/30">
+                        Subcategoría {col.padre_nombre ? `de ${col.padre_nombre}` : ""}
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-body tracking-wider uppercase font-medium bg-[#F5EFE6] text-[#8A7A6E] border border-[#E8DDD0]">
+                        Principal
+                      </span>
+                    )}
+                  </div>
                   <p className="font-body text-xs text-[#8A7A6E] mt-1 font-mono">
                     Slug: {col.categoria_slug || "-"}
                   </p>

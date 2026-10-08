@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.4.2** | 2026-10-08 | **Admin / Jerarquía** | Soporte explícito y visualización de subcategorías agrupadas por padre en Colecciones Home. |
 | **v1.4.1** | 2026-10-08 | **UI / Navbar** | Retiro de botones "Catálogo", "Nosotros" y "Preguntas" del menú superior del Header para una vista limpia y enfocada en flores. |
 | **v1.4.0** | 2026-10-08 | **UX / Layout** | Header con scroll natural (des-anclaje de sticky) y calibración de galería de producto. |
 | **v1.3.5** | 2026-10-08 | **Responsive** | Escala y proporción armónica para laptops en slider de novedades y colecciones. |
@@ -23,6 +24,28 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.4.2] — 2026-10-08: Organización Jerárquica de Categorías y Subcategorías en Colecciones Home
+
+#### Solicitud del Cliente
+> *"¿No permite subcategorías?"* (Al abrir el selector de agregar colecciones en `/admin/colecciones-home`).
+
+#### Contexto y Diagnóstico
+Aunque la base de datos y el componente de la tienda ya soportaban el enlace hacia subcategorías, el selector desplegable en el panel de administración (`/admin/colecciones-home`) mostraba una lista alfabética plana sin distinguir entre categorías principales y subcategorías (ej. *Coronas Fúnebres* o *Cruces* aparecían sueltas sin indicar que pertenecen a *Defunción*, o *Ramos* aparecía duplicado sin saber si correspondía a *Tulipanes* o a *Arreglos Florales*). Tampoco la tabla indicaba el tipo de elemento configurado.
+
+#### Solución Técnica Implementada
+1. **Selector con `<optgroup>` y jerarquía visual (`src/routes/admin/colecciones-home.tsx`):**
+   - Se agruparon las opciones en:
+     * `── CATEGORÍAS PRINCIPALES ──`: Listado de categorías padre activas (*Arreglos Florales, Tulipanes, Defunción, Ocasión, etc.*).
+     * `── SUBCATEGORÍAS DE [PADRE] ──`: Grupos dedicados por categoría padre con prefijo indicativo (ej. `↳ Girasoles (de Primaverales)`, `↳ Coronas Fúnebres (de Defunción)`).
+   - Actualización de etiquetas a **"Categoría o Subcategoría *"** con texto explicativo que confirma la compatibilidad total.
+2. **Badges de tipo en la tabla de colecciones:**
+   - La columna ahora se titula **Colección / Tipo**.
+   - Cada fila cuenta con un badge diferenciador: `Principal` o `Subcategoría de [Padre]`, tanto en versión de escritorio como en tarjetas móviles.
+3. **Respeto riguroso del orden del administrador (`src/lib/queries.ts`):**
+   - Se ajustó la consulta de `getColecciones()` para priorizar el orden manual (`col.orden`) establecido en la tabla por el administrador mediante las flechas ↑↓.
+
+---
 
 ### [v1.4.1] — 2026-10-08: Retiro de Botones "Catálogo", "Nosotros" y "Preguntas" del Menú del Header
 
