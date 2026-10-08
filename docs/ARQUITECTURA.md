@@ -1,200 +1,204 @@
 # Arquitectura — Florería Miraflores
 
-Documento técnico del sistema. Describe **lo que el código realmente implementa hoy** (verificado sobre `src/`), no la propuesta original. Donde el código difiere del `CLAUDE.md`, se marca ⚠️.
+Documento técnico del sistema. Describe **lo que el código realmente implementa hoy** (verificado sobre `src/`), su flujo de datos, componentes de diseño y modelo operativo en producción.
 
-Última revisión: 2026-09-24
-
----
-
-## 1. Resumen
-
-E-commerce de flores para Lima (Miraflores, Surco, Barranco, Lince, San Isidro) con catálogo dinámico, carrito, checkout con delivery por distritos y panel de administración. Frontend en React 19 sobre **TanStack Start** (con render en servidor), datos en **Supabase**, desplegado en **Vercel**.
-
-> ⚠️ **Divergencia de stack.** El `CLAUDE.md` (sección 3) dice *"Sin SSR. Todo SPA con Vite"* y *"React Router v6"*. El código real usa **TanStack Start + TanStack Router** con un entry de servidor (`src/server.ts`) y un bridge serverless (`api/index.js`). Es SSR-capable, no un SPA puro.
+Última revisión: 2026-10-08
 
 ---
 
-## 2. Stack real (verificado en `package.json`)
+## 1. Resumen Ejecutivo
 
-| Capa | Tecnología |
-| --- | --- |
-| UI | React 19 + Tailwind CSS v4 |
-| Framework / Router | TanStack Start + TanStack Router (file-based en `src/routes/`) |
-| Data fetching | TanStack React Query + funciones en `src/lib/queries.ts` |
-| Formularios | React Hook Form + Zod (validación) |
-| Estado global | Zustand (`src/store/cart.ts`) — solo carrito, en memoria |
-| Backend / DB | Supabase (PostgreSQL 17, Storage, Auth, RLS) |
-| Build | Vite 7 |
-| Deploy | Vercel (bridge `api/index.js` → `dist/server/server.js`) |
-| Pasarela | IZIPay — ⚠️ aún NO integrada (flujo manual/WhatsApp) |
+E-commerce de diseño floral premium para Lima Metropolitana (Miraflores, Surco, Barranco, Lince, San Isidro, etc.) con catálogo dinámico, navegación jerárquica con filtros en tiempo real, carrito reactivo, checkout con cálculo automático de delivery por distritos y panel de administración integral.
+
+El frontend está desarrollado en React 19 sobre **TanStack Start** (SSR-capable), con base de datos, autenticación y almacenamiento de medios en **Supabase** (PostgreSQL 17), desplegado en **Vercel** mediante bridge serverless (`api/index.js`).
 
 ---
 
-## 3. Diagrama de arquitectura
+## 2. Stack Tecnológico Real (Verificado en `package.json`)
+
+| Capa | Tecnología / Paquete | Rol / Implementación |
+| :--- | :--- | :--- |
+| **UI** | React 19 + Tailwind CSS v4 | Interfaz responsiva, componentes modulares y tokens de diseño |
+| **Framework / SSR** | TanStack Start (`v1.168.60`) | Servidor SSR optimizado con mitigación CVE-2026-102989 |
+| **Routing** | TanStack Router | Enrutamiento basado en archivos (`src/routes/`), loaders tipados |
+| **Data Fetching** | TanStack React Query + Supabase JS | Caché de cliente y consultas desacopladas en `src/lib/queries.ts` |
+| **Formularios** | React Hook Form + Zod | Validación tipada en checkout, libro de reclamaciones y admin |
+| **Estado Global** | Zustand (`src/store/cart.ts`) | Carrito reactivo en memoria de sesión de navegador (sin BD) |
+| **Backend / DB** | Supabase (PostgreSQL 17.6) | Base de datos relacional, RLS en todas las tablas, Auth |
+| **Almacenamiento** | Supabase Storage (`productos`, etc.) | Almacenamiento de fotografías WebP optimizadas en alta definición |
+| **Build & Deploy** | Vite 7 + Vercel Serverless | Pipeline npm con `scripts/postbuild.js` y puente en `api/index.js` |
+| **Pasarela** | IZIPay | En espera de credenciales comerciales (flujo activo vía WhatsApp) |
+
+---
+
+## 3. Diagrama de Arquitectura del Sistema
 
 ```mermaid
 flowchart TD
-    subgraph Cliente["Navegador del cliente"]
-        UI["React 19 UI\n(componentes + rutas)"]
-        Cart["Zustand\ncarrito en memoria"]
+    subgraph Cliente["Navegador del Cliente (Desktop / Laptop / Mobile)"]
+        UI["React 19 UI\n(Header relativo, Bento Collage, Catálogo, Producto)"]
+        Cart["Zustand Cart Store\n(Carrito en memoria)"]
+        Nav["TanStack Router\n(File-based routing)"]
     end
 
-    subgraph Vercel["Vercel"]
-        Bridge["api/index.js\n(bridge serverless)"]
-        Server["src/server.ts\nTanStack Start server entry (SSR)"]
+    subgraph Vercel["Infraestructura Vercel (Edge / Serverless)"]
+        Bridge["api/index.js\n(Bridge Serverless Node ↔ Web Fetch)"]
+        Server["dist/server/server.js\nTanStack Start Entry SSR"]
+        Static["dist/client/assets/\n(Assets estáticos y WebP optimizados)"]
     end
 
-    subgraph Supabase["Supabase"]
-        DB[("PostgreSQL\n+ RLS")]
-        Storage["Storage\n(imágenes producto)"]
-        Auth["Auth\n(1 admin)"]
+    subgraph Supabase["Servicios Backend Supabase"]
+        DB[("PostgreSQL 17\n10 Tablas + RLS Estricto")]
+        Storage["Supabase Storage\nBucket público /productos WebP"]
+        Auth["Supabase Auth\nSesión admin con JWT"]
     end
 
-    Izi["IZIPay\n(pendiente ⚠️)"]
+    Izi["Pasarela IZIPay\n(Fase 3: Edge Functions)"]
 
-    UI -->|HTTP| Bridge --> Server
-    Server -->|SSR / loaders| UI
-    UI -->|queries.ts + supabase-js| DB
-    UI -->|img| Storage
+    UI -->|HTTP Requests| Bridge --> Server
+    Server -->|HTML SSR + Data Preload| UI
+    UI -->|Consultas queries.ts| DB
+    UI -->|Carga de fotos WebP| Storage
+    UI -->|Recursos estáticos| Static
     Cart --> UI
-    UI -.->|checkout: crea pedido| DB
-    UI -.->|pago: hoy WhatsApp,\nfuturo Edge Function| Izi
-    AdminUI["/admin/* (CRUD)"] -->|login| Auth
-    AdminUI -->|read/write| DB
+    UI -.->|Checkout: crea pedido FM-XXXXXX| DB
+    UI -.->|Coordinación actual| WA["Atención WhatsApp"]
+    UI -.->|Cobro automático (Futuro)| Izi
+    AdminUI["/admin/*\n(Panel CRUD)"] -->|Autenticación| Auth
+    AdminUI -->|Lectura / Escritura RLS| DB
 ```
 
 ---
 
-## 4. Estructura de carpetas (`src/`)
+## 4. Estructura de Archivos y Organización (`src/`)
 
 ```
 src/
-├── routes/                 Rutas (file-based, TanStack Router)
-│   ├── index.tsx           Home
-│   ├── catalogo.tsx        Catálogo completo (con filtros)
-│   ├── categoria.$slug.tsx / .$sub.tsx   Categoría y subcategoría
-│   ├── producto.$id.tsx    Ficha de producto
-│   ├── tag.$key.tsx        Listado por tag (novedad, oferta, etc.)
-│   ├── checkout.tsx        Checkout + delivery por distrito
-│   ├── confirmacion.tsx    Confirmación de pedido
-│   ├── libro-de-reclamaciones.tsx
-│   ├── admin-login.tsx / admin.tsx
-│   └── admin/              Panel: banners, popup, categorias, productos,
-│                           colecciones-home, ocasiones, distritos, pedidos,
-│                           reclamaciones, tags, config, dashboard
-├── components/             UI (Header, Hero, ProductGrid, CartDrawer,
-│                           ProductFilters, PopupModal, Footer, …) + ui/ (46 shadcn)
+├── routes/                               Rutas (File-based routing)
+│   ├── index.tsx                         Home (Hero 8:3, Bento Collage, Novedades, Delivery)
+│   ├── nosotros.tsx                      Página dedicada de historia, valores y atelier de marca
+│   ├── catalogo.tsx                      Catálogo completo con subfiltro dinámico de categorías
+│   ├── categoria.$slug.tsx               Categoría padre (vista dual: subcategorías + productos)
+│   ├── categoria.$slug.$sub.tsx          Subcategoría específica con listado filtrado
+│   ├── producto.$id.tsx                  Ficha de producto con galería sticky lg:top-8
+│   ├── tag.$key.tsx                      Listados temáticos (Novedades, Ofertas, Más Vendidos)
+│   ├── checkout.tsx                      Checkout multi-paso con delivery automático por distrito
+│   ├── confirmacion.tsx                  Confirmación y resumen de pedido con CTA a WhatsApp
+│   ├── libro-de-reclamaciones.tsx        Formulario de reclamaciones según normativa peruana
+│   ├── admin-login.tsx / admin.tsx       Acceso y layout protegido del administrador
+│   └── admin/                            Módulos CRUD del panel administrativo:
+│       ├── banners.tsx                   Gestión de Hero Banners (2560×960 px)
+│       ├── popup.tsx                     Configuración de popup promocional
+│       ├── categorias.tsx                Árbol de categorías y subcategorías
+│       ├── productos.tsx                 Gestión de catálogo con auto-scroll y resalte ámbar
+│       ├── colecciones-home.tsx          Configuración de colecciones en Home
+│       ├── ocasiones.tsx                 Gestión de ocasiones y tags
+│       ├── distritos.tsx                 Tarifas de delivery por distrito de Lima
+│       ├── pedidos.tsx                   Gestión de órdenes y cambio de estados
+│       ├── reclamaciones.tsx             Revisión de hojas de reclamaciones
+│       ├── tags.tsx                      Configuración de etiquetas y colores dinámicos
+│       ├── config.tsx                    Configuración global (WhatsApp, redes, contacto)
+│       └── dashboard.tsx                 Métricas de ventas y actividad reciente
+├── components/                           Componentes de interfaz
+│   ├── Header.tsx                        Header con scroll natural (relative), buscador y menú
+│   ├── Hero.tsx                          Slider principal con proporción 8:3 (2560×960 px)
+│   ├── CategoryShowcase.tsx              Bento Collage editorial asimétrico de colecciones
+│   ├── Novedades.tsx                     Carrusel de productos con tarjetas balanceadas para laptops
+│   ├── ProductGrid.tsx                   Cuadrícula responsiva reutilizable de tarjetas
+│   ├── ProductFilters.tsx                Filtros interactivos por precio, orden y subcategorías
+│   ├── CartDrawer.tsx                    Drawer lateral deslizante del carrito de compras
+│   ├── PopupModal.tsx                    Modal de suscripción con frecuencia controlada (1 por sesión)
+│   ├── AnnouncementBar.tsx               Cintillo de anuncios superior configurable
+│   ├── DeliveryZones.tsx                 Sección informativa de cobertura y distritos
+│   ├── Faq.tsx                           Acordeón de preguntas frecuentes
+│   ├── Footer.tsx                        Pie de página con enlaces institucionales y redes
+│   └── ui/                               Componentes base (Shadcn UI / Tailwind CSS)
 ├── lib/
-│   ├── supabase.ts         Cliente Supabase (VITE_SUPABASE_URL / ANON_KEY)
-│   ├── queries.ts          Todas las consultas a la BD
-│   ├── image-optimizer.ts  Optimización de imágenes
-│   └── utils.ts, error-capture.ts, error-page.ts
-├── store/cart.ts           Estado del carrito (Zustand)
-├── types/database.ts       Tipos de las tablas
-├── server.ts / start.ts    Entradas SSR y cliente de TanStack Start
-└── styles.css              Tokens de diseño (color, tipografía) — ver /brand
+│   ├── supabase.ts                       Instancia del cliente Supabase (`createClient`)
+│   ├── queries.ts                        Capa centralizada de consultas (`getProductosPorCategorias`, etc.)
+│   ├── tag-utils.ts                      Resolución bidireccional de alias de tags y colores
+│   └── utils.ts                          Funciones de formateo, clases (`cn`) y utilidades
+├── store/
+│   └── cart.ts                           Estado global del carrito en memoria (Zustand)
+├── types/
+│   └── database.ts                       Tipado TypeScript completo de las tablas de Supabase
+├── server.ts / start.ts                  Puntos de entrada SSR y cliente de TanStack Start
+└── styles.css                            Variables CSS, fuentes (`Cormorant Garamond`, `DM Sans`) y tokens
 ```
 
 ---
 
-## 5. Capas y responsabilidades
+## 5. Capas Arquitectónicas y Flujo de Datos
 
-**Presentación** — Componentes en `src/components/` + rutas en `src/routes/`. Sin lógica de negocio; consumen datos vía loaders y `queries.ts`.
+### 5.1. Capa de Presentación
+- **Header con Scroll Natural:** El encabezado `<header>` en `Header.tsx` se posiciona de forma relativa (`relative z-30`). Cuando el usuario se desplaza verticalmente, el header sube y se retira de la pantalla naturalmente junto con el resto del contenido, maximizando el espacio de visualización.
+- **Bento Collage Editorial:** Implementado en `CategoryShowcase.tsx`, utiliza CSS Grid asimétrico con una tarjeta vertical destacada de dos filas y una horizontal de dos columnas para jerarquizar las colecciones más demandadas (*Cumpleaños*, *Ramos*, *Amor*, etc.).
+- **Escala Responsiva para Laptops:** En `Novedades.tsx`, las tarjetas utilizan un ancho de `230px-250px` con un límite superior de contenedor `max-w-[1400px]`, permitiendo desplegar 5 productos simultáneos sin ocupar toda la altura del monitor en laptops.
 
-**Acceso a datos** — `src/lib/queries.ts` centraliza toda lectura/escritura a Supabase con `supabase-js`. Ningún componente habla con la BD directamente salvo por estas funciones. `src/lib/supabase.ts` crea el cliente con la anon key (segura para frontend por RLS).
+### 5.2. Capa de Acceso a Datos (`src/lib/queries.ts`)
+Toda interacción con la base de datos se canaliza a través de funciones asíncronas fuertemente tipadas:
+- `getProductosPorCategorias(categoriaIds: string[])`: Ejecuta consultas compuestas `supabase.from("productos").select("*").in("categoria_id", categoriaIds)` para alimentar páginas de categorías padre que agrupan varias subcategorías.
+- `getProductos(categoriaId?, tag?)`: Filtra por categoría o etiqueta específica.
+- `crearPedido(datos)`: Inserta un registro en la tabla `pedidos` con código autogenerado `FM-XXXXXX` y desglose de items en formato JSONB.
 
-**Estado** — Zustand (`store/cart.ts`) mantiene el carrito solo en memoria del navegador; nunca se persiste en BD (por diseño).
-
-**Servidor** — `server.ts` es el entry SSR de TanStack Start. En Vercel, `api/index.js` traduce la request Node ↔ Web `Request/Response` y la pasa al server compilado (`dist/server/server.js`).
+### 5.3. Capa de Estado Global (Zustand)
+El estado de compra reside exclusivamente en el cliente (`src/store/cart.ts`):
+- Los items se almacenan con su identificador, nombre, precio, cantidad e imagen.
+- No se guarda en la base de datos hasta que el cliente envía formalmente el formulario de checkout, evitando sobrecarga de registros huérfanos.
 
 ---
 
-## 6. Modelo de datos (Supabase)
+## 6. Modelo de Datos (Supabase PostgreSQL 17)
 
 ```mermaid
 erDiagram
-    categorias ||--o{ categorias : "parent_id (auto-ref)"
+    categorias ||--o{ categorias : "parent_id (auto-referencia)"
     categorias ||--o{ productos : "categoria_id"
     categorias ||--o{ ocasiones_home : "categoria_id"
     categorias ||--o{ colecciones_home : "categoria_id"
     distritos  ||--o{ pedidos : "distrito_id"
 
-    config { uuid id }
-    banners { uuid id, int orden, bool activo }
-    popup { uuid id, bool activo }
-    categorias { uuid id, text slug, uuid parent_id }
-    productos { uuid id, numeric precio, text[] imagenes, text[] tags }
-    ocasiones_home { uuid id }
-    colecciones_home { uuid id }
-    distritos { uuid id, numeric precio_delivery }
-    pedidos { uuid id, text numero, jsonb productos, text estado }
-```
-
-Tablas: `config`, `banners`, `popup`, `categorias`, `productos`, `ocasiones_home`, `colecciones_home`, `distritos`, `pedidos`. Detalle de columnas, RLS y seed en `BASE-DE-DATOS.md` y `CLAUDE.md` (sección 11).
-
-**RLS:** lectura pública en catálogo/config; escritura solo admin; `pedidos` permite INSERT público (checkout) y SELECT/UPDATE solo admin.
-
----
-
-## 7. Flujo de checkout (estado actual)
-
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant W as Web (checkout.tsx)
-    participant Q as queries.ts
-    participant DB as Supabase
-    participant WA as WhatsApp
-
-    C->>W: Llena datos + elige distrito
-    W->>W: Calcula total = subtotal + delivery(distrito)
-    C->>W: "Pagar con IZIPay"
-    W->>Q: crearPedido(...)
-    Q->>DB: INSERT pedidos (estado="pendiente", numero FM-XXXXXX)
-    W-->>C: Modal "pago pendiente" + confirmación
-    C->>WA: Coordina pago por WhatsApp
-    Note over W,DB: ⚠️ IZIPay NO integrado. El pago real y el<br/>webhook (Fase 3) están pendientes de credenciales.
-```
-
-**Flujo objetivo (Fase 3, aún no construido):** el checkout llamaría una Edge Function que crea el pedido, pide token a IZIPay, redirige al cliente al entorno seguro, y un webhook actualiza el pedido a "pagado" + notifica. Ver `CLAUDE.md` sección 10.
-
----
-
-## 8. Estado de implementación (verificado)
-
-| Área | Estado |
-| --- | --- |
-| Home, catálogo, categorías, producto, tags | ✅ |
-| Filtros de precio + ordenamiento (`ProductFilters`) | ✅ (usado en catálogo, categorías y tags) |
-| Carrito (Zustand + CartDrawer) | ✅ |
-| Checkout con delivery por distrito | ✅ |
-| Confirmación de pedido | ✅ |
-| Panel admin completo (CRUD) | ✅ |
-| Supabase + RLS + Storage | ✅ |
-| **Pasarela IZIPay** | ⚠️ Pendiente (flujo manual por WhatsApp) |
-| **Notificación por correo al recibir pedido** | ❌ No implementada |
-| **Estado "En preparación"** del pedido | ❌ Falta (hay: pendiente, pagado, en_camino, entregado, cancelado) |
-| Logo vectorial (SVG) | ✅ Añadido en `brand/logo/` |
-
----
-
-## 9. Variables de entorno
-
-```
-# Frontend (pueden ir al cliente — protegido por RLS)
-VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
-
-# Solo servidor / Edge Functions (NUNCA en frontend) — Fase 3
-IZIPAY_PUBLIC_KEY=  IZIPAY_PASSWORD=  IZIPAY_SHA_KEY=  IZIPAY_MERCHANT_ID=  IZIPAY_BASE_URL=
+    config { uuid id, text whatsapp, text correo, text horario, text anuncio_barra, text logo_url }
+    banners { uuid id, text imagen_url, text titulo, text subtexto, int orden, bool activo }
+    popup { uuid id, text imagen_url, text texto, bool activo }
+    categorias { uuid id, text nombre, text slug, uuid parent_id, int orden, bool activo }
+    productos { uuid id, text nombre, numeric precio, text[] imagenes, text[] tags, uuid categoria_id, bool activo }
+    ocasiones_home { uuid id, text nombre, text icono, uuid categoria_id, int orden, bool activo }
+    colecciones_home { uuid id, uuid categoria_id, text imagen_custom_url, int orden, bool activo }
+    distritos { uuid id, text nombre, numeric precio_delivery, bool activo }
+    pedidos { uuid id, text numero, text nombre_cliente, text telefono, uuid distrito_id, jsonb productos, numeric total, text estado }
+    suscriptores { uuid id, text telefono, text origen, timestamp created_at }
 ```
 
 ---
 
-## 10. Deuda técnica / pendientes
+## 7. Estado de Implementación de Módulos (Octubre 2026)
 
-1. **IZIPay** — integrar vía Edge Function + webhook (bloqueado por credenciales de Sofía).
-2. **Correo transaccional** — no existe ningún servicio de email; la cotización lo promete.
-3. **Estado "En preparación"** — añadir al enum de pedidos para cumplir los 4 estados de la cotización.
-4. **Alinear identidad visual** — `CLAUDE.md` (champagne + Cormorant) vs. código real (rosa + DM Sans). Ver `brand/README.md`.
-5. **Alinear el `CLAUDE.md`** — actualizar la sección 3 para reflejar TanStack Start (no SPA/React Router).
+| Módulo / Funcionalidad | Estado | Detalles Técnicos |
+| :--- | :---: | :--- |
+| **Landing Page / Home** | ✅ | Hero 8:3, Bento Collage, slider balanceado para laptop, delivery y testimonios. |
+| **Página `/nosotros`** | ✅ | Ruta dedicada e independiente con narrativa, valores de marca y galería del taller. |
+| **Header con Scroll Natural** | ✅ | Des-anclado (`relative`); sube suavemente al hacer scroll. |
+| **Catálogo y Subfiltros** | ✅ | Filtros dinámicos por precio, orden y subcategorías jerárquicas activables. |
+| **Página de Producto** | ✅ | Ficha completa con selector de cantidad, badges dinámicos y galería sticky `lg:top-8`. |
+| **Carrito de Compras** | ✅ | `CartDrawer` con control de cantidades reactivo y subtotal calculado al instante. |
+| **Checkout & Delivery** | ✅ | Validación Zod, selección de distrito con tarifa en tiempo real y código `FM-XXXXXX`. |
+| **Confirmación de Compra** | ✅ | Resumen de pedido con botón de contacto y seguimiento en WhatsApp. |
+| **Panel Administrativo** | ✅ | CRUD completo para las 10 tablas, auto-scroll ámbar al editar productos, reordenamiento. |
+| **Gestión de Tags** | ✅ | Unificación de alias bidireccional en `tag-utils.ts` con colores dinámicos reflejados. |
+| **Imágenes HD WebP** | ✅ | Activos optimizados servidos a través del CDN de Supabase Storage. |
+| **Seguridad Core** | ✅ | Parche `@tanstack/react-start 1.168.60` (CVE-2026-102989) y políticas RLS activas. |
+| **Pasarela IZIPay** | ⚠️ | En espera de credenciales de comercio; flujo de pago coordinado vía WhatsApp. |
+| **Correo Automático** | ❌ | Pendiente de integración con proveedor transaccional (Resend o SendGrid). |
+
+---
+
+## 8. Consideraciones de Despliegue y CI/CD
+
+1. **Pipeline de Construcción:**
+   - Script de compilación: `npm run build` (`vite build`).
+   - Generación de artefactos para SSR en `dist/server/server.js` y cliente en `dist/client/`.
+   - Script `scripts/postbuild.js` copia los activos de cliente a `dist/` para resolver peticiones del bridge serverless.
+2. **Entorno de Producción:**
+   - Alojado en Vercel con ramas de despliegue continuo `master` y `main`.
+   - Variables de entorno públicas (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) inyectadas durante el build.

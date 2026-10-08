@@ -59,6 +59,10 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 | Página / Feature       | Ruta              | Estado                               |
 | ---------------------- | ----------------- | ------------------------------------ |
 | Producto individual    | `/producto/:id`   | ✓ Completado                         |
+| Catálogo con filtros   | `/catalogo`       | ✓ Completado (subfiltros dinámicos)  |
+| Página Nosotros        | `/nosotros`       | ✓ Completado (historia, atelier)     |
+| Header con scroll libre| componente global | ✓ Completado (Header.tsx relativo)   |
+| Bento Collage Home     | Home              | ✓ Completado (CategoryShowcase.tsx)  |
 | Drawer de carrito      | componente global | ✓ Completado (CartDrawer.tsx)         |
 | Checkout               | `/checkout`       | ✓ Completado                         |
 | Confirmación post-pago | `/confirmacion`   | ✓ Completado                         |
@@ -66,7 +70,7 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 | Conexión Supabase      | —                 | ✓ Completado (Fila única, CRUD admin) |
 | IZIPay                 | —                 | ⚠️ Flujo Manual / Pendiente credenciales |
 | Acciones en cards Home (Carrito + Compartir) | Home (`Novedades.tsx`) | ⏳ En planificación (RF-017, RF-018) |
-| Listón lateral rosa + Popup de celular | Home / Global (`PopupModal.tsx`) | ✓ Completado (RF-064a, RF-064b) |
+| Popup de celular       | Global            | ✓ Completado (RF-064b)               |
 
 ### Fases del proyecto
 
@@ -139,25 +143,28 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 ## 5. ESTRUCTURA DE RUTAS COMPLETA
 
 ```
-/                              → Home
-/categoria/:slug               → Categoría padre (muestra subcategorías) — YA EXISTE
-/categoria/:slug/:sub          → Subcategoría (muestra productos) — YA EXISTE
-/producto/:id                  → Producto individual — FALTA
-/checkout                      → Checkout — FALTA
-/confirmacion                  → Confirmación post-pago — FALTA
-/libro-de-reclamaciones        → YA EXISTE
-/admin                         → Panel admin (redirect a /admin/dashboard) — FALTA
-/admin/login                   → Login admin — FALTA
-/admin/dashboard               → Resumen general — FALTA
-/admin/banners                 → Gestión de banners — FALTA
-/admin/popup                   → Gestión de popup — FALTA
-/admin/categorias              → Gestión de categorías — FALTA
-/admin/productos               → Gestión de productos — FALTA
-/admin/colecciones-home        → Colecciones en home — FALTA
-/admin/ocasiones               → Ocasiones en home — FALTA
-/admin/distritos               → Distritos y delivery — FALTA
-/admin/pedidos                 → Lista de pedidos — FALTA
-/admin/config                  → Config general — FALTA
+/                              → Home (Hero 8:3, Bento Collage, Novedades) — COMPLETADO
+/nosotros                      → Historia y atelier de la boutique — COMPLETADO
+/catalogo                      → Catálogo completo con subfiltros — COMPLETADO
+/categoria/:slug               → Categoría padre (subcategorías + productos) — COMPLETADO
+/categoria/:slug/:sub          → Subcategoría (productos) — COMPLETADO
+/producto/:id                  → Producto individual — COMPLETADO
+/checkout                      → Checkout — COMPLETADO
+/confirmacion                  → Confirmación post-pago — COMPLETADO
+/libro-de-reclamaciones        → Libro de reclamaciones — COMPLETADO
+/admin                         → Panel admin (redirect a /admin/dashboard) — COMPLETADO
+/admin/login                   → Login admin — COMPLETADO
+/admin/dashboard               → Resumen general — COMPLETADO
+/admin/banners                 → Gestión de banners — COMPLETADO
+/admin/popup                   → Gestión de popup — COMPLETADO
+/admin/categorias              → Gestión de categorías — COMPLETADO
+/admin/productos               → Gestión de productos — COMPLETADO
+/admin/colecciones-home        → Colecciones en home — COMPLETADO
+/admin/ocasiones               → Ocasiones en home — COMPLETADO
+/admin/distritos               → Distritos y delivery — COMPLETADO
+/admin/pedidos                 → Lista de pedidos — COMPLETADO
+/admin/tags                    → Gestión de tags y colores — COMPLETADO
+/admin/config                  → Config general — COMPLETADO
 ```
 
 ---
