@@ -17,6 +17,9 @@ dist-ssr/
 .vinxi/
 .tanstack/
 .nitro/
+coverage/
+playwright-report/
+test-results/
 
 # Environment variables & secrets (CRÍTICO: nunca subir a GitHub)
 .env
