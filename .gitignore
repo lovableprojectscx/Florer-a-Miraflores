@@ -40,6 +40,7 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+.fuse_hidden*
 
 # Bun lockfiles (forzar npm en Vercel CI)
 bun.lock
@@ -48,6 +49,7 @@ bunfig.toml
 # Local raw media directories
 02_Fotos_Con_Fondo_Prompt_4K/
 03_Fotos_Paquete_2_4K/
+CON FONDO HECHO 4K/
 FOTOS_4K_EDITORIALES/
 convert 4 4K/
 tercer paquete de fotos/
