@@ -1,13 +1,9 @@
 import { test as base, expect, type Page } from "@playwright/test";
 
 /**
- * Lista blanca documentada de errores de consola de terceros / recursos externos
- * que no representan fallos de aplicación (ej. imágenes rotas de terceros o extensiones).
+ * Lista blanca documentada de errores de consola permitidos (solo favicon).
  */
-const CONSOLE_ERROR_ALLOWLIST: RegExp[] = [
-  /Failed to load resource: the server responded with a status of 404/i,
-  /favicon/i,
-];
+const CONSOLE_ERROR_ALLOWLIST: RegExp[] = [/favicon/i];
 
 function isAllowedError(msg: string): boolean {
   return CONSOLE_ERROR_ALLOWLIST.some((regex) => regex.test(msg));
@@ -36,8 +32,10 @@ export const test = base.extend({
     page.on("console", (msg) => {
       if (msg.type() === "error") {
         const text = msg.text();
-        if (!isAllowedError(text)) {
-          errors.push(`[console.error] ${text}`);
+        const url = msg.location()?.url;
+        const fullText = url ? `${text} [url: ${url}]` : text;
+        if (!isAllowedError(fullText)) {
+          errors.push(`[console.error] ${fullText}`);
         }
       }
     });

@@ -16,7 +16,10 @@ const anonClient = createClient(supabaseUrl, supabaseAnonKey, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
 
-const NON_EXISTENT_ID = "00000000-0000-0000-0000-000000000000";
+function isRlsError(error: { code?: string; message?: string } | null): boolean {
+  if (!error) return false;
+  return error.code === "42501" || /row-level security/i.test(error.message ?? "");
+}
 
 describe("RLS — Políticas de seguridad con anon key", () => {
   it.each(["productos", "categorias", "banners", "distritos", "config"] as const)(
@@ -29,50 +32,90 @@ describe("RLS — Políticas de seguridad con anon key", () => {
   );
 
   it("anon NO PUEDE insertar, actualizar ni borrar en 'productos'", async () => {
+    // Lectura previa de un registro real para probar UPDATE y DELETE contra una fila existente.
+    const { data: realRows, error: readError } = await anonClient
+      .from("productos")
+      .select("id, nombre")
+      .limit(1);
+    expect(readError).toBeNull();
+    expect(realRows && realRows.length === 1).toBe(true);
+    const realRow = realRows![0];
+
+    // INSERT — Seguro para producción: envía columnas válidas con `activo: false` y exige
+    // específicamente error de RLS (42501 / "row-level security"), fallando si fuera otro error.
     const { error: insertError } = await anonClient.from("productos").insert({
-      id: NON_EXISTENT_ID,
       nombre: "[RLS-TEST-NO-INSERT]",
       precio: 999,
       imagenes: [],
       activo: false,
     });
-    expect(insertError).not.toBeNull();
+    expect(
+      isRlsError(insertError),
+      `Se esperaba error RLS (42501 / row-level security), pero se recibió: ${JSON.stringify(insertError)}`,
+    ).toBe(true);
 
+    // UPDATE — Seguro para producción: apunta a un `id` real pero asigna exactamente el mismo
+    // `nombre` que ya tiene (`realRow.nombre`). Aunque la policy fallara, el dato no se altera.
     const { data: updateData, error: updateError } = await anonClient
       .from("productos")
-      .update({ nombre: "[RLS-TEST-NO-UPDATE]" })
-      .eq("id", NON_EXISTENT_ID)
+      .update({ nombre: realRow.nombre })
+      .eq("id", realRow.id)
       .select();
-    expect(updateError !== null || (updateData ?? []).length === 0).toBe(true);
+    expect(
+      isRlsError(updateError) || (updateError === null && (updateData ?? []).length === 0),
+    ).toBe(true);
 
+    // DELETE — Seguro para producción: combina `.eq("id", realRow.id)` con `.eq("nombre", "__NO_EXISTE__")`.
+    // Aunque RLS fallara, la condición compuesta no coincide con la fila real y no borra nada.
     const { data: deleteData, error: deleteError } = await anonClient
       .from("productos")
       .delete()
-      .eq("id", NON_EXISTENT_ID)
+      .eq("id", realRow.id)
+      .eq("nombre", "__NO_EXISTE__")
       .select();
     expect(deleteError !== null || (deleteData ?? []).length === 0).toBe(true);
   });
 
   it("anon NO PUEDE insertar, actualizar ni borrar en 'categorias'", async () => {
+    // Lectura previa de un registro real para probar UPDATE y DELETE contra una fila existente.
+    const { data: realRows, error: readError } = await anonClient
+      .from("categorias")
+      .select("id, nombre")
+      .limit(1);
+    expect(readError).toBeNull();
+    expect(realRows && realRows.length === 1).toBe(true);
+    const realRow = realRows![0];
+
+    // INSERT — Seguro para producción: envía columnas válidas con `activo: false` y exige
+    // específicamente error de RLS (42501 / "row-level security"), fallando si fuera otro error.
     const { error: insertError } = await anonClient.from("categorias").insert({
-      id: NON_EXISTENT_ID,
       nombre: "[RLS-TEST-NO-INSERT]",
       slug: "rls-test-no-insert-000000",
       activo: false,
     });
-    expect(insertError).not.toBeNull();
+    expect(
+      isRlsError(insertError),
+      `Se esperaba error RLS (42501 / row-level security), pero se recibió: ${JSON.stringify(insertError)}`,
+    ).toBe(true);
 
+    // UPDATE — Seguro para producción: apunta a un `id` real pero asigna exactamente el mismo
+    // `nombre` que ya tiene (`realRow.nombre`). Aunque la policy fallara, el dato no se altera.
     const { data: updateData, error: updateError } = await anonClient
       .from("categorias")
-      .update({ nombre: "[RLS-TEST-NO-UPDATE]" })
-      .eq("id", NON_EXISTENT_ID)
+      .update({ nombre: realRow.nombre })
+      .eq("id", realRow.id)
       .select();
-    expect(updateError !== null || (updateData ?? []).length === 0).toBe(true);
+    expect(
+      isRlsError(updateError) || (updateError === null && (updateData ?? []).length === 0),
+    ).toBe(true);
 
+    // DELETE — Seguro para producción: combina `.eq("id", realRow.id)` con `.eq("nombre", "__NO_EXISTE__")`.
+    // Aunque RLS fallara, la condición compuesta no coincide con la fila real y no borra nada.
     const { data: deleteData, error: deleteError } = await anonClient
       .from("categorias")
       .delete()
-      .eq("id", NON_EXISTENT_ID)
+      .eq("id", realRow.id)
+      .eq("nombre", "__NO_EXISTE__")
       .select();
     expect(deleteError !== null || (deleteData ?? []).length === 0).toBe(true);
   });
