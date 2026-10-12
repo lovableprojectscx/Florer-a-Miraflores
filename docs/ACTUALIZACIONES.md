@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.5.0** | 2026-10-12 | **QA / Testing** | Base de pruebas automatizadas: Vitest (unitario + RLS), Playwright E2E (mobile/desktop) y comando único `npm run verify`. |
 | **v1.4.2** | 2026-10-08 | **Admin / Jerarquía** | Soporte explícito y visualización de subcategorías agrupadas por padre en Colecciones Home. |
 | **v1.4.1** | 2026-10-08 | **UI / Navbar** | Retiro de botones "Catálogo", "Nosotros" y "Preguntas" del menú superior del Header para una vista limpia y enfocada en flores. |
 | **v1.4.0** | 2026-10-08 | **UX / Layout** | Header con scroll natural (des-anclaje de sticky) y calibración de galería de producto. |
@@ -24,6 +25,27 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.5.0] — 2026-10-12: Base de Pruebas Automatizadas (Vitest + Playwright + RLS + Verify)
+
+#### Contexto y Objetivo
+Establecer los cimientos de calidad y verificación continua antes de las siguientes fases funcionales, sin modificar el comportamiento visible para el cliente ni alterar datos de la base de datos de producción.
+
+#### Solución Técnica Implementada
+1. **Pruebas Unitarias (`vitest.config.ts` + `tests/unit/`):**
+   - Configuración independiente en `jsdom` con `@vitejs/plugin-react`, `vite-tsconfig-paths` y `@testing-library/jest-dom`.
+   - Extracción de `checkoutSchema` y `getFechaMinima` desde `src/routes/checkout.tsx` hacia `src/lib/checkout-schema.ts` sin cambiar su comportamiento.
+   - Cobertura de `useCartStore` (`cart.test.ts`), `slugify` y `extractIdFromSlug` (`utils.test.ts`), utilidades de tags (`tag-utils.test.ts`), `useProductFilters` (`product-filters.test.ts`), validación de checkout (`checkout-schema.test.ts`, incluyendo `it.fails` documentado para el bug de zona horaria UTC en `getFechaMinima`) y `crearPedido` con cliente Supabase mockeado (`queries.test.ts`).
+2. **Pruebas de Seguridad RLS (`vitest.rls.config.ts` + `tests/rls/rls.test.ts`):**
+   - Verificación con `anon key` real de lectura pública en `productos`, `categorias`, `banners`, `distritos` y `config`, bloqueo de lectura en `pedidos` y bloqueo de escritura (`INSERT`/`UPDATE`/`DELETE`) en `productos` y `categorias` usando UUID inexistente.
+3. **Pruebas End-to-End (`playwright.config.ts` + `tests/e2e/`):**
+   - Ejecución en proyectos `mobile` (`Pixel 7`) y `desktop` (`1440×900`) contra el servidor de desarrollo en puerto `8080`.
+   - Fixture común (`tests/e2e/fixtures.ts`) que falla ante `console.error` o `pageerror` inesperados.
+   - Suites: `smoke.spec.ts`, `catalogo.spec.ts`, `carrito.spec.ts`, `checkout.spec.ts` (con interceptación obligatoria de `POST **/rest/v1/pedidos*`) y `admin.spec.ts`.
+4. **Pipeline de Verificación (`npm run verify` y `.github/workflows/verify.yml`):**
+   - Limpieza de errores triviales de tipado (`error: unknown` en `errorComponent` de rutas) y lint (`no-explicit-any`, `prefer-const`, `no-empty-object-type`), dejando `lint`, `typecheck`, `test` y `build` en verde.
+
+---
 
 ### [v1.4.2] — 2026-10-08: Organización Jerárquica de Categorías y Subcategorías en Colecciones Home
 

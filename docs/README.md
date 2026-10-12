@@ -9,6 +9,8 @@
 | [ARQUITECTURA.md](./ARQUITECTURA.md) | Stack real (TanStack Start + React 19), diagramas de arquitectura y flujo de datos, estructura de carpetas, capas y módulos. |
 | [BASE-DE-DATOS.md](./BASE-DE-DATOS.md) | Configuración de Supabase: esquemas de tablas, RLS, extensiones, relaciones y políticas de Storage. |
 | [INCIDENCIAS-Y-SOLUCIONES.md](./INCIDENCIAS-Y-SOLUCIONES.md) | Informe técnico de problemas detectados en desarrollo (tags, persistencia visual en admin) y sus soluciones. |
+| [TESTING.md](./TESTING.md) | Guía de pruebas automatizadas (Vitest unitario, Vitest RLS y Playwright E2E mobile/desktop) y regla de protección de datos de producción. |
+| [PLAN-DE-TRABAJO.md](./PLAN-DE-TRABAJO.md) | Backlog priorizado de mejoras y pendientes antes y después del lanzamiento. |
 
 ### Documentos relacionados (fuera de `docs/`)
 
