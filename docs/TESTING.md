@@ -27,7 +27,8 @@ El proyecto cuenta con un único entorno de Supabase (`sdrkiomeesoctsxeidmu`) qu
 1. **Tests unitarios (`tests/unit/`):**
    - Nunca salen a la red. El cliente `@/lib/supabase` se reemplaza siempre mediante `vi.mock("@/lib/supabase")`.
 2. **Tests RLS (`tests/rls/`):**
-   - Usan la `anon key` real únicamente para comprobar que las lecturas públicas permitidas funcionan (`productos`, `categorias`, `banners`, `distritos`, `config`), que la lectura de `pedidos` está bloqueada para `anon`, y que cualquier intento de `INSERT`, `UPDATE` o `DELETE` con `anon` en `productos` o `categorias` es rechazado o afecta `0` filas (apuntando siempre al UUID inexistente `00000000-0000-0000-0000-000000000000`).
+   - Usan la `anon key` real únicamente para comprobar que las lecturas públicas permitidas funcionan (`productos`, `categorias`, `banners`, `distritos`, `config`), que la lectura de `pedidos` está bloqueada para `anon`, que `INSERT` con `anon` en `productos` y `categorias` devuelve error de RLS (`42501` / `row-level security`), y que `UPDATE` sobre un `id` real con su mismo `nombre` o `DELETE` con condición imposible (`.eq("nombre", "__NO_EXISTE__")`) devuelven error o `0` filas afectadas.
+   - El DELETE con anon no se puede probar sin riesgo con datos reales; se certifica revisando pg_policies (Fase 02).
    - **No se prueba `INSERT` en `pedidos`** desde RLS para no insertar pedidos falsos en la base de datos de producción.
 3. **Tests E2E (`tests/e2e/`):**
    - Navegan y leen el catálogo real en vivo, pero **nunca escriben en la base de datos**.

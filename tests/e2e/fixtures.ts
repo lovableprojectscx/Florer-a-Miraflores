@@ -25,16 +25,34 @@ export async function waitForHydration(page: Page, selector = "header, main"): P
   );
 }
 
-export const test = base.extend({
-  page: async ({ page }, runTest) => {
+type ExtraFixtures = {
+  allowedConsolePatterns: RegExp[];
+  allowConsoleErrors: (patterns: RegExp[]) => void;
+};
+
+export const test = base.extend<ExtraFixtures>({
+  // eslint-disable-next-line no-empty-pattern
+  allowedConsolePatterns: async ({}, run) => {
+    await run([]);
+  },
+
+  allowConsoleErrors: async ({ allowedConsolePatterns }, run) => {
+    await run((patterns: RegExp[]) => {
+      allowedConsolePatterns.push(...patterns);
+    });
+  },
+
+  page: async ({ page, allowedConsolePatterns }, runTest) => {
     const errors: string[] = [];
 
     page.on("console", (msg) => {
       if (msg.type() === "error") {
         const text = msg.text();
-        const url = msg.location()?.url;
+        const url = msg.location()?.url ?? "";
         const fullText = url ? `${text} [url: ${url}]` : text;
-        if (!isAllowedError(fullText)) {
+        const allowedByTest =
+          /status of 404/i.test(text) && allowedConsolePatterns.some((regex) => regex.test(url));
+        if (!isAllowedError(fullText) && !allowedByTest) {
           errors.push(`[console.error] ${fullText}`);
         }
       }

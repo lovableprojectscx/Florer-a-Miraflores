@@ -72,7 +72,15 @@ test.describe("Smoke E2E — Rutas públicas", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   });
 
-  test("Ruta inexistente muestra mensaje de no encontrado", async ({ page }) => {
+  test("Ruta inexistente muestra mensaje de no encontrado", async ({
+    page,
+    allowConsoleErrors,
+  }) => {
+    allowConsoleErrors([
+      /\/categoria\/categoria-inexistente-e2e-404$/,
+      /\/ruta-inexistente-e2e-404$/,
+    ]);
+
     await page.goto("/categoria/categoria-inexistente-e2e-404");
     await expect(page.getByRole("heading", { name: /no encontrad[oa]/i })).toBeVisible();
 
