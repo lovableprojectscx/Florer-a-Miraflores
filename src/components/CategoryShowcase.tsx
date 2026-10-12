@@ -13,17 +13,17 @@ const FALLBACK_IMGS = [amor, cumple, nacimiento, tulipanes, rosas];
 const DEFAULT_CATEGORY_IMAGES: Record<string, string> = {
   "amor-aniversario":
     "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/categorias/1779372409571-r2k4cqrh1ke.webp",
-  "graduacion":
+  graduacion:
     "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/categorias/1779373176544-az43foce4l.webp",
-  "ofertas":
+  ofertas:
     "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/categorias/1779373331339-of9a7hhkfe.webp",
-  "cumpleanos":
+  cumpleanos:
     "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791156553038-2cwu53lgo9o.webp",
-  "ramos":
+  ramos:
     "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791253748676-oaj7j18ejmf.webp",
-  "tulipanes":
+  tulipanes:
     "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791156588496-nkqw1n2xy1.webp",
-  "girasoles":
+  girasoles:
     "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791156580844-o6v4btnji5p.webp",
 };
 
@@ -35,7 +35,10 @@ export function CategoryShowcase({ colecciones }: Props) {
   if (colecciones.length === 0) return null;
 
   return (
-    <section id="categorias" className="px-5 md:px-12 lg:px-16 py-14 md:py-20 animate-fade-in-up bg-[#FAF8F5]/60">
+    <section
+      id="categorias"
+      className="px-5 md:px-12 lg:px-16 py-14 md:py-20 animate-fade-in-up bg-[#FAF8F5]/60"
+    >
       <div className="max-w-[1380px] mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
           <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
@@ -84,7 +87,10 @@ export function CategoryShowcase({ colecciones }: Props) {
             } else if (isVerticalSide) {
               gridSpan = "col-span-12 sm:col-span-6 lg:col-span-4";
               cardHeight = "h-[240px] sm:h-[300px] lg:h-[410px]";
-            } else if (i === 5 || (i === colecciones.length - 1 && (colecciones.length - 2) % 2 !== 0)) {
+            } else if (
+              i === 5 ||
+              (i === colecciones.length - 1 && (colecciones.length - 2) % 2 !== 0)
+            ) {
               // Cierre armonioso en pantallas móviles pequeñas para evitar tarjeta huérfana
               gridSpan = "col-span-12 sm:col-span-6 lg:col-span-3";
               cardHeight = "h-[200px] sm:h-[240px] lg:h-[280px]";
@@ -140,8 +146,8 @@ export function CategoryShowcase({ colecciones }: Props) {
                     isHero
                       ? "p-6 sm:p-8 lg:p-10"
                       : isVerticalSide
-                      ? "p-5 sm:p-6 lg:p-8"
-                      : "p-4 sm:p-5"
+                        ? "p-5 sm:p-6 lg:p-8"
+                        : "p-4 sm:p-5"
                   }`}
                 >
                   <p
@@ -159,8 +165,8 @@ export function CategoryShowcase({ colecciones }: Props) {
                       isHero
                         ? "text-2xl sm:text-3xl lg:text-4xl"
                         : isVerticalSide
-                        ? "text-xl sm:text-2xl lg:text-3xl"
-                        : "text-base sm:text-lg lg:text-xl line-clamp-1"
+                          ? "text-xl sm:text-2xl lg:text-3xl"
+                          : "text-base sm:text-lg lg:text-xl line-clamp-1"
                     }`}
                   >
                     {cat.nombre}
@@ -168,7 +174,8 @@ export function CategoryShowcase({ colecciones }: Props) {
 
                   {isHero && (
                     <p className="mt-2 font-body text-xs sm:text-sm text-white/85 font-light line-clamp-2 max-w-lg hidden sm:block">
-                      Diseños florales concebidos con armonía, sensibilidad y las rosas más frescas de la boutique.
+                      Diseños florales concebidos con armonía, sensibilidad y las rosas más frescas
+                      de la boutique.
                     </p>
                   )}
 

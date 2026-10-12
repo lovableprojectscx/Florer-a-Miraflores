@@ -269,10 +269,7 @@ export async function getTags(): Promise<TagRow[]> {
  * Devuelve hasta `limit` productos activos que contienen la `clave` del tag
  * (o sus variantes históricas) en su array `tags[]`.
  */
-export async function getProductosPorTag(
-  clave: string,
-  limit = 5,
-): Promise<ProductoRow[]> {
+export async function getProductosPorTag(clave: string, limit = 5): Promise<ProductoRow[]> {
   const claves = resolverClavesTag(clave);
   const { data, error } = await supabase
     .from("productos")
@@ -289,11 +286,7 @@ export async function getProductosPorTag(
  * Devuelve un tag por su clave.
  */
 export async function getTagPorClave(clave: string): Promise<TagRow | null> {
-  const { data, error } = await supabase
-    .from("tags")
-    .select("*")
-    .eq("clave", clave)
-    .maybeSingle();
+  const { data, error } = await supabase.from("tags").select("*").eq("clave", clave).maybeSingle();
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
   return data;
@@ -341,7 +334,7 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
 
-  let colecciones = (data ?? []) as ColeccionConCategoria[];
+  const colecciones = (data ?? []) as ColeccionConCategoria[];
 
   // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas
   if (colecciones.length < 6) {
@@ -415,10 +408,7 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
 
   if (parentIds.length === 0) return colecciones;
 
-  const { data: padres } = await supabase
-    .from("categorias")
-    .select("id, slug")
-    .in("id", parentIds);
+  const { data: padres } = await supabase.from("categorias").select("id, slug").in("id", parentIds);
 
   const padreMap: Record<string, string> = {};
   (padres ?? []).forEach((p: { id: string; slug: string }) => {
@@ -431,9 +421,7 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
     if (!parentId || !padreMap[parentId]) return col;
     return {
       ...col,
-      categoria: col.categoria
-        ? { ...col.categoria, padre: { slug: padreMap[parentId] } }
-        : null,
+      categoria: col.categoria ? { ...col.categoria, padre: { slug: padreMap[parentId] } } : null,
     };
   });
 }

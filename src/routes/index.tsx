@@ -68,8 +68,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { categorias, config, colecciones, banners, popup, tagSecciones } =
-    Route.useLoaderData();
+  const { categorias, config, colecciones, banners, popup, tagSecciones } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-background">

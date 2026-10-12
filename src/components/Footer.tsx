@@ -38,7 +38,8 @@ export function Footer({ config }: Props) {
               />
             </Link>
             <p className="font-body font-light text-xs sm:text-sm text-[#2C2420]/75 leading-relaxed max-w-xs">
-              Boutique floral especializada en arreglos de autor, ramos de rosas y detalles para ocasiones inolvidables en Lima.
+              Boutique floral especializada en arreglos de autor, ramos de rosas y detalles para
+              ocasiones inolvidables en Lima.
             </p>
             <div className="pt-2">
               <p className="text-[10px] tracking-widest uppercase font-body text-[#8A7A6E] mb-1">
@@ -125,7 +126,8 @@ export function Footer({ config }: Props) {
             <div className="space-y-3 font-body font-light text-xs sm:text-sm text-[#2C2420]/75">
               <p>Miraflores, Lima, Perú</p>
               <p className="text-xs text-[#8A7A6E]">
-                Horario de atención:<br />
+                Horario de atención:
+                <br />
                 <span className="text-[#2C2420] font-medium">{horario}</span>
               </p>
             </div>

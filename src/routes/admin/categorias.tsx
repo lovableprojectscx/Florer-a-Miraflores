@@ -66,9 +66,11 @@ async function subirImagen(file: File): Promise<string> {
 
   const ext = finalFile.name.split(".").pop() ?? "webp";
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const { error: uploadError } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, finalFile, { cacheControl: "31536000", contentType: finalFile.type, upsert: false });
+  const { error: uploadError } = await supabase.storage.from(BUCKET).upload(path, finalFile, {
+    cacheControl: "31536000",
+    contentType: finalFile.type,
+    upsert: false,
+  });
 
   if (uploadError) throw new Error(`Upload: ${uploadError.message}`);
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
@@ -792,7 +794,10 @@ function CategoriasPage() {
       <div className="md:hidden mt-4 space-y-4">
         {loading ? (
           [1, 2, 3].map((n) => (
-            <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse flex gap-3">
+            <div
+              key={n}
+              className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse flex gap-3"
+            >
               <div className="w-16 h-16 bg-[#F5EFE6] rounded-md flex-shrink-0" />
               <div className="flex-1 space-y-2 py-1">
                 <div className="h-4 bg-[#F5EFE6] rounded w-3/4" />
@@ -892,7 +897,10 @@ function CategoriasPage() {
                         className="transition-colors disabled:opacity-50"
                       >
                         {togglingId === cat.id ? (
-                          <Loader2 className="h-5 w-5 text-[#C4956A] animate-spin" strokeWidth={1.5} />
+                          <Loader2
+                            className="h-5 w-5 text-[#C4956A] animate-spin"
+                            strokeWidth={1.5}
+                          />
                         ) : cat.activo ? (
                           <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
                         ) : (

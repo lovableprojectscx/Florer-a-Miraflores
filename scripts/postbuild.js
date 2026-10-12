@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
-const srcDir = path.join(process.cwd(), 'dist', 'client');
-const destDir = path.join(process.cwd(), 'dist');
+const srcDir = path.join(process.cwd(), "dist", "client");
+const destDir = path.join(process.cwd(), "dist");
 
 function copyRecursiveSync(src, dest) {
   const exists = fs.existsSync(src);
@@ -24,7 +24,7 @@ if (fs.existsSync(srcDir)) {
   fs.readdirSync(srcDir).forEach((item) => {
     copyRecursiveSync(path.join(srcDir, item), path.join(destDir, item));
   });
-  console.log('Postbuild: Copied dist/client files to dist/');
+  console.log("Postbuild: Copied dist/client files to dist/");
 } else {
-  console.error('Postbuild error: dist/client directory not found');
+  console.error("Postbuild error: dist/client directory not found");
 }

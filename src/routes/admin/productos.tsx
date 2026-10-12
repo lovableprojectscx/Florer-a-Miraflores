@@ -83,9 +83,11 @@ async function subirImagen(file: File): Promise<string> {
 
   const ext = finalFile.name.split(".").pop() ?? "webp";
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const { error: uploadError } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, finalFile, { cacheControl: "31536000", contentType: finalFile.type, upsert: false });
+  const { error: uploadError } = await supabase.storage.from(BUCKET).upload(path, finalFile, {
+    cacheControl: "31536000",
+    contentType: finalFile.type,
+    upsert: false,
+  });
   if (uploadError) throw new Error(`Upload: ${uploadError.message}`);
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
   return data.publicUrl;
@@ -147,7 +149,15 @@ interface ProductoFormProps {
   titulo: string;
 }
 
-function ProductoForm({ initial, categorias, tags, saving, onClose, onSave, titulo }: ProductoFormProps) {
+function ProductoForm({
+  initial,
+  categorias,
+  tags,
+  saving,
+  onClose,
+  onSave,
+  titulo,
+}: ProductoFormProps) {
   const [form, setForm] = useState<FormState>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [uploading, setUploading] = useState<number | null>(null);
@@ -338,7 +348,8 @@ function ProductoForm({ initial, categorias, tags, saving, onClose, onSave, titu
               })}
             </div>
             <p className="mt-1.5 font-body text-[10px] text-[#8A7A6E]">
-              Selecciona como máximo 1 tag para evitar que el producto se repita en varias secciones de la página de inicio.
+              Selecciona como máximo 1 tag para evitar que el producto se repita en varias secciones
+              de la página de inicio.
             </p>
           </div>
 
@@ -560,8 +571,8 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
       const f = selectedFiles[i];
       if (!ACCEPTED_TYPES.includes(f.type)) continue;
 
-      let status: BulkFileItem["status"] = "idle";
-      let errorMsg: string | undefined = undefined;
+      const status: BulkFileItem["status"] = "idle";
+      const errorMsg: string | undefined = undefined;
 
       newItems.push({
         id: `${Date.now()}-${i}-${Math.random().toString(36).slice(2)}`,
@@ -581,9 +592,7 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
 
     for (const item of itemsToProcess) {
       // 1. Optimizing
-      setFiles((prev) =>
-        prev.map((f) => (f.id === item.id ? { ...f, status: "optimizing" } : f))
-      );
+      setFiles((prev) => prev.map((f) => (f.id === item.id ? { ...f, status: "optimizing" } : f)));
 
       let optimizedFile: File;
       try {
@@ -594,16 +603,14 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
           prev.map((f) =>
             f.id === item.id
               ? { ...f, status: "error", errorMsg: "Error al optimizar imagen." }
-              : f
-          )
+              : f,
+          ),
         );
         continue;
       }
 
       // 2. Uploading
-      setFiles((prev) =>
-        prev.map((f) => (f.id === item.id ? { ...f, status: "uploading" } : f))
-      );
+      setFiles((prev) => prev.map((f) => (f.id === item.id ? { ...f, status: "uploading" } : f)));
 
       let publicUrl = "";
       try {
@@ -612,26 +619,21 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
         console.error("Error al subir imagen:", err);
         const msg = err instanceof Error ? err.message : "Error al subir la imagen.";
         setFiles((prev) =>
-          prev.map((f) =>
-            f.id === item.id ? { ...f, status: "error", errorMsg: msg } : f
-          )
+          prev.map((f) => (f.id === item.id ? { ...f, status: "error", errorMsg: msg } : f)),
         );
         continue;
       }
 
       // 3. Saving
-      setFiles((prev) =>
-        prev.map((f) => (f.id === item.id ? { ...f, status: "saving" } : f))
-      );
+      setFiles((prev) => prev.map((f) => (f.id === item.id ? { ...f, status: "saving" } : f)));
 
       try {
         const cleanName =
-          item.file.name.substring(0, item.file.name.lastIndexOf(".")) ||
-          item.file.name;
+          item.file.name.substring(0, item.file.name.lastIndexOf(".")) || item.file.name;
 
         const { error } = await supabase.from("productos").insert({
           nombre: `Borrador - ${cleanName}`,
-          precio: 1.00,
+          precio: 1.0,
           descripcion: null,
           categoria_id: null,
           tags: [],
@@ -642,16 +644,12 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
 
         if (error) throw error;
 
-        setFiles((prev) =>
-          prev.map((f) => (f.id === item.id ? { ...f, status: "completed" } : f))
-        );
+        setFiles((prev) => prev.map((f) => (f.id === item.id ? { ...f, status: "completed" } : f)));
       } catch (err) {
         console.error("Error al guardar borrador:", err);
         const msg = err instanceof Error ? err.message : "Error de base de datos.";
         setFiles((prev) =>
-          prev.map((f) =>
-            f.id === item.id ? { ...f, status: "error", errorMsg: msg } : f
-          )
+          prev.map((f) => (f.id === item.id ? { ...f, status: "error", errorMsg: msg } : f)),
         );
       }
     }
@@ -696,8 +694,7 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
   const errorCount = files.filter((f) => f.status === "error").length;
   const pendingCount = files.filter((f) => f.status === "idle").length;
   const processedCount = completedCount + errorCount;
-  const progressPercent =
-    totalFiles > 0 ? Math.round((processedCount / totalFiles) * 100) : 0;
+  const progressPercent = totalFiles > 0 ? Math.round((processedCount / totalFiles) * 100) : 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
@@ -862,17 +859,16 @@ function BulkImportModal({ onClose, onImportSuccess }: BulkImportModalProps) {
                         )}
 
                         {/* Delete button (only when idle or error and not processing) */}
-                        {!processing &&
-                          (item.status === "idle" || item.status === "error") && (
-                            <button
-                              type="button"
-                              onClick={() => removeFile(item.id)}
-                              className="p-1 text-[#8A7A6E] hover:text-red-500 transition-colors"
-                              title="Eliminar de la cola"
-                            >
-                              <Trash2 className="h-4 w-4" strokeWidth={1.5} />
-                            </button>
-                          )}
+                        {!processing && (item.status === "idle" || item.status === "error") && (
+                          <button
+                            type="button"
+                            onClick={() => removeFile(item.id)}
+                            className="p-1 text-[#8A7A6E] hover:text-red-500 transition-colors"
+                            title="Eliminar de la cola"
+                          >
+                            <Trash2 className="h-4 w-4" strokeWidth={1.5} />
+                          </button>
+                        )}
                       </div>
                     </div>
                   );
@@ -998,16 +994,16 @@ function ProductosPage() {
 
       // Auto-migración silenciosa de tags históricos en la base de datos
       const legacyTagProds = (prods ?? []).filter((p: ProductoRow) =>
-        p.tags?.includes("flores_y_globos_para_sorprender" as any)
+        (p.tags as string[] | undefined)?.includes("flores_y_globos_para_sorprender"),
       );
       if (legacyTagProds.length > 0) {
         void Promise.all(
           legacyTagProds.map((p: ProductoRow) => {
             const nuevosTags = p.tags.map((t) =>
-              t === "flores_y_globos_para_sorprender" ? "globos_para_enamorar" : t
+              t === "flores_y_globos_para_sorprender" ? "globos_para_enamorar" : t,
             );
             return supabase.from("productos").update({ tags: nuevosTags }).eq("id", p.id);
-          })
+          }),
         );
       }
 
@@ -1015,9 +1011,10 @@ function ProductosPage() {
       const mapped: ProductoConCategoria[] = (prods ?? []).map((p: ProductoRow) => ({
         ...p,
         // Si el producto aún tiene el tag histórico en memoria, mostrarlo normalizado
-        tags: p.tags?.map((t) =>
-          t === "flores_y_globos_para_sorprender" ? "globos_para_enamorar" : t
-        ) ?? [],
+        tags:
+          p.tags?.map((t) =>
+            t === "flores_y_globos_para_sorprender" ? "globos_para_enamorar" : t,
+          ) ?? [],
         categoria_nombre: p.categoria_id
           ? (catMap.get(p.categoria_id) ?? "Sin categoria")
           : "Sin categoria",
@@ -1048,7 +1045,10 @@ function ProductosPage() {
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       // Eliminar acentos para búsqueda flexible
-      const nameClean = producto.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const nameClean = producto.nombre
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
       const qClean = q.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       if (!nameClean.includes(qClean)) return false;
     }
@@ -1098,16 +1098,20 @@ function ProductosPage() {
     setSaving(true);
     const nombreProd = form.nombre.trim();
     try {
-      const { data, error } = await supabase.from("productos").insert({
-        nombre: nombreProd,
-        precio: parseFloat(form.precio),
-        descripcion: form.descripcion.trim() || null,
-        categoria_id: form.categoria_id || null,
-        tags: form.tags,
-        activo: form.activo,
-        imagenes: form.imagenes.filter(Boolean),
-        orden: 0,
-      }).select("id").single();
+      const { data, error } = await supabase
+        .from("productos")
+        .insert({
+          nombre: nombreProd,
+          precio: parseFloat(form.precio),
+          descripcion: form.descripcion.trim() || null,
+          categoria_id: form.categoria_id || null,
+          tags: form.tags,
+          activo: form.activo,
+          imagenes: form.imagenes.filter(Boolean),
+          orden: 0,
+        })
+        .select("id")
+        .single();
       if (error) throw error;
       setShowCreate(false);
       const newId = data?.id;
@@ -1570,7 +1574,10 @@ function ProductosPage() {
       <div className="md:hidden space-y-4">
         {loading ? (
           [1, 2, 3].map((n) => (
-            <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse flex gap-3">
+            <div
+              key={n}
+              className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse flex gap-3"
+            >
               <div className="w-20 h-20 bg-[#F5EFE6] rounded-md flex-shrink-0" />
               <div className="flex-1 space-y-2 py-1">
                 <div className="h-4 bg-[#F5EFE6] rounded w-3/4" />
@@ -1621,7 +1628,9 @@ function ProductosPage() {
                     <h3 className="font-body text-sm text-[#2C2420] font-semibold truncate">
                       {producto.nombre}
                     </h3>
-                    <p className="font-body text-xs text-[#8A7A6E] mt-0.5">{producto.categoria_nombre}</p>
+                    <p className="font-body text-xs text-[#8A7A6E] mt-0.5">
+                      {producto.categoria_nombre}
+                    </p>
                   </div>
                   <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                     <p className="font-body text-sm text-[#2C2420] font-bold">
@@ -1698,10 +1707,7 @@ function ProductosPage() {
         />
       )}
       {showBulkImport && (
-        <BulkImportModal
-          onClose={() => setShowBulkImport(false)}
-          onImportSuccess={cargarDatos}
-        />
+        <BulkImportModal onClose={() => setShowBulkImport(false)} onImportSuccess={cargarDatos} />
       )}
       {editando && (
         <ProductoForm

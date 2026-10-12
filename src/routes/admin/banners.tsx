@@ -59,9 +59,11 @@ async function subirImagen(file: File): Promise<string> {
 
   const ext = finalFile.name.split(".").pop() ?? "webp";
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const { error: uploadError } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, finalFile, { cacheControl: "31536000", contentType: finalFile.type, upsert: false });
+  const { error: uploadError } = await supabase.storage.from(BUCKET).upload(path, finalFile, {
+    cacheControl: "31536000",
+    contentType: finalFile.type,
+    upsert: false,
+  });
 
   if (uploadError) throw new Error(`Upload: ${uploadError.message}`);
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
@@ -736,7 +738,10 @@ function BannersPage() {
       <div className="md:hidden mt-4 space-y-4">
         {loading ? (
           [1, 2, 3].map((n) => (
-            <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3">
+            <div
+              key={n}
+              className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3"
+            >
               <div className="aspect-[2560/960] bg-[#F5EFE6] rounded" />
               <div className="h-4 bg-[#F5EFE6] rounded w-3/4" />
               <div className="h-3 bg-[#F5EFE6] rounded w-1/2" />
@@ -752,7 +757,10 @@ function BannersPage() {
             const isLast = idx === banners.length - 1;
 
             return (
-              <div key={ban.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
+              <div
+                key={ban.id}
+                className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3"
+              >
                 {/* Imagen Preview */}
                 <div className="w-full aspect-[2560/960] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0]/50 rounded-sm">
                   {ban.imagen_url ? (
@@ -772,7 +780,9 @@ function BannersPage() {
                 {/* Contenido */}
                 <div>
                   <h3 className="font-body text-sm font-semibold text-[#2C2420]">
-                    {ban.titulo ?? <span className="font-normal italic text-[#8A7A6E]">Sin título</span>}
+                    {ban.titulo ?? (
+                      <span className="font-normal italic text-[#8A7A6E]">Sin título</span>
+                    )}
                   </h3>
                   {ban.subtexto && (
                     <p className="font-body text-xs text-[#8A7A6E] mt-1 line-clamp-2">
@@ -824,7 +834,10 @@ function BannersPage() {
                         className="transition-colors disabled:opacity-50"
                       >
                         {togglingId === ban.id ? (
-                          <Loader2 className="h-5 w-5 text-[#C4956A] animate-spin" strokeWidth={1.5} />
+                          <Loader2
+                            className="h-5 w-5 text-[#C4956A] animate-spin"
+                            strokeWidth={1.5}
+                          />
                         ) : ban.activo ? (
                           <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
                         ) : (

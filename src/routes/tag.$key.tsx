@@ -44,7 +44,7 @@ export const Route = createFileRoute("/tag/$key")({
   errorComponent: ({ error }) => (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center bg-[#FDFAF6]">
       <h1 className="font-display text-3xl mb-2 text-[#2C2420]">Algo salió mal</h1>
-      <p className="text-[#8A7A6E]">{error.message}</p>
+      <p className="text-[#8A7A6E]">{error instanceof Error ? error.message : String(error)}</p>
     </div>
   ),
   component: TagPage,

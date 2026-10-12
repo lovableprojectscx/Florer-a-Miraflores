@@ -49,9 +49,9 @@
   --ivory: oklch(0.998 0 0); /* #FFFFFF */
   --ivory-soft: oklch(0.985 0.003 70); /* #FAF8F6 - Contraste suave y clarito para secciones */
   --foreground: oklch(0.18 0 0); /* #1A1A1A */
-  --card: oklch(1.0 0 0); /* Blanco puro para cards */
+  --card: oklch(1 0 0); /* Blanco puro para cards */
   --card-foreground: oklch(0.18 0 0);
-  --popover: oklch(1.0 0 0);
+  --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0 0);
   --primary: oklch(0.18 0 0);
   --primary-foreground: oklch(0.998 0 0);
@@ -171,8 +171,8 @@
   }
 
   .scrollbar-none {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */

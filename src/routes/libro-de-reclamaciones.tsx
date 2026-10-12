@@ -56,7 +56,9 @@ function LibroReclamaciones() {
     if (!data) return;
     const printWindow = window.open("", "_blank");
     if (!printWindow) {
-      alert("Su reclamo fue registrado con éxito. Por favor habilite las ventanas emergentes (popups) en su navegador para imprimir o guardar su copia en PDF.");
+      alert(
+        "Su reclamo fue registrado con éxito. Por favor habilite las ventanas emergentes (popups) en su navegador para imprimir o guardar su copia en PDF.",
+      );
       return;
     }
 
@@ -107,12 +109,16 @@ function LibroReclamaciones() {
             <div class="info-label">Domicilio</div>
             <div class="info-value">${data.domicilio || "—"}</div>
           </div>
-          ${data.tutor ? `
+          ${
+            data.tutor
+              ? `
           <div class="info-item full-width">
             <div class="info-label">Padre / Madre o Tutor (si es menor de edad)</div>
             <div class="info-value">${data.tutor}</div>
           </div>
-          ` : ""}
+          `
+              : ""
+          }
         </div>
         
         <div class="section-title">2. Identificación del bien contratado</div>
@@ -432,13 +438,12 @@ no mayor a quince (15) días hábiles improrrogables.
       setTimeout(() => {
         printPDF(newClaim);
       }, 200);
-
     } catch (err) {
       console.error(err);
       setError(
         err instanceof Error
           ? err.message
-          : "Error al registrar el reclamo. Por favor intente nuevamente."
+          : "Error al registrar el reclamo. Por favor intente nuevamente.",
       );
     } finally {
       setSubmitting(false);
@@ -505,13 +510,16 @@ no mayor a quince (15) días hábiles improrrogables.
                 </h2>
                 <p className="mt-2 font-body text-sm text-muted-foreground">
                   Se ha generado y guardado la{" "}
-                  <strong>Hoja de Reclamación N° {String(claimData.numero).padStart(6, "0")}</strong>
+                  <strong>
+                    Hoja de Reclamación N° {String(claimData.numero).padStart(6, "0")}
+                  </strong>
                 </p>
 
                 <p className="mt-4 font-body font-light text-sm text-foreground/75 leading-relaxed">
-                  El reclamo ha sido guardado de forma segura en nuestro sistema y la descarga del PDF oficial 
-                  (con la <strong>Copia del Consumidor</strong> y la <strong>Copia del Establecimiento</strong>) se ha iniciado automáticamente.
-                  Si no se abrió la ventana de descarga, por favor usa el botón de abajo.
+                  El reclamo ha sido guardado de forma segura en nuestro sistema y la descarga del
+                  PDF oficial (con la <strong>Copia del Consumidor</strong> y la{" "}
+                  <strong>Copia del Establecimiento</strong>) se ha iniciado automáticamente. Si no
+                  se abrió la ventana de descarga, por favor usa el botón de abajo.
                 </p>
 
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
@@ -558,11 +566,7 @@ no mayor a quince (15) días hábiles improrrogables.
                 <Fieldset title="2. Identificación del bien contratado">
                   <Radio name="tipo" options={["Producto", "Servicio"]} />
                   <Field label="Monto reclamado (S/.)" name="monto" type="number" />
-                  <Field
-                    label="Descripción del producto o servicio"
-                    name="descripcion"
-                    textarea
-                  />
+                  <Field label="Descripción del producto o servicio" name="descripcion" textarea />
                 </Fieldset>
 
                 <Fieldset title="3. Detalle de la reclamación">

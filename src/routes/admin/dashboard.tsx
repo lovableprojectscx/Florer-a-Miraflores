@@ -205,7 +205,10 @@ function DashboardPage() {
         ) : (
           <div className="divide-y divide-[#E8DDD0]">
             {recientes.map((p) => (
-              <div key={p.id} className="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+              <div
+                key={p.id}
+                className="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4"
+              >
                 <div className="flex items-center justify-between sm:justify-start gap-4 sm:w-28 sm:flex-shrink-0">
                   <p className="font-body text-sm text-[#2C2420] font-medium">
                     {p.numero ?? `#${p.id.slice(0, 8)}`}
@@ -220,7 +223,9 @@ function DashboardPage() {
                   <p className="font-body text-sm text-[#2C2420] truncate">
                     {p.nombre_cliente ?? "-"}
                   </p>
-                  <p className="font-body text-xs text-[#8A7A6E] mt-0.5 sm:mt-0">{formatFecha(p.created_at)}</p>
+                  <p className="font-body text-xs text-[#8A7A6E] mt-0.5 sm:mt-0">
+                    {formatFecha(p.created_at)}
+                  </p>
                 </div>
                 <div className="flex items-center justify-between sm:justify-end gap-4 sm:flex-shrink-0">
                   <p className="font-body text-sm text-[#2C2420] font-medium">

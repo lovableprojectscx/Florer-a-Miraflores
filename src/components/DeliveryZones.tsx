@@ -13,10 +13,7 @@ const ZONES = [
 
 export function DeliveryZones() {
   return (
-    <section
-      id="delivery"
-      className="px-5 md:px-12 lg:px-16 py-16 md:py-24 bg-[#FAF8F5]/60"
-    >
+    <section id="delivery" className="px-5 md:px-12 lg:px-16 py-16 md:py-24 bg-[#FAF8F5]/60">
       <div className="max-w-[1536px] mx-auto">
         {/* Encabezado */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
@@ -28,7 +25,8 @@ export function DeliveryZones() {
               Delivery el mismo día en Lima.
             </h2>
             <p className="mt-4 md:mt-6 font-body font-light text-[#2C2420]/75 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg">
-              Cada arreglo viaja en condiciones especiales de hidratación y cuidado para preservar su frescura intacta. Realiza tu pedido antes de las 5:00 p.m. y llegará ese mismo día.
+              Cada arreglo viaja en condiciones especiales de hidratación y cuidado para preservar
+              su frescura intacta. Realiza tu pedido antes de las 5:00 p.m. y llegará ese mismo día.
             </p>
 
             {/* Íconos informativos */}
@@ -41,7 +39,9 @@ export function DeliveryZones() {
                   <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
                     Entrega
                   </p>
-                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">Mismo día</p>
+                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">
+                    Mismo día
+                  </p>
                 </div>
               </div>
 
@@ -53,7 +53,9 @@ export function DeliveryZones() {
                   <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
                     Hora límite
                   </p>
-                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">Antes de las 5 p.m.</p>
+                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">
+                    Antes de las 5 p.m.
+                  </p>
                 </div>
               </div>
 
@@ -65,7 +67,9 @@ export function DeliveryZones() {
                   <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
                     Cobertura
                   </p>
-                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">Lima y Callao</p>
+                  <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">
+                    Lima y Callao
+                  </p>
                 </div>
               </div>
             </div>

@@ -105,7 +105,8 @@ export function ProductFiltersBar({
   return (
     <div className="mb-8 md:mb-12 border-y border-[#E8DDD0]/70 py-4 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
       <p className="font-body font-light text-xs md:text-sm text-[#8A7A6E] sm:pb-2.5 tracking-wide">
-        Mostrando <span className="font-medium text-[#2C2420]">{total}</span> producto{total !== 1 ? "s" : ""}
+        Mostrando <span className="font-medium text-[#2C2420]">{total}</span> producto
+        {total !== 1 ? "s" : ""}
       </p>
       <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-end gap-3 sm:gap-4">
         {children}

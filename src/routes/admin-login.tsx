@@ -21,13 +21,17 @@ function AdminLoginPage() {
 
   // Si ya hay sesión activa → ir al dashboard
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
-      if (session) {
-        navigate({ to: "/admin/dashboard" });
-      } else {
-        setChecking(false);
-      }
-    });
+    supabase.auth
+      .getSession()
+      .then(
+        ({ data: { session } }: { data: { session: { user?: { email?: string } } | null } }) => {
+          if (session) {
+            navigate({ to: "/admin/dashboard" });
+          } else {
+            setChecking(false);
+          }
+        },
+      );
   }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {

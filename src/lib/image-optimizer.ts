@@ -2,11 +2,15 @@
  * Convierte un archivo de imagen (jpg, jpeg, png, etc.) a formato WebP
  * utilizando el Canvas del navegador de forma cliente-side.
  * Mantiene una alta calidad visual pero reduce drásticamente el tamaño del archivo.
- * 
+ *
  * @param file El archivo original (File)
  * @param quality Calidad del WebP resultante (de 0.0 a 1.0). Por defecto 0.88 para calidad premium.
  */
-export async function convertToWebP(file: File, quality = 0.92, maxDimension = 2000): Promise<File> {
+export async function convertToWebP(
+  file: File,
+  quality = 0.92,
+  maxDimension = 2000,
+): Promise<File> {
   // Si no es un formato de imagen estándar, retornamos el archivo tal cual
   if (!file.type.startsWith("image/")) {
     return file;
@@ -19,7 +23,7 @@ export async function convertToWebP(file: File, quality = 0.92, maxDimension = 2
       img.onload = () => {
         try {
           const canvas = document.createElement("canvas");
-          
+
           // Redimensionar si supera el límite especificado (manteniendo la relación de aspecto)
           let width = img.width;
           let height = img.height;
@@ -34,7 +38,7 @@ export async function convertToWebP(file: File, quality = 0.92, maxDimension = 2
           }
           canvas.width = width;
           canvas.height = height;
-          
+
           const ctx = canvas.getContext("2d");
           if (!ctx) {
             console.warn("No se pudo obtener el contexto 2D del Canvas, usando archivo original.");
@@ -56,7 +60,8 @@ export async function convertToWebP(file: File, quality = 0.92, maxDimension = 2
 
               // Crear el nuevo nombre del archivo reemplazando la extensión por .webp
               const originalName = file.name;
-              const baseName = originalName.substring(0, originalName.lastIndexOf(".")) || originalName;
+              const baseName =
+                originalName.substring(0, originalName.lastIndexOf(".")) || originalName;
               const newName = `${baseName}.webp`;
 
               const optimizedFile = new File([blob], newName, {
@@ -66,7 +71,7 @@ export async function convertToWebP(file: File, quality = 0.92, maxDimension = 2
               resolve(optimizedFile);
             },
             "image/webp",
-            quality
+            quality,
           );
         } catch (error) {
           console.error("Error durante la conversión a WebP, usando original:", error);

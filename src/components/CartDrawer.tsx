@@ -89,7 +89,8 @@ export function CartDrawer() {
                       {item.nombre}
                     </p>
                     <p className="font-body font-semibold text-xs sm:text-sm text-[#2C2420] mt-0.5">
-                      S/. {item.precio.toFixed(2)} <span className="text-[10px] font-normal text-[#8A7A6E]">PEN</span>
+                      S/. {item.precio.toFixed(2)}{" "}
+                      <span className="text-[10px] font-normal text-[#8A7A6E]">PEN</span>
                     </p>
 
                     {/* Selector de cantidad */}
@@ -134,9 +135,12 @@ export function CartDrawer() {
             {/* Footer */}
             <div className="border-t border-[#E8DDD0] px-6 py-5 space-y-3 bg-[#FAF8F5]/40">
               <div className="flex justify-between items-center">
-                <span className="font-body text-xs uppercase tracking-wider text-[#8A7A6E]">Subtotal estimado</span>
+                <span className="font-body text-xs uppercase tracking-wider text-[#8A7A6E]">
+                  Subtotal estimado
+                </span>
                 <span className="font-body text-lg font-semibold text-[#2C2420]">
-                  S/. {subtotal.toFixed(2)} <span className="text-xs font-normal text-[#8A7A6E]">PEN</span>
+                  S/. {subtotal.toFixed(2)}{" "}
+                  <span className="text-xs font-normal text-[#8A7A6E]">PEN</span>
                 </span>
               </div>
               <p className="font-body font-light text-xs text-[#8A7A6E] leading-relaxed">

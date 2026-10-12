@@ -13,8 +13,8 @@ export function slugify(text: string): string {
     .replace(/[\u0300-\u036f]/g, "") // remove accent marks
     .replace(/ñ/g, "n")
     .replace(/\s+/g, "-") // replace spaces with -
-    .replace(/[^\w\-]+/g, "") // remove all non-word chars except hyphen
-    .replace(/\-\-+/g, "-") // replace multiple - with single -
+    .replace(/[^\w-]+/g, "") // remove all non-word chars except hyphen
+    .replace(/--+/g, "-") // replace multiple - with single -
     .replace(/^-+/, "") // trim - from start
     .replace(/-+$/, ""); // trim - from end
 }

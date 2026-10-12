@@ -97,9 +97,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
     e.stopPropagation();
     const productSlug = `${slugify(producto.nombre)}-${producto.id}`;
     const shareUrl =
-      typeof window !== "undefined"
-        ? `${window.location.origin}/producto/${productSlug}`
-        : "";
+      typeof window !== "undefined" ? `${window.location.origin}/producto/${productSlug}` : "";
 
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
@@ -109,8 +107,8 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
           url: shareUrl,
         });
         return;
-      } catch (err: any) {
-        if (err?.name === "AbortError") return;
+      } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") return;
       }
     }
 
@@ -247,7 +245,9 @@ function TagSection({ tag, productos }: TagSeccion) {
             className="inline-flex items-center text-xs sm:text-sm text-[#3E3834] hover:text-[#1E1E1D] font-normal transition-colors group/link"
           >
             <span>Reserva tu favorito</span>
-            <span className="ml-1 text-[13px] group-hover/link:translate-x-0.5 transition-transform">›</span>
+            <span className="ml-1 text-[13px] group-hover/link:translate-x-0.5 transition-transform">
+              ›
+            </span>
           </Link>
         </div>
       </div>
@@ -305,9 +305,7 @@ function TagSection({ tag, productos }: TagSeccion) {
 
 export function Novedades({ tagSecciones }: Props) {
   const secciones: TagSeccion[] =
-    tagSecciones.length > 0
-      ? tagSecciones
-      : [{ tag: FALLBACK_TAG, productos: FALLBACK_PRODUCTOS }];
+    tagSecciones.length > 0 ? tagSecciones : [{ tag: FALLBACK_TAG, productos: FALLBACK_PRODUCTOS }];
 
   const seccionesConProductos = secciones.filter((s) => s.productos.length > 0);
 

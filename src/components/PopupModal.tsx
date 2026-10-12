@@ -152,9 +152,11 @@ export function PopupModal({ popup, config }: Props) {
   };
 
   const floristPhone = (config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "");
-  const userPhone = phone || (typeof window !== "undefined" ? localStorage.getItem(SUBSCRIBER_PHONE_KEY) ?? "" : "");
+  const userPhone =
+    phone ||
+    (typeof window !== "undefined" ? (localStorage.getItem(SUBSCRIBER_PHONE_KEY) ?? "") : "");
   const waMessage = encodeURIComponent(
-    `¡Hola Florería Miraflores! Me acabo de suscribir con mi celular ${userPhone ? `+51 ${userPhone}` : ""} y deseo activar mi cupón de descuento ${COUPON_CODE} 🌸`
+    `¡Hola Florería Miraflores! Me acabo de suscribir con mi celular ${userPhone ? `+51 ${userPhone}` : ""} y deseo activar mi cupón de descuento ${COUPON_CODE} 🌸`,
   );
   const waUrl = `https://wa.me/${floristPhone}?text=${waMessage}`;
 

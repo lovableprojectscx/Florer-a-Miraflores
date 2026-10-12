@@ -125,19 +125,21 @@ export type ColeccionHomeUpdate = Partial<ColeccionHomeInsert>;
 
 /** Colección con el nombre y slug de la categoría asociada (join) */
 export interface ColeccionConCategoria extends ColeccionHomeRow {
-  categoria: Pick<CategoriaRow, "id" | "nombre" | "slug" | "imagen_url" | "parent_id"> & {
-    padre?: Pick<CategoriaRow, "slug"> | null;
-  } | null;
+  categoria:
+    | (Pick<CategoriaRow, "id" | "nombre" | "slug" | "imagen_url" | "parent_id"> & {
+        padre?: Pick<CategoriaRow, "slug"> | null;
+      })
+    | null;
 }
 
 // ─── tags ─────────────────────────────────────────────────────────────────────
 
 export interface TagRow {
   id: string;
-  clave: string;           // 'novedad', 'mas_vendido', etc.
-  nombre: string;          // 'Lanzamientos especiales'
+  clave: string; // 'novedad', 'mas_vendido', etc.
+  nombre: string; // 'Lanzamientos especiales'
   descripcion: string | null;
-  color_badge: string;     // color HEX del badge en la card
+  color_badge: string; // color HEX del badge en la card
   orden: number;
   activo: boolean;
   mostrar_en_home: boolean;
@@ -179,12 +181,7 @@ export type DistritoUpdate = Partial<DistritoInsert>;
  * "pagado" y "cancelado" son estados auxiliares (IZIPay / gestion interna).
  */
 export type EstadoPedido =
-  | "pendiente"
-  | "pagado"
-  | "en_preparacion"
-  | "en_camino"
-  | "entregado"
-  | "cancelado";
+  "pendiente" | "pagado" | "en_preparacion" | "en_camino" | "entregado" | "cancelado";
 
 export interface PedidoProducto {
   id: string;
@@ -292,8 +289,8 @@ export interface Database {
         Relationships: [];
       };
     };
-    Views: {};
-    Functions: {};
-    Enums: {};
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
   };
 }

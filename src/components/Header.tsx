@@ -97,7 +97,10 @@ export function Header({ categorias, config }: Props) {
             onClick={() => setSearchOpen(true)}
             className="hidden lg:inline-flex items-center gap-2 p-2 -ml-2 text-[#2C2420]/80 hover:text-[#2C2420] hover:opacity-80 transition-all cursor-pointer group"
           >
-            <Search className="h-5 w-5 text-[#2C2420]/70 group-hover:text-[#2C2420]" strokeWidth={1.25} />
+            <Search
+              className="h-5 w-5 text-[#2C2420]/70 group-hover:text-[#2C2420]"
+              strokeWidth={1.25}
+            />
             <span className="text-[11px] tracking-widest uppercase font-body font-light text-[#2C2420]/70 group-hover:text-[#2C2420]">
               Buscar
             </span>
@@ -178,7 +181,9 @@ export function Header({ categorias, config }: Props) {
                   activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
                 >
                   {c.nombre}
-                  {hasSub && <ChevronDown className="h-2.5 w-2.5 xl:h-3 xl:w-3 opacity-60 group-hover:opacity-100 transition-opacity" />}
+                  {hasSub && (
+                    <ChevronDown className="h-2.5 w-2.5 xl:h-3 xl:w-3 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  )}
                 </Link>
 
                 {/* Dropdown for subcategories */}

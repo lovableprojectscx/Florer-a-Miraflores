@@ -85,7 +85,9 @@ function DetalleModal({ claim, onClose }: DetalleModalProps) {
   const printPDF = () => {
     const printWindow = window.open("", "_blank");
     if (!printWindow) {
-      alert("Por favor habilite las ventanas emergentes (popups) en su navegador para imprimir o guardar.");
+      alert(
+        "Por favor habilite las ventanas emergentes (popups) en su navegador para imprimir o guardar.",
+      );
       return;
     }
 
@@ -139,12 +141,16 @@ function DetalleModal({ claim, onClose }: DetalleModalProps) {
             <div class="info-label">Domicilio</div>
             <div class="info-value">${claim.domicilio || "—"}</div>
           </div>
-          ${claim.tutor ? `
+          ${
+            claim.tutor
+              ? `
           <div class="info-item full-width">
             <div class="info-label">Padre / Madre o Tutor (si es menor de edad)</div>
             <div class="info-value">${claim.tutor}</div>
           </div>
-          ` : ""}
+          `
+              : ""
+          }
         </div>
         
         <div class="section-title">2. Identificación del bien contratado</div>
@@ -374,28 +380,40 @@ function DetalleModal({ claim, onClose }: DetalleModalProps) {
             </p>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2.5">
               <div className="col-span-2">
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Nombre completo</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Nombre completo
+                </p>
                 <p className="font-body text-sm text-[#2C2420] font-medium">{claim.nombre}</p>
               </div>
               <div>
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">DNI / CE</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  DNI / CE
+                </p>
                 <p className="font-body text-sm text-[#2C2420]">{claim.documento}</p>
               </div>
               <div>
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Teléfono</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Teléfono
+                </p>
                 <p className="font-body text-sm text-[#2C2420]">{claim.telefono}</p>
               </div>
               <div className="col-span-2">
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Correo electrónico</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Correo electrónico
+                </p>
                 <p className="font-body text-sm text-[#2C2420]">{claim.email}</p>
               </div>
               <div className="col-span-2">
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Domicilio</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Domicilio
+                </p>
                 <p className="font-body text-sm text-[#2C2420]">{claim.domicilio || "—"}</p>
               </div>
               {claim.tutor && (
                 <div className="col-span-2">
-                  <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Tutor / Apoderado</p>
+                  <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                    Tutor / Apoderado
+                  </p>
                   <p className="font-body text-sm text-[#2C2420]">{claim.tutor}</p>
                 </div>
               )}
@@ -409,17 +427,23 @@ function DetalleModal({ claim, onClose }: DetalleModalProps) {
             </p>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2.5">
               <div>
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Tipo de bien</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Tipo de bien
+                </p>
                 <p className="font-body text-sm text-[#2C2420]">{claim.tipo}</p>
               </div>
               <div>
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Monto reclamado</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Monto reclamado
+                </p>
                 <p className="font-body text-sm text-[#2C2420] font-medium">
                   {claim.monto ? `S/. ${claim.monto.toFixed(2)}` : "—"}
                 </p>
               </div>
               <div className="col-span-2">
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Descripción del bien</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Descripción del bien
+                </p>
                 <p className="font-body text-sm text-[#2C2420] bg-[#FDFAF6] border border-[#E8DDD0] p-3 whitespace-pre-wrap mt-1">
                   {claim.descripcion || "—"}
                 </p>
@@ -434,17 +458,23 @@ function DetalleModal({ claim, onClose }: DetalleModalProps) {
             </p>
             <div className="space-y-3">
               <div>
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Acción ejecutada</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Acción ejecutada
+                </p>
                 <p className="font-body text-sm text-[#2C2420] font-medium">{claim.motivo}</p>
               </div>
               <div>
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Detalle del Reclamo o Queja</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Detalle del Reclamo o Queja
+                </p>
                 <p className="font-body text-sm text-[#2C2420] bg-[#FDFAF6] border border-[#E8DDD0] p-3 whitespace-pre-wrap mt-1">
                   {claim.detalle}
                 </p>
               </div>
               <div>
-                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">Pedido concreto del Consumidor</p>
+                <p className="font-body text-[10px] uppercase tracking-wider text-[#8A7A6E]">
+                  Pedido concreto del Consumidor
+                </p>
                 <p className="font-body text-sm text-[#2C2420] bg-[#FDFAF6] border border-[#E8DDD0] p-3 whitespace-pre-wrap mt-1">
                   {claim.pedido}
                 </p>
@@ -521,7 +551,8 @@ function ReclamacionesPage() {
           <div>
             <h1 className="font-display text-3xl text-[#2C2420]">Libro de Reclamaciones</h1>
             <p className="font-body text-sm text-[#8A7A6E] mt-1">
-              Gestiona y visualiza las quejas o reclamos presentados por tus clientes ({claims.length} en total)
+              Gestiona y visualiza las quejas o reclamos presentados por tus clientes (
+              {claims.length} en total)
             </p>
           </div>
         </div>
@@ -590,7 +621,9 @@ function ReclamacionesPage() {
                     colSpan={7}
                     className="px-4 py-12 text-center font-body text-sm text-[#8A7A6E]"
                   >
-                    {search ? "No se encontraron reclamos con esos filtros." : "Aún no hay reclamaciones registradas."}
+                    {search
+                      ? "No se encontraron reclamos con esos filtros."
+                      : "Aún no hay reclamaciones registradas."}
                   </td>
                 </tr>
               ) : (
@@ -608,12 +641,8 @@ function ReclamacionesPage() {
                     <td className="px-4 py-3 font-body text-sm text-[#2C2420] font-medium">
                       {c.nombre}
                     </td>
-                    <td className="px-4 py-3 font-body text-sm text-[#8A7A6E]">
-                      {c.documento}
-                    </td>
-                    <td className="px-4 py-3 font-body text-sm text-[#8A7A6E]">
-                      {c.tipo}
-                    </td>
+                    <td className="px-4 py-3 font-body text-sm text-[#8A7A6E]">{c.documento}</td>
+                    <td className="px-4 py-3 font-body text-sm text-[#8A7A6E]">{c.tipo}</td>
                     <td className="px-4 py-3">
                       <span
                         className={`inline-flex px-2 py-0.5 text-[10px] font-body tracking-wider uppercase border ${
@@ -645,7 +674,10 @@ function ReclamacionesPage() {
         <div className="md:hidden space-y-4">
           {loading ? (
             [1, 2, 3].map((n) => (
-              <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3">
+              <div
+                key={n}
+                className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3"
+              >
                 <div className="flex justify-between">
                   <div className="h-4 bg-[#F5EFE6] rounded w-24" />
                   <div className="h-5 bg-[#F5EFE6] rounded-full w-16" />
@@ -656,11 +688,16 @@ function ReclamacionesPage() {
             ))
           ) : filtrados.length === 0 ? (
             <div className="bg-white border border-[#E8DDD0] p-8 text-center font-body text-sm text-[#8A7A6E] rounded-lg">
-              {search ? "No se encontraron reclamos con esos filtros." : "Aún no hay reclamaciones registradas."}
+              {search
+                ? "No se encontraron reclamos con esos filtros."
+                : "Aún no hay reclamaciones registradas."}
             </div>
           ) : (
             filtrados.map((c) => (
-              <div key={c.id} className="bg-white border border-[#E8DDD0] p-4 rounded-lg flex flex-col gap-3">
+              <div
+                key={c.id}
+                className="bg-white border border-[#E8DDD0] p-4 rounded-lg flex flex-col gap-3"
+              >
                 <div className="flex items-center justify-between">
                   <span className="font-body text-sm text-[#2C2420] font-semibold">
                     Hoja N° {String(c.numero).padStart(6, "0")}
@@ -686,7 +723,9 @@ function ReclamacionesPage() {
                   </div>
                   <div>
                     <span className="text-[#8A7A6E] block mb-0.5">Fecha:</span>
-                    <span className="text-[#2C2420] block">{new Date(c.fecha).toLocaleDateString("es-PE")}</span>
+                    <span className="text-[#2C2420] block">
+                      {new Date(c.fecha).toLocaleDateString("es-PE")}
+                    </span>
                   </div>
                   <div>
                     <span className="text-[#8A7A6E] block mb-0.5">Tipo Bien:</span>
@@ -709,9 +748,7 @@ function ReclamacionesPage() {
       </div>
 
       {/* Modal de Detalle */}
-      {detalle && (
-        <DetalleModal claim={detalle} onClose={() => setDetalle(null)} />
-      )}
+      {detalle && <DetalleModal claim={detalle} onClose={() => setDetalle(null)} />}
     </div>
   );
 }

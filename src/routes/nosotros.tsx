@@ -6,7 +6,14 @@ import { WhatsappFab } from "@/components/WhatsappFab";
 import { DeliveryZones } from "@/components/DeliveryZones";
 import { getCategorias, getConfig } from "@/lib/queries";
 import aboutImg from "@/assets/about-boutique.webp";
-import { Sparkles, HeartHandshake, Clock, ShieldCheck, ArrowRight, MessageCircle } from "lucide-react";
+import {
+  Sparkles,
+  HeartHandshake,
+  Clock,
+  ShieldCheck,
+  ArrowRight,
+  MessageCircle,
+} from "lucide-react";
 
 export const Route = createFileRoute("/nosotros")({
   loader: async () => {
@@ -66,7 +73,8 @@ function NosotrosPage() {
               Flores que hablan por ti.
             </h1>
             <p className="mt-4 font-body font-light text-sm sm:text-base md:text-lg text-[#2C2420]/75 max-w-2xl mx-auto leading-relaxed">
-              Boutique floral nacida en el corazón de Miraflores, dedicada a transformar momentos ordinarios en emociones imborrables a través del arte floral.
+              Boutique floral nacida en el corazón de Miraflores, dedicada a transformar momentos
+              ordinarios en emociones imborrables a través del arte floral.
             </p>
           </div>
         </section>
@@ -103,10 +111,14 @@ function NosotrosPage() {
                 </h2>
               </div>
               <p className="font-body font-light text-sm sm:text-base text-[#2C2420]/80 leading-relaxed">
-                En Florería Miraflores entendemos que regalar flores es un acto de profunda conexión personal. Por ello, seleccionamos personalmente cada tallo desde los mejores cultivos nacionales e importados antes de los primeros rayos de sol.
+                En Florería Miraflores entendemos que regalar flores es un acto de profunda conexión
+                personal. Por ello, seleccionamos personalmente cada tallo desde los mejores
+                cultivos nacionales e importados antes de los primeros rayos de sol.
               </p>
               <p className="font-body font-light text-sm sm:text-base text-[#2C2420]/80 leading-relaxed">
-                Cada uno de nuestros ramos, cajas de lujo y arreglos florales es concebido como una obra de autor: paletas cromáticas armónicas, envolturas de textura premium y follajes aromáticos que despiertan sensaciones únicas desde el primer instante.
+                Cada uno de nuestros ramos, cajas de lujo y arreglos florales es concebido como una
+                obra de autor: paletas cromáticas armónicas, envolturas de textura premium y
+                follajes aromáticos que despiertan sensaciones únicas desde el primer instante.
               </p>
 
               <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -152,7 +164,8 @@ function NosotrosPage() {
                   Frescura Insuperable
                 </h3>
                 <p className="font-body text-xs sm:text-sm text-[#736B63] font-light leading-relaxed">
-                  Tallos hidratados y seleccionados diariamente para garantizar la máxima longevidad y fragancia.
+                  Tallos hidratados y seleccionados diariamente para garantizar la máxima longevidad
+                  y fragancia.
                 </p>
               </div>
 
@@ -160,11 +173,10 @@ function NosotrosPage() {
                 <div className="w-12 h-12 mx-auto rounded-full bg-[#C4848A]/10 text-[#C4848A] flex items-center justify-center">
                   <HeartHandshake className="w-6 h-6" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-display text-lg text-[#2C2420] font-normal">
-                  Diseño de Autor
-                </h3>
+                <h3 className="font-display text-lg text-[#2C2420] font-normal">Diseño de Autor</h3>
                 <p className="font-body text-xs sm:text-sm text-[#736B63] font-light leading-relaxed">
-                  Composiciones creadas por expertos floristas con equilibrio visual, estética contemporánea y armonía.
+                  Composiciones creadas por expertos floristas con equilibrio visual, estética
+                  contemporánea y armonía.
                 </p>
               </div>
 
@@ -176,7 +188,8 @@ function NosotrosPage() {
                   Delivery el Mismo Día
                 </h3>
                 <p className="font-body text-xs sm:text-sm text-[#736B63] font-light leading-relaxed">
-                  Reparto puntual y dedicado en Miraflores, San Isidro, Surco, Barranco y los principales distritos de Lima.
+                  Reparto puntual y dedicado en Miraflores, San Isidro, Surco, Barranco y los
+                  principales distritos de Lima.
                 </p>
               </div>
 
@@ -188,7 +201,8 @@ function NosotrosPage() {
                   Garantía de Satisfacción
                 </h3>
                 <p className="font-body text-xs sm:text-sm text-[#736B63] font-light leading-relaxed">
-                  Cuidamos cada envío con dedicación absoluta para que tu regalo llegue impecable a su destino.
+                  Cuidamos cada envío con dedicación absoluta para que tu regalo llegue impecable a
+                  su destino.
                 </p>
               </div>
             </div>

@@ -17,7 +17,9 @@ export function WhatsappFab({ config }: Props) {
       {/* Speech bubble pill tag */}
       <div className="hidden sm:flex items-center gap-1.5 bg-white text-[#2C2420] text-xs font-body py-2 px-4 rounded-full shadow-lg border border-[#E8DDD0] transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
         <span className="font-light text-[#2C2420]/80">¿Necesitas ayuda?</span>
-        <span className="font-medium text-[#2C2420] underline decoration-[#2C2420]/30 underline-offset-2">Contáctanos</span>
+        <span className="font-medium text-[#2C2420] underline decoration-[#2C2420]/30 underline-offset-2">
+          Contáctanos
+        </span>
       </div>
 
       {/* WhatsApp circular button */}

@@ -478,7 +478,10 @@ function DistritosPage() {
       <div className="sm:hidden mt-4 space-y-4">
         {loading ? (
           [1, 2, 3].map((n) => (
-            <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded animate-pulse space-y-2">
+            <div
+              key={n}
+              className="bg-white border border-[#E8DDD0] p-4 rounded animate-pulse space-y-2"
+            >
               <div className="h-4 bg-[#F5EFE6] rounded w-1/2" />
               <div className="h-3 bg-[#F5EFE6] rounded w-1/3" />
             </div>
@@ -489,14 +492,18 @@ function DistritosPage() {
           </div>
         ) : (
           distritos.map((dist) => (
-            <div key={dist.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
+            <div
+              key={dist.id}
+              className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3"
+            >
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-body text-sm font-semibold text-[#2C2420]">
-                    {dist.nombre}
-                  </h3>
+                  <h3 className="font-body text-sm font-semibold text-[#2C2420]">{dist.nombre}</h3>
                   <p className="font-body text-xs text-[#8A7A6E] mt-1">
-                    Costo: <span className="text-[#2C2420] font-medium">S/ {Number(dist.precio_delivery).toFixed(2)}</span>
+                    Costo:{" "}
+                    <span className="text-[#2C2420] font-medium">
+                      S/ {Number(dist.precio_delivery).toFixed(2)}
+                    </span>
                   </p>
                 </div>
               </div>

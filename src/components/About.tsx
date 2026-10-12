@@ -14,7 +14,8 @@ export function About() {
           </h2>
           <p className="mt-4 md:mt-6 font-body font-light text-sm sm:text-base md:text-lg text-[#2C2420]/75 leading-relaxed max-w-xl">
             En Miraflores diseñamos arreglos únicos con flores de temporada, traídas frescas cada
-            mañana. Cada ramo es una pequeña carta de amor, pensada para emocionar y crear memorias inolvidables.
+            mañana. Cada ramo es una pequeña carta de amor, pensada para emocionar y crear memorias
+            inolvidables.
           </p>
 
           <ul className="mt-8 space-y-4">
@@ -27,7 +28,9 @@ export function About() {
                 <div className="w-5 h-5 rounded-full bg-[#FAF8F5] border border-[#E8DDD0] flex items-center justify-center text-[#2C2420] shrink-0 mt-0.5">
                   <Check className="w-3 h-3" strokeWidth={2} />
                 </div>
-                <span className="font-body font-light text-sm sm:text-base text-[#2C2420]/90">{t}</span>
+                <span className="font-body font-light text-sm sm:text-base text-[#2C2420]/90">
+                  {t}
+                </span>
               </li>
             ))}
           </ul>

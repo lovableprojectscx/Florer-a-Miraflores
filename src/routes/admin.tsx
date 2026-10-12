@@ -57,9 +57,13 @@ function AdminLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
-      setEmail(session?.user?.email ?? "");
-    });
+    supabase.auth
+      .getSession()
+      .then(
+        ({ data: { session } }: { data: { session: { user?: { email?: string } } | null } }) => {
+          setEmail(session?.user?.email ?? "");
+        },
+      );
   }, []);
 
   const handleLogout = async () => {
@@ -79,7 +83,11 @@ function AdminLayout() {
           >
             <Menu className="h-6 w-6" strokeWidth={1.5} />
           </button>
-          <img src={logoImg} alt="Miraflores Admin" className="h-10 w-auto object-contain invert brightness-200" />
+          <img
+            src={logoImg}
+            alt="Miraflores Admin"
+            className="h-10 w-auto object-contain invert brightness-200"
+          />
           <span className="text-[8px] tracking-widest uppercase font-body font-light text-white/50 bg-white/15 px-1.5 py-0.5 rounded ml-2">
             admin
           </span>
@@ -103,7 +111,11 @@ function AdminLayout() {
         {/* Logo */}
         <div className="px-6 py-7 border-b border-white/10 flex items-center justify-between">
           <div className="flex flex-col">
-            <img src={logoImg} alt="Miraflores Admin" className="h-11 w-auto object-contain invert brightness-200 self-start" />
+            <img
+              src={logoImg}
+              alt="Miraflores Admin"
+              className="h-11 w-auto object-contain invert brightness-200 self-start"
+            />
             <p className="mt-2 text-[9px] tracking-widest uppercase font-body font-light text-white/50">
               panel admin
             </p>

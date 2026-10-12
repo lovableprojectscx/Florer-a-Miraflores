@@ -45,7 +45,7 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
     supabase
       .from("tags")
       .select("*")
-      .then(({ data }: { data: any }) => {
+      .then(({ data }: { data: TagRow[] | null }) => {
         if (data) setTags(data);
       });
   }, []);
@@ -66,10 +66,12 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
               key={p.id}
               className="group flex flex-col w-full mx-auto bg-white border border-[#E8DDD0]/60 rounded-xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300"
             >
-              <Link to="/producto/$id" params={{ id: `${slugify(p.nombre)}-${p.id}` }} className="block">
-                <div
-                  className="relative overflow-hidden bg-[#FAF8F5] aspect-[3/4]"
-                >
+              <Link
+                to="/producto/$id"
+                params={{ id: `${slugify(p.nombre)}-${p.id}` }}
+                className="block"
+              >
+                <div className="relative overflow-hidden bg-[#FAF8F5] aspect-[3/4]">
                   {label && (
                     <span
                       className={`absolute top-3 left-3 z-10 px-2.5 py-1 text-[9px] tracking-widest uppercase font-body font-medium rounded-xs shadow-xs ${color ? "text-white" : fallbackClass}`}
@@ -99,7 +101,8 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
                     </h3>
                   </div>
                   <span className="font-body font-semibold text-[#2C2420] text-sm md:text-[15px] mt-2 block">
-                    S/. {p.precio.toFixed(2)} <span className="text-[10px] font-normal text-[#8A7A6E]">PEN</span>
+                    S/. {p.precio.toFixed(2)}{" "}
+                    <span className="text-[10px] font-normal text-[#8A7A6E]">PEN</span>
                   </span>
                 </div>
               </Link>
@@ -153,9 +156,7 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
               key={p.name}
               className="group flex flex-col w-full mx-auto bg-white border border-[#E8DDD0]/60 rounded-xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300"
             >
-              <div
-                className="relative overflow-hidden bg-ivory-soft aspect-[3/4]"
-              >
+              <div className="relative overflow-hidden bg-ivory-soft aspect-[3/4]">
                 <img
                   src={p.img}
                   alt=""
@@ -168,7 +169,9 @@ export function ProductGrid({ products: externalProducts, title }: ProductGridPr
                   <p className="font-body font-light text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-1">
                     Florería Miraflores
                   </p>
-                  <p className="font-display text-base text-foreground leading-tight line-clamp-1">{p.name}</p>
+                  <p className="font-display text-base text-foreground leading-tight line-clamp-1">
+                    {p.name}
+                  </p>
                 </div>
                 <p className="mt-2 font-body font-semibold text-[#2C2420] text-sm">
                   {p.price} <span className="text-[10px] font-normal text-[#8A7A6E]">PEN</span>

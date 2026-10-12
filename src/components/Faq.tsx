@@ -63,7 +63,9 @@ export function Faq() {
               Preguntas frecuentes.
             </h2>
             <p className="mt-4 md:mt-6 font-body font-light text-[#2C2420]/75 max-w-md text-sm sm:text-base leading-relaxed">
-              Descubra todo lo que necesita saber para asegurar una experiencia de compra impecable en nuestra boutique floral. Si requiere asistencia inmediata, nuestro equipo está siempre disponible por WhatsApp.
+              Descubra todo lo que necesita saber para asegurar una experiencia de compra impecable
+              en nuestra boutique floral. Si requiere asistencia inmediata, nuestro equipo está
+              siempre disponible por WhatsApp.
             </p>
           </div>
 

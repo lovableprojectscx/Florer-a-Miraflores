@@ -519,7 +519,10 @@ function PedidosPage() {
         <div className="md:hidden space-y-4">
           {loading ? (
             [1, 2, 3].map((n) => (
-              <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3">
+              <div
+                key={n}
+                className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-3"
+              >
                 <div className="flex justify-between">
                   <div className="h-4 bg-[#F5EFE6] rounded w-24" />
                   <div className="h-5 bg-[#F5EFE6] rounded-full w-16" />
@@ -536,7 +539,10 @@ function PedidosPage() {
             </div>
           ) : (
             filtrados.map((p) => (
-              <div key={p.id} className="bg-white border border-[#E8DDD0] p-4 rounded-lg flex flex-col gap-3">
+              <div
+                key={p.id}
+                className="bg-white border border-[#E8DDD0] p-4 rounded-lg flex flex-col gap-3"
+              >
                 <div className="flex items-center justify-between">
                   <span className="font-body text-sm text-[#2C2420] font-semibold">
                     {p.numero ?? `#${p.id.slice(0, 8)}`}
@@ -546,7 +552,9 @@ function PedidosPage() {
                 <div className="grid grid-cols-2 gap-2 text-xs font-body border-t border-[#F5EFE6] pt-3">
                   <div>
                     <span className="text-[#8A7A6E] block mb-0.5">Cliente:</span>
-                    <span className="text-[#2C2420] font-medium block truncate">{p.nombre_cliente ?? "-"}</span>
+                    <span className="text-[#2C2420] font-medium block truncate">
+                      {p.nombre_cliente ?? "-"}
+                    </span>
                   </div>
                   <div>
                     <span className="text-[#8A7A6E] block mb-0.5">Teléfono:</span>

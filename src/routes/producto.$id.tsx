@@ -42,7 +42,7 @@ export const Route = createFileRoute("/producto/$id")({
       supabase
         .from("tags")
         .select("*")
-        .then(({ data }: { data: any }) => (data ?? []) as TagRow[]),
+        .then(({ data }: { data: TagRow[] | null }) => data ?? []),
     ]);
 
     if (!product) throw redirect({ to: "/" });
@@ -102,7 +102,7 @@ export const Route = createFileRoute("/producto/$id")({
   errorComponent: ({ error }) => (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
       <h1 className="font-display text-3xl mb-2 text-[#2C2420]">Algo salió mal</h1>
-      <p className="text-[#8A7A6E]">{error.message}</p>
+      <p className="text-[#8A7A6E]">{error instanceof Error ? error.message : String(error)}</p>
     </div>
   ),
   component: ProductPage,
@@ -111,7 +111,8 @@ export const Route = createFileRoute("/producto/$id")({
 // ─── Página ───────────────────────────────────────────────────────────────────
 
 function ProductPage() {
-  const { product, relacionados, categorias, config, subcat, parentCat, tags } = Route.useLoaderData();
+  const { product, relacionados, categorias, config, subcat, parentCat, tags } =
+    Route.useLoaderData();
   const navigate = useNavigate();
   const { agregarItem, abrirCarrito } = useCartStore();
 
@@ -258,7 +259,8 @@ function ProductPage() {
               {product.nombre}
             </h1>
             <p className="mt-3 font-body text-2xl sm:text-3xl font-semibold text-[#2C2420]">
-              S/. {product.precio.toFixed(2)} <span className="text-sm font-normal text-[#8A7A6E]">PEN</span>
+              S/. {product.precio.toFixed(2)}{" "}
+              <span className="text-sm font-normal text-[#8A7A6E]">PEN</span>
             </p>
 
             <div className="my-6 border-t border-[#E8DDD0]/80" />
@@ -323,7 +325,8 @@ function ProductPage() {
                   Delivery el mismo día en Lima y Callao
                 </p>
                 <p className="font-body font-light text-xs text-[#8A7A6E] mt-0.5 leading-relaxed">
-                  Miraflores, San Isidro, Surco, Barranco, Lince y más distritos. Elige tu fecha y rango horario en el checkout.
+                  Miraflores, San Isidro, Surco, Barranco, Lince y más distritos. Elige tu fecha y
+                  rango horario en el checkout.
                 </p>
               </div>
             </div>

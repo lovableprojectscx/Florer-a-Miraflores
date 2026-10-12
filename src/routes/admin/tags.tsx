@@ -60,7 +60,11 @@ function AdminTags() {
         .from("tags")
         .update({ ...form })
         .eq("id", editId);
-      if (error) { setError(error.message); setSaving(false); return; }
+      if (error) {
+        setError(error.message);
+        setSaving(false);
+        return;
+      }
 
       // Si cambió la clave del tag, actualizar automáticamente los productos asociados
       if (tagAnterior && tagAnterior.clave !== form.clave) {
@@ -75,7 +79,7 @@ function AdminTags() {
               prods.map((p: { id: string; tags: string[] }) => {
                 const nuevosTags = p.tags.map((t) => (t === tagAnterior.clave ? form.clave : t));
                 return supabase.from("productos").update({ tags: nuevosTags }).eq("id", p.id);
-              })
+              }),
             );
           }
         } catch (syncErr) {
@@ -85,7 +89,11 @@ function AdminTags() {
     } else {
       const orden = tags.length > 0 ? Math.max(...tags.map((t) => t.orden)) + 1 : 1;
       const { error } = await supabase.from("tags").insert({ ...form, orden });
-      if (error) { setError(error.message); setSaving(false); return; }
+      if (error) {
+        setError(error.message);
+        setSaving(false);
+        return;
+      }
     }
 
     setSaving(false);
@@ -171,7 +179,11 @@ function AdminTags() {
         </div>
         {!showForm && (
           <button
-            onClick={() => { setShowForm(true); setEditId(null); setForm(EMPTY_FORM); }}
+            onClick={() => {
+              setShowForm(true);
+              setEditId(null);
+              setForm(EMPTY_FORM);
+            }}
             className="flex items-center gap-2 px-5 py-2.5 bg-[#2C2420] text-white font-body text-xs tracking-widest uppercase hover:bg-[#2C2420]/80 transition-colors self-start sm:self-auto"
           >
             <Plus className="h-4 w-4" /> Nuevo tag
@@ -414,13 +426,13 @@ function AdminTags() {
                 >
                   <Pencil className="h-4 w-4" strokeWidth={1.5} />
                 </button>
-                  <button
-                    onClick={() => setDeleteConfirm(tag.id)}
-                    className="p-2 text-[#8A7A6E] hover:text-red-500 transition-colors"
-                    aria-label="Eliminar"
-                  >
-                    <Trash2 className="h-4 w-4" strokeWidth={1.5} />
-                  </button>
+                <button
+                  onClick={() => setDeleteConfirm(tag.id)}
+                  className="p-2 text-[#8A7A6E] hover:text-red-500 transition-colors"
+                  aria-label="Eliminar"
+                >
+                  <Trash2 className="h-4 w-4" strokeWidth={1.5} />
+                </button>
               </div>
             </div>
           ))}

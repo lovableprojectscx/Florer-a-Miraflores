@@ -424,7 +424,10 @@ function OcasionesPage() {
         <div className="sm:hidden mt-4 space-y-4">
           {loading ? (
             [1, 2, 3].map((n) => (
-              <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-2">
+              <div
+                key={n}
+                className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-2"
+              >
                 <div className="h-4 bg-[#F5EFE6] rounded w-1/2" />
                 <div className="h-3 bg-[#F5EFE6] rounded w-1/3" />
               </div>
@@ -440,7 +443,10 @@ function OcasionesPage() {
               const label = detail ? detail.label.split(" / ")[0] : (oc.icono ?? "-");
 
               return (
-                <div key={oc.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
+                <div
+                  key={oc.id}
+                  className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3"
+                >
                   <div className="flex justify-between items-start">
                     <div className="flex items-center gap-2.5">
                       <div className="flex items-center justify-center h-8 w-8 rounded-sm bg-[#FDFAF6] border border-[#E8DDD0] text-[#C4956A]">
@@ -450,9 +456,7 @@ function OcasionesPage() {
                         <h3 className="font-body text-sm font-semibold text-[#2C2420]">
                           {oc.nombre}
                         </h3>
-                        <p className="font-body text-xs text-[#8A7A6E] mt-0.5">
-                          Icono: {label}
-                        </p>
+                        <p className="font-body text-xs text-[#8A7A6E] mt-0.5">Icono: {label}</p>
                       </div>
                     </div>
                   </div>

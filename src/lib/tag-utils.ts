@@ -6,7 +6,11 @@ import type { TagRow } from "@/types/database";
  */
 const TAG_ALIASES: Record<string, string[]> = {
   globos_para_enamorar: ["globos_para_enamorar", "flores_y_globos_para_sorprender", "globos"],
-  flores_y_globos_para_sorprender: ["globos_para_enamorar", "flores_y_globos_para_sorprender", "globos"],
+  flores_y_globos_para_sorprender: [
+    "globos_para_enamorar",
+    "flores_y_globos_para_sorprender",
+    "globos",
+  ],
   globos: ["globos_para_enamorar", "flores_y_globos_para_sorprender", "globos"],
 };
 
@@ -29,7 +33,7 @@ export function resolverClavesTag(clave: string): string[] {
  */
 export function findTagByClave(
   tags: TagRow[] | undefined | null,
-  clave: string | undefined | null
+  clave: string | undefined | null,
 ): TagRow | undefined {
   if (!tags || !clave) return undefined;
 
@@ -46,8 +50,7 @@ export function findTagByClave(
   const claveNorm = clave.toLowerCase().replace(/_/g, " ");
   return tags.find(
     (t) =>
-      t.nombre.toLowerCase() === claveNorm ||
-      t.clave.toLowerCase().includes(clave.toLowerCase())
+      t.nombre.toLowerCase() === claveNorm || t.clave.toLowerCase().includes(clave.toLowerCase()),
   );
 }
 
@@ -56,7 +59,7 @@ export function findTagByClave(
  */
 export function getTagBadgeInfo(
   tags: TagRow[] | undefined | null,
-  rawTag: string | undefined | null
+  rawTag: string | undefined | null,
 ): { label: string; color: string; tagObj?: TagRow } | null {
   if (!rawTag) return null;
 

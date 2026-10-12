@@ -164,7 +164,10 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
                 )}
 
                 {Array.from(hijasPorPadre.entries()).map(([padreId, { padreNombre, hijas }]) => (
-                  <optgroup key={padreId} label={`── SUBCATEGORÍAS DE ${padreNombre.toUpperCase()} ──`}>
+                  <optgroup
+                    key={padreId}
+                    label={`── SUBCATEGORÍAS DE ${padreNombre.toUpperCase()} ──`}
+                  >
                     {hijas.map((sub) => (
                       <option key={sub.id} value={sub.id}>
                         ↳ {sub.nombre} (de {padreNombre})
@@ -178,7 +181,10 @@ function AgregarModal({ categorias, colExistentes, onClose, onSave }: AgregarMod
           </div>
 
           <p className="font-body text-[11px] text-[#8A7A6E] leading-relaxed bg-[#FAF8F5] p-3 rounded border border-[#E8DDD0]/50">
-            ✓ <strong>Permite tanto categorías principales como subcategorías:</strong> Puedes elegir una categoría general (ej. <em>Arreglos Florales</em>) o una subcategoría específica (ej. <em>Girasoles</em>, <em>Cumpleaños</em>, <em>Coronas Fúnebres</em>). En el Home enlazará automáticamente a su página correspondiente.
+            ✓ <strong>Permite tanto categorías principales como subcategorías:</strong> Puedes
+            elegir una categoría general (ej. <em>Arreglos Florales</em>) o una subcategoría
+            específica (ej. <em>Girasoles</em>, <em>Cumpleaños</em>, <em>Coronas Fúnebres</em>). En
+            el Home enlazará automáticamente a su página correspondiente.
           </p>
         </div>
 
@@ -473,7 +479,10 @@ function ColeccionesHomePage() {
       <div className="sm:hidden mt-4 space-y-4">
         {loading ? (
           [1, 2, 3].map((n) => (
-            <div key={n} className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-2">
+            <div
+              key={n}
+              className="bg-white border border-[#E8DDD0] p-4 rounded-lg animate-pulse space-y-2"
+            >
               <div className="h-4 bg-[#F5EFE6] rounded w-1/2" />
               <div className="h-3 bg-[#F5EFE6] rounded w-1/3" />
             </div>
@@ -485,7 +494,10 @@ function ColeccionesHomePage() {
         ) : (
           colecciones.map((col, idx) => {
             return (
-              <div key={col.id} className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3">
+              <div
+                key={col.id}
+                className="bg-white border border-[#E8DDD0] p-4 rounded flex flex-col gap-3"
+              >
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-body text-sm font-semibold text-[#2C2420]">
@@ -535,7 +547,10 @@ function ColeccionesHomePage() {
                         className="transition-colors disabled:opacity-50"
                       >
                         {togglingId === col.id ? (
-                          <Loader2 className="h-5 w-5 text-[#C4956A] animate-spin flex-shrink-0 mx-auto" strokeWidth={1.5} />
+                          <Loader2
+                            className="h-5 w-5 text-[#C4956A] animate-spin flex-shrink-0 mx-auto"
+                            strokeWidth={1.5}
+                          />
                         ) : col.activo ? (
                           <ToggleRight className="h-6 w-6 text-[#C4956A]" strokeWidth={1.5} />
                         ) : (

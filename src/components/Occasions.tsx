@@ -54,7 +54,8 @@ export function Occasions({ ocasiones }: Props) {
             Flores para cada momento
           </h2>
           <p className="mt-3 font-body font-light text-[#2C2420]/70 text-sm md:text-base leading-relaxed">
-            Encuentra el arreglo perfecto diseñado para celebrar, agradecer o sorprender a quien más quieres.
+            Encuentra el arreglo perfecto diseñado para celebrar, agradecer o sorprender a quien más
+            quieres.
           </p>
         </div>
 
@@ -95,11 +96,7 @@ export function Occasions({ ocasiones }: Props) {
             }
 
             return (
-              <Link
-                key={item.id}
-                to="/catalogo"
-                className={cls}
-              >
+              <Link key={item.id} to="/catalogo" className={cls}>
                 {inner}
               </Link>
             );
