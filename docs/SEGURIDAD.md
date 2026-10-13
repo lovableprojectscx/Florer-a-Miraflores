@@ -95,3 +95,84 @@ En el Dashboard de Supabase (**Authentication → Providers → Email** / **User
 - **`npm run test:e2e` (`tests/e2e/admin.spec.ts`):**
   - Verifica que `/admin` sin sesión redirige a `/admin-login`.
   - Cuando se configuran `E2E_ADMIN_EMAIL` y `E2E_ADMIN_PASSWORD` en `.env.e2e.local`, inicia sesión con el administrador y recorre las 12 secciones del panel en modo solo lectura verificando que ninguna quede bloqueada antes ni después de aplicar `005-admin-rls.sql`.
+
+---
+
+## 6. Riesgo de Montos en Checkout y Mitigación (Fase 05)
+
+### 6.1. Descripción del Riesgo
+En la arquitectura actual de checkout:
+- Los valores de `subtotal`, `delivery` y `total` se calculan en el navegador del cliente (`src/routes/checkout.tsx` y `src/lib/queries.ts`).
+- La política RLS `pedidos.insert_public` permite la inserción anónima (`FOR INSERT TO anon, authenticated WITH CHECK (true)`).
+- Un usuario con conocimientos técnicos podría enviar una petición HTTP directa a la API REST de Supabase manipulando el payload con precios arbitrarios (por ejemplo, `total: 0.10` en un pedido de S/ 200).
+
+### 6.2. Mitigación Actual (Operativa / Manual)
+- Actualmente **no existe pasarela de cobro desatendido en vivo**: todo pedido se coordina manualmente vía WhatsApp (`+51 999 600 482`).
+- La persona encargada de la florería recibe la alerta del pedido en WhatsApp, revisa el detalle en el panel de administración (`/admin/pedidos`) y coteja el monto con el catálogo y la tarifa oficial del distrito antes de solicitar o confirmar la transferencia (Yape/Plin/bancaria).
+- Por lo tanto, el riesgo financiero está mitigado por la verificación humana previa al despacho.
+
+### 6.3. Propuesta Futura (Obligatoria antes de IZIPay / Cobro Online)
+Antes de activar cobros automáticos con tarjeta (IZIPay u otra pasarela), el backend **debe** recalcular y validar obligatoriamente los montos desde la fuente de verdad (tablas `productos` y `distritos`).
+
+Se plantean dos alternativas técnicas:
+1. **Opción A (Recomendada): Edge Function `crear-pedido`**  
+   El cliente envía solo `[{ id, cantidad }]` y `distrito_id`. Una Edge Function calcula precios, crea la sesión de pago con IZIPay e inserta el pedido con `service_role`. La política pública `insert_public` de `pedidos` se revoca.
+2. **Opción B (Nivel BD): Trigger `BEFORE INSERT` en `public.pedidos`**  
+   Recalcula automáticamente los montos y rechaza el insert si hay discrepancia.
+
+#### Borrador del Trigger en PostgreSQL (comentado, NO aplicar sin aprobación):
+```sql
+-- -- ==============================================================================
+-- -- BORRADOR DE TRIGGER PARA RECALCULAR / VALIDAR MONTOS EN PUBLIC.PEDIDOS
+-- -- (NO EJECUTAR HASTA APROBACIÓN DE FASE POST-LANZAMIENTO / IZIPAY)
+-- -- ==============================================================================
+--
+-- CREATE OR REPLACE FUNCTION public.validar_recalcular_pedido()
+-- RETURNS TRIGGER AS $$
+-- DECLARE
+--   item jsonb;
+--   precio_db numeric;
+--   subtotal_calculado numeric := 0;
+--   delivery_calculado numeric := 0;
+-- BEGIN
+--   -- 1. Recalcular subtotal sumando precios oficiales de cada producto en BD
+--   FOR item IN SELECT * FROM jsonb_array_elements(NEW.productos)
+--   LOOP
+--     SELECT precio INTO precio_db
+--     FROM public.productos
+--     WHERE id = (item->>'id')::uuid AND activo = true;
+--
+--     IF NOT FOUND THEN
+--       RAISE EXCEPTION 'Producto % no encontrado o inactivo', (item->>'id');
+--     END IF;
+--
+--     subtotal_calculado := subtotal_calculado + (precio_db * COALESCE((item->>'cantidad')::int, 1));
+--   END LOOP;
+--
+--   -- 2. Recalcular costo de delivery desde la tabla distritos
+--   IF NEW.distrito_id IS NOT NULL THEN
+--     SELECT precio_delivery INTO delivery_calculado
+--     FROM public.distritos
+--     WHERE id = NEW.distrito_id AND activo = true;
+--
+--     IF NOT FOUND THEN
+--       delivery_calculado := 0;
+--     END IF;
+--   END IF;
+--
+--   -- 3. Forzar los montos calculados por el servidor
+--   NEW.subtotal := subtotal_calculado;
+--   NEW.delivery := delivery_calculado;
+--   NEW.total    := subtotal_calculado + delivery_calculado;
+--
+--   RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
+--
+-- -- DROP TRIGGER IF EXISTS trg_validar_recalcular_pedido ON public.pedidos;
+-- -- CREATE TRIGGER trg_validar_recalcular_pedido
+-- --   BEFORE INSERT ON public.pedidos
+-- --   FOR EACH ROW
+-- --   EXECUTE FUNCTION public.validar_recalcular_pedido();
+```
+

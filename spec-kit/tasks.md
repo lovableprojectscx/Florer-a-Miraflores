@@ -11,7 +11,7 @@ Resumen priorizado. Detalle y notas en `../docs/PLAN-DE-TRABAJO.md`.
 - [x] ⚙️/🧑‍💻 **Arreglar "Nacimientos"** (no se refleja en la web): diagnosticado en Fase 02 y resuelto en Fase 03 (pasa a categoría padre con redirección de `/categoria/ocasion/nacimientos`, ocultamiento automático de categorías vacías y `docs/sql/003-nacimientos-padre.sql`).
 - [x] ⚙️ **Dividir "Nacimientos" en Niño y Niña** (`nacimientos-nino` y `nacimientos-nina` en `docs/sql/003-nacimientos-padre.sql` + guía en `docs/GUIA-PANEL-CATEGORIAS.md`).
 - [x] ⚙️ **"Tulipanes" no se refleja en Ramos/Arreglos**: selector agrupado `Padre › Hija` en `/admin/productos`, ocultamiento de subcategorías vacías y `docs/sql/004-tulipanes-reasignacion.sql` + guía para reasignar los 13 productos de Tulipanes padre.
-- [ ] 🧑‍💻 **Estado "En preparación"** en pedidos (hoy: pendiente, pagado, en camino, entregado, cancelado).
+- [x] 🧑‍💻 **Estado "En preparación"** en pedidos: verificado de punta a punta en Fase 05 (selector de 6 estados ordenados según flujo real de negocio, toast con feedback y tests E2E; verificado por MCP en BD que no había restricción CHECK bloqueante; `docs/sql/006-estado-en-preparacion.sql` listo por si a futuro se desea constraint explícito).
 
 ## P2 — Post-lanzamiento (no bloquea)
 
