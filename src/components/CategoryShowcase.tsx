@@ -119,19 +119,10 @@ export function CategoryShowcase({ colecciones }: Props) {
                   className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
                 />
 
-                {/* Gradiente dinámico según jerarquía */}
-                <div
-                  className={`absolute inset-0 transition-colors duration-500 ${
-                    isHero
-                      ? "bg-gradient-to-t from-black/85 via-black/35 to-black/10 group-hover:from-black/90"
-                      : "bg-gradient-to-t from-black/80 via-black/25 to-transparent group-hover:from-black/85"
-                  }`}
-                />
-
                 {/* Badge editorial superior para las primeras tarjetas */}
                 {isHero && (
                   <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
-                    <span className="px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-body font-medium text-white border border-white/30 shadow-xs">
+                    <span className="px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-body font-medium text-[#2C2420] border border-[#E8DDD0]/80 shadow-xs">
                       Colección Destacada
                     </span>
                   </div>
@@ -139,65 +130,52 @@ export function CategoryShowcase({ colecciones }: Props) {
 
                 {isVerticalSide && (
                   <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5">
-                    <span className="px-3 py-1 rounded-full bg-black/35 backdrop-blur-md text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body text-white/95 border border-white/20 shadow-xs">
+                    <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body font-medium text-[#2C2420] border border-[#E8DDD0]/80 shadow-xs">
                       Exclusivo
                     </span>
                   </div>
                 )}
 
-                {/* Contenido textual adaptado al tamaño */}
-                <div
-                  className={`absolute inset-0 flex flex-col justify-end text-white ${
-                    isHero
-                      ? "p-6 sm:p-8 lg:p-10"
-                      : isVerticalSide
-                        ? "p-5 sm:p-6 lg:p-8"
-                        : "p-4 sm:p-5"
-                  }`}
-                >
-                  <p
-                    className={`uppercase font-body font-light opacity-80 mb-1 ${
-                      isHero
-                        ? "text-[10px] sm:text-xs tracking-[0.22em]"
-                        : "text-[9px] sm:text-[10px] tracking-[0.2em]"
-                    }`}
-                  >
-                    {isHero ? "Edición de Autor" : "Colección"}
-                  </p>
-
-                  <h3
-                    className={`font-display font-normal leading-snug drop-shadow-sm ${
-                      isHero
-                        ? "text-2xl sm:text-3xl lg:text-4xl"
-                        : isVerticalSide
-                          ? "text-xl sm:text-2xl lg:text-3xl"
-                          : "text-base sm:text-lg lg:text-xl line-clamp-1"
-                    }`}
-                  >
-                    {cat.nombre}
-                  </h3>
-
-                  {isHero && (
-                    <p className="mt-2 font-body text-xs sm:text-sm text-white/85 font-light line-clamp-2 max-w-lg hidden sm:block">
-                      Diseños florales concebidos con armonía, sensibilidad y las rosas más frescas
-                      de la boutique.
-                    </p>
-                  )}
-
-                  <div className="mt-2.5 sm:mt-3 flex items-center">
-                    {isHero ? (
-                      <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#2C2420] text-xs font-body uppercase tracking-[0.16em] font-medium rounded-xl shadow-md group-hover:bg-[#FAF8F5] group-hover:translate-x-1 transition-all">
+                {/* Contenido textual en cápsula blanca limpia (sin sombreado oscuro en la foto) */}
+                {isHero ? (
+                  <div className="absolute inset-x-4 bottom-4 sm:inset-x-6 sm:bottom-6 p-4 sm:p-6 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E8DDD0]/60 shadow-sm flex flex-col justify-between sm:flex-row sm:items-center gap-3 transition-all duration-300 group-hover:shadow-md">
+                    <div>
+                      <p className="text-[10px] sm:text-xs tracking-[0.22em] uppercase font-body text-[#8A7A6E] font-medium mb-0.5">
+                        Edición de Autor
+                      </p>
+                      <h3 className="font-display font-normal text-xl sm:text-3xl text-[#2C2420] leading-tight">
+                        {cat.nombre}
+                      </h3>
+                      <p className="mt-1 font-body text-xs sm:text-sm text-[#2C2420]/75 font-light line-clamp-1 hidden md:block">
+                        Diseños florales concebidos con armonía, sensibilidad y las rosas más
+                        frescas.
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <span className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-[#2C2420] text-white text-xs font-body uppercase tracking-[0.16em] font-medium rounded-xl group-hover:bg-[#1a1513] transition-all">
                         <span>Explorar Colección</span>
                         <span className="transition-transform group-hover:translate-x-1">→</span>
                       </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs tracking-[0.16em] uppercase font-body font-light text-white/90 group-hover:text-white transition-all">
+                    </div>
+                  </div>
+                ) : (
+                  <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4 p-3 sm:p-4 bg-white/95 backdrop-blur-md rounded-xl border border-[#E8DDD0]/60 shadow-sm transition-all duration-300 group-hover:shadow-md flex flex-col justify-between">
+                    <div>
+                      <p className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body text-[#8A7A6E] font-medium mb-0.5">
+                        Colección
+                      </p>
+                      <h3 className="font-display font-normal text-sm sm:text-base lg:text-lg text-[#2C2420] leading-snug line-clamp-1">
+                        {cat.nombre}
+                      </h3>
+                    </div>
+                    <div className="mt-1.5 sm:mt-2 flex items-center">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] tracking-[0.16em] uppercase font-body font-medium text-[#2C2420]/80 group-hover:text-[#2C2420] transition-colors">
                         <span>Explorar</span>
                         <span className="transition-transform group-hover:translate-x-1">→</span>
                       </span>
-                    )}
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             );
 

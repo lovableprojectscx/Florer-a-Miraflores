@@ -1,40 +1,68 @@
-# PROMPT 07 — Página de reseñas y testimonios (P2, post-lanzamiento)
+# PROMPT 07 — Reseñas (opción D: reseñas reales de Google elegidas a mano)
 
-> Opción A del plan: testimonios curados, administrables desde el panel, + botón a Google. La API de Google Maps queda para después (P3).
+> Decisión de Jack (13-10-2026): reseñas reales copiadas a mano desde Google al admin + botón "Ver todas en Google".
+> NADA de scraping ni widgets externos. La API oficial de Google queda para más adelante.
+> Reglas del 00 vigentes (SQL: mostrar, esperar "SQL 007 aprobado por el revisor", ejecutar por MCP, pegar después).
 
----
+Rama: `fase-07-resenas` desde master actualizado.
 
-Rama: `fase-07-resenas`.
+## 0. Lectura previa (solo lectura, pega salidas crudas)
+- Estructura real de la tabla de configuración (`config` o como se llame): columnas y tipos.
+- Las policies actuales de una tabla de catálogo (ej. `banners`) para copiar EXACTAMENTE la condición de admin (`is_admin()`).
 
-## Alcance
+## 1. Base de datos — `docs/sql/007-testimonios.sql` (idempotente, con bloque de reversa comentado)
+Tabla `testimonios`:
+- `id uuid pk default gen_random_uuid()`
+- `nombre text not null` (como aparece en Google, ej. "María P.")
+- `texto text not null` (copiado TAL CUAL, sin editar)
+- `estrellas int not null check (estrellas between 1 and 5)`
+- `fecha date` (fecha de la reseña original)
+- `fuente text not null default 'google' check (fuente in ('google','whatsapp','facebook','directo'))`
+- `enlace_original text` (opcional)
+- `imagen_url text` (opcional: foto del arreglo entregado)
+- `destacado bool default false`, `orden int default 0`, `activo bool default true`, `created_at timestamptz default now()`
 
-- Ruta pública **`/resenas`** (y enlace en footer y, si Jack lo aprueba, en el menú): grilla de testimonios con foto (del cliente o del arreglo), nombre, distrito opcional, texto, estrellas 1–5, fecha. Destacados primero. Botón **"Ver nuestras reseñas en Google"** con el enlace que esté en `config` (nuevo campo `google_reviews_url`).
-- Sección opcional en el home con 3 testimonios destacados (detrás de un toggle en config, apagada por defecto).
-- Admin **`/admin/testimonios`**: CRUD completo con el mismo patrón que banners (upload a Storage en WebP con `src/lib/image-optimizer.ts`, toggle activo inline, destacar, reordenar con flechas ↑↓). Errores con toast.
+RLS: SELECT público solo `activo = true`; INSERT/UPDATE/DELETE solo `is_admin()` (misma forma que las demás tablas).
+Columnas nuevas en la tabla de configuración:
+- `google_reviews_url text`, `google_rating numeric(2,1)`, `google_reviews_count int`, `mostrar_resenas_home bool default false`.
+Bucket de Storage: reutiliza el existente que corresponda o crea `testimonios` con policies de escritura `is_admin()` (igual que `banners`). Dilo explícitamente.
 
-## Base de datos (lo corre Jack)
+## 2. Página pública `/resenas`
+- Encabezado: "Lo que dicen nuestros clientes" + resumen real desde config: "★ 4,9 · 120 reseñas en Google" (solo si google_rating y google_reviews_count tienen valor; si no, no se muestra nada inventado).
+- Botón "Ver todas en Google" → `google_reviews_url` (target _blank, rel noopener). Si está vacío, no se muestra.
+- Grilla de tarjetas: estrellas, texto (cortar a ~6 líneas con "Leer más"), nombre, fecha, icono pequeño de la fuente, foto si hay. Destacados primero, luego `orden`.
+- Estado vacío digno si hay 0.
+- Mismo estilo visual del sitio (tipografías, colores, bordes de las tarjetas de Novedades).
 
-`docs/sql/0XX-testimonios.sql`, idempotente y con reversa:
+## 3. Franja en el home
+- Debajo de las Colecciones: 3–6 reseñas destacadas en carrusel horizontal (mismo patrón borde a borde de Novedades) + enlace "Ver todas las reseñas" → `/resenas`.
+- Solo aparece si `mostrar_resenas_home = true` Y hay al menos 3 activas.
 
-- Tabla `testimonios` (`id`, `nombre`, `distrito`, `texto`, `estrellas int check 1..5`, `imagen_url`, `fecha date`, `destacado bool`, `orden int`, `activo bool`, `created_at`).
-- RLS: SELECT público solo `activo = true`; INSERT/UPDATE/DELETE solo admin, **con la misma condición de admin que usan las otras tablas** (cópiala de las policies existentes, no inventes otra).
-- Columna `google_reviews_url text` en `config`.
-- El front no puede romperse si la tabla todavía no existe: la sección se oculta y el admin muestra "Falta correr el SQL de testimonios".
+## 4. Enlaces
+- Footer: "Reseñas". NO tocar el menú principal del header.
 
-## SEO
+## 5. Admin `/admin/testimonios` (en el menú lateral del admin)
+- CRUD con el mismo patrón que banners: toggle activo, destacar, reordenar ↑↓, toasts de error/éxito.
+- Formulario: nombre, texto, estrellas (selector de 1 a 5 visual), fecha, fuente, enlace original, foto opcional (subida con `subirImagenConMiniaturas`).
+- Bloque "Resumen de Google" en la misma pantalla: editar `google_reviews_url`, `google_rating`, `google_reviews_count` y el toggle `mostrar_resenas_home`.
+- Aviso fijo en el formulario: "Copia la reseña tal cual aparece en Google. No la edites ni inventes reseñas."
+- Si la tabla aún no existe: mensaje "Falta correr el SQL 007", sin romper el admin.
 
-`<title>` "Reseñas | Florería Miraflores", meta description, y `AggregateRating` en JSON-LD **solo** si hay al menos 3 testimonios activos (con los datos reales, nada inventado).
+## 6. SEO
+- `<title>` "Reseñas | Florería Miraflores" y meta description.
+- **NO** agregar JSON-LD `AggregateRating` ni `Review`: Google no permite marcado de reseñas elegidas por el propio negocio.
+- Agregar `/resenas` al sitemap.
 
-## Tests
+## 7. Tests
+- Vitest: validación del formulario (estrellas 1–5, texto mínimo 10 caracteres, nombre obligatorio); formato del resumen ("4,9" con coma); regla de visibilidad de la franja del home (toggle + mínimo 3).
+- Playwright: `/resenas` carga sin errores en mobile y desktop, sin scroll horizontal; estado vacío; la franja del home no aparece con el toggle apagado. CRUD de admin solo con `E2E_ALLOW_WRITES=1` usando `[E2E] testimonio` y borrándolo al final.
+- RLS: anon NO puede insertar en `testimonios` (exigir 42501).
 
-- Vitest: cálculo del promedio y conteo; validación del formulario (estrellas 1–5, texto mínimo).
-- Playwright: `/resenas` carga sin errores en mobile/desktop y sin scroll horizontal; con 0 testimonios muestra un estado vacío digno; admin (con credenciales y `E2E_ALLOW_WRITES=1`): crear `[E2E] testimonio`, verlo en `/resenas`, borrarlo.
-- RLS: anon no puede insertar en `testimonios`.
+## 8. Documentación
+`docs/BASE-DE-DATOS.md`, `docs/REQUISITOS-FUNCIONALES.md`, `docs/ACTUALIZACIONES.md` y `docs/GUIA-PANEL-TESTIMONIOS.md` (guía para Sofía/encargada: cómo copiar una reseña de Google paso a paso, con capturas).
 
-## Documentación
+**Prohibido** cargar reseñas inventadas en producción. Datos de ejemplo solo en tests con prefijo `[E2E]`.
 
-`docs/BASE-DE-DATOS.md`, `docs/REQUISITOS-FUNCIONALES.md` (nuevo RF), `docs/ACTUALIZACIONES.md`, guía corta para la encargada en `docs/GUIA-PANEL-TESTIMONIOS.md`.
-
-**Importante:** no cargues testimonios inventados. Si hace falta contenido de ejemplo para probar, solo en tests con prefijo `[E2E]`.
-
-Entrega el reporte del Prompt 00.
+## Cierre
+verify + E2E completos guardados en archivo, capturas de `/resenas` (390 y 1440) y del admin, merge a master, push, y captura de la web real DESPUÉS de confirmar que el deploy terminó (verifica tú la captura antes de describirla).
+Reporte con el formato del 00.
