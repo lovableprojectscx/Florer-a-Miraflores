@@ -66,14 +66,14 @@ Se habilitó RLS (`ENABLE ROW LEVEL SECURITY`) de manera global en las tablas pa
 - **Escritura (INSERT):** Permiso exclusivo para insertar nuevas filas en las tablas `pedidos` y `suscriptores` (con `CHECK (true)`).
 - **Prohibido:** El público no puede consultar (`SELECT`), modificar (`UPDATE`) ni borrar (`DELETE`) el listado de pedidos realizados ni de suscriptores. Tampoco pueden modificar los productos ni configuraciones.
 
-### 4.2. Permisos para Administrador (Auth UID válido)
+### 4.2. Permisos para Administrador (`public.is_admin()`)
 
-- El administrador (validado mediante sesión iniciada, `auth.uid() IS NOT NULL` bajo el rol `authenticated`) tiene permisos completos sobre la totalidad de las tablas.
+- Originalmente las políticas de escritura comprobaban `auth.uid() IS NOT NULL`. En la **Fase 03-B** (`docs/sql/005-admin-rls.sql`), se endureció la autorización mediante la tabla `public.admins` y la función `public.is_admin()` (`SECURITY DEFINER`, `SET search_path = public`, `STABLE`), de modo que **solo los usuarios registrados en `public.admins`** tienen permisos de escritura sobre el catálogo, lectura/edición de `pedidos` y `reclamaciones`, y subida/borrado en `storage.objects`. Ver detalle completo en [docs/SEGURIDAD.md](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/docs/SEGURIDAD.md).
 - Específicamente en la tabla `pedidos`, las políticas están divididas de la siguiente manera para evitar conflictos con la pasarela de pagos:
   - **`insert_public`**: Permite `INSERT` para `anon` y `authenticated` con `WITH CHECK (true)`.
-  - **`admin_select`**: Permite `SELECT` solo para `authenticated` con `USING (auth.uid() IS NOT NULL)`.
-  - **`admin_update`**: Permite `UPDATE` solo para `authenticated` con `USING/WITH CHECK (auth.uid() IS NOT NULL)`.
-  - **`admin_delete`**: Permite `DELETE` solo para `authenticated` con `USING (auth.uid() IS NOT NULL)`.
+  - **`admin_select`**: Permite `SELECT` solo para administradores (`USING (public.is_admin())`).
+  - **`admin_update`**: Permite `UPDATE` solo para administradores (`USING/WITH CHECK (public.is_admin())`).
+  - **`admin_delete`**: Permite `DELETE` solo para administradores (`USING (public.is_admin())`).
 
 > [!IMPORTANT]
 > Se han separado las políticas de administración de la tabla `pedidos` en consultas individuales por comando (`SELECT`, `UPDATE`, `DELETE`) en lugar de usar una política única `FOR ALL`. Esto asegura que las peticiones de compras anónimas realizadas por la pasarela de pagos puedan insertar nuevos registros sin ser bloqueadas por las restricciones de lectura del administrador.
