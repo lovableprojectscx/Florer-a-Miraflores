@@ -20,7 +20,11 @@ import {
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { ProductoRow, ProductoTag, CategoriaRow, TagRow } from "@/types/database";
-import { convertToWebP } from "@/lib/image-optimizer";
+import {
+  convertToWebP,
+  subirImagenConMiniaturas,
+  eliminarImagenConMiniaturas,
+} from "@/lib/image-optimizer";
 import { findTagByClave, resolverClavesTag } from "@/lib/tag-utils";
 import { armarOpcionesCategoriaSelect } from "@/lib/categorias-utils";
 
@@ -75,33 +79,11 @@ function buildFormFromProducto(p: ProductoRow): FormState {
 }
 
 async function subirImagen(file: File): Promise<string> {
-  let finalFile = file;
-  try {
-    finalFile = await convertToWebP(file);
-  } catch (err) {
-    console.error("Error al optimizar imagen a WebP:", err);
-  }
-
-  const ext = finalFile.name.split(".").pop() ?? "webp";
-  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const { error: uploadError } = await supabase.storage.from(BUCKET).upload(path, finalFile, {
-    cacheControl: "31536000",
-    contentType: finalFile.type,
-    upsert: false,
-  });
-  if (uploadError) throw new Error(`Upload: ${uploadError.message}`);
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
-  return data.publicUrl;
+  return subirImagenConMiniaturas(file, BUCKET);
 }
 
 async function eliminarImagenStorage(url: string) {
-  try {
-    const match = url.match(/\/storage\/v1\/object\/public\/productos\/(.+)/);
-    if (!match) return;
-    await supabase.storage.from(BUCKET).remove([match[1]]);
-  } catch {
-    // silencioso
-  }
+  return eliminarImagenConMiniaturas(url, BUCKET);
 }
 
 // --- Skeleton ---
