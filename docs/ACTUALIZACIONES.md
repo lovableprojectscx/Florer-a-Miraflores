@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.8.0** | 2026-10-13 | **Pedidos / Checkout** | Fase 05: Certificación de estado `"En preparación"`, selector reordenado según flujo operativo y toasts en `/admin/pedidos`; corrección de fecha mínima en Lima (`America/Lima`) en `getFechaMinima()`; reintento automático ante colisión de número de pedido (código 23505) en `crearPedido()`; documentación de riesgo de montos y trigger borrador en `docs/SEGURIDAD.md`; tests E2E y unitarios. |
 | **v1.7.0** | 2026-10-12 | **Catálogo / UI** | Fase 04: Paginación incremental `"Ver más"` en lotes de 24 (`use-ver-mas.ts`), fotos protagonistas `aspect-[4/5]`, grilla máximo 4 columnas (`grid-cols-2 md:grid-cols-3 xl:grid-cols-4`), `decoding="async"`, `sizes` y placeholder explícito en `ProductGrid`. |
 | **v1.6.1** | 2026-10-12 | **Seguridad / RLS** | Fase 03-B: Endurecimiento de políticas RLS con tabla `public.admins`, función `public.is_admin()`, script `docs/sql/005-admin-rls.sql`, auditoría de `pedidos`/`reclamaciones`/`storage` y tests E2E de las 12 secciones de `/admin`. |
 | **v1.6.0** | 2026-10-12 | **Categorías / Admin** | Fase 03: Ocultamiento automático de categorías vacías en la web pública, selector agrupado `Padre › Hija` en `/admin/productos`, toasts y conteos en `/admin/categorias`, redirección de subcategorías movidas y scripts SQL `003`/`004`. |
@@ -29,6 +30,35 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.8.0] — 2026-10-13: Certificación de Estado "En preparación" y Blindaje del Checkout (Fase 05)
+
+#### Contexto y Objetivo
+Certificar el funcionamiento del estado `"En preparación"` en el panel de administración y en la base de datos de producción; subsanar el desfase horario en la selección de fecha mínima de entrega para compras nocturnas en Lima; proteger el checkout ante colisiones de clave única de número de pedido; y documentar el riesgo de montos en inserciones públicas con propuesta de mitigación futura.
+
+#### Cambios Implementados
+1. **Certificación y UX del panel de pedidos (`src/routes/admin/pedidos.tsx`):**
+   - Reordenamiento de `ESTADOS` y del selector del modal para reflejar el flujo operativo: Recibido (`pendiente`) → En preparación (`en_preparacion`) → En camino (`en_camino`) → Entregado (`entregado`), manteniendo `pagado` y `cancelado` como auxiliares.
+   - Integración de notificaciones `toast` (Sonner): `toast.success("Pedido FM-XXXXXX → En preparación")` al actualizar y `toast.error` si ocurre algún fallo.
+2. **Corrección de zona horaria en fecha mínima (`src/lib/checkout-schema.ts`):**
+   - `getFechaMinima()` calcula "mañana" explícitamente en la zona horaria `America/Lima` utilizando `Intl.DateTimeFormat("en-CA", { timeZone: "America/Lima" })`.
+   - Evita que a partir de las 19:00 (UTC−5) la fecha mínima salte a pasado mañana.
+   - Alineación idéntica entre el atributo `min` del input de fecha y la regla de validación Zod en `checkoutSchema`.
+3. **Resiliencia ante colisión de número de pedido (`src/lib/queries.ts`):**
+   - `crearPedido()` implementa un bucle de hasta 3 intentos de reintento exclusivo para colisiones de clave única (código PostgreSQL `23505`).
+   - Cualquier otro error falla de inmediato.
+   - Mensaje claro con opción de contacto vía WhatsApp (`+51 999 600 482`) en caso de persistir la colisión tras 3 intentos.
+4. **Auditoría de base de datos y scripts SQL (`docs/sql/`):**
+   - Verificado por Supabase MCP que la columna `pedidos.estado` no tenía restricción `CHECK` restrictiva en producción, admitiendo `'en_preparacion'` sin error.
+   - `docs/sql/verificar-estado-pedidos.sql`: script de solo lectura para auditar constraints y políticas RLS en `pedidos`.
+   - `docs/sql/006-estado-en-preparacion.sql`: script DDL idempotente preparado por si a futuro se formaliza la restricción `CHECK`.
+5. **Documentación de seguridad (`docs/SEGURIDAD.md`):**
+   - Sección 6 agregada detallando el riesgo de manipulación de montos en cliente, la mitigación operativa actual (revisión humana vía WhatsApp) y la propuesta técnica futura (Edge Function o trigger en PostgreSQL, con borrador SQL comentado).
+6. **Batería de pruebas automatizadas:**
+   - Tests unitarios en `tests/unit/checkout-schema.test.ts` (10:00, 18:59, 19:00, 23:59 y fin de año en Lima) y `tests/unit/queries.test.ts` (reintentos por colisión y no-reintento ante otros errores).
+   - Tests E2E en `tests/e2e/checkout.spec.ts` (reloj fijado a las 20:00 de Lima) y `tests/e2e/admin-pedidos.spec.ts` (filtro, modal y selector de 6 estados en solo lectura, con salvaguarda de 0 escrituras en producción).
+
+---
 
 ### [v1.7.0] — 2026-10-12: Fotos de Catálogo Más Grandes (4:5) y Paginación "Ver más" por Lotes de 24 (Fase 04)
 

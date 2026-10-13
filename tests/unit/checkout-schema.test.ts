@@ -64,15 +64,27 @@ describe("checkoutSchema", () => {
     expect(res.success).toBe(false);
   });
 
-  // Bug conocido, se arregla en Fase 05
-  it.fails(
-    "getFechaMinima calcula mañana en hora local de Lima después de las 19:00 (UTC-5)",
-    () => {
-      // 2026-10-12 a las 21:00 en Lima (UTC-5) equivale a 2026-10-13T02:00:00Z en UTC.
-      // Mañana en Lima es 2026-10-13, pero toISOString() usa UTC y devuelve 2026-10-14.
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2026-10-12T21:00:00-05:00"));
-      expect(getFechaMinima()).toBe("2026-10-13");
-    },
-  );
+  it("getFechaMinima calcula mañana en hora local de Lima a diferentes horas del día y fin de año", () => {
+    vi.useFakeTimers();
+
+    // 10:00 Lima -> mañana es 2026-10-13
+    vi.setSystemTime(new Date("2026-10-12T10:00:00-05:00"));
+    expect(getFechaMinima()).toBe("2026-10-13");
+
+    // 18:59 Lima -> mañana es 2026-10-13
+    vi.setSystemTime(new Date("2026-10-12T18:59:00-05:00"));
+    expect(getFechaMinima()).toBe("2026-10-13");
+
+    // 19:00 Lima (00:00 UTC día siguiente) -> mañana en Lima sigue siendo 2026-10-13
+    vi.setSystemTime(new Date("2026-10-12T19:00:00-05:00"));
+    expect(getFechaMinima()).toBe("2026-10-13");
+
+    // 23:59 Lima (04:59 UTC día siguiente) -> mañana en Lima sigue siendo 2026-10-13
+    vi.setSystemTime(new Date("2026-10-12T23:59:00-05:00"));
+    expect(getFechaMinima()).toBe("2026-10-13");
+
+    // 31 de diciembre 21:00 Lima (02:00 UTC del 1 de enero) -> mañana en Lima es 2027-01-01
+    vi.setSystemTime(new Date("2026-12-31T21:00:00-05:00"));
+    expect(getFechaMinima()).toBe("2027-01-01");
+  });
 });

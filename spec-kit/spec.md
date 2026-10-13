@@ -27,7 +27,7 @@ Login protegido. CRUD de: productos, categorías, colecciones del home, ocasione
 ## Flujos clave
 
 - **Checkout:** cliente llena datos → elige distrito (se aplica delivery) → se registra el pedido con número `FM-XXXXXX` y estado inicial → confirmación + WhatsApp. (El pago real por IZIPay está pendiente.)
-- **Estados del pedido:** pendiente, pagado, en camino, entregado, cancelado. **Falta "En preparación"** (pedido del cliente).
+- **Estados del pedido:** Recibido (`pendiente`), En preparación (`en_preparacion`), En camino (`en_camino`), Entregado (`entregado`), Pagado (`pagado`), Cancelado (`cancelado`). Certificado de punta a punta en Fase 05.
 
 ## Alcance de requisitos
 

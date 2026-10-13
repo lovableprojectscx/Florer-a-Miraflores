@@ -144,4 +144,3 @@ test.describe("Catálogo E2E — Paginación 'Ver más' y layout de tarjetas", (
     }
   });
 });
-

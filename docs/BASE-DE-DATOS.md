@@ -195,3 +195,29 @@ Consultadas directamente sobre `pg_policies` en el proyecto `sdrkiomeesoctsxeidm
 - [`docs/sql/003-nacimientos-padre.sql`](./sql/003-nacimientos-padre.sql): Promueve `"Nacimientos"` (`slug = 'nacimientos'`) a categoría principal (`parent_id = NULL`, `orden = 2`) e inserta de forma idempotente las subcategorías `"Niño"` (`slug = 'nacimientos-nino'`) y `"Niña"` (`slug = 'nacimientos-nina'`). Incluye consulta `SELECT` de verificación y bloque de rollback comentado.
 - [`docs/sql/004-tulipanes-reasignacion.sql`](./sql/004-tulipanes-reasignacion.sql): Script completamente comentado con los 13 `UPDATE` individuales para reasignar los productos que estaban en `"Tulipanes"` padre hacia sus subcategorías (`Tulipanes › Ramos`, `Tulipanes › Arreglos`, `Primaverales › Girasoles`, etc.).
 
+---
+
+## 9. Estados de Pedidos y Restricciones (Fase 05)
+
+### 9.1. Estados Válidos de Pedidos
+El ciclo operativo del pedido comprende 6 estados:
+1. `pendiente`: Recibido (estado por defecto al crearse la orden).
+2. `en_preparacion`: En preparación (el arreglo floral está siendo confeccionado en taller).
+3. `en_camino`: En camino (el repartidor está en ruta de entrega).
+4. `entregado`: Entregado (el pedido fue recibido en destino).
+5. `pagado`: Pagado (estado auxiliar para registro de confirmación de pago).
+6. `cancelado`: Cancelado (estado auxiliar si el cliente desiste o hay incidencia).
+
+### 9.2. Auditoría de Constraints en `public.pedidos`
+Mediante consulta MCP a `pg_constraint`:
+- `pedidos_pkey`: `PRIMARY KEY (id)`
+- `pedidos_numero_key`: `UNIQUE (numero)`
+- `pedidos_distrito_id_fkey`: `FOREIGN KEY (distrito_id) REFERENCES distritos(id)`
+
+**Conclusión:** La base de datos en producción no cuenta con un constraint `CHECK` que restrinja los valores admisibles en `pedidos.estado`. El tipo de dato es `text DEFAULT 'pendiente'::text`, por lo que el estado `'en_preparacion'` es aceptado sin rechazo a nivel motor.
+
+### 9.3. Scripts Disponibles (`docs/sql/`)
+- [`docs/sql/verificar-estado-pedidos.sql`](./sql/verificar-estado-pedidos.sql): Consulta de sólo lectura (`SELECT`) de constraints, estados agrupados y políticas RLS activas en `pedidos`.
+- [`docs/sql/006-estado-en-preparacion.sql`](./sql/006-estado-en-preparacion.sql): Script idempotente con guarda y rollback que formaliza el `CHECK (estado IN ('pendiente', 'en_preparacion', 'en_camino', 'entregado', 'pagado', 'cancelado'))`. Queda preparado para su aplicación únicamente si Jack y el revisor deciden restringirlo a nivel DDL.
+
+

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Eye, X, Loader2, ImageOff, ChevronDown } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import type { PedidoRow, EstadoPedido, PedidoProducto } from "@/types/database";
 
@@ -11,14 +12,14 @@ export const Route = createFileRoute("/admin/pedidos")({
 
 // --- Constantes ---
 
-// Flujo del pedido: Recibido -> En preparacion -> En camino -> Entregado
+// Flujo del pedido: Recibido -> En preparación -> En camino -> Entregado (pagado y cancelado auxiliares)
 const ESTADOS: { value: EstadoPedido | "todos"; label: string }[] = [
   { value: "todos", label: "Todos" },
   { value: "pendiente", label: "Recibido" },
-  { value: "pagado", label: "Pagado" },
   { value: "en_preparacion", label: "En preparación" },
   { value: "en_camino", label: "En camino" },
   { value: "entregado", label: "Entregado" },
+  { value: "pagado", label: "Pagado" },
   { value: "cancelado", label: "Cancelado" },
 ];
 
@@ -141,6 +142,8 @@ function DetalleModal({ pedido, onClose, onUpdate }: DetalleModalProps) {
     try {
       await onUpdate(pedido.id, estado);
       setChanged(false);
+    } catch {
+      // Notificado con toast.error en handleUpdate
     } finally {
       setSaving(false);
     }
@@ -374,12 +377,22 @@ function PedidosPage() {
     cargarPedidos();
   }, [cargarPedidos]);
 
-  async function handleUpdate(id: string, estado: EstadoPedido) {
-    const { error: err } = await supabase.from("pedidos").update({ estado }).eq("id", id);
-    if (err) throw new Error(err.message);
+  async function handleUpdate(id: string, nuevoEstado: EstadoPedido) {
+    const { error: err } = await supabase
+      .from("pedidos")
+      .update({ estado: nuevoEstado })
+      .eq("id", id);
+    if (err) {
+      toast.error(`Error al actualizar estado del pedido: ${err.message}`);
+      throw new Error(err.message);
+    }
     // Actualizar local
-    setPedidos((prev) => prev.map((p) => (p.id === id ? { ...p, estado } : p)));
-    setDetalle((prev) => (prev?.id === id ? { ...prev, estado } : prev));
+    setPedidos((prev) => prev.map((p) => (p.id === id ? { ...p, estado: nuevoEstado } : p)));
+    setDetalle((prev) => (prev?.id === id ? { ...prev, estado: nuevoEstado } : prev));
+
+    const p = pedidos.find((item) => item.id === id);
+    const num = p?.numero ?? `#${id.slice(0, 8)}`;
+    toast.success(`Pedido ${num} → ${ESTADO_LABEL[nuevoEstado]}`);
   }
 
   const filtrados = filtro === "todos" ? pedidos : pedidos.filter((p) => p.estado === filtro);

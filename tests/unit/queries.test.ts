@@ -42,7 +42,7 @@ describe("crearPedido", () => {
     vi.clearAllMocks();
   });
 
-  it("genera número FM-XXXXXX e inserta el pedido con estado 'pendiente'", async () => {
+  it("éxito al primer intento: genera FM-XXXXXX y llama a insert una sola vez", async () => {
     insertMock.mockResolvedValueOnce({ error: null });
 
     const numero = await crearPedido(sampleInput);
@@ -62,13 +62,45 @@ describe("crearPedido", () => {
     );
   });
 
-  it("lanza un error legible cuando Supabase devuelve error", async () => {
+  it("duplicado (código 23505) y luego éxito: reintenta y genera un nuevo número en el segundo intento", async () => {
+    insertMock
+      .mockResolvedValueOnce({
+        error: { code: "23505", message: "duplicate key value violates unique constraint" },
+      })
+      .mockResolvedValueOnce({ error: null });
+
+    const numero = await crearPedido(sampleInput);
+
+    expect(numero).toMatch(/^FM-\d{6}$/);
+    expect(insertMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("3 duplicados seguidos (código 23505): falla tras 3 intentos y ofrece mensaje con WhatsApp", async () => {
+    insertMock
+      .mockResolvedValueOnce({
+        error: { code: "23505", message: "duplicate key value violates unique constraint" },
+      })
+      .mockResolvedValueOnce({
+        error: { code: "23505", message: "duplicate key value violates unique constraint" },
+      })
+      .mockResolvedValueOnce({
+        error: { code: "23505", message: "duplicate key value violates unique constraint" },
+      });
+
+    await expect(crearPedido(sampleInput)).rejects.toThrow(
+      /No pudimos generar un número de pedido único tras 3 intentos.*WhatsApp.*\+51 999 600 482/,
+    );
+    expect(insertMock).toHaveBeenCalledTimes(3);
+  });
+
+  it("error distinto de 23505: lanza de inmediato y NO reintenta (1 solo intento)", async () => {
     insertMock.mockResolvedValueOnce({
-      error: { message: "violates foreign key constraint" },
+      error: { code: "42501", message: "permission denied for table pedidos" },
     });
 
     await expect(crearPedido(sampleInput)).rejects.toThrow(
-      "[Supabase] violates foreign key constraint",
+      "[Supabase] permission denied for table pedidos",
     );
+    expect(insertMock).toHaveBeenCalledTimes(1);
   });
 });
