@@ -69,6 +69,9 @@ function ErrorComponent({ error, reset }: { error: unknown; reset: () => void })
   );
 }
 
+const supabaseUrl =
+  (import.meta.env.VITE_SUPABASE_URL as string) || "https://sdrkiomeesoctsxeidmu.supabase.co";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -91,6 +94,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary" },
     ],
     links: [
+      {
+        rel: "preconnect",
+        href: supabaseUrl,
+        crossOrigin: "",
+      },
       {
         rel: "stylesheet",
         href: appCss,
