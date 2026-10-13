@@ -9,6 +9,7 @@ Rama: `fase-08-correo`.
 ## Antes de programar: qué necesita Jack
 
 Lista en el reporte (y en `docs/CORREO.md`) lo que debe existir, y **detente** si falta algo bloqueante:
+
 1. Cuenta en Resend y `RESEND_API_KEY`.
 2. Dominio `floreriamiraflores.com` verificado en Resend (registros DNS SPF/DKIM). Sin esto los correos caen en spam o no salen; mientras tanto, solo se puede probar enviando desde el dominio de pruebas de Resend a la cuenta del propio Jack.
 3. Correo remitente (p. ej. `pedidos@floreriamiraflores.com`) y correo que recibe el aviso interno.

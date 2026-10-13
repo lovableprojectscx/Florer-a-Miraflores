@@ -16,18 +16,18 @@ El frontend está desarrollado en React 19 sobre **TanStack Start** (SSR-capable
 
 ## 2. Stack Tecnológico Real (Verificado en `package.json`)
 
-| Capa | Tecnología / Paquete | Rol / Implementación |
-| :--- | :--- | :--- |
-| **UI** | React 19 + Tailwind CSS v4 | Interfaz responsiva, componentes modulares y tokens de diseño |
-| **Framework / SSR** | TanStack Start (`v1.168.60`) | Servidor SSR optimizado con mitigación CVE-2026-102989 |
-| **Routing** | TanStack Router | Enrutamiento basado en archivos (`src/routes/`), loaders tipados |
-| **Data Fetching** | TanStack React Query + Supabase JS | Caché de cliente y consultas desacopladas en `src/lib/queries.ts` |
-| **Formularios** | React Hook Form + Zod | Validación tipada en checkout, libro de reclamaciones y admin |
-| **Estado Global** | Zustand (`src/store/cart.ts`) | Carrito reactivo en memoria de sesión de navegador (sin BD) |
-| **Backend / DB** | Supabase (PostgreSQL 17.6) | Base de datos relacional, RLS en todas las tablas, Auth |
-| **Almacenamiento** | Supabase Storage (`productos`, etc.) | Almacenamiento de fotografías WebP optimizadas en alta definición |
-| **Build & Deploy** | Vite 7 + Vercel Serverless | Pipeline npm con `scripts/postbuild.js` y puente en `api/index.js` |
-| **Pasarela** | IZIPay | En espera de credenciales comerciales (flujo activo vía WhatsApp) |
+| Capa                | Tecnología / Paquete                 | Rol / Implementación                                               |
+| :------------------ | :----------------------------------- | :----------------------------------------------------------------- |
+| **UI**              | React 19 + Tailwind CSS v4           | Interfaz responsiva, componentes modulares y tokens de diseño      |
+| **Framework / SSR** | TanStack Start (`v1.168.60`)         | Servidor SSR optimizado con mitigación CVE-2026-102989             |
+| **Routing**         | TanStack Router                      | Enrutamiento basado en archivos (`src/routes/`), loaders tipados   |
+| **Data Fetching**   | TanStack React Query + Supabase JS   | Caché de cliente y consultas desacopladas en `src/lib/queries.ts`  |
+| **Formularios**     | React Hook Form + Zod                | Validación tipada en checkout, libro de reclamaciones y admin      |
+| **Estado Global**   | Zustand (`src/store/cart.ts`)        | Carrito reactivo en memoria de sesión de navegador (sin BD)        |
+| **Backend / DB**    | Supabase (PostgreSQL 17.6)           | Base de datos relacional, RLS en todas las tablas, Auth            |
+| **Almacenamiento**  | Supabase Storage (`productos`, etc.) | Almacenamiento de fotografías WebP optimizadas en alta definición  |
+| **Build & Deploy**  | Vite 7 + Vercel Serverless           | Pipeline npm con `scripts/postbuild.js` y puente en `api/index.js` |
+| **Pasarela**        | IZIPay                               | En espera de credenciales comerciales (flujo activo vía WhatsApp)  |
 
 ---
 
@@ -131,19 +131,24 @@ src/
 ## 5. Capas Arquitectónicas y Flujo de Datos
 
 ### 5.1. Capa de Presentación
+
 - **Header con Scroll Natural:** El encabezado `<header>` en `Header.tsx` se posiciona de forma relativa (`relative z-30`). Cuando el usuario se desplaza verticalmente, el header sube y se retira de la pantalla naturalmente junto con el resto del contenido, maximizando el espacio de visualización.
-- **Bento Collage Editorial:** Implementado en `CategoryShowcase.tsx`, utiliza CSS Grid asimétrico con una tarjeta vertical destacada de dos filas y una horizontal de dos columnas para jerarquizar las colecciones más demandadas (*Cumpleaños*, *Ramos*, *Amor*, etc.).
+- **Bento Collage Editorial:** Implementado en `CategoryShowcase.tsx`, utiliza CSS Grid asimétrico con una tarjeta vertical destacada de dos filas y una horizontal de dos columnas para jerarquizar las colecciones más demandadas (_Cumpleaños_, _Ramos_, _Amor_, etc.).
 - **Escala Responsiva para Laptops:** En `Novedades.tsx`, las tarjetas utilizan un ancho de `230px-250px` con un límite superior de contenedor `max-w-[1400px]`, permitiendo desplegar 5 productos simultáneos sin ocupar toda la altura del monitor en laptops.
 - **Paginación "Ver más" en Cliente y Fotos 4:5 (`ProductGrid.tsx` + `use-ver-mas.ts`):** Los filtros y el ordenamiento operan en cliente sobre la lista completa (~300 productos en JSON liviano), pero solo se montan en el DOM 24 tarjetas por lote (`tamanoLote={24}`) con imágenes `loading="lazy"` y `aspect-[4/5]` en grilla de 2/3/4 columnas (`grid-cols-2 md:grid-cols-3 xl:grid-cols-4`), reduciendo el consumo de memoria en móvil y el egress de Supabase Storage (la paginación en servidor queda como mejora futura si el catálogo supera ~1,000 productos).
 
 ### 5.2. Capa de Acceso a Datos (`src/lib/queries.ts`)
+
 Toda interacción con la base de datos se canaliza a través de funciones asíncronas fuertemente tipadas:
+
 - `getProductosPorCategorias(categoriaIds: string[])`: Ejecuta consultas compuestas `supabase.from("productos").select("*").in("categoria_id", categoriaIds)` para alimentar páginas de categorías padre que agrupan varias subcategorías.
 - `getProductos(categoriaId?, tag?)`: Filtra por categoría o etiqueta específica.
 - `crearPedido(datos)`: Inserta un registro en la tabla `pedidos` con código autogenerado `FM-XXXXXX` y desglose de items en formato JSONB.
 
 ### 5.3. Capa de Estado Global (Zustand)
+
 El estado de compra reside exclusivamente en el cliente (`src/store/cart.ts`):
+
 - Los items se almacenan con su identificador, nombre, precio, cantidad e imagen.
 - No se guarda en la base de datos hasta que el cliente envía formalmente el formulario de checkout, evitando sobrecarga de registros huérfanos.
 
@@ -175,22 +180,22 @@ erDiagram
 
 ## 7. Estado de Implementación de Módulos (Octubre 2026)
 
-| Módulo / Funcionalidad | Estado | Detalles Técnicos |
-| :--- | :---: | :--- |
-| **Landing Page / Home** | ✅ | Hero 8:3, Bento Collage, slider balanceado para laptop, delivery y testimonios. |
-| **Página `/nosotros`** | ✅ | Ruta dedicada e independiente con narrativa, valores de marca y galería del taller. |
-| **Header con Scroll Natural** | ✅ | Des-anclado (`relative`); sube suavemente al hacer scroll. |
-| **Catálogo y Subfiltros** | ✅ | Filtros dinámicos por precio, orden y subcategorías jerárquicas activables. |
-| **Página de Producto** | ✅ | Ficha completa con selector de cantidad, badges dinámicos y galería sticky `lg:top-8`. |
-| **Carrito de Compras** | ✅ | `CartDrawer` con control de cantidades reactivo y subtotal calculado al instante. |
-| **Checkout & Delivery** | ✅ | Validación Zod, selección de distrito con tarifa en tiempo real y código `FM-XXXXXX`. |
-| **Confirmación de Compra** | ✅ | Resumen de pedido con botón de contacto y seguimiento en WhatsApp. |
-| **Panel Administrativo** | ✅ | CRUD completo para las 10 tablas, auto-scroll ámbar al editar productos, reordenamiento. |
-| **Gestión de Tags** | ✅ | Unificación de alias bidireccional en `tag-utils.ts` con colores dinámicos reflejados. |
-| **Imágenes HD WebP** | ✅ | Activos optimizados servidos a través del CDN de Supabase Storage. |
-| **Seguridad Core** | ✅ | Parche `@tanstack/react-start 1.168.60` (CVE-2026-102989) y políticas RLS activas. |
-| **Pasarela IZIPay** | ⚠️ | En espera de credenciales de comercio; flujo de pago coordinado vía WhatsApp. |
-| **Correo Automático** | ❌ | Pendiente de integración con proveedor transaccional (Resend o SendGrid). |
+| Módulo / Funcionalidad        | Estado | Detalles Técnicos                                                                        |
+| :---------------------------- | :----: | :--------------------------------------------------------------------------------------- |
+| **Landing Page / Home**       |   ✅   | Hero 8:3, Bento Collage, slider balanceado para laptop, delivery y testimonios.          |
+| **Página `/nosotros`**        |   ✅   | Ruta dedicada e independiente con narrativa, valores de marca y galería del taller.      |
+| **Header con Scroll Natural** |   ✅   | Des-anclado (`relative`); sube suavemente al hacer scroll.                               |
+| **Catálogo y Subfiltros**     |   ✅   | Filtros dinámicos por precio, orden y subcategorías jerárquicas activables.              |
+| **Página de Producto**        |   ✅   | Ficha completa con selector de cantidad, badges dinámicos y galería sticky `lg:top-8`.   |
+| **Carrito de Compras**        |   ✅   | `CartDrawer` con control de cantidades reactivo y subtotal calculado al instante.        |
+| **Checkout & Delivery**       |   ✅   | Validación Zod, selección de distrito con tarifa en tiempo real y código `FM-XXXXXX`.    |
+| **Confirmación de Compra**    |   ✅   | Resumen de pedido con botón de contacto y seguimiento en WhatsApp.                       |
+| **Panel Administrativo**      |   ✅   | CRUD completo para las 10 tablas, auto-scroll ámbar al editar productos, reordenamiento. |
+| **Gestión de Tags**           |   ✅   | Unificación de alias bidireccional en `tag-utils.ts` con colores dinámicos reflejados.   |
+| **Imágenes HD WebP**          |   ✅   | Activos optimizados servidos a través del CDN de Supabase Storage.                       |
+| **Seguridad Core**            |   ✅   | Parche `@tanstack/react-start 1.168.60` (CVE-2026-102989) y políticas RLS activas.       |
+| **Pasarela IZIPay**           |   ⚠️   | En espera de credenciales de comercio; flujo de pago coordinado vía WhatsApp.            |
+| **Correo Automático**         |   ❌   | Pendiente de integración con proveedor transaccional (Resend o SendGrid).                |
 
 ---
 

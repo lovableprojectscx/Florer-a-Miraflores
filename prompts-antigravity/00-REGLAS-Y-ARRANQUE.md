@@ -47,7 +47,8 @@ Si un doc contradice al código, **manda el código**. Repórtalo, no lo "arregl
 ## 5. Definición de "terminado" (aplica a TODAS las fases)
 
 Una fase solo está terminada si:
-1. `npm run verify` pasa completo (lint + typecheck + tests unitarios + build). *(Este script se crea en la Fase 01; antes de eso, corre `npm run lint` y `npm run build`.)*
+
+1. `npm run verify` pasa completo (lint + typecheck + tests unitarios + build). _(Este script se crea en la Fase 01; antes de eso, corre `npm run lint` y `npm run build`.)_
 2. Los tests E2E de la fase pasan (`npm run test:e2e`) en los proyectos **mobile** y **desktop**.
 3. La documentación de la fase está actualizada (ver cada prompt).
 4. Entregaste el reporte con el formato de abajo.

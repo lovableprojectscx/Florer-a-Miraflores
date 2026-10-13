@@ -23,14 +23,14 @@ Rama: `fase-01-base-pruebas`. Antes de crearla, haz lo de la sección 4 del Prom
 
 ### Tests unitarios mínimos (sobre código que YA existe)
 
-| Archivo a probar | Qué cubrir |
-| --- | --- |
-| `src/store/cart.ts` | agregar item nuevo, agregar existente suma cantidad, quitar, `actualizarCantidad` ignora < 1, vaciar, `total()` y `totalItems()` |
-| `src/lib/utils.ts` | `slugify` (tildes, ñ, espacios, símbolos, guiones repetidos), `extractIdFromSlug` (UUID solo, slug-UUID, fallback) |
-| `src/lib/tag-utils.ts` | `resolverClavesTag`, `findTagByClave`, `getTagBadgeInfo` con tag inexistente/undefined |
-| `src/components/ProductFilters.tsx` | `useProductFilters`: orden precio asc/desc, cada rango de precio, lista vacía |
-| Checkout (validación) | Extrae `checkoutSchema` y `getFechaMinima` de `src/routes/checkout.tsx` a `src/lib/checkout-schema.ts` **sin cambiar su comportamiento** y pruébalo: teléfono < 9 dígitos, letras en teléfono, email inválido, hora fuera del enum, fecha de hoy rechazada. *(Hay un bug de zona horaria en `getFechaMinima`; NO lo arregles aquí, va en la Fase 05. Escribe el test que lo demuestra y márcalo `it.fails` con un comentario `// Bug conocido, se arregla en Fase 05`.)* |
-| `src/lib/queries.ts` | `crearPedido` con supabase mockeado: genera número `FM-` + 6 dígitos, inserta `estado: "pendiente"`, lanza error legible si Supabase devuelve error |
+| Archivo a probar                    | Qué cubrir                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `src/store/cart.ts`                 | agregar item nuevo, agregar existente suma cantidad, quitar, `actualizarCantidad` ignora < 1, vaciar, `total()` y `totalItems()`                                                                                                                                                                                                                                                                                                                                         |
+| `src/lib/utils.ts`                  | `slugify` (tildes, ñ, espacios, símbolos, guiones repetidos), `extractIdFromSlug` (UUID solo, slug-UUID, fallback)                                                                                                                                                                                                                                                                                                                                                       |
+| `src/lib/tag-utils.ts`              | `resolverClavesTag`, `findTagByClave`, `getTagBadgeInfo` con tag inexistente/undefined                                                                                                                                                                                                                                                                                                                                                                                   |
+| `src/components/ProductFilters.tsx` | `useProductFilters`: orden precio asc/desc, cada rango de precio, lista vacía                                                                                                                                                                                                                                                                                                                                                                                            |
+| Checkout (validación)               | Extrae `checkoutSchema` y `getFechaMinima` de `src/routes/checkout.tsx` a `src/lib/checkout-schema.ts` **sin cambiar su comportamiento** y pruébalo: teléfono < 9 dígitos, letras en teléfono, email inválido, hora fuera del enum, fecha de hoy rechazada. _(Hay un bug de zona horaria en `getFechaMinima`; NO lo arregles aquí, va en la Fase 05. Escribe el test que lo demuestra y márcalo `it.fails` con un comentario `// Bug conocido, se arregla en Fase 05`.)_ |
+| `src/lib/queries.ts`                | `crearPedido` con supabase mockeado: genera número `FM-` + 6 dígitos, inserta `estado: "pendiente"`, lanza error legible si Supabase devuelve error                                                                                                                                                                                                                                                                                                                      |
 
 ## 3. Playwright (E2E)
 
@@ -42,6 +42,7 @@ Rama: `fase-01-base-pruebas`. Antes de crearla, haz lo de la sección 4 del Prom
 ### Regla de oro de datos en E2E
 
 La BD es producción. Por eso:
+
 - Las pruebas **leen** datos reales (catálogo, categorías) pero **nunca escriben**.
 - En el checkout, intercepta con `page.route("**/rest/v1/pedidos*", ...)` y responde `201` vacío para que **no** se cree un pedido real. Verifica en el test que la interceptación ocurrió.
 - Tests de admin: credenciales en `.env.e2e.local` (`E2E_ADMIN_EMAIL`, `E2E_ADMIN_PASSWORD`; ya está cubierto por `*.local` en `.gitignore`). Si no existen, esos tests hacen `test.skip` con un mensaje claro. Solo lectura por defecto. Cualquier test que escriba debe ir detrás de `E2E_ALLOW_WRITES=1`, usar nombres con prefijo `[E2E]` y borrar lo que creó en `afterAll`.
@@ -57,6 +58,7 @@ La BD es producción. Por eso:
 ## 4. RLS (seguridad) — `tests/rls/`
 
 Proyecto Vitest aparte (`vitest.rls.config.ts`, environment `node`) que usa el **anon key real** desde `.env.local`:
+
 - anon **puede** leer `productos`, `categorias`, `banners`, `distritos`, `config`.
 - anon **no puede** insertar/actualizar/borrar en `productos` ni `categorias` (ojo: un UPDATE/DELETE bloqueado por RLS no da error, devuelve 0 filas; verifica con `.select()` que no afectó nada, y apunta a un id inexistente para no tocar datos aunque la policy estuviera mal).
 - anon **no puede** leer `pedidos` (debe volver vacío o error).

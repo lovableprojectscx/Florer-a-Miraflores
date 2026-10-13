@@ -73,15 +73,15 @@ Formato de salida: imagen cuadrada 1:1, arreglo centrado con aire alrededor.
 
 ## PARTE C — Biblioteca de fondos (elige uno, on-brand)
 
-Todos van con la línea *"premium, femenino, elegante"*. Los primeros dos son los más seguros para catálogo.
+Todos van con la línea _"premium, femenino, elegante"_. Los primeros dos son los más seguros para catálogo.
 
-1. **Estudio marfil minimalista** *(recomendado para catálogo)*
+1. **Estudio marfil minimalista** _(recomendado para catálogo)_
    `un fondo liso color marfil / blanco cálido, superficie del mismo tono, estilo estudio limpio y minimalista`
 
-2. **Rosa empolvado suave** *(match con la identidad actual del sitio)*
+2. **Rosa empolvado suave** _(match con la identidad actual del sitio)_
    `un fondo degradado en rosa empolvado muy suave (#C4848A desaturado) con superficie clara, luz cálida`
 
-3. **Champagne / crema con textura de tela** *(match con la paleta de la propuesta original)*
+3. **Champagne / crema con textura de tela** _(match con la paleta de la propuesta original)_
    `un fondo color champagne cremoso con una tela de lino sutilmente texturizada, elegante y cálido`
 
 4. **Mármol claro premium**
@@ -96,7 +96,7 @@ Todos van con la línea *"premium, femenino, elegante"*. Los primeros dos son lo
 7. **Editorial oscuro (para arreglos claros / premium)**
    `un fondo carbón profundo y elegante con luz focal suave sobre el arreglo, estilo editorial de lujo`
 
-8. **Escena de fecha especial** *(para campañas: San Valentín, Día de la Madre)*
+8. **Escena de fecha especial** _(para campañas: San Valentín, Día de la Madre)_
    `un fondo cálido con bokeh dorado suave desenfocado, ambiente romántico y sofisticado, sin objetos definidos`
 
 > Para **defunción/coronas**: usa el fondo 1 o 4 (marfil o mármol), luz sobria, nada romántico.

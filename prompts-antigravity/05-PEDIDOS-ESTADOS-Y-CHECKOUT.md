@@ -29,6 +29,7 @@ Lo que falta certificar es **la base de datos**: si `pedidos.estado` tiene un `C
 ## 3. Bug potencial: número de pedido repetido
 
 `crearPedido` (`src/lib/queries.ts`) genera `FM-` + 6 dígitos al azar. `numero` es `UNIQUE`: si se repite, el insert falla y el cliente ve un error al pagar.
+
 - Reintenta hasta 3 veces con un número nuevo **solo** cuando el error es de duplicado (código `23505`); cualquier otro error se lanza igual que hoy.
 - Si a los 3 intentos falla, mensaje claro al cliente con la opción de WhatsApp.
 - Tests unitarios con supabase mockeado: éxito al primer intento; duplicado y luego éxito; 3 duplicados → error; error distinto de 23505 → no reintenta.

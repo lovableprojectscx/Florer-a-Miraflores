@@ -226,24 +226,28 @@ Textos ya redactados y corregidos, en dos tonos. Copia el bloque que quieras den
 ### Tono emocional (estilo cálido, cercano)
 
 **Bienvenida / marca**
+
 - KICKER: "FLORES QUE HABLAN POR TI"
 - TITULAR: "La mejor manera de alegrar su día"
 - DESCRIPCIÓN: "Un detalle floral que dice todo lo que sientes. Diseños hechos a mano en Lima."
 - BOTÓN: "Ver colección"
 
 **Amor / aniversario**
+
 - KICKER: "PARA UN AMOR COMO EL SUYO"
 - TITULAR: "Rosas que enamoran"
 - DESCRIPCIÓN: "Arreglos románticos que convierten un instante en un recuerdo. Sorpréndela hoy."
 - BOTÓN: "Pedir ahora"
 
 **Cumpleaños**
+
 - KICKER: "CELEBRA A QUIEN MÁS QUIERES"
 - TITULAR: "Flores para un feliz cumpleaños"
 - DESCRIPCIÓN: "Color, aroma y alegría en cada arreglo. Haz que su día sea inolvidable."
 - BOTÓN: "Ver opciones"
 
 **Flores amarillas (temporada)**
+
 - KICKER: "FRESCURA QUE ALEGRA EL DÍA"
 - TITULAR: "Flores Amarillas de Temporada"
 - DESCRIPCIÓN: "Arreglos radiantes para regalar felicidad. Entrega el mismo día en Lima."
@@ -252,24 +256,28 @@ Textos ya redactados y corregidos, en dos tonos. Copia el bloque que quieras den
 ### Tono beneficio / servicio (estilo directo, profesional)
 
 **Delivery**
+
 - KICKER: "NOS IMPORTA LLEGAR A TIEMPO"
 - TITULAR: "Delivery el mismo día"
 - DESCRIPCIÓN: "Entregas seguras y puntuales en Miraflores, Surco, Barranco, Lince y San Isidro."
 - BOTÓN: "Más información"
 
 **Urgencia / mismo día**
+
 - KICKER: "AÚN ESTÁS A TIEMPO"
 - TITULAR: "Envía flores hoy mismo"
 - DESCRIPCIÓN: "Haz tu pedido antes de las 5 p.m. y entregamos el mismo día en Lima."
 - BOTÓN: "Pedir ahora"
 
 **Premium / lujo**
+
 - KICKER: "LA COLECCIÓN MÁS EXCLUSIVA"
 - TITULAR: "Arreglos Premium"
 - DESCRIPCIÓN: "Diseños imponentes con las flores más finas, para gestos que dejan huella."
 - BOTÓN: "Descubrir"
 
 **Corporativo**
+
 - KICKER: "DETALLES QUE DEJAN HUELLA"
 - TITULAR: "Flores para empresas"
 - DESCRIPCIÓN: "Inauguraciones, aniversarios y agradecimientos con la elegancia de Miraflores."
@@ -278,6 +286,7 @@ Textos ya redactados y corregidos, en dos tonos. Copia el bloque que quieras den
 ### Tono sobrio (defunción — respetar reglas IF de ocasión)
 
 **Condolencias**
+
 - KICKER: "ACOMPAÑAMOS TU RECUERDO"
 - TITULAR: "Arreglos de condolencia"
 - DESCRIPCIÓN: "Con respeto y delicadeza, flores para honrar y acompañar. Entrega discreta en Lima."
