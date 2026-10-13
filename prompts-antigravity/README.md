@@ -2,17 +2,17 @@
 
 Orden de uso. Cada fase en un chat (o en el mismo, si Antigravity mantiene contexto), siempre con el **00 primero**.
 
-| # | Prompt | Tipo | Depende de | Para lanzar |
-| --- | --- | --- | --- | --- |
-| 00 | Reglas y arranque | Contexto | — | Sí |
-| 01 | Base de pruebas (Vitest + Playwright + RLS) | Código + tests | 00 | Sí |
-| 02 | Diagnóstico de categorías (solo lectura) | Investigación | 01 | Sí |
-| 03 | Arreglo de categorías | Código + panel | 02 + **tus decisiones D1/D2** + SQL corrido | Sí |
-| 04 | Catálogo: fotos grandes + "Ver más" | Código + tests | 01 | Sí |
-| 05 | Pedidos: "En preparación" + bugs del checkout | Código + SQL | 01 | Sí |
-| 06 | Certificación pre-lanzamiento (GO/NO-GO) | Pruebas + docs | 03, 04, 05 mergeadas | Sí |
-| 07 | Reseñas y testimonios | Código + SQL | 06 | No (P2) |
-| 08 | Correo automático | Código + terceros | 06 + cuenta Resend y dominio | No (P2) |
+| #   | Prompt                                        | Tipo              | Depende de                                  | Para lanzar |
+| --- | --------------------------------------------- | ----------------- | ------------------------------------------- | ----------- |
+| 00  | Reglas y arranque                             | Contexto          | —                                           | Sí          |
+| 01  | Base de pruebas (Vitest + Playwright + RLS)   | Código + tests    | 00                                          | Sí          |
+| 02  | Diagnóstico de categorías (solo lectura)      | Investigación     | 01                                          | Sí          |
+| 03  | Arreglo de categorías                         | Código + panel    | 02 + **tus decisiones D1/D2** + SQL corrido | Sí          |
+| 04  | Catálogo: fotos grandes + "Ver más"           | Código + tests    | 01                                          | Sí          |
+| 05  | Pedidos: "En preparación" + bugs del checkout | Código + SQL      | 01                                          | Sí          |
+| 06  | Certificación pre-lanzamiento (GO/NO-GO)      | Pruebas + docs    | 03, 04, 05 mergeadas                        | Sí          |
+| 07  | Reseñas y testimonios                         | Código + SQL      | 06                                          | No (P2)     |
+| 08  | Correo automático                             | Código + terceros | 06 + cuenta Resend y dominio                | No (P2)     |
 
 04 y 05 no dependen de 02/03: se pueden hacer mientras esperas el diagnóstico o la respuesta de Sofía.
 

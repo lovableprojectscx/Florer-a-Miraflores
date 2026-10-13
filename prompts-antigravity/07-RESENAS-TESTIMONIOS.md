@@ -15,6 +15,7 @@ Rama: `fase-07-resenas`.
 ## Base de datos (lo corre Jack)
 
 `docs/sql/0XX-testimonios.sql`, idempotente y con reversa:
+
 - Tabla `testimonios` (`id`, `nombre`, `distrito`, `texto`, `estrellas int check 1..5`, `imagen_url`, `fecha date`, `destacado bool`, `orden int`, `activo bool`, `created_at`).
 - RLS: SELECT público solo `activo = true`; INSERT/UPDATE/DELETE solo admin, **con la misma condición de admin que usan las otras tablas** (cópiala de las policies existentes, no inventes otra).
 - Columna `google_reviews_url text` en `config`.

@@ -12,6 +12,7 @@ Paquete de contexto estructurado (spec-driven) para que cualquier chat/modelo nu
 ## Documentación detallada (fuente de verdad ampliada)
 
 Este spec kit es el resumen. El detalle vive en:
+
 - `../CLAUDE.md` — especificación original completa.
 - `../docs/` — REQUISITOS-FUNCIONALES, ARQUITECTURA, BASE-DE-DATOS, PLAN-DE-TRABAJO, ACTUALIZACIONES, INCIDENCIAS.
 - `../brand/` — identidad visual, logo SVG y prompts de imágenes.

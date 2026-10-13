@@ -17,8 +17,8 @@ Resumen priorizado. Detalle y notas en `../docs/PLAN-DE-TRABAJO.md`.
 
 - [ ] 🧑‍💻 **Página de Reseñas/Testimonios** (imágenes + texto + estrellas, administrable). Enlace a Google ya; API después.
 - [ ] 🧑‍💻 **Correo automático** al recibir pedido (Edge Function + Resend).
-- [ ] 🧑‍💻 **Botón "Agregar al carrito"** en tarjetas del Home (RF-017).
-- [ ] 🧑‍💻 **Botón "Compartir"** en tarjetas del Home (RF-018).
+- [x] 🧑‍💻 **Botón "Agregar al carrito"** en tarjetas del Home (RF-017).
+- [x] 🧑‍💻 **Botón "Compartir"** en tarjetas del Home (RF-018).
 
 ## P3 — Cuando se pueda
 

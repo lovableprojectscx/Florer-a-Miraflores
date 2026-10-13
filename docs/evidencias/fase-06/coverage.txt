@@ -1,0 +1,56 @@
+
+> test:coverage
+> vitest run --coverage
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.4 [39m[90mC:/Users/JACK FRANKLIN/Desktop/Proyectos Idenza/Trabajos-Mayo/Floreria miraflores/floreria-miraflo-main[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/unit/tag-utils.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/cart.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/categorias-utils.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tests/unit/checkout-schema.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32m✓[39m tests/unit/use-ver-mas.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+ [32m✓[39m tests/unit/queries.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/unit/utils.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/product-filters.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32m✓[39m tests/unit/ProductGrid.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 569[2mms[22m[39m
+   [32m✓[39m ProductGrid — paginación 'Ver más' y placeholder de imagen [2m(3)[22m
+     [33m[2m✓[22m[39m con 30 productos y tamanoLote=24 muestra 24 tarjetas y el botón 'Ver más'; tras clic muestra 30 y el botón desaparece[33m 459[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m      Tests [22m [1m[32m71 passed[39m[22m[90m (71)[39m
+[2m   Start at [22m 09:21:08
+[2m   Duration [22m 5.59s[2m (environment 78%, setup 14%, tests 3%, worker 3%, import 2%, transform 1%)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   89.18 |    71.95 |   85.93 |   91.54 |                   
+ assets            |       0 |        0 |       0 |       0 |                   
+  ...especial.webp |       0 |        0 |       0 |       0 |                   
+  ...omantico.webp |       0 |        0 |       0 |       0 |                   
+  ...sorpresa.webp |       0 |        0 |       0 |       0 |                   
+  ...t-corona.webp |       0 |        0 |       0 |       0 |                   
+  ...d-aurora.webp |       0 |        0 |       0 |       0 |                   
+  ...d-pampas.webp |       0 |        0 |       0 |       0 |                   
+  ...d-velvet.webp |       0 |        0 |       0 |       0 |                   
+  ...rimavera.webp |       0 |        0 |       0 |       0 |                   
+  ...ulipanes.webp |       0 |        0 |       0 |       0 |                   
+ components        |   78.68 |    71.69 |   56.52 |   75.92 |                   
+  ...ctFilters.tsx |   70.83 |    72.72 |   46.15 |   61.11 | 59-122            
+  ProductGrid.tsx  |   83.78 |    71.42 |      70 |   83.33 | 120-149,188-210   
+ data              |   46.15 |        0 |      25 |    62.5 |                   
+  catalog.ts       |   46.15 |        0 |      25 |    62.5 | 109-110,226       
+ hooks             |     100 |    89.47 |     100 |     100 |                   
+  use-ver-mas.ts   |     100 |    89.47 |     100 |     100 | 17,33             
+ lib               |   91.43 |    70.95 |   97.18 |    94.6 |                   
+  ...rias-utils.ts |   93.51 |    74.44 |   96.42 |   94.11 | ...72,229-232,278 
+  ...out-schema.ts |     100 |      100 |     100 |     100 |                   
+  queries.ts       |   87.12 |    58.42 |     100 |   93.63 | ...22,427,432-434 
+  tag-utils.ts     |     100 |    95.45 |     100 |     100 | 70                
+  utils.ts         |   92.85 |      100 |   66.66 |   92.85 | 5                 
+ store             |     100 |       75 |     100 |     100 |                   
+  cart.ts          |     100 |       75 |     100 |     100 | 38,57             
+-------------------|---------|----------|---------|---------|-------------------

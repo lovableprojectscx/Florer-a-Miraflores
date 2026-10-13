@@ -9,6 +9,7 @@ Rama: `fase-06-certificacion`, partiendo de `master` **con las fases 01–05 ya 
 ## 1. Regresión completa
 
 Corre y guarda la salida en `docs/evidencias/fase-06/`:
+
 - `npm run verify`
 - `npm run test:coverage` → anota % de líneas en `src/lib`, `src/store`, `src/hooks` (meta: ≥ 80 % en esas tres carpetas; si no llegas, lista qué falta).
 - `npm run test:rls`

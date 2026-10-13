@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, ShoppingBag, Share2, Check } from "lucide-react";
+import { toast } from "sonner";
 import { useCartStore } from "@/store/cart";
 import type { ProductoRow, TagRow } from "@/types/database";
 import { slugify } from "@/lib/utils";
@@ -118,7 +119,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch {
-        // Fallback silencioso
+        toast.error("No se pudo copiar el enlace al portapapeles");
       }
     }
   };

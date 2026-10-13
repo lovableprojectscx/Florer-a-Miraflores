@@ -3,21 +3,21 @@
 
 :root {
   /* Color — neutros marfil */
-  --fm-bg:            #FFFFFF; /* fondo principal */
-  --fm-ivory-soft:    #FAF8F6; /* secciones alternadas / cards suaves */
-  --fm-text:          #1A1A1A; /* texto principal */
-  --fm-text-muted:    #8C8A84; /* texto secundario */
+  --fm-bg: #ffffff; /* fondo principal */
+  --fm-ivory-soft: #faf8f6; /* secciones alternadas / cards suaves */
+  --fm-text: #1a1a1a; /* texto principal */
+  --fm-text-muted: #8c8a84; /* texto secundario */
 
   /* Color — acento de marca */
-  --fm-accent:        #C4848A; /* rosa — CTAs, focos, detalles */
+  --fm-accent: #c4848a; /* rosa — CTAs, focos, detalles */
 
   /* Bordes y estados */
-  --fm-border:        rgba(0, 0, 0, 0.06);
-  --fm-destructive:   #D64545;
+  --fm-border: rgba(0, 0, 0, 0.06);
+  --fm-destructive: #d64545;
 
   /* Tipografía */
-  --fm-font-display:  "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --fm-font-body:     "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --fm-font-display: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --fm-font-body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   /* Disponibles (importadas, no cableadas): "Playfair Display", "Montserrat", "Jost" */
 
   --fm-tracking-display: -0.02em;

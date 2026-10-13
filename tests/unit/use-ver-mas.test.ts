@@ -120,4 +120,14 @@ describe("useVerMas — paginación incremental en cliente", () => {
     expect(result.current.mostrando).toBe(24);
     expect(result.current.total).toBe(40);
   });
+
+  it("genera clave estable correctamente para items con propiedad 'name' y elementos primitivos", () => {
+    const itemsConName = [{ name: "Ramo A" }, { name: "Ramo B" }];
+    const { result: resName } = renderHook(() => useVerMas(itemsConName, 1));
+    expect(resName.current.total).toBe(2);
+
+    const itemsPrimitivos = ["rosa", "tulipan", "girasol"];
+    const { result: resPrim } = renderHook(() => useVerMas(itemsPrimitivos, 2));
+    expect(resPrim.current.total).toBe(3);
+  });
 });

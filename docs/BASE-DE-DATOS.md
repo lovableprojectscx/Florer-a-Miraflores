@@ -44,7 +44,7 @@ Se crearon las 10 tablas requeridas en el esquema `public`, utilizando `uuid` co
 | `faqs`             | Preguntas frecuentes. Campos: `pregunta`, `respuesta`, `orden`, `activo`.                                                                                                                                                                                                                    |
 | `distritos`        | Zonas de cobertura y costos de delivery. Campos: `nombre`, `precio_delivery`, `activo`.                                                                                                                                                                                                      |
 | `pedidos`          | Órdenes de los clientes. Campos: `numero` (único), `nombre_cliente`, `telefono`, `email`, `distrito_id`, `direccion`, `referencia`, `fecha_entrega`, `hora_entrega`, `productos` (jsonb), desglose de precios (subtotal, delivery, total), `estado`, `izi_transaction_id` (Izipay), `notas`. |
-| `suscriptores`     | Leads capturados vía popup y listón lateral. Campos: `id`, `telefono`, `origen`, `created_at`.                                                                                                                                                                                              |
+| `suscriptores`     | Leads capturados vía popup y listón lateral. Campos: `id`, `telefono`, `origen`, `created_at`.                                                                                                                                                                                               |
 
 ### Relaciones (Claves Foráneas)
 
@@ -175,12 +175,12 @@ Se han registrado con éxito los primeros **2 pedidos** de prueba en la tabla `p
 
 Consultadas directamente sobre `pg_policies` en el proyecto `sdrkiomeesoctsxeidmu`:
 
-| Tabla | Policy | Comando (`cmd`) | Roles | `USING` (`qual`) | `WITH CHECK` |
-| :--- | :--- | :---: | :---: | :--- | :--- |
-| `categorias` | `Public Read categorias` | `SELECT` | `{public}` | `true` | `null` |
-| `categorias` | `Admin Write categorias` | `ALL` | `{public}` | `(auth.uid() IS NOT NULL)` | `null` |
-| `productos` | `Public Read productos` | `SELECT` | `{public}` | `true` | `null` |
-| `productos` | `Admin Write productos` | `ALL` | `{public}` | `(auth.uid() IS NOT NULL)` | `null` |
+| Tabla        | Policy                   | Comando (`cmd`) |   Roles    | `USING` (`qual`)           | `WITH CHECK` |
+| :----------- | :----------------------- | :-------------: | :--------: | :------------------------- | :----------- |
+| `categorias` | `Public Read categorias` |    `SELECT`     | `{public}` | `true`                     | `null`       |
+| `categorias` | `Admin Write categorias` |      `ALL`      | `{public}` | `(auth.uid() IS NOT NULL)` | `null`       |
+| `productos`  | `Public Read productos`  |    `SELECT`     | `{public}` | `true`                     | `null`       |
+| `productos`  | `Admin Write productos`  |      `ALL`      | `{public}` | `(auth.uid() IS NOT NULL)` | `null`       |
 
 - **Certificación de `DELETE` para `anon`:** No existe ninguna policy `DELETE` permisiva para usuarios no autenticados (`auth.uid() IS NULL`); únicamente sesiones autenticadas (`auth.uid() IS NOT NULL`) pueden ejecutar `INSERT`, `UPDATE` o `DELETE` sobre `categorias` y `productos`.
 
@@ -200,7 +200,9 @@ Consultadas directamente sobre `pg_policies` en el proyecto `sdrkiomeesoctsxeidm
 ## 9. Estados de Pedidos y Restricciones (Fase 05)
 
 ### 9.1. Estados Válidos de Pedidos
+
 El ciclo operativo del pedido comprende 6 estados:
+
 1. `pendiente`: Recibido (estado por defecto al crearse la orden).
 2. `en_preparacion`: En preparación (el arreglo floral está siendo confeccionado en taller).
 3. `en_camino`: En camino (el repartidor está en ruta de entrega).
@@ -209,7 +211,9 @@ El ciclo operativo del pedido comprende 6 estados:
 6. `cancelado`: Cancelado (estado auxiliar si el cliente desiste o hay incidencia).
 
 ### 9.2. Auditoría de Constraints en `public.pedidos`
+
 Mediante consulta MCP a `pg_constraint`:
+
 - `pedidos_pkey`: `PRIMARY KEY (id)`
 - `pedidos_numero_key`: `UNIQUE (numero)`
 - `pedidos_distrito_id_fkey`: `FOREIGN KEY (distrito_id) REFERENCES distritos(id)`
@@ -217,7 +221,6 @@ Mediante consulta MCP a `pg_constraint`:
 **Conclusión:** La base de datos en producción no cuenta con un constraint `CHECK` que restrinja los valores admisibles en `pedidos.estado`. El tipo de dato es `text DEFAULT 'pendiente'::text`, por lo que el estado `'en_preparacion'` es aceptado sin rechazo a nivel motor.
 
 ### 9.3. Scripts Disponibles (`docs/sql/`)
+
 - [`docs/sql/verificar-estado-pedidos.sql`](./sql/verificar-estado-pedidos.sql): Consulta de sólo lectura (`SELECT`) de constraints, estados agrupados y políticas RLS activas en `pedidos`.
 - [`docs/sql/006-estado-en-preparacion.sql`](./sql/006-estado-en-preparacion.sql): Script idempotente con guarda y rollback que formaliza el `CHECK (estado IN ('pendiente', 'en_preparacion', 'en_camino', 'entregado', 'pagado', 'cancelado'))`. Queda preparado para su aplicación únicamente si Jack y el revisor deciden restringirlo a nivel DDL.
-
-

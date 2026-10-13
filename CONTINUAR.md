@@ -40,9 +40,25 @@ Chat nuevo en Cowork → misma carpeta conectada (`floreria-miraflo-main`) → c
 4. SQL: Antigravity lo escribe y lo ejecuta por MCP solo después de "SQL NNN aprobado por el revisor". Si el SQL cambia después de aprobado, se detiene y lo vuelve a mostrar. En lo crítico, pedir salida CRUDA del MCP.
 5. Merge solo con APROBADO.
 
-## Estado al 12-10-2026 (noche)
+## Estado al 13-10-2026 (Fase 06 — Certificación)
 
-- APROBADAS y mergeadas en master local: Fase 01 (tests), 02 (diagnóstico), 03 (categorías + SQL 003 ejecutado), 03-B (seguridad RLS, SQL 005 ejecutado: solo pedidos@floreriamiraflores.com es admin), 04 (catálogo fotos 4:5 + "Ver más"). Último merge: c3e377b.
-- SIGUIENTE: Fase 05 (pedidos/checkout). Prompt 05 + ajustes: el CHECK de estado lo verifica Antigravity por MCP; riesgo de montos va en docs/SEGURIDAD.md; no crear pedidos reales.
-- Pendientes de Jack: borrar test_admin_temp en Supabase Auth; desactivar "Allow new users to sign up"; push bloqueado (credencial jackquispe27-source sin permiso en lovableprojectscx/Florer-a-Miraflores); confirmar rama de Vercel; la encargada reparte los 39 productos en Niño/Niña y confirma la tabla de 13 de Tulipanes (luego "SQL 004 aprobado").
-- La landing (Novedades.tsx) NO cambió en la Fase 04: sus tarjetas siguen chicas (slider 160–260 px, foto cuadrada). Pendiente decidir si se agrandan.
+- APROBADAS y mergeadas en master local:
+  - Fase 01: Base de pruebas automatizadas (`npm run verify`).
+  - Fase 02: Diagnóstico de categorías en solo lectura.
+  - Fase 03: Arreglo de categorías (`docs/sql/003-nacimientos-padre.sql` aplicado).
+  - Fase 03-B: Seguridad RLS (`docs/sql/005-admin-rls.sql` aplicado, admin único: `pedidos@floreriamiraflores.com`).
+  - Fase 04: Catálogo (fotos 4:5 + paginación incremental "Ver más" de 24).
+  - Fase 05: Pedidos / checkout (`docs/sql/006-pedidos-estado-check.sql` aplicado, hora de Lima en checkout, deduplicación de número de pedido).
+  - Fase 06 (en rama `fase-06-certificacion`): Certificación pre-lanzamiento (`VEREDICTO: GO con condiciones`).
+    - RF-017 / RF-018 completados con test E2E.
+    - Test de compra completa E2E con interceptación segura y sin pedidos falsos.
+    - Auditoría de desbordamiento en 360/390/1440px: 0 overflow.
+    - 412 imágenes auditadas: 412 válidas (0 rotas).
+    - SEO: sitemap.xml (437 URLs), robots.txt, `<html lang="es">`.
+    - Lighthouse móvil en build de producción: 100 SEO, 100 Best Practices.
+- Pendientes asignados a Jack antes del despliegue:
+  1. Push a GitHub (`git push origin master`) cuando se autorice.
+  2. Borrar `test_admin_temp@floreriamiraflores.com` en Supabase Auth.
+  3. Desactivar "Allow new users to sign up" en Supabase Auth.
+  4. Repartir productos en Nacimientos Niño/Niña en el panel.
+  5. Confirmar tabla de Tulipanes (`docs/sql/004-tulipanes-reasignacion.sql`).

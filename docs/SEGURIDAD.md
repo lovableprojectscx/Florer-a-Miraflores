@@ -7,6 +7,7 @@ Este documento detalla el modelo de seguridad Row-Level Security (RLS) de la bas
 ## 1. Problema Detectado (Antes de Fase 03-B)
 
 En la configuración inicial de RLS:
+
 - Las 10 tablas de catálogo y configuración (`banners`, `categorias`, `colecciones_home`, `config`, `distritos`, `faqs`, `ocasiones_home`, `popup`, `productos`, `tags`) tenían políticas de escritura (`FOR ALL`) con condición `auth.uid() IS NOT NULL` (o `auth.role() = 'authenticated'`).
 - La tabla `pedidos` permitía `SELECT`, `UPDATE` y `DELETE` a cualquier sesión con `auth.uid() IS NOT NULL`.
 - La tabla `reclamaciones` tenía la política `"Allow admin select/update to reclamaciones"` (`FOR ALL TO authenticated`) con `USING (true)` y `WITH CHECK (true)`.
@@ -49,6 +50,7 @@ En la configuración inicial de RLS:
 Toda gestión de administradores se realiza desde el **SQL Editor** del Dashboard de Supabase (que ejecuta con rol `postgres`).
 
 ### 3.1. Listar los administradores actuales
+
 ```sql
 SELECT user_id, email, created_at
 FROM public.admins
@@ -56,8 +58,10 @@ ORDER BY created_at ASC;
 ```
 
 ### 3.2. Agregar un nuevo administrador
+
 1. Crear primero el usuario en **Supabase Dashboard → Authentication → Users → Add user** (si aún no existe en `auth.users`).
 2. Ejecutar en el **SQL Editor**:
+
 ```sql
 INSERT INTO public.admins (user_id, email)
 SELECT id, email
@@ -68,18 +72,22 @@ SET email = EXCLUDED.email;
 ```
 
 ### 3.3. Quitar un administrador
+
 Ejecutar en el **SQL Editor**:
+
 ```sql
 DELETE FROM public.admins
 WHERE lower(email) = lower('ex-admin@floreriamiraflores.pe');
 ```
-*(Si además se elimina el usuario desde **Authentication → Users**, la cláusula `ON DELETE CASCADE` borrará automáticamente su fila en `public.admins`).*
+
+_(Si además se elimina el usuario desde **Authentication → Users**, la cláusula `ON DELETE CASCADE` borrará automáticamente su fila en `public.admins`)._
 
 ---
 
 ## 4. Recordatorio Crítico de Configuración en Supabase Auth
 
 En el Dashboard de Supabase (**Authentication → Providers → Email** / **User Signups**):
+
 - **Mantener SIEMPRE DESACTIVADA la opción `"Allow new users to sign up"`** (registro público deshabilitado).
 - Los clientes de Florería Miraflores compran sin crear cuenta (invitados).
 - Aunque `public.is_admin()` impide que un usuario recién registrado acceda o modifique datos administrativos, mantener desactivado el registro público evita la creación no autorizada de cuentas en `auth.users`.
@@ -101,26 +109,32 @@ En el Dashboard de Supabase (**Authentication → Providers → Email** / **User
 ## 6. Riesgo de Montos en Checkout y Mitigación (Fase 05)
 
 ### 6.1. Descripción del Riesgo
+
 En la arquitectura actual de checkout:
+
 - Los valores de `subtotal`, `delivery` y `total` se calculan en el navegador del cliente (`src/routes/checkout.tsx` y `src/lib/queries.ts`).
 - La política RLS `pedidos.insert_public` permite la inserción anónima (`FOR INSERT TO anon, authenticated WITH CHECK (true)`).
 - Un usuario con conocimientos técnicos podría enviar una petición HTTP directa a la API REST de Supabase manipulando el payload con precios arbitrarios (por ejemplo, `total: 0.10` en un pedido de S/ 200).
 
 ### 6.2. Mitigación Actual (Operativa / Manual)
+
 - Actualmente **no existe pasarela de cobro desatendido en vivo**: todo pedido se coordina manualmente vía WhatsApp (`+51 999 600 482`).
 - La persona encargada de la florería recibe la alerta del pedido en WhatsApp, revisa el detalle en el panel de administración (`/admin/pedidos`) y coteja el monto con el catálogo y la tarifa oficial del distrito antes de solicitar o confirmar la transferencia (Yape/Plin/bancaria).
 - Por lo tanto, el riesgo financiero está mitigado por la verificación humana previa al despacho.
 
 ### 6.3. Propuesta Futura (Obligatoria antes de IZIPay / Cobro Online)
+
 Antes de activar cobros automáticos con tarjeta (IZIPay u otra pasarela), el backend **debe** recalcular y validar obligatoriamente los montos desde la fuente de verdad (tablas `productos` y `distritos`).
 
 Se plantean dos alternativas técnicas:
+
 1. **Opción A (Recomendada): Edge Function `crear-pedido`**  
    El cliente envía solo `[{ id, cantidad }]` y `distrito_id`. Una Edge Function calcula precios, crea la sesión de pago con IZIPay e inserta el pedido con `service_role`. La política pública `insert_public` de `pedidos` se revoca.
 2. **Opción B (Nivel BD): Trigger `BEFORE INSERT` en `public.pedidos`**  
    Recalcula automáticamente los montos y rechaza el insert si hay discrepancia.
 
 #### Borrador del Trigger en PostgreSQL (comentado, NO aplicar sin aprobación):
+
 ```sql
 -- -- ==============================================================================
 -- -- BORRADOR DE TRIGGER PARA RECALCULAR / VALIDAR MONTOS EN PUBLIC.PEDIDOS
@@ -175,4 +189,3 @@ Se plantean dos alternativas técnicas:
 -- --   FOR EACH ROW
 -- --   EXECUTE FUNCTION public.validar_recalcular_pedido();
 ```
-

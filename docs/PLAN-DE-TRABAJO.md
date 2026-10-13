@@ -11,30 +11,30 @@ Lista ordenada y priorizada de pendientes, incluyendo las solicitudes nuevas del
 
 ## P1 — Antes del lanzamiento
 
-| # | Pedido | Tipo | Nota |
-| --- | --- | --- | --- |
-| 1 | **Paginación del catálogo** ("Ver más", lotes de 24) | 🧑‍💻 | Plan ya definido. Alivia celular y egress con 300+ productos. |
-| 2 | **Fotos del catálogo más grandes y bonitas** (estilo Lima Floral) | 🧑‍💻 | Cambio de layout en `ProductGrid`: tarjetas más grandes, menos columnas, imagen protagonista. |
-| 3 | **Arreglar categoría "Nacimientos"** — no se refleja en la web | ⚙️/🧑‍💻 | Investigar: ¿no le deja subir (bug de admin) o está sin productos/inactiva? Primero reproducir el error. |
-| 4 | **Dividir "Nacimientos" en Niño y Niña** (subcategorías) | ⚙️ | Crear 2 subcategorías en el panel y asignar productos. Verificar que el admin lo permita. |
-| 5 | **"Tulipanes" no se refleja en Ramos y Arreglos** | ⚙️ | Revisar que las subcategorías de Tulipanes (arreglos/ramos/floreros) tengan productos asignados y estén activas. |
-| 6 | **Estado "En preparación"** en pedidos | 🧑‍💻 | Añadir al flujo de estados (hoy: pendiente, pagado, en camino, entregado). |
+| #   | Pedido                                                            | Tipo  | Nota                                                                                                             |
+| --- | ----------------------------------------------------------------- | ----- | ---------------------------------------------------------------------------------------------------------------- |
+| 1   | **Paginación del catálogo** ("Ver más", lotes de 24)              | 🧑‍💻    | Plan ya definido. Alivia celular y egress con 300+ productos.                                                    |
+| 2   | **Fotos del catálogo más grandes y bonitas** (estilo Lima Floral) | 🧑‍💻    | Cambio de layout en `ProductGrid`: tarjetas más grandes, menos columnas, imagen protagonista.                    |
+| 3   | **Arreglar categoría "Nacimientos"** — no se refleja en la web    | ⚙️/🧑‍💻 | Investigar: ¿no le deja subir (bug de admin) o está sin productos/inactiva? Primero reproducir el error.         |
+| 4   | **Dividir "Nacimientos" en Niño y Niña** (subcategorías)          | ⚙️    | Crear 2 subcategorías en el panel y asignar productos. Verificar que el admin lo permita.                        |
+| 5   | **"Tulipanes" no se refleja en Ramos y Arreglos**                 | ⚙️    | Revisar que las subcategorías de Tulipanes (arreglos/ramos/floreros) tengan productos asignados y estén activas. |
+| 6   | **Estado "En preparación"** en pedidos                            | 🧑‍💻    | Añadir al flujo de estados (hoy: pendiente, pagado, en camino, entregado).                                       |
 
 ## P2 — Post-lanzamiento (rápido, no bloquea salir al aire)
 
-| # | Pedido | Tipo | Nota |
-| --- | --- | --- | --- |
-| 7 | **Página de Reseñas y Testimonios** (imágenes + texto + estrellas) | 🧑‍💻 | Opción A (recomendada): testimonios curados cargados desde el panel. Opción B: conectar a Google Maps (ver P3-11). |
-| 8 | **Correo automático** al recibir un pedido | 🧑‍💻 | Edge Function + servicio de correo (Resend). Prometido en cotización. |
-| 9 | **Botón "Agregar al carrito"** en tarjetas del Home | 🧑‍💻 | RF-017. |
-| 10 | **Botón "Compartir"** en tarjetas del Home | 🧑‍💻 | RF-018 (Web Share API / copiar enlace). |
+| #   | Pedido                                                             | Tipo | Nota                                                                                                               |
+| --- | ------------------------------------------------------------------ | ---- | ------------------------------------------------------------------------------------------------------------------ |
+| 7   | **Página de Reseñas y Testimonios** (imágenes + texto + estrellas) | 🧑‍💻   | Opción A (recomendada): testimonios curados cargados desde el panel. Opción B: conectar a Google Maps (ver P3-11). |
+| 8   | **Correo automático** al recibir un pedido                         | 🧑‍💻   | Edge Function + servicio de correo (Resend). Prometido en cotización.                                              |
+| 9   | **Botón "Agregar al carrito"** en tarjetas del Home                | 🧑‍💻   | RF-017.                                                                                                            |
+| 10  | **Botón "Compartir"** en tarjetas del Home                         | 🧑‍💻   | RF-018 (Web Share API / copiar enlace).                                                                            |
 
 ## P3 — Cuando se pueda / depende de terceros
 
-| # | Pedido | Tipo | Nota |
-| --- | --- | --- | --- |
-| 11 | **Conectar reseñas a Google Maps** | 🔒 | Requiere Google Place ID + API key. La API de Google solo devuelve ~5 reseñas; para más, se usa enlace o se curan manualmente. |
-| 12 | **Integración IZIPay** (pago en la web) | 🔒 | Bloqueado por credenciales de Sofía (Sandbox). |
+| #   | Pedido                                  | Tipo | Nota                                                                                                                           |
+| --- | --------------------------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 11  | **Conectar reseñas a Google Maps**      | 🔒   | Requiere Google Place ID + API key. La API de Google solo devuelve ~5 reseñas; para más, se usa enlace o se curan manualmente. |
+| 12  | **Integración IZIPay** (pago en la web) | 🔒   | Bloqueado por credenciales de Sofía (Sandbox).                                                                                 |
 
 ---
 

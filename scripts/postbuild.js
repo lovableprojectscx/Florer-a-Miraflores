@@ -28,3 +28,10 @@ if (fs.existsSync(srcDir)) {
 } else {
   console.error("Postbuild error: dist/client directory not found");
 }
+
+const serverIndex = path.join(process.cwd(), "dist", "server", "index.js");
+const serverTarget = path.join(process.cwd(), "dist", "server", "server.js");
+if (fs.existsSync(serverIndex) && !fs.existsSync(serverTarget)) {
+  fs.copyFileSync(serverIndex, serverTarget);
+  console.log("Postbuild: Created dist/server/server.js for preview compatibility");
+}

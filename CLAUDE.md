@@ -56,33 +56,36 @@ Guía de contexto completo para el agente de desarrollo. Leer antes de tocar cua
 
 ### Estado de Construcción de Páginas y Features
 
-| Página / Feature       | Ruta              | Estado                               |
-| ---------------------- | ----------------- | ------------------------------------ |
-| Producto individual    | `/producto/:id`   | ✓ Completado                         |
-| Catálogo con filtros   | `/catalogo`       | ✓ Completado (subfiltros dinámicos)  |
-| Página Nosotros        | `/nosotros`       | ✓ Completado (historia, atelier)     |
-| Header con scroll libre| componente global | ✓ Completado (Header.tsx relativo)   |
-| Bento Collage Home     | Home              | ✓ Completado (CategoryShowcase.tsx)  |
-| Drawer de carrito      | componente global | ✓ Completado (CartDrawer.tsx)         |
-| Checkout               | `/checkout`       | ✓ Completado                         |
-| Confirmación post-pago | `/confirmacion`   | ✓ Completado                         |
-| Panel admin            | `/admin/*`        | ✓ Completado                         |
-| Conexión Supabase      | —                 | ✓ Completado (Fila única, CRUD admin) |
-| IZIPay                 | —                 | ⚠️ Flujo Manual / Pendiente credenciales |
-| Acciones en cards Home (Carrito + Compartir) | Home (`Novedades.tsx`) | ⏳ En planificación (RF-017, RF-018) |
-| Popup de celular       | Global            | ✓ Completado (RF-064b)               |
+| Página / Feature                             | Ruta                   | Estado                                   |
+| -------------------------------------------- | ---------------------- | ---------------------------------------- |
+| Producto individual                          | `/producto/:id`        | ✓ Completado                             |
+| Catálogo con filtros                         | `/catalogo`            | ✓ Completado (subfiltros dinámicos)      |
+| Página Nosotros                              | `/nosotros`            | ✓ Completado (historia, atelier)         |
+| Header con scroll libre                      | componente global      | ✓ Completado (Header.tsx relativo)       |
+| Bento Collage Home                           | Home                   | ✓ Completado (CategoryShowcase.tsx)      |
+| Drawer de carrito                            | componente global      | ✓ Completado (CartDrawer.tsx)            |
+| Checkout                                     | `/checkout`            | ✓ Completado                             |
+| Confirmación post-pago                       | `/confirmacion`        | ✓ Completado                             |
+| Panel admin                                  | `/admin/*`             | ✓ Completado                             |
+| Conexión Supabase                            | —                      | ✓ Completado (Fila única, CRUD admin)    |
+| IZIPay                                       | —                      | ⚠️ Flujo Manual / Pendiente credenciales |
+| Acciones en cards Home (Carrito + Compartir) | Home (`Novedades.tsx`) | ✓ Completado (RF-017, RF-018)            |
+| Popup de celular                             | Global                 | ✓ Completado (RF-064b)                   |
 
 ### Fases del proyecto
 
 **FASE 1 — Frontend completo**
-* **Completado:** Página de producto individual, Carrito Zustand (CartDrawer), Formulario de Checkout y Confirmación.
+
+- **Completado:** Página de producto individual, Carrito Zustand (CartDrawer), Formulario de Checkout y Confirmación.
 
 **FASE 2 — Conectar Supabase**
-* **Completado:** Reemplazado catálogo y categorías estáticas con queries reales de Supabase. Creado panel de administración completo (CRUD para productos, categorías, banners, popup, ocasiones, distritos, pedidos, libro de reclamaciones, tags del home).
+
+- **Completado:** Reemplazado catálogo y categorías estáticas con queries reales de Supabase. Creado panel de administración completo (CRUD para productos, categorías, banners, popup, ocasiones, distritos, pedidos, libro de reclamaciones, tags del home).
 
 **FASE 3 — IZIPay (Automatizado)**
-* **Pendiente:** Integración con la pasarela transaccional de cobro en línea IZIPay mediante Edge Functions y webhook.
-* **Estado actual:** El checkout registra el pedido en la base de datos de Supabase y redirige al usuario a confirmación de WhatsApp/resumen de pedido. El botón de pago simula la transacción indicando que está pendiente de integración oficial.
+
+- **Pendiente:** Integración con la pasarela transaccional de cobro en línea IZIPay mediante Edge Functions y webhook.
+- **Estado actual:** El checkout registra el pedido en la base de datos de Supabase y redirige al usuario a confirmación de WhatsApp/resumen de pedido. El botón de pago simula la transacción indicando que está pendiente de integración oficial.
 
 ---
 

@@ -6,37 +6,68 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 ## Índice de Versiones e Hitos
 
-| Versión | Fecha | Tipo | Resumen de Cambios |
-| :---: | :---: | :---: | :--- |
-| **v1.8.0** | 2026-10-13 | **Pedidos / Checkout** | Fase 05: Certificación de estado `"En preparación"`, selector reordenado según flujo operativo y toasts en `/admin/pedidos`; corrección de fecha mínima en Lima (`America/Lima`) en `getFechaMinima()`; reintento automático ante colisión de número de pedido (código 23505) en `crearPedido()`; documentación de riesgo de montos y trigger borrador en `docs/SEGURIDAD.md`; tests E2E y unitarios. |
-| **v1.7.0** | 2026-10-12 | **Catálogo / UI** | Fase 04: Paginación incremental `"Ver más"` en lotes de 24 (`use-ver-mas.ts`), fotos protagonistas `aspect-[4/5]`, grilla máximo 4 columnas (`grid-cols-2 md:grid-cols-3 xl:grid-cols-4`), `decoding="async"`, `sizes` y placeholder explícito en `ProductGrid`. |
-| **v1.6.1** | 2026-10-12 | **Seguridad / RLS** | Fase 03-B: Endurecimiento de políticas RLS con tabla `public.admins`, función `public.is_admin()`, script `docs/sql/005-admin-rls.sql`, auditoría de `pedidos`/`reclamaciones`/`storage` y tests E2E de las 12 secciones de `/admin`. |
-| **v1.6.0** | 2026-10-12 | **Categorías / Admin** | Fase 03: Ocultamiento automático de categorías vacías en la web pública, selector agrupado `Padre › Hija` en `/admin/productos`, toasts y conteos en `/admin/categorias`, redirección de subcategorías movidas y scripts SQL `003`/`004`. |
-| **v1.5.1** | 2026-10-12 | **Diagnóstico** | Fase 02: Diagnóstico de categorías en solo lectura (`scripts/diagnostico-categorias.mjs`, `docs/sql/diagnostico-categorias.sql`, `docs/DIAGNOSTICO-CATEGORIAS.md`). |
-| **v1.5.0** | 2026-10-12 | **QA / Testing** | Base de pruebas automatizadas: Vitest (unitario + RLS), Playwright E2E (mobile/desktop) y comando único `npm run verify`. |
-| **v1.4.2** | 2026-10-08 | **Admin / Jerarquía** | Soporte explícito y visualización de subcategorías agrupadas por padre en Colecciones Home. |
-| **v1.4.1** | 2026-10-08 | **UI / Navbar** | Retiro de botones "Catálogo", "Nosotros" y "Preguntas" del menú superior del Header para una vista limpia y enfocada en flores. |
-| **v1.4.0** | 2026-10-08 | **UX / Layout** | Header con scroll natural (des-anclaje de sticky) y calibración de galería de producto. |
-| **v1.3.5** | 2026-10-08 | **Responsive** | Escala y proporción armónica para laptops en slider de novedades y colecciones. |
-| **v1.3.0** | 2026-10-08 | **Catálogo / Home** | Reemplazo de colecciones de baja densidad por "Cumpleaños" y "Ramos", fotos HD y filtros de subcategorías. |
-| **v1.2.0** | 2026-10-07 | **Diseño Editorial** | Rediseño Collage Bento asimétrico para colecciones destacadas del Home. |
-| **v1.1.0** | 2026-10-07 | **Estructura Web** | Creación de página dedicada `/nosotros` y simplificación de la landing page (retiro de ocasiones y sobrecarga). |
-| **v1.0.5** | 2026-10-07 | **UX / Limpieza** | Retiro del listón lateral flotante de promociones para navegación limpia. |
-| **v1.0.4** | 2026-10-07 | **Seguridad / CI** | Parche de seguridad CVE-2026-102989 en `@tanstack/react-start` y normalización de pipeline en Vercel. |
-| **v1.0.3** | 2026-10-06 | **Admin / Datos** | Unificación de tags, alias automáticos y feedback visual con auto-scroll en edición de productos. |
-| **v1.0.2** | 2026-10-05 | **Branding** | Incorporación de favicon e isotipos multirresolución y proporción exacta del Hero Banner (8:3). |
-| **v1.0.1** | 2026-10-04 | **Contenido / DB** | Carga masiva y optimización de activos fotográficos WebP en Supabase Storage (80+ productos). |
+|  Versión   |   Fecha    |          Tipo          | Resumen de Cambios                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| :--------: | :--------: | :--------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **v1.9.0** | 2026-10-13 | **Certificación / QA** | Fase 06: Certificación pre-lanzamiento (`VEREDICTO: GO con condiciones`). Implementación y verificación de RF-017 (agregar al carrito desde el home) y RF-018 (compartir producto con portapapeles/toast); test E2E de flujo completo de compra y auditoría de desbordamiento horizontal en 360/390/1440px; auditoría de 412 imágenes (0 rotas); sitemap.xml (437 URLs) y robots.txt; `<html lang="es">`; Lighthouse móvil (100 SEO, 100 Best Practices); checklist manual y acta de certificación. |
+| **v1.8.0** | 2026-10-13 | **Pedidos / Checkout** | Fase 05: Certificación de estado `"En preparación"`, selector reordenado según flujo operativo y toasts en `/admin/pedidos`; corrección de fecha mínima en Lima (`America/Lima`) en `getFechaMinima()`; reintento automático ante colisión de número de pedido (código 23505) en `crearPedido()`; documentación de riesgo de montos y trigger borrador en `docs/SEGURIDAD.md`; tests E2E y unitarios.                                                                                               |
+| **v1.7.0** | 2026-10-12 |   **Catálogo / UI**    | Fase 04: Paginación incremental `"Ver más"` en lotes de 24 (`use-ver-mas.ts`), fotos protagonistas `aspect-[4/5]`, grilla máximo 4 columnas (`grid-cols-2 md:grid-cols-3 xl:grid-cols-4`), `decoding="async"`, `sizes` y placeholder explícito en `ProductGrid`.                                                                                                                                                                                                                                    |
+| **v1.6.1** | 2026-10-12 |  **Seguridad / RLS**   | Fase 03-B: Endurecimiento de políticas RLS con tabla `public.admins`, función `public.is_admin()`, script `docs/sql/005-admin-rls.sql`, auditoría de `pedidos`/`reclamaciones`/`storage` y tests E2E de las 12 secciones de `/admin`.                                                                                                                                                                                                                                                               |
+| **v1.6.0** | 2026-10-12 | **Categorías / Admin** | Fase 03: Ocultamiento automático de categorías vacías en la web pública, selector agrupado `Padre › Hija` en `/admin/productos`, toasts y conteos en `/admin/categorias`, redirección de subcategorías movidas y scripts SQL `003`/`004`.                                                                                                                                                                                                                                                           |
+| **v1.5.1** | 2026-10-12 |    **Diagnóstico**     | Fase 02: Diagnóstico de categorías en solo lectura (`scripts/diagnostico-categorias.mjs`, `docs/sql/diagnostico-categorias.sql`, `docs/DIAGNOSTICO-CATEGORIAS.md`).                                                                                                                                                                                                                                                                                                                                 |
+| **v1.5.0** | 2026-10-12 |    **QA / Testing**    | Base de pruebas automatizadas: Vitest (unitario + RLS), Playwright E2E (mobile/desktop) y comando único `npm run verify`.                                                                                                                                                                                                                                                                                                                                                                           |
+| **v1.4.2** | 2026-10-08 | **Admin / Jerarquía**  | Soporte explícito y visualización de subcategorías agrupadas por padre en Colecciones Home.                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **v1.4.1** | 2026-10-08 |    **UI / Navbar**     | Retiro de botones "Catálogo", "Nosotros" y "Preguntas" del menú superior del Header para una vista limpia y enfocada en flores.                                                                                                                                                                                                                                                                                                                                                                     |
+| **v1.4.0** | 2026-10-08 |    **UX / Layout**     | Header con scroll natural (des-anclaje de sticky) y calibración de galería de producto.                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **v1.3.5** | 2026-10-08 |     **Responsive**     | Escala y proporción armónica para laptops en slider de novedades y colecciones.                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **v1.3.0** | 2026-10-08 |  **Catálogo / Home**   | Reemplazo de colecciones de baja densidad por "Cumpleaños" y "Ramos", fotos HD y filtros de subcategorías.                                                                                                                                                                                                                                                                                                                                                                                          |
+| **v1.2.0** | 2026-10-07 |  **Diseño Editorial**  | Rediseño Collage Bento asimétrico para colecciones destacadas del Home.                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **v1.1.0** | 2026-10-07 |   **Estructura Web**   | Creación de página dedicada `/nosotros` y simplificación de la landing page (retiro de ocasiones y sobrecarga).                                                                                                                                                                                                                                                                                                                                                                                     |
+| **v1.0.5** | 2026-10-07 |   **UX / Limpieza**    | Retiro del listón lateral flotante de promociones para navegación limpia.                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| **v1.0.4** | 2026-10-07 |   **Seguridad / CI**   | Parche de seguridad CVE-2026-102989 en `@tanstack/react-start` y normalización de pipeline en Vercel.                                                                                                                                                                                                                                                                                                                                                                                               |
+| **v1.0.3** | 2026-10-06 |   **Admin / Datos**    | Unificación de tags, alias automáticos y feedback visual con auto-scroll en edición de productos.                                                                                                                                                                                                                                                                                                                                                                                                   |
+| **v1.0.2** | 2026-10-05 |      **Branding**      | Incorporación de favicon e isotipos multirresolución y proporción exacta del Hero Banner (8:3).                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **v1.0.1** | 2026-10-04 |   **Contenido / DB**   | Carga masiva y optimización de activos fotográficos WebP en Supabase Storage (80+ productos).                                                                                                                                                                                                                                                                                                                                                                                                       |
 
 ---
 
 ## Detalle de Hitos y Actualizaciones
 
+### [v1.9.0] — 2026-10-13: Certificación Pre-Lanzamiento y Auditoría Global (Fase 06)
+
+#### Contexto y Objetivo
+
+Realizar la certificación exhaustiva de pre-lanzamiento (_go / no-go_) de la plataforma Florería Miraflores mediante auditoría automatizada y manual de flujos de compra, seguridad, imágenes públicas, SEO, rendimiento móvil (Lighthouse) y checklist pre-lanzamiento.
+
+#### Cambios Implementados
+
+1. **Acciones Rápidas en Home (`src/components/Novedades.tsx`):**
+   - Implementación y certificación de RF-017 (botón "Agregar al carrito" que incorpora el ítem y abre el drawer interactivo sin abandonar la vista).
+   - Implementación y certificación de RF-018 (botón "Compartir" con soporte nativo de Web Share API y fallback a portapapeles con `toast.error` ante rechazos).
+   - Test E2E dedicado: [`tests/e2e/home-acciones.spec.ts`](file:///tests/e2e/home-acciones.spec.ts).
+2. **Recorrido Completo de Compra y Auditoría Responsiva:**
+   - Creación de [`tests/e2e/recorrido-compra.spec.ts`](file:///tests/e2e/recorrido-compra.spec.ts) cubriendo navegación Home → Catálogo/Categoría → Ficha de Producto → Carrito → Checkout → Confirmación con interceptación segura de inserción en Supabase (sin filas de prueba en producción).
+   - Auditoría multi-resolución: verificación de `scrollWidth <= clientWidth` (0 desbordamiento horizontal) en 360px, 390px y 1440px en todas las vistas públicas.
+   - Auditoría de enlaces de WhatsApp FAB hacia `https://wa.me/51999600482`.
+3. **SEO, Sitemap y Metadatos:**
+   - Corrección de accesibilidad e indexación en [`src/routes/__root.tsx`](file:///src/routes/__root.tsx): `<html lang="es">`.
+   - Creación de [`public/robots.txt`](file:///public/robots.txt) con apertura de rutas públicas y exclusión de `/admin` y `/confirmacion`.
+   - Creación de [`scripts/generate-sitemap.mjs`](file:///scripts/generate-sitemap.mjs) y generación de [`public/sitemap.xml`](file:///public/sitemap.xml) con 437 URLs activas indexables.
+4. **Verificación de Imágenes Públicas:**
+   - Creación y ejecución de [`scripts/verificar-imagenes.mjs`](file:///scripts/verificar-imagenes.mjs) con concurrencia 5: 412 URLs únicas auditadas, 412 válidas (100%), 0 rotas ([`docs/evidencias/fase-06/imagenes.md`](file:///docs/evidencias/fase-06/imagenes.md)).
+5. **Auditoría Lighthouse Móvil y Documentación de Lanzamiento:**
+   - Auditoría sobre build local de producción compilado: 100 en SEO y 100 en Best Practices en Home, Catálogo y Producto.
+   - Creación de [`docs/CHECKLIST-MANUAL-LANZAMIENTO.md`](file:///docs/CHECKLIST-MANUAL-LANZAMIENTO.md) y acta oficial [`docs/CERTIFICACION-LANZAMIENTO.md`](file:///docs/CERTIFICACION-LANZAMIENTO.md) con `VEREDICTO: GO con condiciones`.
+
+---
+
 ### [v1.8.0] — 2026-10-13: Certificación de Estado "En preparación" y Blindaje del Checkout (Fase 05)
 
 #### Contexto y Objetivo
+
 Certificar el funcionamiento del estado `"En preparación"` en el panel de administración y en la base de datos de producción; subsanar el desfase horario en la selección de fecha mínima de entrega para compras nocturnas en Lima; proteger el checkout ante colisiones de clave única de número de pedido; y documentar el riesgo de montos en inserciones públicas con propuesta de mitigación futura.
 
 #### Cambios Implementados
+
 1. **Certificación y UX del panel de pedidos (`src/routes/admin/pedidos.tsx`):**
    - Reordenamiento de `ESTADOS` y del selector del modal para reflejar el flujo operativo: Recibido (`pendiente`) → En preparación (`en_preparacion`) → En camino (`en_camino`) → Entregado (`entregado`), manteniendo `pagado` y `cancelado` como auxiliares.
    - Integración de notificaciones `toast` (Sonner): `toast.success("Pedido FM-XXXXXX → En preparación")` al actualizar y `toast.error` si ocurre algún fallo.
@@ -63,9 +94,11 @@ Certificar el funcionamiento del estado `"En preparación"` en el panel de admin
 ### [v1.7.0] — 2026-10-12: Fotos de Catálogo Más Grandes (4:5) y Paginación "Ver más" por Lotes de 24 (Fase 04)
 
 #### Contexto y Objetivo
+
 Reducir el número de elementos montados en el DOM en móvil y el consumo de egress de Supabase Storage sin romper los filtros ni el ordenamiento en cliente, y dar mayor protagonismo visual a las fotografías del catálogo (inspirado en la proporción foto/tarjeta de Lima Floral: 2 columnas en móvil, 3 en `md`, máximo 4 en `xl`, fotos `aspect-[4/5]`).
 
 #### Cambios Implementados
+
 1. **Hook de paginación incremental (`src/hooks/use-ver-mas.ts`):**
    - `useVerMas<T>(items, tamanoLote = 24)` expone `{ visibles, total, mostrando, hayMas, verMas }`.
    - Se reinicia automáticamente a `24` cuando cambia la lista filtrada u ordenada mediante comparación por clave estable (`tamanoLote|longitud|ids`), sin resetear si se recibe un nuevo array con los mismos elementos.
@@ -83,9 +116,11 @@ Reducir el número de elementos montados en el DOM en móvil y el consumo de egr
 ### [v1.6.1] — 2026-10-12: Endurecimiento de Seguridad RLS (Fase 03-B)
 
 #### Contexto y Objetivo
+
 Todas las policies de escritura en las 10 tablas de catálogo/contenido, `SELECT`/`UPDATE`/`DELETE` en `pedidos` y `reclamaciones`, y `INSERT`/`DELETE` en `storage.objects` usaban `auth.uid() IS NOT NULL` (o `TO authenticated USING (true)`), permitiendo que cualquier usuario autenticado modificara el catálogo o leyera/modificara pedidos y reclamos.
 
 #### Cambios Implementados
+
 1. **Migración SQL idempotente (`docs/sql/005-admin-rls.sql`):**
    - Creación de `public.admins` (`user_id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE`, `email text NOT NULL`, `created_at timestamptz`) con RLS activo y sin policies públicas.
    - Creación de `public.is_admin()` (`RETURNS boolean`, `LANGUAGE sql`, `STABLE`, `SECURITY DEFINER`, `SET search_path = public`).
@@ -104,11 +139,13 @@ Todas las policies de escritura en las 10 tablas de catálogo/contenido, `SELECT
 ### [v1.6.0] — 2026-10-12: Arreglo de Categorías, Visibilidad Automática y Mejoras de Admin (Fase 03)
 
 #### Contexto y Decisiones de Negocio
+
 - **D1 = B:** `"Nacimientos"` pasa a ser categoría padre en el menú principal con las subcategorías `"Niño"` (`nacimientos-nino`) y `"Niña"` (`nacimientos-nina`).
 - **D2 = A:** Cada producto pertenece a una única categoría (`categoria_id`), sin agregar `categorias_extra`.
 - **Regla de visibilidad pública:** Cualquier categoría o subcategoría con 0 productos activos (directos + hijas) se oculta automáticamente en la tienda pública, mientras sigue visible y administrable en `/admin`.
 
 #### Cambios Implementados
+
 1. **Utilidades puras de categorías (`src/lib/categorias-utils.ts`):**
    - `filtrarCategoriasVisibles`, `calcularConteoProductosPorCategoria`, `armarOpcionesCategoriaSelect`, `buscarConflictoSlugCategoria`, `formatearErrorGuardadoCategoria` y `resolverRedireccionSubcategoria`.
 2. **Panel Admin (`src/routes/admin/productos.tsx`, `src/routes/admin/categorias.tsx`, `src/routes/__root.tsx`):**
@@ -129,9 +166,11 @@ Todas las policies de escritura en las 10 tablas de catálogo/contenido, `SELECT
 ### [v1.5.1] — 2026-10-12: Diagnóstico de Categorías (Fase 02 — Solo Lectura)
 
 #### Contexto y Objetivo
-Diagnosticar con evidencia real la causa de los 3 reclamos sobre categorías (*"Nacimientos no se refleja / no deja subirla"*, *"Dividir Nacimientos en Niño y Niña"*, *"Tulipanes no se refleja en Ramos y Arreglos"*) sin modificar ningún dato de producción.
+
+Diagnosticar con evidencia real la causa de los 3 reclamos sobre categorías (_"Nacimientos no se refleja / no deja subirla"_, _"Dividir Nacimientos en Niño y Niña"_, _"Tulipanes no se refleja en Ramos y Arreglos"_) sin modificar ningún dato de producción.
 
 #### Entregables Implementados
+
 1. **Script de diagnóstico con `anon key` (`scripts/diagnostico-categorias.mjs`):** Consulta en solo lectura (`SELECT`) el árbol de las 29 categorías activas y los 402 productos activos, identificando subcategorías con 0 productos (`Tulipanes › Arreglos` tiene `0` productos mientras que `Tulipanes` padre tiene `13`), la existencia de `Ocasión › Nacimientos` (`39` productos activos) y la colisión de nombres duplicados (`"Ramos"`) en el `<select>` plano de `/admin/productos`.
 2. **Consultas SQL para el SQL Editor (`docs/sql/diagnostico-categorias.sql`):** Archivo de solo `SELECT` para inspeccionar filas inactivas, conteos totales, productos sin categoría, `pg_policies` y constraints de `categorias`.
 3. **Informe técnico y matriz de decisiones (`docs/DIAGNOSTICO-CATEGORIAS.md`):** Documenta causas confirmadas, clasificación y opciones D1 (`Niño/Niña`) y D2 (`Tulipanes en Ramos/Arreglos`).
@@ -141,9 +180,11 @@ Diagnosticar con evidencia real la causa de los 3 reclamos sobre categorías (*"
 ### [v1.5.0] — 2026-10-12: Base de Pruebas Automatizadas (Vitest + Playwright + RLS + Verify)
 
 #### Contexto y Objetivo
+
 Establecer los cimientos de calidad y verificación continua antes de las siguientes fases funcionales, sin modificar el comportamiento visible para el cliente ni alterar datos de la base de datos de producción.
 
 #### Solución Técnica Implementada
+
 1. **Pruebas Unitarias (`vitest.config.ts` + `tests/unit/`):**
    - Configuración independiente en `jsdom` con `@vitejs/plugin-react`, `vite-tsconfig-paths` y `@testing-library/jest-dom`.
    - Extracción de `checkoutSchema` y `getFechaMinima` desde `src/routes/checkout.tsx` hacia `src/lib/checkout-schema.ts` sin cambiar su comportamiento.
@@ -162,17 +203,20 @@ Establecer los cimientos de calidad y verificación continua antes de las siguie
 ### [v1.4.2] — 2026-10-08: Organización Jerárquica de Categorías y Subcategorías en Colecciones Home
 
 #### Solicitud del Cliente
-> *"¿No permite subcategorías?"* (Al abrir el selector de agregar colecciones en `/admin/colecciones-home`).
+
+> _"¿No permite subcategorías?"_ (Al abrir el selector de agregar colecciones en `/admin/colecciones-home`).
 
 #### Contexto y Diagnóstico
-Aunque la base de datos y el componente de la tienda ya soportaban el enlace hacia subcategorías, el selector desplegable en el panel de administración (`/admin/colecciones-home`) mostraba una lista alfabética plana sin distinguir entre categorías principales y subcategorías (ej. *Coronas Fúnebres* o *Cruces* aparecían sueltas sin indicar que pertenecen a *Defunción*, o *Ramos* aparecía duplicado sin saber si correspondía a *Tulipanes* o a *Arreglos Florales*). Tampoco la tabla indicaba el tipo de elemento configurado.
+
+Aunque la base de datos y el componente de la tienda ya soportaban el enlace hacia subcategorías, el selector desplegable en el panel de administración (`/admin/colecciones-home`) mostraba una lista alfabética plana sin distinguir entre categorías principales y subcategorías (ej. _Coronas Fúnebres_ o _Cruces_ aparecían sueltas sin indicar que pertenecen a _Defunción_, o _Ramos_ aparecía duplicado sin saber si correspondía a _Tulipanes_ o a _Arreglos Florales_). Tampoco la tabla indicaba el tipo de elemento configurado.
 
 #### Solución Técnica Implementada
+
 1. **Selector con `<optgroup>` y jerarquía visual (`src/routes/admin/colecciones-home.tsx`):**
    - Se agruparon las opciones en:
-     * `── CATEGORÍAS PRINCIPALES ──`: Listado de categorías padre activas (*Arreglos Florales, Tulipanes, Defunción, Ocasión, etc.*).
-     * `── SUBCATEGORÍAS DE [PADRE] ──`: Grupos dedicados por categoría padre con prefijo indicativo (ej. `↳ Girasoles (de Primaverales)`, `↳ Coronas Fúnebres (de Defunción)`).
-   - Actualización de etiquetas a **"Categoría o Subcategoría *"** con texto explicativo que confirma la compatibilidad total.
+     - `── CATEGORÍAS PRINCIPALES ──`: Listado de categorías padre activas (_Arreglos Florales, Tulipanes, Defunción, Ocasión, etc._).
+     - `── SUBCATEGORÍAS DE [PADRE] ──`: Grupos dedicados por categoría padre con prefijo indicativo (ej. `↳ Girasoles (de Primaverales)`, `↳ Coronas Fúnebres (de Defunción)`).
+   - Actualización de etiquetas a *_"Categoría o Subcategoría *"*_ con texto explicativo que confirma la compatibilidad total.
 2. **Badges de tipo en la tabla de colecciones:**
    - La columna ahora se titula **Colección / Tipo**.
    - Cada fila cuenta con un badge diferenciador: `Principal` o `Subcategoría de [Padre]`, tanto en versión de escritorio como en tarjetas móviles.
@@ -184,15 +228,18 @@ Aunque la base de datos y el componente de la tienda ya soportaban el enlace hac
 ### [v1.4.1] — 2026-10-08: Retiro de Botones "Catálogo", "Nosotros" y "Preguntas" del Menú del Header
 
 #### Solicitud del Cliente
-> *"Quita de la vista de la landing el botón de nosotros, preguntas y catálogo."*
+
+> _"Quita de la vista de la landing el botón de nosotros, preguntas y catálogo."_
 
 #### Contexto y Diagnóstico
+
 En la barra de navegación del Header (`Header.tsx`), los enlaces directos a `Catálogo`, `Nosotros` y `Preguntas` ocupaban espacio horizontal al final de la lista de categorías florales. Al acumularse 12 elementos en una sola línea, la cabecera se percibía densa y comprimida en resoluciones de laptop y escritorio.
 
 #### Solución Técnica Implementada
+
 1. **Despeje de la barra de navegación de escritorio (`src/components/Header.tsx`):**
    - Se removieron los elementos `<li>` correspondientes a `/catalogo`, `/nosotros`, `/#faq` y el dropdown colapsable `Más`.
-   - La barra ahora se dedica con exclusividad al descubrimiento de flores: **Inicio** + las 8 categorías padre oficiales (*Ocasión, Arreglos Florales, Arreglos Premium, Tulipanes, Primaverales, Defunción, Novedades, Ofertas*).
+   - La barra ahora se dedica con exclusividad al descubrimiento de flores: **Inicio** + las 8 categorías padre oficiales (_Ocasión, Arreglos Florales, Arreglos Premium, Tulipanes, Primaverales, Defunción, Novedades, Ofertas_).
    - Se otorgó un espaciado más amplio y refinado (`gap-3 lg:gap-4 xl:gap-6 2xl:gap-8`) y tipografía con mayor legibilidad (`text-[11px] lg:text-[11.5px] xl:text-[12px] 2xl:text-[12.5px]`).
    - El botón **Inicio** ahora se muestra de forma consistente en todos los anchos de escritorio (`lg:block`).
 2. **Sincronización del menú móvil:**
@@ -205,12 +252,15 @@ En la barra de navegación del Header (`Header.tsx`), los enlaces directos a `Ca
 ### [v1.4.0] — 2026-10-08: Header con Scroll Natural y Des-anclaje de Barra Fija
 
 #### Solicitud del Cliente
-> *"Otro también es del header que suba cuando se scrolea, que no se quede."*
+
+> _"Otro también es del header que suba cuando se scrolea, que no se quede."_
 
 #### Contexto y Diagnóstico
+
 El encabezado `<header>` utilizaba las clases `sticky top-0 z-30`, lo cual mantenía una franja de entre 64px (móvil) y 96px (escritorio) fija en la parte superior de la pantalla durante todo el recorrido del usuario. En dispositivos de altura reducida o laptops, esta barra persistente consumía un porcentaje notable del área visible de compra.
 
 #### Solución Técnica Implementada
+
 1. **Flujo de desplazamiento relativo:**
    - En [`src/components/Header.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/Header.tsx), se removieron las clases `sticky top-0` y se asignó `relative z-30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]`.
    - El header ahora se desplaza hacia arriba con el flujo natural del documento, desapareciendo de la vista cuando el usuario hace scroll hacia abajo.
@@ -225,12 +275,15 @@ El encabezado `<header>` utilizaba las clases `sticky top-0 z-30`, lo cual mante
 ### [v1.3.5] — 2026-10-08: Escala y Proporción Armónica para Pantallas de Laptops
 
 #### Solicitud del Cliente
-> *"Tal vez no se está adaptando bien porque en su pantalla sale muy grande."*
+
+> _"Tal vez no se está adaptando bien porque en su pantalla sale muy grande."_
 
 #### Contexto y Diagnóstico
+
 En pantallas estándar de laptops (resoluciones comunes de 1366×768, 1440×900 y 1536×864 px), las tarjetas de producto en el carrusel de novedades (`Novedades.tsx`) tenían un ancho forzado de `w-[325px] sm:w-[345px]`. Esto provocaba una altura resultante de casi 480px, acaparando más del 65% del alto vertical visible de la laptop y permitiendo visualizar únicamente 2 a 3 tarjetas simultáneas de forma desproporcionada.
 
 #### Solución Técnica Implementada
+
 1. **Redimensión armónica de tarjetas (`src/components/Novedades.tsx`):**
    - Se ajustó el ancho base a `w-[215px] sm:w-[230px] lg:w-[245px] xl:w-[250px]`.
    - La altura total de cada tarjeta se redujo de ~470px a ~340px, permitiendo que en pantallas de laptop quepan cómodamente 5 productos completos a la vez.
@@ -243,12 +296,15 @@ En pantallas estándar de laptops (resoluciones comunes de 1366×768, 1440×900 
 ### [v1.3.0] — 2026-10-08: Optimización de Colecciones y Filtros Jerárquicos en Catálogo
 
 #### Solicitud del Cliente
-> *"El nacimiento y luxury no hay creo en el catálogo... podemos cambiarlos por otros que tengan más fotos."*
+
+> _"El nacimiento y luxury no hay creo en el catálogo... podemos cambiarlos por otros que tengan más fotos."_
 
 #### Contexto y Diagnóstico
-La sección de colecciones del Home mostraba categorías como *Nacimientos* y *Box Luxury*, las cuales únicamente disponían de 2 productos en la base de datos de producción, restando valor a la experiencia de descubrimiento del usuario. Además, en el catálogo general, seleccionar una categoría padre no permitía desglosar sus subcategorías de manera inmediata.
+
+La sección de colecciones del Home mostraba categorías como _Nacimientos_ y _Box Luxury_, las cuales únicamente disponían de 2 productos en la base de datos de producción, restando valor a la experiencia de descubrimiento del usuario. Además, en el catálogo general, seleccionar una categoría padre no permitía desglosar sus subcategorías de manera inmediata.
 
 #### Solución Técnica Implementada
+
 1. **Reemplazo por colecciones de alta disponibilidad:**
    - En [`src/components/CategoryShowcase.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/CategoryShowcase.tsx), se reemplazaron las tarjetas por:
      - **Cumpleaños:** Categoría destacada con más de 40 productos en stock.
@@ -257,7 +313,7 @@ La sección de colecciones del Home mostraba categorías como *Nacimientos* y *B
 2. **Consulta multi-categoría recursiva:**
    - En [`src/lib/queries.ts`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/lib/queries.ts), se creó la función `getProductosPorCategorias(categoriaIds: string[])` para realizar consultas mediante el operador `in` de Supabase, obteniendo en una única petición todos los productos de un grupo de categorías hijas.
 3. **Navegación unificada en `/categoria/$slug`:**
-   - En [`src/routes/categoria.$slug.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/routes/categoria.$slug.tsx), cuando una categoría padre tiene hijas (ej. *Tulipanes* o *Arreglos Florales*), se muestran tanto los botones de acceso directo a cada subcategoría como el grid completo con todos los productos combinados debajo.
+   - En [`src/routes/categoria.$slug.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/routes/categoria.$slug.tsx), cuando una categoría padre tiene hijas (ej. _Tulipanes_ o _Arreglos Florales_), se muestran tanto los botones de acceso directo a cada subcategoría como el grid completo con todos los productos combinados debajo.
 4. **Subfiltro interactivo en `/catalogo`:**
    - En [`src/routes/catalogo.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/routes/catalogo.tsx), al seleccionar una categoría padre, aparece una barra secundaria de subcategorías que permite filtrar de inmediato sin tener que abandonar la vista.
 
@@ -266,9 +322,11 @@ La sección de colecciones del Home mostraba categorías como *Nacimientos* y *B
 ### [v1.2.0] — 2026-10-07: Bento Collage Editorial Asimétrico en Home
 
 #### Solicitud del Cliente
-> *"¿Podemos darle otro formato tipo collage a esto?"*
+
+> _"¿Podemos darle otro formato tipo collage a esto?"_
 
 #### Solución Técnica Implementada
+
 - En [`src/components/CategoryShowcase.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/CategoryShowcase.tsx), se sustituyó la cuadrícula estática uniforme por un layout Bento asimétrico:
   - **Tarjeta protagonista (Feature):** Abarca 2 filas verticales (`md:col-span-1 md:row-span-2`), ofreciendo gran impacto visual con fotografía vertical de alta calidad.
   - **Tarjeta ancha horizontal:** Ocupa 2 columnas (`md:col-span-2 md:row-span-1`) para destacar arreglos prémium.
@@ -280,9 +338,11 @@ La sección de colecciones del Home mostraba categorías como *Nacimientos* y *B
 ### [v1.1.0] — 2026-10-07: Página Dedicada `/nosotros` y Depuración del Home
 
 #### Solicitud del Cliente
-> *"Flores para cada momento esa parte no va, y el de nosotros en la landing no va, podría ser en otra página."*
+
+> _"Flores para cada momento esa parte no va, y el de nosotros en la landing no va, podría ser en otra página."_
 
 #### Solución Técnica Implementada
+
 1. **Creación de ruta independiente `/nosotros`:**
    - Se creó [`src/routes/nosotros.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/routes/nosotros.tsx) como una experiencia editorial completa:
      - Historia de Florería Miraflores y su taller en el corazón del distrito.
@@ -298,9 +358,11 @@ La sección de colecciones del Home mostraba categorías como *Nacimientos* y *B
 ### [v1.0.5] — 2026-10-07: Retiro del Listón Lateral Flotante de Promociones
 
 #### Solicitud del Cliente
-> *"No sé dónde hiciste el push porque el cintillo aún se mira... esa parte no va."*
+
+> _"No sé dónde hiciste el push porque el cintillo aún se mira... esa parte no va."_
 
 #### Solución Técnica Implementada
+
 - En [`src/components/PopupModal.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/PopupModal.tsx), se removió el botón/listón rosa lateral permanente que permanecía anclado a la derecha de la ventana (`fixed right-0 top-1/2`).
 - El popup promocional se mantiene administrable y controlado mediante frecuencia de sesión (`sessionStorage`), pero sin generar ruido visual persistente en los costados de la pantalla.
 
@@ -309,9 +371,11 @@ La sección de colecciones del Home mostraba categorías como *Nacimientos* y *B
 ### [v1.0.4] — 2026-10-07: Parche de Seguridad CVE-2026-102989 y Normalización Vercel
 
 #### Diagnóstico
+
 Durante los despliegues en Vercel, el build fallaba debido a una vulnerabilidad reportada en versiones anteriores del framework `@tanstack/react-start` (CVE-2026-102989), y conflictos entre archivos de bloqueo (`bun.lock` vs `package-lock.json`).
 
 #### Solución Técnica Implementada
+
 1. Se actualizó la dependencia `@tanstack/react-start` a la versión `1.168.60`.
 2. Se eliminó el archivo `bun.lock` y se definió de forma explícita el comando de instalación en la configuración de Vercel mediante `npm ci` / `npm install`.
 3. Se verificó la generación adecuada de artefactos SSR (`dist/server/server.js`) y cliente (`dist/client/`) con script post-build (`scripts/postbuild.js`).
@@ -321,9 +385,11 @@ Durante los despliegues en Vercel, el build fallaba debido a una vulnerabilidad 
 ### [v1.0.3] — 2026-10-06: Unificación de Tags y Feedback Visual en Edición de Productos
 
 #### Diagnóstico
-Al renombrar tags en el panel de control (ej. *Globos para enamorar*), los productos previamente asociados conservaban la clave histórica `flores_y_globos_para_sorprender`, renderizando insignias negras en la tienda. Además, al editar productos en el panel admin, la lista se reordenaba alfabéticamente desplazando el producto y provocando la falsa impresión de pérdida de datos.
+
+Al renombrar tags en el panel de control (ej. _Globos para enamorar_), los productos previamente asociados conservaban la clave histórica `flores_y_globos_para_sorprender`, renderizando insignias negras en la tienda. Además, al editar productos en el panel admin, la lista se reordenaba alfabéticamente desplazando el producto y provocando la falsa impresión de pérdida de datos.
 
 #### Solución Técnica Implementada
+
 1. Creación de [`src/lib/tag-utils.ts`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria miraflores/floreria-miraflo-main/src/lib/tag-utils.ts) para resolución bidireccional de alias y migración transparente en segundo plano.
 2. Adición de selector de ordenamiento en la tabla de productos del administrador (orden por más recientes `created_at DESC`).
 3. Resalte visual animado en color ámbar (`ring-2 ring-amber-400`) y auto-scroll centrado en la fila del producto editado.
@@ -333,6 +399,7 @@ Al renombrar tags en el panel de control (ej. *Globos para enamorar*), los produ
 ### [v1.0.2] — 2026-10-05: Branding Oficial y Proporción del Hero Banner
 
 #### Solución Técnica Implementada
+
 1. Creación y despliegue del paquete oficial de favicons e isotipos en formato `.ico` multirresolución (16x16, 32x32, 48x48), `.svg` vectorial, `.png` (180x180 para Apple Touch) y `site.webmanifest`.
 2. Estandarización de las dimensiones del slider/banner principal del Home a la proporción oficial de diseño **8:3 (2560 × 960 px)**, tanto en los estilos frontend como en las recomendaciones del panel de administración.
 
@@ -341,5 +408,6 @@ Al renombrar tags en el panel de control (ej. *Globos para enamorar*), los produ
 ### [v1.0.1] — 2026-10-04: Carga y Optimización de Activos Fotográficos WebP
 
 #### Solución Técnica Implementada
+
 1. Creación del bucket público `productos` en Supabase Storage con políticas RLS de acceso público y escritura autenticada.
 2. Procesamiento, compresión y subida masiva de más de 80 fotografías reales de arreglos florales, ramos de novia, box románticos y tulipanes en formato moderno **WebP**, garantizando pesos inferiores a 120 KB por imagen y tiempos de carga instantáneos.

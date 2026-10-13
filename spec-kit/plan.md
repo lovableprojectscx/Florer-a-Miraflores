@@ -2,16 +2,16 @@
 
 ## Stack real (verificado en código)
 
-| Capa | Tecnología |
-| --- | --- |
-| UI | React 19 + Tailwind CSS v4 |
+| Capa               | Tecnología                                                                   |
+| ------------------ | ---------------------------------------------------------------------------- |
+| UI                 | React 19 + Tailwind CSS v4                                                   |
 | Framework / Router | TanStack Start + TanStack Router (file-based en `src/routes/`) — SSR-capable |
-| Data | TanStack React Query + funciones en `src/lib/queries.ts` |
-| Formularios | React Hook Form + Zod |
-| Estado global | Zustand (`src/store/cart.ts`) — solo carrito, en memoria |
-| Backend/BD | Supabase (PostgreSQL, Storage, Auth, RLS) |
-| Build/Deploy | Vite 7 → Vercel (bridge `api/index.js` → `dist/server/server.js`) |
-| Pasarela | IZIPay (pendiente de integrar) |
+| Data               | TanStack React Query + funciones en `src/lib/queries.ts`                     |
+| Formularios        | React Hook Form + Zod                                                        |
+| Estado global      | Zustand (`src/store/cart.ts`) — solo carrito, en memoria                     |
+| Backend/BD         | Supabase (PostgreSQL, Storage, Auth, RLS)                                    |
+| Build/Deploy       | Vite 7 → Vercel (bridge `api/index.js` → `dist/server/server.js`)            |
+| Pasarela           | IZIPay (pendiente de integrar)                                               |
 
 > ⚠️ El `CLAUDE.md` §3 dice "SPA + React Router sin SSR" — es incorrecto respecto al código. El real es TanStack Start.
 

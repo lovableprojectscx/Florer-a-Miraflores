@@ -30,8 +30,9 @@ Rama: `fase-02-diagnostico-categorias`.
    - Productos activos cuyo nombre contenga "tulip" y en qué categoría (con su padre) están asignados.
    - Productos activos cuyo nombre contenga "nacimiento", "bebé", "bebe", "baby", "niño", "niña" y su categoría.
    - Si encuentra `nacimientos` o no.
-   
+
    ⚠️ Con la anon key solo se ven las filas que la policy permite. Si la policy de `categorias` solo deja ver `activo = true`, una Nacimientos **inactiva no aparecerá**. Por eso:
+
 2. Prepara `docs/sql/diagnostico-categorias.sql` **solo con SELECTs** para que Jack lo corra en el SQL Editor (ahí sí se ve todo): todas las filas de `categorias` (incluidas inactivas), conteo de productos por categoría (activos e inactivos), las policies de `categorias` y `productos` (`select * from pg_policies where tablename in ('categorias','productos')`), y los constraints de `categorias`.
 3. Reproduce el "no me deja subir" en local: en `/admin/categorias` intenta crear una categoría con un slug que ya exista. Anota el mensaje exacto que ve el usuario. **No guardes nada en producción**: si para reproducir tendrías que escribir en la BD, no lo hagas; deduce desde el código y el SQL, y dilo.
 4. Revisa el menú (`src/components/Header.tsx`) y el home (`CategoryShowcase`, colecciones) para ver de dónde sale cada categoría y por qué una podría no mostrarse.
@@ -39,6 +40,7 @@ Rama: `fase-02-diagnostico-categorias`.
 ## Entregable: `docs/DIAGNOSTICO-CATEGORIAS.md`
 
 Para **cada** reclamo:
+
 - **Causa confirmada** (con la evidencia: salida del script o del SQL), o **hipótesis pendiente** de que Jack corra el SQL.
 - Clasificación: 🧑‍💻 código · ⚙️ config del panel · 🗄️ cambio de BD.
 - Opciones de arreglo con esfuerzo (S/M/L) y riesgo.
