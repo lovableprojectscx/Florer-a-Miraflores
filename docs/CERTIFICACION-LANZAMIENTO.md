@@ -9,9 +9,9 @@
 
 ## Veredicto Oficial
 
-# VEREDICTO: GO con condiciones
+# VEREDICTO: NO-GO hasta completar la Fase 06-B (imágenes)
 
-La plataforma cumple con todos los criterios de estabilidad, seguridad, cobertura de pruebas, ausencia de desbordamiento responsivo y rendimiento técnico para su puesta en marcha pública comercial. El despliegue final está condicionado a la ejecución de las 5 acciones administrativas pendientes a cargo de Jack especificadas en este documento.
+La plataforma cumple con los criterios de estabilidad, seguridad, ausencia de desbordamiento horizontal y cobertura de pruebas automatizadas. Sin embargo, el veredicto es **NO-GO** debido al peso excesivo de imágenes en el Home (14 MB) y un LCP móvil elevado (40 s), lo que representa un riesgo crítico de agotamiento de cuota de transferencia saliente (egress) en Supabase y una experiencia lenta en conexiones móviles. El pase a producción queda postergado hasta completar la **Fase 06-B (imágenes livianas + fotos grandes en el home)** y cumplir las acciones administrativas pendientes de Jack.
 
 ---
 
@@ -29,21 +29,26 @@ La plataforma cumple con todos los criterios de estabilidad, seguridad, cobertur
 
 ---
 
-## 2. Auditoría Lighthouse Móvil (Build de Producción)
+## 2. Rendimiento y Carga de Red (Auditoría Lighthouse Móvil)
 
 Auditoría realizada mediante Lighthouse CLI v12.8.2 en modo móvil con estrangulamiento estándar sobre el build compilado de producción local:
 
-| Ruta Auditada                        | Performance | Accessibility | Best Practices | SEO | Reportes Generados                                                                                                                                                                   |
-| :----------------------------------- | :---------: | :-----------: | :------------: | :-: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Home (`/`)**                       |     58      |      89       |      100       | 100 | [`home.report.html`](file:///docs/evidencias/fase-06/lighthouse/home.report.html), [`home.report.json`](file:///docs/evidencias/fase-06/lighthouse/home.report.json)                 |
-| **Catálogo (`/catalogo`)**           |     64      |      95       |      100       | 100 | [`catalogo.report.html`](file:///docs/evidencias/fase-06/lighthouse/catalogo.report.html), [`catalogo.report.json`](file:///docs/evidencias/fase-06/lighthouse/catalogo.report.json) |
-| **Ficha Producto (`/producto/:id`)** |     73      |      96       |      100       | 100 | [`producto.report.html`](file:///docs/evidencias/fase-06/lighthouse/producto.report.html), [`producto.report.json`](file:///docs/evidencias/fase-06/lighthouse/producto.report.json) |
+| Ruta Auditada                        | Peso Total |    LCP     | Performance | Accessibility | Best Practices | SEO | Reportes Generados                                                                                                                                                                   |
+| :----------------------------------- | :--------: | :--------: | :---------: | :-----------: | :------------: | :-: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Home (`/`)**                       | **14 MB**  | **40.0 s** |     58      | 89 (meta ≥90) |      100       | 100 | [`home.report.html`](file:///docs/evidencias/fase-06/lighthouse/home.report.html), [`home.report.json`](file:///docs/evidencias/fase-06/lighthouse/home.report.json)                 |
+| **Catálogo (`/catalogo`)**           |   5.3 MB   |   7.2 s    |     64      |      95       |      100       | 100 | [`catalogo.report.html`](file:///docs/evidencias/fase-06/lighthouse/catalogo.report.html), [`catalogo.report.json`](file:///docs/evidencias/fase-06/lighthouse/catalogo.report.json) |
+| **Ficha Producto (`/producto/:id`)** |   1.9 MB   |   5.7 s    |     73      |      96       |      100       | 100 | [`producto.report.html`](file:///docs/evidencias/fase-06/lighthouse/producto.report.html), [`producto.report.json`](file:///docs/evidencias/fase-06/lighthouse/producto.report.json) |
 
-**Aspectos destacados de SEO y A11y:**
+### Diagnóstico Técnico de Rendimiento
 
-- Idioma base fijado a español (`<html lang="es">`).
-- Metadatos OpenGraph, títulos diferenciados y meta descriptions en todas las rutas.
-- Máxima puntuación (100/100) en Prácticas Recomendadas y SEO en todas las páginas clave.
+1. **Causa principal (imágenes no responsivas):**
+   - La auditoría `uses-responsive-images` reporta un desperdicio directo de **12.7 MB (~13 MB)** en el Home. Se descargan imágenes originales completas para renderizarlas en tarjetas de 160–260 px en móvil y escritorio.
+2. **Nota sobre compresión de texto:**
+   - La advertencia de `uses-text-compression` observada en el test local ocurre porque `vite preview` no comprime texto. En Vercel producción, el edge CDN comprime HTML, JS y CSS automáticamente con Brotli y Gzip, por lo que no es un problema de la aplicación.
+3. **Riesgo crítico de transferencia (Egress en Supabase Free):**
+   - El plan gratuito de Supabase incluye un límite de ancho de banda saliente de aproximadamente **5 GB mensuales**.
+   - Con el Home pesando 14 MB por visita, **la cuota mensual se agotaría con apenas ~360 visitas**, bloqueando el acceso a las imágenes de la tienda.
+   - En la Fase 06-B es indispensable reducir el payload del Home a **menos de 2.5 MB** mediante generación y consumo de miniaturas responsivas (WebP 480 px y 960 px).
 
 ---
 
@@ -62,15 +67,19 @@ Auditoría realizada mediante Lighthouse CLI v12.8.2 en modo móvil con estrangu
 
 ## 4. Condiciones para el Lanzamiento (Pendientes de Jack)
 
-Para completar la transición al ambiente productivo público, Jack debe realizar las siguientes 5 tareas en el panel de control y repositorio:
+Para completar la transición al ambiente productivo público, Jack debe coordinar y ejecutar las siguientes tareas:
 
-1. **Push a GitHub**:
-   - Realizar `git push origin master` una vez integrada la fase certificada (el entorno local tiene el push remoto bloqueado).
-2. **Eliminar Usuario Temporal de Autenticación**:
+1. **Aprobación de la Fase 06-B (Optimización de Imágenes):**
+   - Ejecutar la generación de miniaturas e implementación de `srcset`/`sizes` para reducir el Home a <2.5 MB y LCP <4 s.
+2. **Revisión de Pedidos de Prueba en Producción:**
+   - En la tabla `pedidos` existen filas de prueba generadas en el desarrollo inicial (ej. `FM-TEST01`, etc.); Jack debe evaluar si se eliminan antes del lanzamiento oficial.
+3. **Push a GitHub:**
+   - Realizar `git push origin master` una vez que todas las fases previas estén aprobadas y mergeadas (el entorno local mantiene el push remoto bloqueado).
+4. **Eliminar Usuario Temporal de Autenticación:**
    - Entrar al panel de Supabase (_Authentication > Users_) y eliminar permanentemente la cuenta de prueba `test_admin_temp@floreriamiraflores.com`.
-3. **Desactivar Registro Público de Usuarios**:
+5. **Desactivar Registro Público de Usuarios:**
    - En Supabase (_Authentication > Providers > Email_), desmarcar la casilla _"Allow new users to sign up"_ para impedir registros no autorizados.
-4. **Reparto de Productos en Nacimientos**:
+6. **Reparto de Productos en Nacimientos:**
    - En el panel administrativo (`/admin/productos`), asignar productos reales a las subcategorías _Nacimientos Niño_ y _Nacimientos Niña_ para activarlas en el catálogo.
-5. **Aprobación y Aplicación de Reasignación de Tulipanes (SQL 004)**:
+7. **Aprobación y Aplicación de Reasignación de Tulipanes (SQL 004):**
    - Revisar la tabla de 13 productos en `docs/sql/004-tulipanes-reasignacion.sql` y autorizar su ejecución cuando se desee reorganizar dicha categoría.

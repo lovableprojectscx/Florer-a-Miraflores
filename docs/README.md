@@ -30,7 +30,7 @@
 ## Estado del proyecto (resumen a Octubre 2026)
 
 - ✅ **Completado y certificado (Fases 01 a 06):** Catálogo enriquecido con paginación "Ver más" (lotes de 24) y fotos 4:5; RLS blindado con `is_admin()`; estado de pedidos "En preparación" certificado; checkout seguro con hora de Lima y deduplicación de números de pedido; acciones rápidas en Home (RF-017 / RF-018); 412 imágenes validadas (0 rotas); sitemap.xml (437 URLs) y robots.txt; `<html lang="es">`; suite completa de 71 unit tests y 50 tests E2E en verde.
-- 📋 **Veredicto pre-lanzamiento:** `GO con condiciones` (5 tareas administrativas de Jack detalladas en `CERTIFICACION-LANZAMIENTO.md`).
+- 📋 **Veredicto pre-lanzamiento:** `NO-GO hasta completar la Fase 06-B (imágenes)` (peso del Home en 14 MB y riesgo de egress en Supabase Free).
 - ❌ **Pendiente externo (post-lanzamiento):** Integración pasarela IZIPay (en espera de credenciales de Sofía) y servicio de correo transaccional.
 
 Ver el detalle en [CERTIFICACION-LANZAMIENTO.md](./CERTIFICACION-LANZAMIENTO.md) y el historial en [ACTUALIZACIONES.md](./ACTUALIZACIONES.md).
