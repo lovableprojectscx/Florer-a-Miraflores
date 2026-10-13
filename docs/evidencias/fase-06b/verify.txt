@@ -42,23 +42,23 @@ C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflore
 
  RUN  v5.0.4 C:/Users/JACK FRANKLIN/Desktop/Proyectos Idenza/Trabajos-Mayo/Floreria miraflores/floreria-miraflo-main
 
- ✓ tests/unit/tag-utils.test.ts (9 tests) 12ms
- ✓ tests/unit/utils.test.ts (6 tests) 9ms
+ ✓ tests/unit/tag-utils.test.ts (9 tests) 13ms
+ ✓ tests/unit/utils.test.ts (6 tests) 7ms
+ ✓ tests/unit/cart.test.ts (7 tests) 9ms
  ✓ tests/unit/categorias-utils.test.ts (14 tests) 28ms
- ✓ tests/unit/cart.test.ts (7 tests) 12ms
- ✓ tests/unit/image-utils.test.ts (14 tests) 15ms
- ✓ tests/unit/checkout-schema.test.ts (7 tests) 46ms
- ✓ tests/unit/use-ver-mas.test.ts (7 tests) 48ms
- ✓ tests/unit/queries.test.ts (15 tests) 25ms
- ✓ tests/unit/product-filters.test.ts (3 tests) 23ms
- ✓ tests/unit/ProductGrid.test.tsx (3 tests) 445ms
+ ✓ tests/unit/image-utils.test.ts (14 tests) 14ms
+ ✓ tests/unit/checkout-schema.test.ts (7 tests) 51ms
+ ✓ tests/unit/use-ver-mas.test.ts (7 tests) 50ms
+ ✓ tests/unit/queries.test.ts (15 tests) 21ms
+ ✓ tests/unit/product-filters.test.ts (3 tests) 31ms
+ ✓ tests/unit/ProductGrid.test.tsx (3 tests) 415ms
    ✓ ProductGrid — paginación 'Ver más' y placeholder de imagen (3)
-     ✓ con 30 productos y tamanoLote=24 muestra 24 tarjetas y el botón 'Ver más'; tras clic muestra 30 y el botón desaparece 370ms
+     ✓ con 30 productos y tamanoLote=24 muestra 24 tarjetas y el botón 'Ver más'; tras clic muestra 30 y el botón desaparece 342ms
 
  Test Files  10 passed (10)
       Tests  85 passed (85)
-   Start at  10:29:58
-   Duration  7.12s (environment 82%, setup 13%, tests 1%, transform 1%, import 1%, worker 1%)
+   Start at  11:08:59
+   Duration  6.29s (environment 81%, setup 13%, transform 2%, tests 2%, import 2%, worker 1%)
 
 
 > build
@@ -66,7 +66,7 @@ C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflore
 
 vite v7.3.3 building client environment for production...
 transforming...
-✓ 2137 modules transformed.
+✓ 2138 modules transformed.
 rendering chunks...
 computing gzip size...
 dist/client/.assetsignore                                    0.02 kB
@@ -84,57 +84,57 @@ dist/client/assets/logo-miraflores-DDxBf7Kq.webp           101.38 kB
 dist/client/assets/about-boutique-DCIO9u4d.webp            108.02 kB
 dist/client/assets/styles-_PGJ3Dsq.css                     131.35 kB │ gzip:  21.07 kB
 dist/client/assets/logo-miraflores-CgMYqKoi.js               0.06 kB │ gzip:   0.08 kB
-dist/client/assets/categoria._slug._sub-C8jHe0XG.js          0.45 kB │ gzip:   0.32 kB
-dist/client/assets/catalogo-Dea_XSFU.js                      0.46 kB │ gzip:   0.32 kB
-dist/client/assets/categoria._slug-CQwDgbRh.js               0.46 kB │ gzip:   0.32 kB
-dist/client/assets/producto._id-C-yAFH_U.js                  0.46 kB │ gzip:   0.32 kB
-dist/client/assets/categoria._slug._sub-Ua8yEB5c.js          0.46 kB │ gzip:   0.32 kB
-dist/client/assets/producto._id-D_czb-LC.js                  0.46 kB │ gzip:   0.32 kB
-dist/client/assets/categoria._slug-Li_zjKaw.js               0.46 kB │ gzip:   0.33 kB
-dist/client/assets/tag._key-DP_gvGXw.js                      0.47 kB │ gzip:   0.33 kB
-dist/client/assets/tag._key-CpYqts-g.js                      0.48 kB │ gzip:   0.34 kB
-dist/client/assets/image-utils-BA5XShmk.js                   0.90 kB │ gzip:   0.48 kB
-dist/client/assets/image-optimizer-FbfTpnl3.js               2.27 kB │ gzip:   1.12 kB
-dist/client/assets/tag._key-CvPxYN3R.js                      2.50 kB │ gzip:   1.16 kB
-dist/client/assets/ProductFilters-C09SO9J0.js                2.51 kB │ gzip:   1.17 kB
-dist/client/assets/admin-login-Cv5HP5n8.js                   3.22 kB │ gzip:   1.29 kB
-dist/client/assets/categoria._slug._sub-Sfy7Ct7g.js          3.22 kB │ gzip:   1.38 kB
-dist/client/assets/catalogo-ZiitB9tm.js                      3.36 kB │ gzip:   1.52 kB
-dist/client/assets/DeliveryZones-CeUOESZS.js                 3.58 kB │ gzip:   1.12 kB
-dist/client/assets/confirmacion-DY6J_yb7.js                  3.59 kB │ gzip:   1.72 kB
-dist/client/assets/admin-BNqrJwjT.js                         4.32 kB │ gzip:   1.53 kB
-dist/client/assets/categoria._slug-vnTm7ozy.js               4.32 kB │ gzip:   1.74 kB
-dist/client/assets/dashboard-D7-GAE8h.js                     5.92 kB │ gzip:   1.85 kB
-dist/client/assets/config-DNeecObg.js                        6.15 kB │ gzip:   2.06 kB
-dist/client/assets/ProductGrid-DYQ6aOGo.js                   6.65 kB │ gzip:   2.55 kB
-dist/client/assets/producto._id-CVu_vo3c.js                  6.90 kB │ gzip:   2.35 kB
-dist/client/assets/nosotros-cfiw7V8l.js                      8.27 kB │ gzip:   2.59 kB
-dist/client/assets/popup-DMhcccai.js                         9.54 kB │ gzip:   3.24 kB
-dist/client/assets/tags-B7UDqEJg.js                         11.68 kB │ gzip:   3.23 kB
-dist/client/assets/distritos-TQlBea5C.js                    12.81 kB │ gzip:   3.21 kB
-dist/client/assets/ocasiones-K5nAt_2j.js                    13.27 kB │ gzip:   3.41 kB
-dist/client/assets/colecciones-home-DJzOI3CB.js             13.77 kB │ gzip:   3.65 kB
-dist/client/assets/pedidos-Cz7tB8U7.js                      15.96 kB │ gzip:   3.70 kB
-dist/client/assets/libro-de-reclamaciones-4H6txeAK.js       18.76 kB │ gzip:   5.42 kB
-dist/client/assets/WhatsappFab-BrgyoQnA.js                  19.98 kB │ gzip:   5.31 kB
-dist/client/assets/banners-BRGLGsjT.js                      20.39 kB │ gzip:   4.67 kB
-dist/client/assets/reclamaciones-fmMGMzWx.js                22.49 kB │ gzip:   5.00 kB
-dist/client/assets/categorias-DcU5scep.js                   22.62 kB │ gzip:   5.39 kB
+dist/client/assets/categoria._slug._sub-CdjXQkYV.js          0.45 kB │ gzip:   0.32 kB
+dist/client/assets/catalogo-CcMCM48Y.js                      0.46 kB │ gzip:   0.33 kB
+dist/client/assets/categoria._slug-BDnBm7Rl.js               0.46 kB │ gzip:   0.33 kB
+dist/client/assets/producto._id-zssxqt3k.js                  0.46 kB │ gzip:   0.33 kB
+dist/client/assets/categoria._slug._sub-ffGxk1n0.js          0.46 kB │ gzip:   0.33 kB
+dist/client/assets/producto._id-Cnct4Pj5.js                  0.46 kB │ gzip:   0.32 kB
+dist/client/assets/categoria._slug-CRMSB2Yo.js               0.46 kB │ gzip:   0.33 kB
+dist/client/assets/tag._key-cWyW94n-.js                      0.47 kB │ gzip:   0.33 kB
+dist/client/assets/tag._key-C_Vsy-_K.js                      0.48 kB │ gzip:   0.34 kB
+dist/client/assets/ResponsiveImage-Br2Y1SGF.js               1.38 kB │ gzip:   0.78 kB
+dist/client/assets/image-optimizer-Bk_dKbKL.js               2.27 kB │ gzip:   1.12 kB
+dist/client/assets/tag._key-BjFDBSvw.js                      2.50 kB │ gzip:   1.17 kB
+dist/client/assets/ProductFilters-Drpyuwur.js                2.51 kB │ gzip:   1.17 kB
+dist/client/assets/admin-login-CelDYE-N.js                   3.22 kB │ gzip:   1.29 kB
+dist/client/assets/categoria._slug._sub-B9bMc4rv.js          3.23 kB │ gzip:   1.39 kB
+dist/client/assets/catalogo-CmDyFU9O.js                      3.37 kB │ gzip:   1.53 kB
+dist/client/assets/DeliveryZones-BCjNdBWX.js                 3.58 kB │ gzip:   1.13 kB
+dist/client/assets/confirmacion-CcB7oPhy.js                  3.59 kB │ gzip:   1.72 kB
+dist/client/assets/admin-CD06IimM.js                         4.32 kB │ gzip:   1.53 kB
+dist/client/assets/categoria._slug-BcYY6mes.js               4.33 kB │ gzip:   1.75 kB
+dist/client/assets/dashboard-jE6gJm63.js                     5.92 kB │ gzip:   1.85 kB
+dist/client/assets/config-CTGIzLyV.js                        6.15 kB │ gzip:   2.07 kB
+dist/client/assets/ProductGrid-DrwtinP8.js                   6.61 kB │ gzip:   2.53 kB
+dist/client/assets/producto._id-CTPS543o.js                  6.88 kB │ gzip:   2.33 kB
+dist/client/assets/nosotros-BUMBZ6fJ.js                      8.27 kB │ gzip:   2.60 kB
+dist/client/assets/popup-BvQg_rfk.js                         9.54 kB │ gzip:   3.25 kB
+dist/client/assets/tags-DLyVUeKO.js                         11.68 kB │ gzip:   3.24 kB
+dist/client/assets/distritos-i-HtN_DJ.js                    12.81 kB │ gzip:   3.21 kB
+dist/client/assets/ocasiones-CZtsNK5r.js                    13.27 kB │ gzip:   3.42 kB
+dist/client/assets/colecciones-home-C5ZvH1kS.js             13.77 kB │ gzip:   3.65 kB
+dist/client/assets/pedidos-IWU5lQ2U.js                      15.96 kB │ gzip:   3.70 kB
+dist/client/assets/libro-de-reclamaciones-DsOHIJbC.js       18.76 kB │ gzip:   5.42 kB
+dist/client/assets/WhatsappFab-CBXLJkNI.js                  19.98 kB │ gzip:   5.31 kB
+dist/client/assets/banners-BREh1M25.js                      20.39 kB │ gzip:   4.67 kB
+dist/client/assets/reclamaciones-BeNrRYbA.js                22.49 kB │ gzip:   5.00 kB
+dist/client/assets/categorias-C-CY28OS.js                   22.62 kB │ gzip:   5.39 kB
 dist/client/assets/vendor-lucide-NzBk3sgo.js                24.42 kB │ gzip:   9.20 kB
-dist/client/assets/productos-D9vUBj2S.js                    37.83 kB │ gzip:   8.89 kB
-dist/client/assets/checkout-DfAve3JA.js                     44.98 kB │ gzip:  15.07 kB
-dist/client/assets/index-BiCeT3Z0.js                        47.93 kB │ gzip:  15.59 kB
+dist/client/assets/productos-E_cZUmCJ.js                    37.83 kB │ gzip:   8.89 kB
+dist/client/assets/checkout-EXQiABo_.js                     44.98 kB │ gzip:  15.07 kB
+dist/client/assets/index-vNbtGYRH.js                        47.90 kB │ gzip:  15.56 kB
 dist/client/assets/vendor-supabase-Dh6eHXVI.js             207.32 kB │ gzip:  54.19 kB
-dist/client/assets/index-CN_Xp8kA.js                       485.40 kB │ gzip: 149.47 kB
-✓ built in 8.64s
+dist/client/assets/index-YGY69sFP.js                       485.41 kB │ gzip: 149.48 kB
+✓ built in 8.44s
 vite v7.3.3 building ssr environment for production...
 transforming...
-✓ 2199 modules transformed.
+✓ 2200 modules transformed.
 rendering chunks...
 Using secrets defined in .env.local
 dist/server/.dev.vars                                        0.30 kB
 dist/server/wrangler.json                                    1.41 kB
-dist/server/.vite/manifest.json                             22.10 kB
+dist/server/.vite/manifest.json                             22.23 kB
 dist/server/assets/product-tulipanes-BC0rNiOg.webp          31.36 kB
 dist/server/assets/product-box-romantico-BTuwwvPY.webp      34.62 kB
 dist/server/assets/product-novedad-velvet-MCV19rEe.webp     41.44 kB
@@ -151,53 +151,53 @@ dist/server/assets/styles-_PGJ3Dsq.css                     131.35 kB
 dist/server/assets/logo-miraflores-uWsZPdFg.js               0.08 kB
 dist/server/index.js                                         0.10 kB
 dist/server/assets/empty-plugin-adapters-BFgPZ6_d.js         0.13 kB
-dist/server/assets/catalogo-CglBl9_f.js                      0.68 kB
-dist/server/assets/categoria._slug-CwewIVRu.js               0.68 kB
-dist/server/assets/producto._id-BqI4c-32.js                  0.68 kB
-dist/server/assets/categoria._slug._sub-B3xi0_zc.js          0.68 kB
-dist/server/assets/tag._key-CmRFshVB.js                      0.69 kB
-dist/server/assets/categoria._slug._sub-DplAzjlP.js          0.75 kB
-dist/server/assets/producto._id-CVAEs5_I.js                  0.76 kB
-dist/server/assets/categoria._slug-CFrJdKzq.js               0.76 kB
-dist/server/assets/tag._key-tpS9EzTk.js                      0.77 kB
-dist/server/assets/start-CzJv-0sA.js                         1.51 kB
-dist/server/assets/image-utils-BrxqB_Gr.js                   1.74 kB
-dist/server/assets/tag._key-CilGv0Z7.js                      3.98 kB
-dist/server/assets/ProductFilters-CTeh0Qli.js                4.07 kB
-dist/server/assets/image-optimizer-BpdKQlPT.js               4.46 kB
-dist/server/assets/admin-login-CFjRHqgD.js                   5.10 kB
-dist/server/assets/confirmacion-BCdOCchF.js                  5.13 kB
-dist/server/assets/categoria._slug._sub-CWuFcXA2.js          5.18 kB
-dist/server/assets/DeliveryZones-CnC7WOem.js                 5.32 kB
-dist/server/assets/catalogo-D_rM0F-c.js                      6.10 kB
-dist/server/assets/admin-DMaG7Vzo.js                         6.91 kB
-dist/server/assets/categoria._slug-BL6WxCGa.js               7.01 kB
-dist/server/assets/_tanstack-start-manifest_v-C6vvoyiD.js    8.16 kB
-dist/server/assets/dashboard-B5KlrkBA.js                     9.40 kB
-dist/server/assets/config-g1FOE0uE.js                        9.70 kB
-dist/server/assets/producto._id-CvrvP5Qu.js                 11.59 kB
-dist/server/assets/nosotros-Dbcc-xxz.js                     11.91 kB
-dist/server/assets/ProductGrid-C6-32e1K.js                  12.67 kB
-dist/server/assets/popup-COy59YCz.js                        15.33 kB
-dist/server/assets/tags-BjhrxIVi.js                         18.98 kB
-dist/server/assets/distritos-B1R2CDMy.js                    21.15 kB
-dist/server/assets/worker-entry-qAmECjWT.js                 21.31 kB
-dist/server/assets/ocasiones-BwEE8tPw.js                    21.93 kB
-dist/server/assets/colecciones-home-Dsv6Srwn.js             23.07 kB
-dist/server/assets/libro-de-reclamaciones-Dl8Q9Rxk.js       24.97 kB
-dist/server/assets/pedidos-cLZTV-3l.js                      26.75 kB
-dist/server/assets/reclamaciones-BxLodIy5.js                31.25 kB
-dist/server/assets/WhatsappFab-BLx2_8Ku.js                  32.66 kB
-dist/server/assets/banners-C1N3OJ_u.js                      33.24 kB
-dist/server/assets/categorias-C98UoxRn.js                   38.67 kB
+dist/server/assets/catalogo-Dhdh_qE-.js                      0.68 kB
+dist/server/assets/categoria._slug-D9TQqi56.js               0.68 kB
+dist/server/assets/producto._id-DjwnHtSe.js                  0.68 kB
+dist/server/assets/categoria._slug._sub-hN72cfHC.js          0.68 kB
+dist/server/assets/tag._key-CdSP7WdY.js                      0.69 kB
+dist/server/assets/categoria._slug._sub-Bt07crFs.js          0.75 kB
+dist/server/assets/producto._id-B_hZoulG.js                  0.76 kB
+dist/server/assets/categoria._slug-iZdZ9V5p.js               0.76 kB
+dist/server/assets/tag._key-Cql1WSPV.js                      0.77 kB
+dist/server/assets/start-Du3mQc81.js                         1.51 kB
+dist/server/assets/ResponsiveImage-_6P0bz9b.js               2.94 kB
+dist/server/assets/tag._key-Byqu98tu.js                      3.98 kB
+dist/server/assets/ProductFilters-CjTItBdr.js                4.07 kB
+dist/server/assets/image-optimizer-BP8Eab6N.js               4.46 kB
+dist/server/assets/admin-login-Bt2Fxy63.js                   5.10 kB
+dist/server/assets/confirmacion-BAj7DKUE.js                  5.13 kB
+dist/server/assets/categoria._slug._sub-Cfqb1TPp.js          5.18 kB
+dist/server/assets/DeliveryZones-D-tXP9cd.js                 5.32 kB
+dist/server/assets/catalogo-Du2A3Mbt.js                      6.11 kB
+dist/server/assets/admin-CpEsT7hW.js                         6.91 kB
+dist/server/assets/categoria._slug-Pl5ZEQUw.js               7.01 kB
+dist/server/assets/_tanstack-start-manifest_v-CIEuSNiU.js    8.18 kB
+dist/server/assets/dashboard-CjfZH1pi.js                     9.40 kB
+dist/server/assets/config-ps4aXI1q.js                        9.70 kB
+dist/server/assets/producto._id-LQtVGRoD.js                 11.44 kB
+dist/server/assets/nosotros-C9CB1wLD.js                     11.91 kB
+dist/server/assets/ProductGrid-Bm5wqIx7.js                  12.49 kB
+dist/server/assets/popup-DqbneIu2.js                        15.33 kB
+dist/server/assets/tags-bpQtJvDy.js                         18.98 kB
+dist/server/assets/distritos-CzGmCBE5.js                    21.15 kB
+dist/server/assets/worker-entry-CM6f7xN8.js                 21.31 kB
+dist/server/assets/ocasiones-DJUiMfXF.js                    21.93 kB
+dist/server/assets/colecciones-home-CKN6whba.js             23.07 kB
+dist/server/assets/libro-de-reclamaciones-88htCw30.js       24.97 kB
+dist/server/assets/pedidos-lPcyM38p.js                      26.75 kB
+dist/server/assets/reclamaciones-BdzRepCK.js                31.25 kB
+dist/server/assets/WhatsappFab-E0aDjVTN.js                  32.66 kB
+dist/server/assets/banners-BIXr5T4n.js                      33.24 kB
+dist/server/assets/categorias-CJP-VRPh.js                   38.67 kB
 dist/server/assets/vendor-lucide-Cjc4eZD4.js                42.36 kB
-dist/server/assets/productos-B_w1Px9M.js                    65.34 kB
-dist/server/assets/index-H79JXLgA.js                        93.40 kB
-dist/server/assets/checkout-B0PLM86V.js                     99.41 kB
-dist/server/assets/router-BSPe4SxK.js                      474.82 kB
+dist/server/assets/productos-egVxlQ1q.js                    65.34 kB
+dist/server/assets/index-CMqS_DLn.js                        93.14 kB
+dist/server/assets/checkout-8UF5Q3Ck.js                     99.41 kB
+dist/server/assets/router-CFD6Ab9z.js                      474.82 kB
 dist/server/assets/vendor-supabase-BBa_TrIY.js             713.23 kB
-dist/server/assets/server-DiTAVr5x.js                      802.45 kB
-✓ built in 7.67s
+dist/server/assets/server-seDVkFOh.js                      802.45 kB
+✓ built in 7.53s
 
 > postbuild
 > node scripts/postbuild.js

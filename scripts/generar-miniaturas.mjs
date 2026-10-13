@@ -64,14 +64,9 @@ const supabaseAnonKey =
   "";
 
 const adminEmail =
-  process.env.E2E_ADMIN_EMAIL ||
-  e2eEnv.E2E_ADMIN_EMAIL ||
-  "pedidos@floreriamiraflores.com";
+  process.env.E2E_ADMIN_EMAIL || e2eEnv.E2E_ADMIN_EMAIL || "pedidos@floreriamiraflores.com";
 
-const adminPassword =
-  process.env.E2E_ADMIN_PASSWORD ||
-  e2eEnv.E2E_ADMIN_PASSWORD ||
-  "";
+const adminPassword = process.env.E2E_ADMIN_PASSWORD || e2eEnv.E2E_ADMIN_PASSWORD || "";
 
 const isDryRun = !process.argv.includes("--upload") || process.argv.includes("--dry-run");
 const BUCKETS = ["banners", "categorias", "productos"];
@@ -84,7 +79,7 @@ const client = createClient(supabaseUrl, supabaseAnonKey, {
 async function autenticarAdmin() {
   if (!adminEmail || !adminPassword) {
     throw new Error(
-      "Credenciales de administrador no encontradas en .env.e2e.local (E2E_ADMIN_EMAIL / E2E_ADMIN_PASSWORD)"
+      "Credenciales de administrador no encontradas en .env.e2e.local (E2E_ADMIN_EMAIL / E2E_ADMIN_PASSWORD)",
     );
   }
 
@@ -222,7 +217,9 @@ async function ejecutar() {
 
   log("=====================================================================");
   log(` GENERADOR DE MINIATURAS WEBP (Fase 06-B)`);
-  log(` Modo: ${isDryRun ? "DRY-RUN (Simulación sin cambios)" : "SUBIDA REAL (Admin Auth, upsert: false)"}`);
+  log(
+    ` Modo: ${isDryRun ? "DRY-RUN (Simulación sin cambios)" : "SUBIDA REAL (Admin Auth, upsert: false)"}`,
+  );
   log(` Fecha: ${new Date().toISOString()}`);
   log("=====================================================================\n");
 
@@ -295,7 +292,9 @@ async function ejecutar() {
       }
 
       if (!isDryRun && (i + CONCURRENCY) % 30 === 0) {
-        log(`  ... procesadas ${Math.min(i + CONCURRENCY, archivos.length)}/${archivos.length} imágenes`);
+        log(
+          `  ... procesadas ${Math.min(i + CONCURRENCY, archivos.length)}/${archivos.length} imágenes`,
+        );
       }
     }
 
@@ -315,8 +314,12 @@ async function ejecutar() {
       log(`  Archivos saltados (ya existían): ${saltadas}`);
     }
     log(`  Peso original total: ${(bucketOriginalBytes / 1024 / 1024).toFixed(2)} MB`);
-    log(`  Peso miniaturas 480w: ${(bucket480Bytes / 1024 / 1024).toFixed(2)} MB (-${ahorro480Pct}%)`);
-    log(`  Peso miniaturas 960w: ${(bucket960Bytes / 1024 / 1024).toFixed(2)} MB (-${ahorro960Pct}%)\n`);
+    log(
+      `  Peso miniaturas 480w: ${(bucket480Bytes / 1024 / 1024).toFixed(2)} MB (-${ahorro480Pct}%)`,
+    );
+    log(
+      `  Peso miniaturas 960w: ${(bucket960Bytes / 1024 / 1024).toFixed(2)} MB (-${ahorro960Pct}%)\n`,
+    );
 
     granTotalImagenes += exitos;
     granTotalErrores += errores;
@@ -346,8 +349,12 @@ async function ejecutar() {
     log(` Total miniaturas saltadas:     ${granTotalSaltadas}`);
   }
   log(` Peso original total:           ${(granTotalOriginalBytes / 1024 / 1024).toFixed(2)} MB`);
-  log(` Peso miniaturas 480w:          ${(granTotal480Bytes / 1024 / 1024).toFixed(2)} MB (-${granAhorro480Pct}%)`);
-  log(` Peso miniaturas 960w:          ${(granTotal960Bytes / 1024 / 1024).toFixed(2)} MB (-${granAhorro960Pct}%)`);
+  log(
+    ` Peso miniaturas 480w:          ${(granTotal480Bytes / 1024 / 1024).toFixed(2)} MB (-${granAhorro480Pct}%)`,
+  );
+  log(
+    ` Peso miniaturas 960w:          ${(granTotal960Bytes / 1024 / 1024).toFixed(2)} MB (-${granAhorro960Pct}%)`,
+  );
   log(` Ahorro estimado móvil (480w):  -${granAhorro480Pct}%`);
   log(` Ahorro estimado desktop (960w):-${granAhorro960Pct}%`);
   log("=====================================================================\n");

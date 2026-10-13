@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  imagenUrl,
-  imagenSrcSet,
-  revertirMiniatura,
-  type ImageWidth,
-} from "@/lib/image-utils";
+import { imagenUrl, imagenSrcSet, revertirMiniatura, type ImageWidth } from "@/lib/image-utils";
 
-export interface ResponsiveImageProps
-  extends React.ImgHTMLAttributes<HTMLImageElement> {
+export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   url?: string | null;
   anchoMiniatura?: ImageWidth;
   fallbackUrl?: string;

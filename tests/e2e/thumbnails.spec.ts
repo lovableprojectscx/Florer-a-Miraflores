@@ -14,8 +14,12 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
     const novedadesImgs = novedades.locator("img");
     await expect(novedadesImgs.first()).toBeVisible();
 
-    const rawSrc = (await novedadesImgs.first().getAttribute("data-thumb-src")) || (await novedadesImgs.first().getAttribute("src"));
-    const rawSrcSet = (await novedadesImgs.first().getAttribute("data-thumb-srcset")) || (await novedadesImgs.first().getAttribute("srcset"));
+    const rawSrc =
+      (await novedadesImgs.first().getAttribute("data-thumb-src")) ||
+      (await novedadesImgs.first().getAttribute("src"));
+    const rawSrcSet =
+      (await novedadesImgs.first().getAttribute("data-thumb-srcset")) ||
+      (await novedadesImgs.first().getAttribute("srcset"));
 
     // Verificar que apunta a miniaturas thumbs/480/ o render/ si es URL de storage
     if (rawSrc && rawSrc.includes("supabase.co/storage")) {
@@ -47,8 +51,10 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
     const firstImg = cards.first().locator("img");
     await expect(firstImg).toBeVisible();
 
-    const rawCatalogSrc = (await firstImg.getAttribute("data-thumb-src")) || (await firstImg.getAttribute("src"));
-    const rawCatalogSrcSet = (await firstImg.getAttribute("data-thumb-srcset")) || (await firstImg.getAttribute("srcset"));
+    const rawCatalogSrc =
+      (await firstImg.getAttribute("data-thumb-src")) || (await firstImg.getAttribute("src"));
+    const rawCatalogSrcSet =
+      (await firstImg.getAttribute("data-thumb-srcset")) || (await firstImg.getAttribute("srcset"));
 
     if (rawCatalogSrc && rawCatalogSrc.includes("supabase.co/storage")) {
       expect(rawCatalogSrc).toMatch(/(thumbs\/480|render\/)/);
