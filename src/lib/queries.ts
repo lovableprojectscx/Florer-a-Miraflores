@@ -489,32 +489,44 @@ export interface CrearPedidoInput {
  * RLS: INSERT público — no requiere sesión.
  */
 export async function crearPedido(input: CrearPedidoInput): Promise<string> {
-  // Generar número de pedido
-  const numero = `FM-${Math.floor(100000 + Math.random() * 900000)}`;
+  const MAX_INTENTOS = 3;
 
-  // fecha_entrega debe llegar como "YYYY-MM-DD" desde el input[type=date] — no transformar.
-  // distrito_id debe ser UUID válido — viene del select cargado desde getDistritos().
+  for (let intento = 1; intento <= MAX_INTENTOS; intento++) {
+    // Generar número de pedido aleatorio FM-XXXXXX
+    const numero = `FM-${Math.floor(100000 + Math.random() * 900000)}`;
 
-  const { error } = await supabase.from("pedidos").insert({
-    numero,
-    nombre_cliente: input.nombre_cliente,
-    telefono: input.telefono,
-    email: input.email,
-    distrito_id: input.distrito_id,
-    direccion: input.direccion,
-    referencia: input.referencia ?? null,
-    fecha_entrega: input.fecha_entrega,
-    hora_entrega: input.hora_entrega,
-    notas: input.notas ?? null,
-    productos: input.productos,
-    subtotal: input.subtotal,
-    delivery: input.delivery,
-    total: input.total,
-    estado: "pendiente" as const,
-  });
+    const { error } = await supabase.from("pedidos").insert({
+      numero,
+      nombre_cliente: input.nombre_cliente,
+      telefono: input.telefono,
+      email: input.email,
+      distrito_id: input.distrito_id,
+      direccion: input.direccion,
+      referencia: input.referencia ?? null,
+      fecha_entrega: input.fecha_entrega,
+      hora_entrega: input.hora_entrega,
+      notas: input.notas ?? null,
+      productos: input.productos,
+      subtotal: input.subtotal,
+      delivery: input.delivery,
+      total: input.total,
+      estado: "pendiente" as const,
+    });
 
-  if (error) throw new Error(`[Supabase] ${error.message}`);
-  return numero;
+    if (!error) {
+      return numero;
+    }
+
+    // Si el error NO es colisión de clave única (código PostgreSQL 23505), fallar de inmediato
+    if (error.code !== "23505") {
+      throw new Error(`[Supabase] ${error.message}`);
+    }
+  }
+
+  // Si tras 3 intentos seguidos persiste colisión de clave única:
+  throw new Error(
+    "No pudimos generar un número de pedido único tras 3 intentos. Por favor contáctanos por WhatsApp al +51 999 600 482 para registrar tu pedido directamente.",
+  );
 }
 
 /**
