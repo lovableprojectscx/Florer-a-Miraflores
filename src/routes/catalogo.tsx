@@ -156,7 +156,7 @@ function CatalogoPage() {
 
         {/* Grid de productos */}
         {filtrados.length > 0 ? (
-          <ProductGrid products={filtrados} />
+          <ProductGrid products={filtrados} tamanoLote={24} />
         ) : (
           <section className="border border-[#E8DDD0] p-8 md:p-16 bg-[#F5EFE6]/40 text-center">
             <p className="font-italic-serif text-rose-accent mb-2">— sin resultados</p>

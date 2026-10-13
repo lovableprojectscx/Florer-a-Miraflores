@@ -134,6 +134,7 @@ src/
 - **Header con Scroll Natural:** El encabezado `<header>` en `Header.tsx` se posiciona de forma relativa (`relative z-30`). Cuando el usuario se desplaza verticalmente, el header sube y se retira de la pantalla naturalmente junto con el resto del contenido, maximizando el espacio de visualización.
 - **Bento Collage Editorial:** Implementado en `CategoryShowcase.tsx`, utiliza CSS Grid asimétrico con una tarjeta vertical destacada de dos filas y una horizontal de dos columnas para jerarquizar las colecciones más demandadas (*Cumpleaños*, *Ramos*, *Amor*, etc.).
 - **Escala Responsiva para Laptops:** En `Novedades.tsx`, las tarjetas utilizan un ancho de `230px-250px` con un límite superior de contenedor `max-w-[1400px]`, permitiendo desplegar 5 productos simultáneos sin ocupar toda la altura del monitor en laptops.
+- **Paginación "Ver más" en Cliente y Fotos 4:5 (`ProductGrid.tsx` + `use-ver-mas.ts`):** Los filtros y el ordenamiento operan en cliente sobre la lista completa (~300 productos en JSON liviano), pero solo se montan en el DOM 24 tarjetas por lote (`tamanoLote={24}`) con imágenes `loading="lazy"` y `aspect-[4/5]` en grilla de 2/3/4 columnas (`grid-cols-2 md:grid-cols-3 xl:grid-cols-4`), reduciendo el consumo de memoria en móvil y el egress de Supabase Storage (la paginación en servidor queda como mejora futura si el catálogo supera ~1,000 productos).
 
 ### 5.2. Capa de Acceso a Datos (`src/lib/queries.ts`)
 Toda interacción con la base de datos se canaliza a través de funciones asíncronas fuertemente tipadas:
