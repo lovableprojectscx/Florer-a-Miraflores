@@ -7,8 +7,8 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
   }) => {
     test.setTimeout(120_000);
 
-    await page.goto("/");
-    await expect(page.locator("header")).toBeVisible();
+    await page.goto("/catalogo");
+    await expect(page.locator("header").first()).toBeVisible();
 
     const urlsMenu = new Set<string>();
 
@@ -49,9 +49,14 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
     const listaUrls = Array.from(urlsMenu);
     expect(listaUrls.length).toBeGreaterThan(0);
 
-    // Defunción (0 productos) y Tulipanes › Ramos (0 productos) no deben aparecer en el menú
+    // Nacimientos ahora es padre en el menú principal (39 productos activos)
+    expect(listaUrls).toContain("/categoria/nacimientos");
+
+    // Defunción (0 productos), Tulipanes › Ramos (0 productos) y Niño/Niña vacías no deben aparecer en el menú
     expect(listaUrls).not.toContain("/categoria/defuncion");
     expect(listaUrls).not.toContain("/categoria/tulipanes/ramos-tulipanes");
+    expect(listaUrls).not.toContain("/categoria/nacimientos/nacimientos-nino");
+    expect(listaUrls).not.toContain("/categoria/nacimientos/nacimientos-nina");
 
     for (const url of listaUrls) {
       const response = await page.goto(url);
@@ -78,6 +83,7 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
     const response = await page.goto("/categoria/ocasion/nacimientos");
     expect(response?.status()).toBeLessThan(400);
 
+    await expect(page).toHaveURL(/\/categoria\/nacimientos$/);
     await expect(page.getByRole("heading", { name: /nacimientos/i })).toBeVisible();
     await expect(page.getByText(/no encontrado|page not found/i)).toHaveCount(0);
 
