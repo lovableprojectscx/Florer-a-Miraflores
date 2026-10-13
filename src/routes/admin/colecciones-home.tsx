@@ -9,9 +9,11 @@ import {
   Loader2,
   ToggleLeft,
   ToggleRight,
+  AlertTriangle,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { CategoriaRow } from "@/types/database";
+import { calcularConteoProductosPorCategoria } from "@/lib/categorias-utils";
 
 export const Route = createFileRoute("/admin/colecciones-home")({
   head: () => ({ meta: [{ title: "Colecciones Home | Admin Floreria Miraflores" }] }),
@@ -33,6 +35,7 @@ interface ColeccionConCategoria extends ColeccionRow {
   categoria_slug: string;
   es_subcategoria?: boolean;
   padre_nombre?: string | null;
+  totalProductosActivos?: number;
 }
 
 // --- Helpers ---
@@ -223,27 +226,36 @@ function ColeccionesHomePage() {
   const cargarDatos = useCallback(async () => {
     setLoading(true);
     try {
-      const [{ data: cats }, { data: cols }] = await Promise.all([
+      const [{ data: cats }, { data: cols }, { data: prods }] = await Promise.all([
         supabase.from("categorias").select("*").order("nombre"),
         supabase
           .from("colecciones_home")
           .select("*, categoria:categorias(id, nombre, slug, imagen_url)")
           .order("orden", { ascending: true }),
+        supabase.from("productos").select("categoria_id").eq("activo", true),
       ]);
 
       const todasCats = (cats ?? []) as CategoriaRow[];
       setCategorias(todasCats);
 
+      const prodsActivos = (prods ?? []) as { categoria_id: string | null }[];
+      const conteoPorCat = calcularConteoProductosPorCategoria(
+        todasCats,
+        prodsActivos.map((p) => p.categoria_id),
+      );
+
       const catMap = new Map(todasCats.map((c) => [c.id, c]));
       const mapped: ColeccionConCategoria[] = ((cols ?? []) as ColeccionRow[]).map((col) => {
         const cat = col.categoria_id ? catMap.get(col.categoria_id) : undefined;
         const padre = cat?.parent_id ? catMap.get(cat.parent_id) : undefined;
+        const totalProds = col.categoria_id ? (conteoPorCat[col.categoria_id]?.total ?? 0) : 0;
         return {
           ...col,
           categoria_nombre: cat?.nombre ?? "Sin categoria",
           categoria_slug: cat?.slug ?? "",
           es_subcategoria: !!cat?.parent_id,
           padre_nombre: padre?.nombre ?? null,
+          totalProductosActivos: totalProds,
         };
       });
       setColecciones(mapped);
@@ -425,6 +437,12 @@ function ColeccionesHomePage() {
                           Principal
                         </span>
                       )}
+                      {col.totalProductosActivos === 0 && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-body font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                          <AlertTriangle className="h-3 w-3 text-amber-600 flex-shrink-0" />
+                          <span>Esta categoría no tiene productos activos</span>
+                        </span>
+                      )}
                     </div>
                   </td>
 
@@ -510,6 +528,12 @@ function ColeccionesHomePage() {
                     ) : (
                       <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-body tracking-wider uppercase font-medium bg-[#F5EFE6] text-[#8A7A6E] border border-[#E8DDD0]">
                         Principal
+                      </span>
+                    )}
+                    {col.totalProductosActivos === 0 && (
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-body font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                        <AlertTriangle className="h-3 w-3 text-amber-600 flex-shrink-0" />
+                        <span>Esta categoría no tiene productos activos</span>
                       </span>
                     )}
                   </div>

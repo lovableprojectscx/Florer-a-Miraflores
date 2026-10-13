@@ -385,6 +385,61 @@ describe("Consultas de lectura en queries.ts", () => {
     );
   });
 
+  it("colección configurada con 0 productos se muestra", async () => {
+    tableResults = {
+      colecciones_home: {
+        data: [
+          {
+            id: "col-corp",
+            categoria_id: "cat-corp",
+            orden: 2,
+            activo: true,
+            categoria: {
+              id: "cat-corp",
+              nombre: "Corporativos",
+              slug: "corporativo",
+              activo: true,
+              parent_id: null,
+            },
+          },
+          {
+            id: "col-grad",
+            categoria_id: "cat-grad",
+            orden: 5,
+            activo: true,
+            categoria: {
+              id: "cat-grad",
+              nombre: "Graduación",
+              slug: "graduacion",
+              activo: true,
+              parent_id: null,
+            },
+          },
+        ],
+        error: null,
+      },
+      categorias: {
+        data: [
+          { id: "cat-corp", slug: "corporativo", activo: true, orden: 2, parent_id: null },
+          { id: "cat-grad", slug: "graduacion", activo: true, orden: 5, parent_id: null },
+        ],
+        error: null,
+      },
+      productos: {
+        // Solo cat-grad tiene productos activos, cat-corp tiene 0
+        data: [{ categoria_id: "cat-grad" }],
+        error: null,
+      },
+    };
+
+    const colecciones = await getColecciones();
+    const colCorp = colecciones.find(
+      (c) => (c.categoria as { slug?: string })?.slug === "corporativo",
+    );
+    expect(colCorp).toBeDefined();
+    expect(colCorp?.id).toBe("col-corp");
+  });
+
   it("throwOnError lanza error ante fallo de Supabase o datos nulos", async () => {
     queryResult = { data: null, error: { message: "Error forzado" } };
     await expect(getBanners()).rejects.toThrow("[Supabase] Error forzado");

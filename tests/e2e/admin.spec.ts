@@ -47,11 +47,13 @@ test.describe("Admin E2E — Protección de ruta y navegación", () => {
       const mobileMenuBtn = page.locator("header").getByRole("button", { name: "Abrir menú" });
       if (await mobileMenuBtn.isVisible()) {
         await mobileMenuBtn.click();
+        await page.waitForTimeout(350);
       }
-      await page
+      const sectionLink = page
         .locator("aside nav")
-        .getByRole("link", { name: section.label, exact: true })
-        .click();
+        .getByRole("link", { name: section.label, exact: true });
+      await sectionLink.scrollIntoViewIfNeeded();
+      await sectionLink.click();
       await expect(page).toHaveURL(new RegExp(section.urlPart));
       await expect(
         page.locator("main h1").first(),

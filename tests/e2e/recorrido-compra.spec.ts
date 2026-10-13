@@ -21,8 +21,11 @@ test.describe("Recorrido Completo de Compra y Auditoría Pre-Lanzamiento", () =>
     await page.goto("/");
     await waitForHydration(page, "main");
 
-    // 2. Navegar a una Categoría desde las tarjetas destacadas del Home
-    const linkCategoria = page.locator('main a[href^="/categoria/"]').first();
+    // 2. Navegar a una Categoría con productos desde las tarjetas destacadas del Home
+    const linkCategoria = page
+      .locator('main a[href^="/categoria/"]')
+      .filter({ hasText: /Graduación|Novedades|Nacimientos/i })
+      .first();
     await expect(linkCategoria).toBeVisible();
     await linkCategoria.click();
     await expect(page).toHaveURL(/\/categoria\//);

@@ -36,18 +36,38 @@ export function imagenUrl(url: string | null | undefined, ancho?: ImageWidth): s
   return trimmed.replace(SUPABASE_STORAGE_REGEX, `${basePath}/thumbs/${ancho}/${filePath}`);
 }
 
+export interface ImagenSrcSetOptions {
+  original?: number;
+  anchos?: ImageWidth[];
+}
+
 /**
- * Genera el atributo `srcset` para una imagen de Supabase Storage,
- * apuntando a las variantes de 480w y 960w.
+ * Genera el atributo `srcset` para una imagen de Supabase Storage.
+ * Permite especificar las miniaturas a incluir (por defecto 480w y 960w)
+ * y opcionalmente incluir la URL original con un ancho declarado
+ * (ej. `{ original: 2560 }` o `{ original: 1600 }`).
  */
-export function imagenSrcSet(url: string | null | undefined): string | undefined {
+export function imagenSrcSet(
+  url: string | null | undefined,
+  options?: ImagenSrcSetOptions,
+): string | undefined {
   if (!url || typeof url !== "string") return undefined;
   const trimmed = url.trim();
   if (!isSupabaseStorageUrl(trimmed)) return undefined;
 
-  const u480 = imagenUrl(trimmed, 480);
-  const u960 = imagenUrl(trimmed, 960);
-  return `${u480} 480w, ${u960} 960w`;
+  const anchos = options?.anchos ?? [480, 960];
+  const parts: string[] = [];
+
+  for (const a of anchos) {
+    parts.push(`${imagenUrl(trimmed, a)} ${a}w`);
+  }
+
+  if (options?.original && options.original > 0) {
+    const orig = revertirMiniatura(trimmed);
+    parts.push(`${orig} ${options.original}w`);
+  }
+
+  return parts.length > 0 ? parts.join(", ") : undefined;
 }
 
 /**

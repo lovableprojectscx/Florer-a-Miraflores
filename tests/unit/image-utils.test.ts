@@ -64,6 +64,19 @@ describe("image-utils (Fase 06-B)", () => {
       expect(srcset).toBe(`${expected480} 480w, ${expected960} 960w`);
     });
 
+    it("soporta incluir el original como candidato grande (ej. 2560w o 1600w)", () => {
+      const srcset = imagenSrcSet(original, { original: 2560 });
+      expect(srcset).toBe(`${expected480} 480w, ${expected960} 960w, ${original} 2560w`);
+
+      const srcset1600 = imagenSrcSet(original, { original: 1600 });
+      expect(srcset1600).toBe(`${expected480} 480w, ${expected960} 960w, ${original} 1600w`);
+    });
+
+    it("soporta personalizar los anchos de miniaturas (ej. solo 960w + original 2560w para banner)", () => {
+      const srcset = imagenSrcSet(original, { anchos: [960], original: 2560 });
+      expect(srcset).toBe(`${expected960} 960w, ${original} 2560w`);
+    });
+
     it("retorna undefined para assets locales o no válidos", () => {
       expect(imagenSrcSet("/assets/hero-flowers.webp")).toBeUndefined();
       expect(imagenSrcSet(null)).toBeUndefined();

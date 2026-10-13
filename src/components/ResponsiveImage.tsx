@@ -5,6 +5,8 @@ export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageE
   url?: string | null;
   anchoMiniatura?: ImageWidth;
   fallbackUrl?: string;
+  originalWidth?: number;
+  anchosMiniatura?: ImageWidth[];
 }
 
 /**
@@ -17,6 +19,8 @@ export function ResponsiveImage({
   url,
   anchoMiniatura = 480,
   fallbackUrl,
+  originalWidth,
+  anchosMiniatura,
   src,
   srcSet,
   sizes,
@@ -38,8 +42,13 @@ export function ResponsiveImage({
       ? imagenUrl(rawUrl, anchoMiniatura)
       : rawUrl;
 
+  const calculatedSrcSet = imagenSrcSet(rawUrl, {
+    original: originalWidth,
+    anchos: anchosMiniatura,
+  });
+
   // Si falló, nunca renderizar srcset ni sizes para que el navegador no ignore `src`
-  const currentSrcSet = hasError ? undefined : (srcSet ?? imagenSrcSet(rawUrl));
+  const currentSrcSet = hasError ? undefined : (srcSet ?? calculatedSrcSet);
   const currentSizes = hasError ? undefined : sizes;
 
   useEffect(() => {
@@ -57,7 +66,7 @@ export function ResponsiveImage({
       srcSet={currentSrcSet}
       sizes={currentSizes}
       data-thumb-src={anchoMiniatura ? imagenUrl(rawUrl, anchoMiniatura) : undefined}
-      data-thumb-srcset={imagenSrcSet(rawUrl)}
+      data-thumb-srcset={calculatedSrcSet}
       alt={alt}
       loading={hasError ? "eager" : loading}
       decoding="async"

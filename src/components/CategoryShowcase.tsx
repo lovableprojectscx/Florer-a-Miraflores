@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import type { ColeccionConCategoria } from "@/types/database";
-import { imagenUrl, imagenSrcSet, onImageThumbError } from "@/lib/image-utils";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 import amor from "@/assets/product-box-romantico.webp";
@@ -109,6 +108,7 @@ export function CategoryShowcase({ colecciones }: Props) {
                   url={img}
                   fallbackUrl={img || FALLBACK_IMGS[i % FALLBACK_IMGS.length]}
                   anchoMiniatura={isHero ? 960 : 480}
+                  originalWidth={isHero ? 1600 : undefined}
                   sizes={
                     isHero
                       ? "(max-width: 1024px) 100vw, 66vw"

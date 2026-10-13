@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import heroImg from "@/assets/hero-flowers.webp";
 import type { BannerRow } from "@/types/database";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { imagenUrl, imagenSrcSet, onImageThumbError } from "@/lib/image-utils";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 interface Props {
@@ -97,14 +96,14 @@ export function Hero({ banners }: Props) {
         >
           {displayBanners.map((ban, banIdx) => {
             const isFirst = banIdx === 0;
-            const thumbUrl = imagenUrl(ban.imagen_url, 960);
-            const srcSet = imagenSrcSet(ban.imagen_url);
 
             const img = (
               <ResponsiveImage
                 url={ban.imagen_url}
                 fallbackUrl={ban.imagen_url ?? heroImg}
                 anchoMiniatura={960}
+                originalWidth={2560}
+                anchosMiniatura={[960]}
                 sizes="100vw"
                 fetchPriority={isFirst ? "high" : "auto"}
                 loading={isFirst ? "eager" : "lazy"}

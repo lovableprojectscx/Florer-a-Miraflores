@@ -42,6 +42,7 @@ test.describe("Catálogo E2E — Paginación 'Ver más' y layout de tarjetas", (
     let actual = 24;
     while (actual < totalReal) {
       await expect(btnVerMas).toBeVisible();
+      await btnVerMas.scrollIntoViewIfNeeded();
       await btnVerMas.click();
       actual = Math.min(actual + 24, totalReal);
       await expect(cards).toHaveCount(actual);
