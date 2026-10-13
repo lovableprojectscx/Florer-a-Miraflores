@@ -27,8 +27,8 @@ En la configuración inicial de RLS:
    - Solo devuelve `true` si la sesión autenticada pertenece a un `user_id` registrado en `public.admins`.
 3. **Políticas endurecidas con `public.is_admin()`:**
    - **Catálogo y contenido (`banners`, `categorias`, `colecciones_home`, `config`, `distritos`, `faqs`, `ocasiones_home`, `popup`, `productos`, `tags`):**
-     - Lectura pública (`SELECT`): sin cambios (`true`).
-     - Escritura administrativa (`FOR ALL TO authenticated`): exige `USING (public.is_admin())` y `WITH CHECK (public.is_admin())`.
+     - Lectura pública (`"Public Read <tabla>"` y `"tags_lectura_publica"`): sin cambios (`true`).
+     - Escritura administrativa (`"Admin Write <tabla>"` y `"tags_escritura_admin"`, `FOR ALL TO authenticated`): exige `USING (public.is_admin())` y `WITH CHECK (public.is_admin())`.
    - **`pedidos`:**
      - Inserción pública (`insert_public` para checkout sin cuenta): sin cambios (`FOR INSERT TO anon, authenticated WITH CHECK (true)`).
      - `admin_select`, `admin_update` y `admin_delete`: exigen `public.is_admin()`.
@@ -36,8 +36,11 @@ En la configuración inicial de RLS:
      - Inserción pública (`Allow anon insert to reclamaciones` para el Libro de Reclamaciones): sin cambios (`FOR INSERT TO public WITH CHECK (true)`).
      - `Allow admin select/update to reclamaciones` (`FOR ALL TO authenticated`): exige `USING (public.is_admin())` y `WITH CHECK (public.is_admin())`.
    - **Storage (`storage.objects` en buckets `banners`, `categorias`, `productos`, `popup`):**
-     - Lectura pública de imágenes (`SELECT`): sin cambios.
-     - Políticas de `INSERT`, `UPDATE` y `DELETE`: exigen `bucket_id = '<bucket>' AND public.is_admin()`.
+     - Lectura pública de imágenes (`lectura publica de <bucket>`): sin cambios.
+     - Políticas de `INSERT` (`admin puede subir ...`), `UPDATE` (`admin puede actualizar ...`) y `DELETE` (`admin puede eliminar ...`): exigen `bucket_id = '<bucket>' AND public.is_admin()`.
+4. **Guardas de seguridad antes del `COMMIT`:**
+   - **Guarda 1:** Aborta toda la transacción si `public.admins` está vacía (por ejemplo, si no se reemplazó el placeholder del email antes de ejecutar).
+   - **Guarda 2:** Recorre `pg_policies` y aborta toda la transacción listando las policies infractoras si queda cualquier policy de escritura (o lectura en `pedidos`/`reclamaciones`) cuya `qual` o `with_check` aplicable no contenga `is_admin()`, permitiendo únicamente las dos excepciones `pedidos.insert_public` y `"Allow anon insert to reclamaciones"`.
 
 ---
 
