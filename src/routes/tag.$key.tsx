@@ -96,7 +96,7 @@ function TagPage() {
               onRangoChange={setRango}
             />
             {filtrados.length > 0 ? (
-              <ProductGrid products={filtrados} />
+              <ProductGrid products={filtrados} tamanoLote={24} />
             ) : (
               <p className="font-body font-light text-sm text-[#8A7A6E] py-8 text-center">
                 No hay productos en ese rango de precio.

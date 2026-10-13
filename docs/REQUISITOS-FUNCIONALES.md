@@ -26,10 +26,14 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 | RF-007 | Ordenamiento de productos (más recientes, recomendados, precio asc/desc) | Media | ✅ | Cotización 3.1 |
 | RF-008 | Listado de productos por tag (novedad, oferta, edición limitada, más vendido) | Media | ✅ | CLAUDE §7 |
 | RF-009 | Página de catálogo completo `/catalogo` | Media | ✅ | — (implementado) |
+| RF-009a | Paginación incremental "Ver más" en cliente por lotes de 24 productos (`use-ver-mas.ts`) en catálogo, categoría, subcategoría y tag (con indicador accesible `aria-live="polite"` y traslado de foco a la primera tarjeta nueva) | Alta | ✅ | Solicitud Cliente (v1.7.0 / Fase 04) |
+| RF-009b | Fotos de catálogo más grandes estilo Lima Floral: proporción `aspect-[4/5]`, grilla `grid-cols-2 md:grid-cols-3 xl:grid-cols-4`, nombre hasta 2 líneas en móvil (`line-clamp-2`), `decoding="async"`, `sizes` y placeholder explícito si `imagenes` está vacío | Alta | ✅ | Solicitud Cliente (v1.7.0 / Fase 04) |
 
 > **Detalle RF-003a (Navegación híbrida padre/hijos):** Al navegar hacia una categoría con subcategorías como `/categoria/tulipanes` o `/categoria/arreglos-florales`, el usuario visualiza en la cabecera los accesos directos a cada subcategoría (`/categoria/tulipanes/en-caja`, etc.) y simultáneamente, en la parte inferior, la lista agregada de todos los productos pertenecientes a cualquiera de sus hijas mediante la consulta Supabase `getProductosPorCategorias`.
 >
 > **Detalle RF-005a (Header con scroll natural):** El elemento `<header>` utiliza posicionamiento `relative z-30` en lugar de `sticky top-0`, permitiendo que al desplazarse hacia abajo el encabezado suba fluidamente junto con el contenido de la página, liberando un 100% de la altura de pantalla útil para la exploración de arreglos florales.
+>
+> **Detalle RF-009a y RF-009b (Paginación "Ver más" y fotos 4:5):** Los filtros y el ordenamiento continúan operando sobre la colección filtrada completa en memoria, pero `ProductGrid` solo monta 24 tarjetas por lote cuando recibe `tamanoLote={24}`, reduciendo el DOM inicial en móvil y la descarga de imágenes desde Supabase Storage. En `producto.$id.tsx` (productos relacionados) no se pasa `tamanoLote`, por lo que no muestra botón de paginación.
 
 ---
 

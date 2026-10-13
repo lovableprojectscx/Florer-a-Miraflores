@@ -6,8 +6,8 @@ Resumen priorizado. Detalle y notas en `../docs/PLAN-DE-TRABAJO.md`.
 
 ## P1 — Antes de lanzar
 
-- [ ] 🧑‍💻 **Paginación del catálogo** ("Ver más", lotes de 24) en `ProductGrid`. Plan definido.
-- [ ] 🧑‍💻 **Fotos del catálogo más grandes** (estilo Lima Floral): tarjetas más grandes, menos columnas.
+- [x] 🧑‍💻 **Paginación del catálogo** ("Ver más", lotes de 24) en `ProductGrid` (`src/hooks/use-ver-mas.ts`). Aplicada en catálogo, categoría, subcategoría y tag (relacionados no paginan).
+- [x] 🧑‍💻 **Fotos del catálogo más grandes** (estilo Lima Floral): tarjetas `aspect-[4/5]`, 2 columnas en móvil, 3 en `md` y máximo 4 en `xl`, con `decoding="async"`, `sizes` y placeholder explícito.
 - [x] ⚙️/🧑‍💻 **Arreglar "Nacimientos"** (no se refleja en la web): diagnosticado en Fase 02 y resuelto en Fase 03 (pasa a categoría padre con redirección de `/categoria/ocasion/nacimientos`, ocultamiento automático de categorías vacías y `docs/sql/003-nacimientos-padre.sql`).
 - [x] ⚙️ **Dividir "Nacimientos" en Niño y Niña** (`nacimientos-nino` y `nacimientos-nina` en `docs/sql/003-nacimientos-padre.sql` + guía en `docs/GUIA-PANEL-CATEGORIAS.md`).
 - [x] ⚙️ **"Tulipanes" no se refleja en Ramos/Arreglos**: selector agrupado `Padre › Hija` en `/admin/productos`, ocultamiento de subcategorías vacías y `docs/sql/004-tulipanes-reasignacion.sql` + guía para reasignar los 13 productos de Tulipanes padre.

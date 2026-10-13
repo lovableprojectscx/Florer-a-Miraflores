@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.7.0** | 2026-10-12 | **Catálogo / UI** | Fase 04: Paginación incremental `"Ver más"` en lotes de 24 (`use-ver-mas.ts`), fotos protagonistas `aspect-[4/5]`, grilla máximo 4 columnas (`grid-cols-2 md:grid-cols-3 xl:grid-cols-4`), `decoding="async"`, `sizes` y placeholder explícito en `ProductGrid`. |
 | **v1.6.1** | 2026-10-12 | **Seguridad / RLS** | Fase 03-B: Endurecimiento de políticas RLS con tabla `public.admins`, función `public.is_admin()`, script `docs/sql/005-admin-rls.sql`, auditoría de `pedidos`/`reclamaciones`/`storage` y tests E2E de las 12 secciones de `/admin`. |
 | **v1.6.0** | 2026-10-12 | **Categorías / Admin** | Fase 03: Ocultamiento automático de categorías vacías en la web pública, selector agrupado `Padre › Hija` en `/admin/productos`, toasts y conteos en `/admin/categorias`, redirección de subcategorías movidas y scripts SQL `003`/`004`. |
 | **v1.5.1** | 2026-10-12 | **Diagnóstico** | Fase 02: Diagnóstico de categorías en solo lectura (`scripts/diagnostico-categorias.mjs`, `docs/sql/diagnostico-categorias.sql`, `docs/DIAGNOSTICO-CATEGORIAS.md`). |
@@ -28,6 +29,26 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.7.0] — 2026-10-12: Fotos de Catálogo Más Grandes (4:5) y Paginación "Ver más" por Lotes de 24 (Fase 04)
+
+#### Contexto y Objetivo
+Reducir el número de elementos montados en el DOM en móvil y el consumo de egress de Supabase Storage sin romper los filtros ni el ordenamiento en cliente, y dar mayor protagonismo visual a las fotografías del catálogo (inspirado en la proporción foto/tarjeta de Lima Floral: 2 columnas en móvil, 3 en `md`, máximo 4 en `xl`, fotos `aspect-[4/5]`).
+
+#### Cambios Implementados
+1. **Hook de paginación incremental (`src/hooks/use-ver-mas.ts`):**
+   - `useVerMas<T>(items, tamanoLote = 24)` expone `{ visibles, total, mostrando, hayMas, verMas }`.
+   - Se reinicia automáticamente a `24` cuando cambia la lista filtrada u ordenada mediante comparación por clave estable (`tamanoLote|longitud|ids`), sin resetear si se recibe un nuevo array con los mismos elementos.
+2. **Grilla de productos (`src/components/ProductGrid.tsx`) y rutas de catálogo (`catalogo.tsx`, `categoria.$slug.tsx`, `categoria.$slug.$sub.tsx`, `tag.$key.tsx`):**
+   - Prop opcional `tamanoLote?: number` aplicada con `tamanoLote={24}` en `/catalogo`, `/categoria/:slug`, `/categoria/:slug/:sub` y `/tag/:key` (los productos relacionados en `/producto/:id` no pasan `tamanoLote` y no paginan).
+   - Contador `"Mostrando X de Y"` con `aria-live="polite"` y botón secundario `"Ver más"` que traslada el foco (`focus({ preventScroll: true })`) a la primera tarjeta del nuevo lote.
+   - Cuadrícula ajustada a `grid-cols-2 md:grid-cols-3 xl:grid-cols-4`, contenedor de imagen en proporción `aspect-[4/5]`, bloque de texto compacto con `line-clamp-2 sm:line-clamp-1`, `decoding="async"`, `sizes` responsivos y placeholder explícito (`romantico`) cuando `imagenes` está vacío o `null`.
+   - El "modo home" (productos estáticos) del componente permanece intacto.
+3. **Pruebas y Evidencia Visual:**
+   - Tests unitarios en `tests/unit/use-ver-mas.test.ts` (6 tests) y `tests/unit/ProductGrid.test.tsx` (3 tests).
+   - Tests E2E en `tests/e2e/catalogo-paginacion.spec.ts` y capturas antes/después a 390 px y 1440 px en `docs/evidencias/fase-04/`.
+
+---
 
 ### [v1.6.1] — 2026-10-12: Endurecimiento de Seguridad RLS (Fase 03-B)
 
