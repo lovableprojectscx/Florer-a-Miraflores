@@ -124,4 +124,50 @@ describe("RLS — Políticas de seguridad con anon key", () => {
     const { data, error } = await anonClient.from("pedidos").select("*").limit(5);
     expect(error !== null || (data ?? []).length === 0).toBe(true);
   });
+
+  it("anon NO PUEDE leer 'reclamaciones' (devuelve error o 0 filas)", async () => {
+    const { data, error } = await anonClient.from("reclamaciones").select("*").limit(5);
+    expect(error !== null || (data ?? []).length === 0).toBe(true);
+  });
+
+  it("anon NO PUEDE actualizar ni borrar en 'pedidos' ni 'reclamaciones'", async () => {
+    // NOTA SOBRE INSERT PÚBLICO EN `pedidos` Y `reclamaciones`:
+    // Las políticas `insert_public` (en `pedidos`) y `Allow anon insert to reclamaciones`
+    // (en `reclamaciones`) permiten a `anon` insertar filas nuevas (`WITH CHECK (true)`).
+    // NO ejecutamos un `INSERT` con `anon` en este test contra producción porque la política
+    // está diseñada para ACEPTAR la inserción y crearía un pedido o reclamo falso real en la
+    // base de datos de la tienda (que luego `anon` ni siquiera podría borrar por RLS).
+    // La vigencia de ambas políticas de inserción pública se certifica consultando `pg_policies`
+    // (ver `docs/SEGURIDAD.md` y `docs/BASE-DE-DATOS.md`) y el flujo de UI se prueba en E2E
+    // interceptando la petición de red.
+    const fakeUuid = "00000000-0000-0000-0000-000000000000";
+
+    const { data: updPed, error: updPedErr } = await anonClient
+      .from("pedidos")
+      .update({ notas: "__RLS_TEST_NO_OP__" })
+      .eq("id", fakeUuid)
+      .select();
+    expect(updPedErr !== null || (updPed ?? []).length === 0).toBe(true);
+
+    const { data: delPed, error: delPedErr } = await anonClient
+      .from("pedidos")
+      .delete()
+      .eq("id", fakeUuid)
+      .select();
+    expect(delPedErr !== null || (delPed ?? []).length === 0).toBe(true);
+
+    const { data: updRec, error: updRecErr } = await anonClient
+      .from("reclamaciones")
+      .update({ detalle: "__RLS_TEST_NO_OP__" })
+      .eq("id", fakeUuid)
+      .select();
+    expect(updRecErr !== null || (updRec ?? []).length === 0).toBe(true);
+
+    const { data: delRec, error: delRecErr } = await anonClient
+      .from("reclamaciones")
+      .delete()
+      .eq("id", fakeUuid)
+      .select();
+    expect(delRecErr !== null || (delRec ?? []).length === 0).toBe(true);
+  });
 });

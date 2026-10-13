@@ -33,12 +33,15 @@ test.describe("Admin E2E — Protección de ruta y navegación", () => {
       "Omitido: define E2E_ADMIN_EMAIL y E2E_ADMIN_PASSWORD en .env.e2e.local para ejecutar las pruebas autenticadas del panel admin.",
     );
 
+    test.setTimeout(90_000);
+
     await page.goto("/admin-login");
     await page.locator("#email").fill(ADMIN_EMAIL!);
     await page.locator("#password").fill(ADMIN_PASSWORD!);
     await page.getByRole("button", { name: "Ingresar" }).click();
 
     await expect(page).toHaveURL(/\/admin\/dashboard/);
+    await expect(page.locator("main h1").first()).toBeVisible();
 
     for (const section of SIDEBAR_SECTIONS) {
       const mobileMenuBtn = page.locator("header").getByRole("button", { name: "Abrir menú" });
@@ -50,6 +53,10 @@ test.describe("Admin E2E — Protección de ruta y navegación", () => {
         .getByRole("link", { name: section.label, exact: true })
         .click();
       await expect(page).toHaveURL(new RegExp(section.urlPart));
+      await expect(
+        page.locator("main h1").first(),
+        `La sección ${section.label} (${section.urlPart}) debe renderizar su encabezado principal`,
+      ).toBeVisible();
     }
   });
 });

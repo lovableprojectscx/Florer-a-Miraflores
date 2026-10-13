@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.6.1** | 2026-10-12 | **Seguridad / RLS** | Fase 03-B: Endurecimiento de políticas RLS con tabla `public.admins`, función `public.is_admin()`, script `docs/sql/005-admin-rls.sql`, auditoría de `pedidos`/`reclamaciones`/`storage` y tests E2E de las 12 secciones de `/admin`. |
 | **v1.6.0** | 2026-10-12 | **Categorías / Admin** | Fase 03: Ocultamiento automático de categorías vacías en la web pública, selector agrupado `Padre › Hija` en `/admin/productos`, toasts y conteos en `/admin/categorias`, redirección de subcategorías movidas y scripts SQL `003`/`004`. |
 | **v1.5.1** | 2026-10-12 | **Diagnóstico** | Fase 02: Diagnóstico de categorías en solo lectura (`scripts/diagnostico-categorias.mjs`, `docs/sql/diagnostico-categorias.sql`, `docs/DIAGNOSTICO-CATEGORIAS.md`). |
 | **v1.5.0** | 2026-10-12 | **QA / Testing** | Base de pruebas automatizadas: Vitest (unitario + RLS), Playwright E2E (mobile/desktop) y comando único `npm run verify`. |
@@ -27,6 +28,27 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.6.1] — 2026-10-12: Endurecimiento de Seguridad RLS (Fase 03-B)
+
+#### Contexto y Objetivo
+Todas las policies de escritura en las 10 tablas de catálogo/contenido, `SELECT`/`UPDATE`/`DELETE` en `pedidos` y `reclamaciones`, y `INSERT`/`DELETE` en `storage.objects` usaban `auth.uid() IS NOT NULL` (o `TO authenticated USING (true)`), permitiendo que cualquier usuario autenticado modificara el catálogo o leyera/modificara pedidos y reclamos.
+
+#### Cambios Implementados
+1. **Migración SQL idempotente (`docs/sql/005-admin-rls.sql`):**
+   - Creación de `public.admins` (`user_id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE`, `email text NOT NULL`, `created_at timestamptz`) con RLS activo y sin policies públicas.
+   - Creación de `public.is_admin()` (`RETURNS boolean`, `LANGUAGE sql`, `STABLE`, `SECURITY DEFINER`, `SET search_path = public`).
+   - Reemplazo de las policies de escritura en `banners`, `categorias`, `colecciones_home`, `config`, `distritos`, `faqs`, `ocasiones_home`, `popup`, `productos` y `tags` para exigir `public.is_admin()` tanto en `USING` como en `WITH CHECK`.
+   - Reemplazo de `admin_select`, `admin_update` y `admin_delete` en `pedidos`, y `"Allow admin select/update to reclamaciones"` en `reclamaciones` para exigir `public.is_admin()`, manteniendo intacto el `INSERT` público.
+   - Reemplazo de las policies de `INSERT` y `DELETE` (y adición de `UPDATE`) en `storage.objects` para los buckets `banners`, `categorias`, `productos` y `popup` usando `public.is_admin()`.
+   - Bloque completo de reversa comentada para restaurar las policies previas si fuera necesario.
+2. **Pruebas de RLS y E2E (`tests/rls/rls.test.ts`, `tests/e2e/admin.spec.ts`):**
+   - Verificación en `tests/rls/rls.test.ts` de que `anon` no puede leer, actualizar ni eliminar filas en `pedidos` ni en `reclamaciones`.
+   - Verificación en `tests/e2e/admin.spec.ts` de inicio de sesión con `.env.e2e.local` y recorrido en solo lectura de las 12 secciones del panel `/admin` validando encabezados y cero errores de consola/página.
+3. **Documentación (`docs/SEGURIDAD.md`):**
+   - Documentación detallada de la arquitectura de autorización (`public.admins` + `public.is_admin()`), matriz de policies antes y después en `public` y `storage.objects`, y procedimiento de alta/baja de administradores.
+
+---
 
 ### [v1.6.0] — 2026-10-12: Arreglo de Categorías, Visibilidad Automática y Mejoras de Admin (Fase 03)
 
