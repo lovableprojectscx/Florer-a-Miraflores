@@ -13,6 +13,8 @@ import { supabase } from "@/lib/supabase";
 import { slugify } from "@/lib/utils";
 import { getTagBadgeInfo } from "@/lib/tag-utils";
 import { useVerMas } from "@/hooks/use-ver-mas";
+import { imagenUrl, imagenSrcSet, onImageThumbError } from "@/lib/image-utils";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 // Data estática del home — se mantiene para compatibilidad
 const defaultProducts = [
@@ -109,17 +111,14 @@ export function ProductGrid({
                         {label}
                       </span>
                     )}
-                    <img
-                      src={primeraImagen}
+                    <ResponsiveImage
+                      url={primeraImagen}
+                      fallbackUrl={primeraImagen || romantico}
+                      anchoMiniatura={480}
                       alt={p.nombre}
                       loading="lazy"
-                      decoding="async"
                       sizes="(min-width: 1536px) 360px, (min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-105 will-change-transform"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = romantico;
-                      }}
                     />
                   </div>
                   <div className="p-2.5 sm:p-3.5 flex-1 flex flex-col justify-between">

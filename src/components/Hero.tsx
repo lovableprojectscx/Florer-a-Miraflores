@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import heroImg from "@/assets/hero-flowers.webp";
 import type { BannerRow } from "@/types/database";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { imagenUrl, imagenSrcSet, onImageThumbError } from "@/lib/image-utils";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 interface Props {
   banners: BannerRow[];
@@ -93,16 +95,21 @@ export function Hero({ banners }: Props) {
           className="flex transition-transform duration-700 ease-in-out w-full"
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
-          {displayBanners.map((ban) => {
+          {displayBanners.map((ban, banIdx) => {
+            const isFirst = banIdx === 0;
+            const thumbUrl = imagenUrl(ban.imagen_url, 960);
+            const srcSet = imagenSrcSet(ban.imagen_url);
+
             const img = (
-              <img
-                src={ban.imagen_url}
+              <ResponsiveImage
+                url={ban.imagen_url}
+                fallbackUrl={ban.imagen_url ?? heroImg}
+                anchoMiniatura={960}
+                sizes="100vw"
+                fetchPriority={isFirst ? "high" : "auto"}
+                loading={isFirst ? "eager" : "lazy"}
                 alt={ban.titulo ?? "Banner Florería Miraflores"}
                 className="w-full h-full object-cover object-center block select-none"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = heroImg;
-                }}
               />
             );
 
@@ -155,7 +162,7 @@ export function Hero({ banners }: Props) {
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white/30 backdrop-blur-md text-white hover:bg-white/60 active:scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 hidden md:flex shadow-sm cursor-pointer border border-white/40"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-white/30 backdrop-blur-md text-white hover:bg-white/60 active:scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 hidden md:flex shadow-sm cursor-pointer border border-white/40"
               aria-label="Anterior banner"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -163,7 +170,7 @@ export function Hero({ banners }: Props) {
 
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-white/30 backdrop-blur-md text-white hover:bg-white/60 active:scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 hidden md:flex shadow-sm cursor-pointer border border-white/40"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-white/30 backdrop-blur-md text-white hover:bg-white/60 active:scale-95 transition-all duration-300 opacity-0 group-hover:opacity-100 hidden md:flex shadow-sm cursor-pointer border border-white/40"
               aria-label="Siguiente banner"
             >
               <ChevronRight className="w-5 h-5" />
@@ -173,31 +180,31 @@ export function Hero({ banners }: Props) {
       </div>
 
       {/* Paginación Numérica estilo Lima Floral < 1 2 3 4 > ABAJO DEL BANNER */}
-      <div className="flex items-center justify-center gap-3 py-3 sm:py-3.5 select-none text-[#2C2420] bg-white">
+      <div className="flex items-center justify-center gap-2 py-3 sm:py-3.5 select-none text-[#2C2420] bg-white">
         <button
           onClick={handlePrev}
           aria-label="Anterior"
           disabled={total <= 1}
-          className="p-1 text-[#8A7A6E] hover:text-[#2C2420] disabled:opacity-40 disabled:hover:text-[#8A7A6E] transition-colors cursor-pointer"
+          className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#6B5E55] hover:text-[#2C2420] disabled:opacity-40 disabled:hover:text-[#6B5E55] transition-colors cursor-pointer"
         >
-          <ChevronLeft className="w-3.5 h-3.5" />
+          <ChevronLeft className="w-4 h-4" />
         </button>
 
-        <div className="flex items-center gap-3 text-xs font-body">
+        <div className="flex items-center gap-1 text-xs font-body">
           {displayBanners.map((_, idx) => {
             const isActive = idx === activeIndex;
             return (
               <button
                 key={idx}
                 onClick={() => setActiveIndex(idx)}
-                className={`transition-all duration-200 cursor-pointer ${
+                className={`min-w-[44px] min-h-[44px] flex items-center justify-center p-2 transition-all duration-200 cursor-pointer ${
                   isActive
                     ? "font-semibold text-[#2C2420] underline underline-offset-4"
-                    : "text-[#8A7A6E] hover:text-[#2C2420]"
+                    : "text-[#6B5E55] hover:text-[#2C2420]"
                 }`}
                 aria-label={`Ir al banner ${idx + 1}`}
               >
-                {idx + 1}
+                <span>{idx + 1}</span>
               </button>
             );
           })}
@@ -207,9 +214,9 @@ export function Hero({ banners }: Props) {
           onClick={handleNext}
           aria-label="Siguiente"
           disabled={total <= 1}
-          className="p-1 text-[#8A7A6E] hover:text-[#2C2420] disabled:opacity-40 disabled:hover:text-[#8A7A6E] transition-colors cursor-pointer"
+          className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#6B5E55] hover:text-[#2C2420] disabled:opacity-40 disabled:hover:text-[#6B5E55] transition-colors cursor-pointer"
         >
-          <ChevronRight className="w-3.5 h-3.5" />
+          <ChevronRight className="w-4 h-4" />
         </button>
       </div>
     </section>

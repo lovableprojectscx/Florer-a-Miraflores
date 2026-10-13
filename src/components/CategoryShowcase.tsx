@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ColeccionConCategoria } from "@/types/database";
+import { imagenUrl, imagenSrcSet, onImageThumbError } from "@/lib/image-utils";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 import amor from "@/assets/product-box-romantico.webp";
 import cumple from "@/assets/product-arreglo-especial.webp";
@@ -103,15 +105,18 @@ export function CategoryShowcase({ colecciones }: Props) {
 
             const inner = (
               <>
-                <img
-                  src={img}
+                <ResponsiveImage
+                  url={img}
+                  fallbackUrl={img || FALLBACK_IMGS[i % FALLBACK_IMGS.length]}
+                  anchoMiniatura={isHero ? 960 : 480}
+                  sizes={
+                    isHero
+                      ? "(max-width: 1024px) 100vw, 66vw"
+                      : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  }
                   alt={cat.nombre}
                   loading={i < 2 ? "eager" : "lazy"}
                   className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = FALLBACK_IMGS[i % FALLBACK_IMGS.length];
-                  }}
                 />
 
                 {/* Gradiente dinámico según jerarquía */}

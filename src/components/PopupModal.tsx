@@ -181,6 +181,7 @@ export function PopupModal({ popup, config }: Props) {
           onClick={handleClose}
           role="dialog"
           aria-modal="true"
+          aria-label="Promoción y suscripción a Florería Miraflores"
         >
           <div
             className="relative bg-white rounded-2xl shadow-2xl max-w-sm sm:max-w-md w-full overflow-hidden border border-[#E8DDD0]/60 animate-fade-in"
@@ -209,10 +210,10 @@ export function PopupModal({ popup, config }: Props) {
               </div>
             ) : (
               <div className="bg-gradient-to-br from-[#FAF8F6] via-[#F5EFE6] to-[#FAF8F6] pt-8 pb-5 px-6 text-center border-b border-[#E8DDD0]/60">
-                <div className="w-12 h-12 mx-auto rounded-full bg-[#C4848A]/15 text-[#C4848A] flex items-center justify-center mb-2.5 shadow-inner">
+                <div className="w-12 h-12 mx-auto rounded-full bg-[#C4848A]/15 text-[#9B4850] flex items-center justify-center mb-2.5 shadow-inner">
                   <Sparkles className="w-6 h-6" />
                 </div>
-                <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#C4848A]">
+                <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#9B4850]">
                   Club Florería Miraflores
                 </span>
                 <h3 className="font-display text-2xl sm:text-3xl text-[#2C2420] mt-1 font-normal">
@@ -225,7 +226,7 @@ export function PopupModal({ popup, config }: Props) {
             <div className="px-6 pt-5 pb-2 text-center">
               {popup?.imagen_url && (
                 <>
-                  <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#C4848A] block mb-1">
+                  <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#9B4850] block mb-1">
                     Club Florería Miraflores
                   </span>
                   <h3 className="font-display text-xl sm:text-2xl text-[#2C2420] font-normal mb-2">
@@ -233,7 +234,7 @@ export function PopupModal({ popup, config }: Props) {
                   </h3>
                 </>
               )}
-              <p className="font-body text-xs sm:text-sm text-[#8C8A84] leading-relaxed">
+              <p className="font-body text-xs sm:text-sm text-[#595753] leading-relaxed">
                 {popup?.texto && !isLegacyOrUnwantedText(popup.texto)
                   ? popup.texto
                   : "Suscríbete con tu celular o WhatsApp para recibir promociones exclusivas, novedades y recordatorios de fechas especiales."}
@@ -246,7 +247,7 @@ export function PopupModal({ popup, config }: Props) {
                 <div>
                   <label
                     htmlFor="phone-input"
-                    className="block text-[11px] font-body uppercase tracking-wider text-[#8C8A84] mb-1.5 font-medium"
+                    className="block text-[11px] font-body uppercase tracking-wider text-[#595753] mb-1.5 font-medium"
                   >
                     Tu número de WhatsApp / Celular
                   </label>
@@ -298,7 +299,7 @@ export function PopupModal({ popup, config }: Props) {
                   )}
                 </button>
 
-                <p className="text-[11px] text-center text-[#8C8A84] font-light leading-snug">
+                <p className="text-[11px] text-center text-[#595753] font-light leading-snug">
                   🔒 Sin spam. Solo promociones exclusivas y novedades de Florería Miraflores.
                 </p>
               </form>
@@ -312,7 +313,7 @@ export function PopupModal({ popup, config }: Props) {
                   <h4 className="font-display text-xl text-[#2C2420] font-normal">
                     ¡Ya eres parte de nuestra comunidad!
                   </h4>
-                  <p className="font-body text-xs text-[#8C8A84] mt-1">
+                  <p className="font-body text-xs text-[#595753] mt-1">
                     Usa tu cupón de bienvenida o contáctanos por WhatsApp para hacer tu pedido:
                   </p>
                 </div>
@@ -320,10 +321,10 @@ export function PopupModal({ popup, config }: Props) {
                 {/* Cupón con botón copiar */}
                 <div className="p-3 bg-[#FAF8F6] border border-dashed border-[#C4848A] rounded-xl flex items-center justify-between">
                   <div className="text-left">
-                    <span className="text-[10px] text-[#8C8A84] uppercase tracking-wider block">
+                    <span className="text-[10px] text-[#595753] uppercase tracking-wider block">
                       Cupón 10% OFF
                     </span>
-                    <span className="font-mono text-base font-bold text-[#C4848A] tracking-wider">
+                    <span className="font-mono text-base font-bold text-[#9B4850] tracking-wider">
                       {COUPON_CODE}
                     </span>
                   </div>
@@ -339,7 +340,7 @@ export function PopupModal({ popup, config }: Props) {
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5 text-[#8C8A84]" />
+                        <Copy className="w-3.5 h-3.5 text-[#595753]" />
                         <span>Copiar</span>
                       </>
                     )}
@@ -362,7 +363,7 @@ export function PopupModal({ popup, config }: Props) {
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="text-xs text-[#8C8A84] hover:text-[#2C2420] underline transition-colors cursor-pointer"
+                  className="text-xs text-[#595753] hover:text-[#2C2420] underline transition-colors cursor-pointer"
                 >
                   Continuar navegando
                 </button>

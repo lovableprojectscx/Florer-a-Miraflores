@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { useCartStore } from "@/store/cart";
 import type { ProductoRow, TagRow } from "@/types/database";
 import { slugify } from "@/lib/utils";
+import { imagenUrl, imagenSrcSet, onImageThumbError } from "@/lib/image-utils";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 import pampas from "@/assets/product-novedad-pampas.webp";
 import velvet from "@/assets/product-novedad-velvet.webp";
@@ -124,17 +126,23 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
     }
   };
 
+  const thumbUrl = imagenUrl(imgSrc, 480);
+  const srcSet = imagenSrcSet(imgSrc);
+
   return (
-    <article className="group flex-shrink-0 w-[160px] sm:w-[185px] md:w-[210px] lg:w-[230px] xl:w-[245px] 2xl:w-[260px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-lg border border-[#E8DDD0]/50">
+    <article className="group flex-shrink-0 w-[45vw] sm:w-[42vw] md:w-[30vw] lg:w-[calc(25%-1rem)] xl:w-[280px] 2xl:w-[295px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-lg border border-[#E8DDD0]/50">
       <Link
         to="/producto/$id"
         params={{ id: `${slugify(producto.nombre)}-${producto.id}` }}
         className="block"
       >
-        {/* Imagen cuadrada limpia sin bordes que ocupa todo el ancho */}
-        <div className="relative overflow-hidden bg-[#FAF8F5] aspect-square">
-          <img
-            src={imgSrc}
+        {/* Imagen en proporción 4:5 igual al catálogo */}
+        <div className="relative overflow-hidden bg-[#FAF8F5] aspect-[4/5]">
+          <ResponsiveImage
+            url={imgSrc}
+            fallbackUrl={imgSrc}
+            anchoMiniatura={480}
+            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 25vw"
             alt={producto.nombre}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
@@ -269,11 +277,11 @@ function TagSection({ tag, productos }: TagSeccion) {
       {/* Controles de paginación y botón "Ver más productos" */}
       <div className="flex flex-col items-center justify-center gap-3.5 sm:gap-4 mt-6 sm:mt-8">
         {total > 1 && (
-          <div className="flex items-center gap-3 text-xs font-body text-[#736B63] select-none">
+          <div className="flex items-center gap-2 text-xs font-body text-[#595753] select-none">
             <button
               onClick={handlePrev}
               aria-label="Anterior"
-              className="p-1 hover:text-[#1E1E1D] transition-colors cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#595753] hover:text-[#1E1E1D] transition-colors cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -283,7 +291,7 @@ function TagSection({ tag, productos }: TagSeccion) {
             <button
               onClick={handleNext}
               aria-label="Siguiente"
-              className="p-1 hover:text-[#1E1E1D] transition-colors cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#595753] hover:text-[#1E1E1D] transition-colors cursor-pointer"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -293,7 +301,7 @@ function TagSection({ tag, productos }: TagSeccion) {
         <Link
           to="/tag/$key"
           params={{ key: tag.clave }}
-          className="inline-flex items-center justify-center px-8 py-3 bg-[#9C9381] hover:bg-[#8A816F] text-white text-[11px] tracking-[0.18em] uppercase font-body font-normal rounded-md transition-colors duration-300 shadow-xs"
+          className="inline-flex items-center justify-center px-8 py-3 bg-[#2C2420] hover:bg-[#433934] text-white text-[11px] tracking-[0.18em] uppercase font-body font-medium rounded-md transition-colors duration-300 shadow-xs"
         >
           Ver más productos
         </Link>
