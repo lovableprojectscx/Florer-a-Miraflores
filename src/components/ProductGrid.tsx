@@ -126,9 +126,11 @@ export function ProductGrid({
                       <p className="text-[10px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-0.5">
                         Florería Miraflores
                       </p>
-                      <h3 className="font-display text-base text-[#2C2420] group-hover:text-[#C4956A] transition-colors duration-200 line-clamp-2 sm:line-clamp-1 leading-snug">
-                        {p.nombre}
-                      </h3>
+                      <div className="min-h-[2.6rem] sm:min-h-[2.75rem] flex items-center">
+                        <h3 className="font-display text-base text-[#2C2420] group-hover:text-[#C4956A] transition-colors duration-200 line-clamp-2 leading-snug">
+                          {p.nombre}
+                        </h3>
+                      </div>
                     </div>
                     <span className="font-body font-semibold text-[#2C2420] text-sm md:text-[15px] mt-1.5 block">
                       S/. {p.precio.toFixed(2)}{" "}

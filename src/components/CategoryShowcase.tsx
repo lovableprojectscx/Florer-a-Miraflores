@@ -76,27 +76,29 @@ export function CategoryShowcase({ colecciones }: Props) {
 
             const parentSlug = cat.padre?.slug ?? null;
 
-            // Bento responsive classes according to position
-            let gridSpan = "";
-            let cardHeight = "";
+            // Bento responsive classes according to position y regla móvil sin tarjetas huérfanas
+            const totalColecciones = colecciones.length;
             const isHero = i === 0;
             const isVerticalSide = i === 1;
+            // Si lo que queda tras la 1ª es impar, la 2ª también va a todo el ancho en móvil para que el resto quede par
+            const segundaAnchoEnMovil = (totalColecciones - 1) % 2 !== 0;
+
+            let gridSpan = "";
+            let cardHeight = "";
 
             if (isHero) {
               gridSpan = "col-span-12 lg:col-span-8";
               cardHeight = "h-[300px] sm:h-[360px] lg:h-[410px]";
             } else if (isVerticalSide) {
-              gridSpan = "col-span-12 sm:col-span-6 lg:col-span-4";
-              cardHeight = "h-[240px] sm:h-[300px] lg:h-[410px]";
-            } else if (
-              i === 5 ||
-              (i === colecciones.length - 1 && (colecciones.length - 2) % 2 !== 0)
-            ) {
-              // Cierre armonioso en pantallas móviles pequeñas para evitar tarjeta huérfana
-              gridSpan = "col-span-12 sm:col-span-6 lg:col-span-3";
-              cardHeight = "h-[200px] sm:h-[240px] lg:h-[280px]";
+              gridSpan = segundaAnchoEnMovil
+                ? "col-span-12 sm:col-span-6 lg:col-span-4"
+                : "col-span-6 sm:col-span-6 lg:col-span-4";
+              cardHeight = segundaAnchoEnMovil
+                ? "h-[250px] sm:h-[300px] lg:h-[410px]"
+                : "h-[220px] sm:h-[240px] lg:h-[410px]";
             } else {
-              gridSpan = "col-span-6 lg:col-span-3";
+              // Todas las tarjetas pequeñas restantes van en 2 columnas con la MISMA altura exacta
+              gridSpan = "col-span-6 sm:col-span-6 lg:col-span-3";
               cardHeight = "h-[220px] sm:h-[240px] lg:h-[280px]";
             }
 

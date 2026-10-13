@@ -151,9 +151,11 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
 
         {/* Información del producto */}
         <div className="bg-[#F7F7F7] px-3.5 pt-3 sm:px-4 sm:pt-3.5 pb-2 text-center">
-          <h3 className="font-body text-[#222222] text-xs sm:text-[13px] md:text-sm font-normal leading-snug line-clamp-1 group-hover:text-[#666666] transition-colors">
-            {producto.nombre}
-          </h3>
+          <div className="min-h-[2.5rem] sm:min-h-[2.6rem] flex items-center justify-center">
+            <h3 className="font-body text-[#222222] text-xs sm:text-[13px] md:text-sm font-normal leading-snug line-clamp-2 group-hover:text-[#666666] transition-colors">
+              {producto.nombre}
+            </h3>
+          </div>
           <p className="mt-1 font-body text-[#222222] text-xs sm:text-[13px] md:text-sm font-normal">
             S/. {producto.precio.toFixed(2)} PEN
           </p>
@@ -261,12 +263,12 @@ function TagSection({ tag, productos }: TagSeccion) {
         </div>
       </div>
 
-      {/* Slider borde a borde (referencia: limafloralco.com) */}
+      {/* Slider borde a borde con margen derecho seguro para no solapar el botón flotante */}
       <div className="w-full">
         <div
           ref={sliderRef}
           onScroll={updateCurrentIndex}
-          className="flex overflow-x-auto gap-2 pb-3.5 snap-x snap-mandatory scrollbar-none w-full px-4"
+          className="flex overflow-x-auto gap-2 pb-3.5 snap-x snap-mandatory scrollbar-none w-full px-4 pr-16 sm:pr-6"
         >
           {productos.map((p) => (
             <ProductCard key={p.id} producto={p} />
