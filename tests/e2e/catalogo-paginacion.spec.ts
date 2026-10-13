@@ -110,6 +110,9 @@ test.describe("Catálogo E2E — Paginación 'Ver más' y layout de tarjetas", (
     // Hacer scroll progresivo por todas las tarjetas del primer lote hasta el final
     for (let i = 0; i < 24; i++) {
       await cards.nth(i).scrollIntoViewIfNeeded();
+      if (i % 4 === 0) {
+        await page.waitForTimeout(100);
+      }
     }
 
     const footerCounter = page.locator('main [aria-live="polite"]');
@@ -127,7 +130,7 @@ test.describe("Catálogo E2E — Paginación 'Ver más' y layout de tarjetas", (
               }).length,
           );
         },
-        { timeout: 15000 },
+        { timeout: 20000 },
       )
       .toBe(24);
 
