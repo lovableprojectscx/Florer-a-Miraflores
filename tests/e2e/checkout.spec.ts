@@ -109,4 +109,43 @@ test.describe("Checkout E2E — Flujo completo con interceptación segura", () =
     expect(waHref).toContain("wa.me/");
     expect(waHref).toContain(orderNumber);
   });
+
+  test("con el reloj del navegador fijado a las 20:00 en Lima, el min del input es mañana y elegir hoy muestra error", async ({
+    page,
+  }) => {
+    // 20:00 Lima (UTC-5) el 15 de octubre de 2026 -> en UTC ya es 16 de octubre 01:00.
+    // "Hoy" en Lima es 2026-10-15 y "Mañana" en Lima es 2026-10-16.
+    await page.clock.setFixedTime(new Date("2026-10-15T20:00:00-05:00"));
+
+    // 1. Agregar producto al carrito desde /catalogo
+    await page.goto("/catalogo");
+    await waitForHydration(page, "main article button");
+
+    const firstCard = page.locator("main article").first();
+    await expect(firstCard).toBeVisible();
+    await firstCard.getByRole("button", { name: /agregar al carrito/i }).click();
+
+    const drawer = page.getByRole("dialog", { name: "Carrito de compras" });
+    await expect(drawer).toHaveClass(/translate-x-0/);
+    await drawer.getByRole("link", { name: /Continuar al checkout/i }).click();
+    await expect(page).toHaveURL(/\/checkout$/);
+
+    // 2. Verificar que el atributo min sea estrictamente mañana en Lima (2026-10-16)
+    const fechaInput = page.locator("#fecha_entrega");
+    await expect(fechaInput).toHaveAttribute("min", "2026-10-16");
+
+    // 3. Seleccionar "hoy" (2026-10-15) e intentar enviar
+    await fechaInput.fill("2026-10-15");
+    const form = page.locator("form");
+    const submitBtn = form.getByRole("button", { name: /Pagar con IZIPay/i });
+    await submitBtn.click();
+
+    // 4. Debe mostrar el error de validación de Zod
+    await expect(form.getByText("La fecha mínima de entrega es mañana")).toBeVisible();
+
+    // 5. Corregir a "mañana" (2026-10-16) hace desaparecer el error de fecha mínima
+    await fechaInput.fill("2026-10-16");
+    await submitBtn.click();
+    await expect(form.getByText("La fecha mínima de entrega es mañana")).toBeHidden();
+  });
 });

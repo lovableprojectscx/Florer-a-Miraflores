@@ -2,10 +2,20 @@ import { z } from "zod";
 
 // ─── Fecha mínima: mañana ─────────────────────────────────────────────────────
 
-export function getFechaMinima() {
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  return d.toISOString().split("T")[0]; // YYYY-MM-DD
+export function getFechaMinima(baseDate: Date = new Date()): string {
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Lima",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const [yearStr, monthStr, dayStr] = formatter.format(baseDate).split("-");
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+
+  const tomorrowUtc = new Date(Date.UTC(year, month - 1, day + 1));
+  return tomorrowUtc.toISOString().split("T")[0]; // YYYY-MM-DD
 }
 
 // ─── Schema de validación ─────────────────────────────────────────────────────
