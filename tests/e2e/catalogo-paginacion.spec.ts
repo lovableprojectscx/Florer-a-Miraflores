@@ -94,4 +94,54 @@ test.describe("Catálogo E2E — Paginación 'Ver más' y layout de tarjetas", (
       expect(box5!.y).toBeGreaterThan(box1!.y + 50);
     }
   });
+
+  test("al hacer scroll hasta el final del primer lote, todas las <img> de las 24 tarjetas cargan con naturalWidth > 0", async ({
+    page,
+  }) => {
+    await page.goto("/catalogo");
+    await waitForHydration(page, "main select");
+
+    const cards = page.locator("main article");
+    await expect(cards).toHaveCount(24);
+
+    const images = page.locator("main article img");
+    await expect(images).toHaveCount(24);
+
+    // Hacer scroll progresivo por todas las tarjetas del primer lote hasta el final
+    for (let i = 0; i < 24; i++) {
+      await cards.nth(i).scrollIntoViewIfNeeded();
+    }
+
+    const footerCounter = page.locator('main [aria-live="polite"]');
+    await footerCounter.scrollIntoViewIfNeeded();
+
+    // Esperar a que todas las 24 imágenes terminen de cargar y tengan naturalWidth > 0
+    await expect
+      .poll(
+        async () => {
+          return await images.evaluateAll(
+            (imgs) =>
+              imgs.filter((img) => {
+                const el = img as HTMLImageElement;
+                return el.complete && el.naturalWidth > 0;
+              }).length,
+          );
+        },
+        { timeout: 15000 },
+      )
+      .toBe(24);
+
+    const naturalWidths = await images.evaluateAll((imgs) =>
+      imgs.map((img) => (img as HTMLImageElement).naturalWidth),
+    );
+
+    expect(naturalWidths).toHaveLength(24);
+    for (let i = 0; i < naturalWidths.length; i++) {
+      expect(
+        naturalWidths[i],
+        `La imagen de la tarjeta #${i + 1} debería tener naturalWidth > 0`,
+      ).toBeGreaterThan(0);
+    }
+  });
 });
+
