@@ -42,23 +42,23 @@ C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflore
 
 [1m[30m[46m RUN [49m[39m[22m [36mv5.0.4 [39m[90mC:/Users/JACK FRANKLIN/Desktop/Proyectos Idenza/Trabajos-Mayo/Floreria miraflores/floreria-miraflo-main[39m
 
+ [32mÔ£ô[39m tests/unit/tag-utils.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 14[2mms[22m[39m
  [32mÔ£ô[39m tests/unit/image-utils.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/utils.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
  [32mÔ£ô[39m tests/unit/categorias-utils.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 29[2mms[22m[39m
- [32mÔ£ô[39m tests/unit/tag-utils.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 12[2mms[22m[39m
  [32mÔ£ô[39m tests/unit/cart.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 12[2mms[22m[39m
- [32mÔ£ô[39m tests/unit/checkout-schema.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 46[2mms[22m[39m
- [32mÔ£ô[39m tests/unit/use-ver-mas.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 50[2mms[22m[39m
- [32mÔ£ô[39m tests/unit/queries.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 22[2mms[22m[39m
- [32mÔ£ô[39m tests/unit/utils.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 7[2mms[22m[39m
- [32mÔ£ô[39m tests/unit/product-filters.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 36[2mms[22m[39m
- [32mÔ£ô[39m tests/unit/ProductGrid.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 492[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/checkout-schema.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/queries.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/use-ver-mas.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/product-filters.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/ProductGrid.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 437[2mms[22m[39m
    [32mÔ£ô[39m ProductGrid ÔÇö paginaci├│n 'Ver m├ís' y placeholder de imagen [2m(3)[22m
-     [33m[2mÔ£ô[22m[39m con 30 productos y tamanoLote=24 muestra 24 tarjetas y el bot├│n 'Ver m├ís'; tras clic muestra 30 y el bot├│n desaparece[33m 414[2mms[22m[39m
+     [33m[2mÔ£ô[22m[39m con 30 productos y tamanoLote=24 muestra 24 tarjetas y el bot├│n 'Ver m├ís'; tras clic muestra 30 y el bot├│n desaparece[33m 363[2mms[22m[39m
 
 [2m Test Files [22m [1m[32m10 passed[39m[22m[90m (10)[39m
 [2m      Tests [22m [1m[32m88 passed[39m[22m[90m (88)[39m
-[2m   Start at [22m 12:34:26
-[2m   Duration [22m 5.79s[2m (environment 82%, setup 13%, tests 2%, import 2%, transform 1%, worker 1%)[22m
+[2m   Start at [22m 13:14:37
+[2m   Duration [22m 5.98s[2m (environment 82%, setup 13%, tests 2%, import 2%, transform 1%, worker 1%)[22m
 
 
 > build
@@ -82,51 +82,51 @@ computing gzip size...
 [2mdist/client/[22m[32massets/hero-flowers-BvA6XZaO.webp              [39m[1m[2m 89.62 kB[22m[1m[22m
 [2mdist/client/[22m[32massets/logo-miraflores-DDxBf7Kq.webp           [39m[1m[2m101.38 kB[22m[1m[22m
 [2mdist/client/[22m[32massets/about-boutique-DCIO9u4d.webp            [39m[1m[2m108.02 kB[22m[1m[22m
-[2mdist/client/[22m[35massets/styles-is1Mq9Py.css                     [39m[1m[2m131.35 kB[22m[1m[22m[2m Ôöé gzip:  21.06 kB[22m
+[2mdist/client/[22m[35massets/styles-DmphMVmJ.css                     [39m[1m[2m131.56 kB[22m[1m[22m[2m Ôöé gzip:  21.15 kB[22m
 [2mdist/client/[22m[36massets/logo-miraflores-CgMYqKoi.js             [39m[1m[2m  0.06 kB[22m[1m[22m[2m Ôöé gzip:   0.08 kB[22m
-[2mdist/client/[22m[36massets/categoria._slug._sub-ByRXZfg7.js        [39m[1m[2m  0.45 kB[22m[1m[22m[2m Ôöé gzip:   0.32 kB[22m
-[2mdist/client/[22m[36massets/catalogo-ZFJj7vBm.js                    [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
-[2mdist/client/[22m[36massets/categoria._slug-C_R1sJ9B.js             [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
-[2mdist/client/[22m[36massets/producto._id-DWa1sj45.js                [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
-[2mdist/client/[22m[36massets/categoria._slug._sub-Cltj1JUX.js        [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
-[2mdist/client/[22m[36massets/producto._id-sXcyYXIv.js                [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
-[2mdist/client/[22m[36massets/categoria._slug-Z7K5PCEL.js             [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
-[2mdist/client/[22m[36massets/tag._key-DwWejeG1.js                    [39m[1m[2m  0.47 kB[22m[1m[22m[2m Ôöé gzip:   0.34 kB[22m
-[2mdist/client/[22m[36massets/tag._key-CzX686uY.js                    [39m[1m[2m  0.48 kB[22m[1m[22m[2m Ôöé gzip:   0.34 kB[22m
-[2mdist/client/[22m[36massets/ResponsiveImage-B8sEEies.js             [39m[1m[2m  1.57 kB[22m[1m[22m[2m Ôöé gzip:   0.87 kB[22m
-[2mdist/client/[22m[36massets/image-optimizer-BFMkN2WO.js             [39m[1m[2m  2.27 kB[22m[1m[22m[2m Ôöé gzip:   1.12 kB[22m
-[2mdist/client/[22m[36massets/tag._key-C_X0lazx.js                    [39m[1m[2m  2.50 kB[22m[1m[22m[2m Ôöé gzip:   1.17 kB[22m
-[2mdist/client/[22m[36massets/ProductFilters-C_Wbnxq2.js              [39m[1m[2m  2.51 kB[22m[1m[22m[2m Ôöé gzip:   1.18 kB[22m
-[2mdist/client/[22m[36massets/admin-login-B97I4rma.js                 [39m[1m[2m  3.22 kB[22m[1m[22m[2m Ôöé gzip:   1.29 kB[22m
-[2mdist/client/[22m[36massets/categoria._slug._sub-BsSjWmTG.js        [39m[1m[2m  3.23 kB[22m[1m[22m[2m Ôöé gzip:   1.39 kB[22m
-[2mdist/client/[22m[36massets/catalogo-D0mBr5bs.js                    [39m[1m[2m  3.37 kB[22m[1m[22m[2m Ôöé gzip:   1.53 kB[22m
-[2mdist/client/[22m[36massets/DeliveryZones-Dz_WqGBL.js               [39m[1m[2m  3.57 kB[22m[1m[22m[2m Ôöé gzip:   1.13 kB[22m
-[2mdist/client/[22m[36massets/confirmacion-Bn3Ns5Xi.js                [39m[1m[2m  3.59 kB[22m[1m[22m[2m Ôöé gzip:   1.72 kB[22m
-[2mdist/client/[22m[36massets/admin-CYE47p-c.js                       [39m[1m[2m  4.32 kB[22m[1m[22m[2m Ôöé gzip:   1.53 kB[22m
-[2mdist/client/[22m[36massets/categoria._slug-BHS3q1ol.js             [39m[1m[2m  4.33 kB[22m[1m[22m[2m Ôöé gzip:   1.75 kB[22m
-[2mdist/client/[22m[36massets/dashboard-BMcEdWPw.js                   [39m[1m[2m  5.92 kB[22m[1m[22m[2m Ôöé gzip:   1.85 kB[22m
-[2mdist/client/[22m[36massets/config-C3kRRryF.js                      [39m[1m[2m  6.15 kB[22m[1m[22m[2m Ôöé gzip:   2.07 kB[22m
-[2mdist/client/[22m[36massets/ProductGrid-BTmmP--6.js                 [39m[1m[2m  6.61 kB[22m[1m[22m[2m Ôöé gzip:   2.53 kB[22m
-[2mdist/client/[22m[36massets/producto._id-0GSkXIW7.js                [39m[1m[2m  6.90 kB[22m[1m[22m[2m Ôöé gzip:   2.34 kB[22m
-[2mdist/client/[22m[36massets/nosotros-ceRFTltO.js                    [39m[1m[2m  8.27 kB[22m[1m[22m[2m Ôöé gzip:   2.60 kB[22m
-[2mdist/client/[22m[36massets/popup-B9OuiU0m.js                       [39m[1m[2m  9.54 kB[22m[1m[22m[2m Ôöé gzip:   3.25 kB[22m
-[2mdist/client/[22m[36massets/tags-BixEDyGY.js                        [39m[1m[2m 11.68 kB[22m[1m[22m[2m Ôöé gzip:   3.24 kB[22m
-[2mdist/client/[22m[36massets/distritos-dQfOBzR9.js                   [39m[1m[2m 12.81 kB[22m[1m[22m[2m Ôöé gzip:   3.21 kB[22m
-[2mdist/client/[22m[36massets/ocasiones-YGY9Vd1m.js                   [39m[1m[2m 13.27 kB[22m[1m[22m[2m Ôöé gzip:   3.42 kB[22m
-[2mdist/client/[22m[36massets/colecciones-home-KcG8y2u3.js            [39m[1m[2m 14.63 kB[22m[1m[22m[2m Ôöé gzip:   3.81 kB[22m
-[2mdist/client/[22m[36massets/pedidos-BnWUwjDj.js                     [39m[1m[2m 15.96 kB[22m[1m[22m[2m Ôöé gzip:   3.71 kB[22m
-[2mdist/client/[22m[36massets/libro-de-reclamaciones-D_b9iSPr.js      [39m[1m[2m 18.76 kB[22m[1m[22m[2m Ôöé gzip:   5.42 kB[22m
-[2mdist/client/[22m[36massets/WhatsappFab-DUvYV_Gn.js                 [39m[1m[2m 19.98 kB[22m[1m[22m[2m Ôöé gzip:   5.31 kB[22m
-[2mdist/client/[22m[36massets/banners-SDhWVmyS.js                     [39m[1m[2m 20.39 kB[22m[1m[22m[2m Ôöé gzip:   4.67 kB[22m
-[2mdist/client/[22m[36massets/reclamaciones-BHg5-jX-.js               [39m[1m[2m 22.49 kB[22m[1m[22m[2m Ôöé gzip:   5.01 kB[22m
-[2mdist/client/[22m[36massets/categorias-BvNBRXlV.js                  [39m[1m[2m 22.62 kB[22m[1m[22m[2m Ôöé gzip:   5.39 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug._sub-tRhWBhhT.js        [39m[1m[2m  0.45 kB[22m[1m[22m[2m Ôöé gzip:   0.32 kB[22m
+[2mdist/client/[22m[36massets/catalogo-Z4t0zmrw.js                    [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug-BdvCSYtu.js             [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/producto._id-CLiWBTnv.js                [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug._sub-DAir6CTT.js        [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/producto._id-qlX736z9.js                [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.32 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug-DpArEhHB.js             [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/tag._key-CwNHrfH3.js                    [39m[1m[2m  0.47 kB[22m[1m[22m[2m Ôöé gzip:   0.34 kB[22m
+[2mdist/client/[22m[36massets/tag._key-CzEiCC2T.js                    [39m[1m[2m  0.48 kB[22m[1m[22m[2m Ôöé gzip:   0.34 kB[22m
+[2mdist/client/[22m[36massets/ResponsiveImage-CYpIZeZd.js             [39m[1m[2m  1.57 kB[22m[1m[22m[2m Ôöé gzip:   0.87 kB[22m
+[2mdist/client/[22m[36massets/image-optimizer-Bw5rBuz0.js             [39m[1m[2m  2.27 kB[22m[1m[22m[2m Ôöé gzip:   1.12 kB[22m
+[2mdist/client/[22m[36massets/tag._key-DqMupcTA.js                    [39m[1m[2m  2.50 kB[22m[1m[22m[2m Ôöé gzip:   1.17 kB[22m
+[2mdist/client/[22m[36massets/ProductFilters-CRxEEkQd.js              [39m[1m[2m  2.51 kB[22m[1m[22m[2m Ôöé gzip:   1.18 kB[22m
+[2mdist/client/[22m[36massets/admin-login-CU7I2DFQ.js                 [39m[1m[2m  3.22 kB[22m[1m[22m[2m Ôöé gzip:   1.29 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug._sub-BxfIfXgF.js        [39m[1m[2m  3.23 kB[22m[1m[22m[2m Ôöé gzip:   1.39 kB[22m
+[2mdist/client/[22m[36massets/catalogo-BdK-9uiq.js                    [39m[1m[2m  3.37 kB[22m[1m[22m[2m Ôöé gzip:   1.53 kB[22m
+[2mdist/client/[22m[36massets/DeliveryZones-BUiy7fLp.js               [39m[1m[2m  3.57 kB[22m[1m[22m[2m Ôöé gzip:   1.13 kB[22m
+[2mdist/client/[22m[36massets/confirmacion-CXHDI1Vl.js                [39m[1m[2m  3.59 kB[22m[1m[22m[2m Ôöé gzip:   1.72 kB[22m
+[2mdist/client/[22m[36massets/admin-G4LOFQxm.js                       [39m[1m[2m  4.32 kB[22m[1m[22m[2m Ôöé gzip:   1.53 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug-DTfvOk30.js             [39m[1m[2m  4.33 kB[22m[1m[22m[2m Ôöé gzip:   1.75 kB[22m
+[2mdist/client/[22m[36massets/dashboard-NNziv0IC.js                   [39m[1m[2m  5.92 kB[22m[1m[22m[2m Ôöé gzip:   1.85 kB[22m
+[2mdist/client/[22m[36massets/config-DZkP7uSJ.js                      [39m[1m[2m  6.15 kB[22m[1m[22m[2m Ôöé gzip:   2.07 kB[22m
+[2mdist/client/[22m[36massets/ProductGrid-jMEE6V5S.js                 [39m[1m[2m  6.61 kB[22m[1m[22m[2m Ôöé gzip:   2.54 kB[22m
+[2mdist/client/[22m[36massets/producto._id-IDNmKXf0.js                [39m[1m[2m  6.90 kB[22m[1m[22m[2m Ôöé gzip:   2.34 kB[22m
+[2mdist/client/[22m[36massets/nosotros-BFmPB9qW.js                    [39m[1m[2m  8.27 kB[22m[1m[22m[2m Ôöé gzip:   2.60 kB[22m
+[2mdist/client/[22m[36massets/popup-B3AvAoEN.js                       [39m[1m[2m  9.54 kB[22m[1m[22m[2m Ôöé gzip:   3.25 kB[22m
+[2mdist/client/[22m[36massets/tags-BTG6x1XM.js                        [39m[1m[2m 11.68 kB[22m[1m[22m[2m Ôöé gzip:   3.24 kB[22m
+[2mdist/client/[22m[36massets/distritos-C5Cc9DtI.js                   [39m[1m[2m 12.81 kB[22m[1m[22m[2m Ôöé gzip:   3.21 kB[22m
+[2mdist/client/[22m[36massets/ocasiones-C_copjkb.js                   [39m[1m[2m 13.27 kB[22m[1m[22m[2m Ôöé gzip:   3.42 kB[22m
+[2mdist/client/[22m[36massets/colecciones-home-S_LYvmXk.js            [39m[1m[2m 14.63 kB[22m[1m[22m[2m Ôöé gzip:   3.81 kB[22m
+[2mdist/client/[22m[36massets/pedidos-Yc4-RM1m.js                     [39m[1m[2m 15.96 kB[22m[1m[22m[2m Ôöé gzip:   3.71 kB[22m
+[2mdist/client/[22m[36massets/libro-de-reclamaciones-DsWIxCwn.js      [39m[1m[2m 18.76 kB[22m[1m[22m[2m Ôöé gzip:   5.42 kB[22m
+[2mdist/client/[22m[36massets/WhatsappFab-CMuALm2U.js                 [39m[1m[2m 19.98 kB[22m[1m[22m[2m Ôöé gzip:   5.31 kB[22m
+[2mdist/client/[22m[36massets/banners-BcQjdp4x.js                     [39m[1m[2m 20.39 kB[22m[1m[22m[2m Ôöé gzip:   4.67 kB[22m
+[2mdist/client/[22m[36massets/reclamaciones-C8-QhBmG.js               [39m[1m[2m 22.49 kB[22m[1m[22m[2m Ôöé gzip:   5.00 kB[22m
+[2mdist/client/[22m[36massets/categorias-DQwXC7wI.js                  [39m[1m[2m 22.62 kB[22m[1m[22m[2m Ôöé gzip:   5.39 kB[22m
 [2mdist/client/[22m[36massets/vendor-lucide-CJzXZ9Y1.js               [39m[1m[2m 24.64 kB[22m[1m[22m[2m Ôöé gzip:   9.27 kB[22m
-[2mdist/client/[22m[36massets/productos-uf4iGbNv.js                   [39m[1m[2m 37.83 kB[22m[1m[22m[2m Ôöé gzip:   8.89 kB[22m
-[2mdist/client/[22m[36massets/checkout-CWGuCRhp.js                    [39m[1m[2m 44.98 kB[22m[1m[22m[2m Ôöé gzip:  15.07 kB[22m
-[2mdist/client/[22m[36massets/index-CzElirem.js                       [39m[1m[2m 47.92 kB[22m[1m[22m[2m Ôöé gzip:  15.56 kB[22m
+[2mdist/client/[22m[36massets/productos-Dp-HKYQ6.js                   [39m[1m[2m 37.83 kB[22m[1m[22m[2m Ôöé gzip:   8.89 kB[22m
+[2mdist/client/[22m[36massets/checkout-DcjOmeEt.js                    [39m[1m[2m 44.98 kB[22m[1m[22m[2m Ôöé gzip:  15.07 kB[22m
+[2mdist/client/[22m[36massets/index-CwxNzrQf.js                       [39m[1m[2m 47.96 kB[22m[1m[22m[2m Ôöé gzip:  15.57 kB[22m
 [2mdist/client/[22m[36massets/vendor-supabase-Dh6eHXVI.js             [39m[1m[2m207.32 kB[22m[1m[22m[2m Ôöé gzip:  54.19 kB[22m
-[2mdist/client/[22m[36massets/index-DTKB9-D0.js                       [39m[1m[2m485.49 kB[22m[1m[22m[2m Ôöé gzip: 149.52 kB[22m
-[32mÔ£ô built in 8.47s[39m
+[2mdist/client/[22m[36massets/index-BqIk-nqo.js                       [39m[1m[2m485.49 kB[22m[1m[22m[2m Ôöé gzip: 149.53 kB[22m
+[32mÔ£ô built in 8.22s[39m
 [36mvite v7.3.3 [32mbuilding ssr environment for production...[36m[39m
 transforming...
 [32mÔ£ô[39m 2200 modules transformed.
@@ -147,57 +147,57 @@ Using secrets defined in .env.local
 [2mdist/server/[22m[32massets/hero-flowers-BvA6XZaO.webp              [39m[1m[2m 89.62 kB[22m[1m[22m
 [2mdist/server/[22m[32massets/logo-miraflores-DDxBf7Kq.webp           [39m[1m[2m101.38 kB[22m[1m[22m
 [2mdist/server/[22m[32massets/about-boutique-DCIO9u4d.webp            [39m[1m[2m108.02 kB[22m[1m[22m
-[2mdist/server/[22m[35massets/styles-is1Mq9Py.css                     [39m[1m[2m131.35 kB[22m[1m[22m
+[2mdist/server/[22m[35massets/styles-DmphMVmJ.css                     [39m[1m[2m131.56 kB[22m[1m[22m
 [2mdist/server/[22m[36massets/logo-miraflores-uWsZPdFg.js             [39m[1m[2m  0.08 kB[22m[1m[22m
 [2mdist/server/[22m[36mindex.js                                       [39m[1m[2m  0.10 kB[22m[1m[22m
 [2mdist/server/[22m[36massets/empty-plugin-adapters-BFgPZ6_d.js       [39m[1m[2m  0.13 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/catalogo-BhVIRVdc.js                    [39m[1m[2m  0.68 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/categoria._slug-qvSiGJtp.js             [39m[1m[2m  0.68 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/producto._id-CswAfsJi.js                [39m[1m[2m  0.68 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/categoria._slug._sub-C5k4rJHC.js        [39m[1m[2m  0.68 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/tag._key-Dmx4HKx8.js                    [39m[1m[2m  0.69 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/categoria._slug._sub-Cp1qQtNR.js        [39m[1m[2m  0.75 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/producto._id-fKcE1eCm.js                [39m[1m[2m  0.76 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/categoria._slug-B7AIh5xc.js             [39m[1m[2m  0.76 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/tag._key-BnouukrJ.js                    [39m[1m[2m  0.77 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/start-Ca75XCcA.js                       [39m[1m[2m  1.51 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/ResponsiveImage-CbPpfG4h.js             [39m[1m[2m  3.33 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/tag._key-BhAKrUyT.js                    [39m[1m[2m  3.98 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/ProductFilters-Bu6WI-pi.js              [39m[1m[2m  4.07 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/image-optimizer-DjAYzpTy.js             [39m[1m[2m  4.46 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/admin-login-Dw8ahQQh.js                 [39m[1m[2m  5.10 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/confirmacion-DA5FbuMI.js                [39m[1m[2m  5.13 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/categoria._slug._sub-QjGm2La8.js        [39m[1m[2m  5.18 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/DeliveryZones-DaNP2UI-.js               [39m[1m[2m  5.31 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/catalogo-BjxxGSrV.js                    [39m[1m[2m  6.11 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/admin-CMvy93RZ.js                       [39m[1m[2m  6.91 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/categoria._slug-BAX85kce.js             [39m[1m[2m  7.01 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/_tanstack-start-manifest_v-B5nf0Kmp.js  [39m[1m[2m  8.18 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/dashboard-hNd2-2ui.js                   [39m[1m[2m  9.40 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/config-CdFw2UYU.js                      [39m[1m[2m  9.70 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/producto._id-BkNrOiTS.js                [39m[1m[2m 11.46 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/nosotros-DlPI29XQ.js                    [39m[1m[2m 11.91 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/ProductGrid-B_Vh2OBZ.js                 [39m[1m[2m 12.49 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/popup-C5eVo1Yd.js                       [39m[1m[2m 15.33 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/tags-A8JTReG5.js                        [39m[1m[2m 18.98 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/distritos-6MFkQhJ1.js                   [39m[1m[2m 21.15 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/worker-entry-CiwnYFl1.js                [39m[1m[2m 21.31 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/ocasiones-CHoRoiZi.js                   [39m[1m[2m 21.93 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/colecciones-home-CC7gSukR.js            [39m[1m[2m 24.56 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/libro-de-reclamaciones-DSomLTLW.js      [39m[1m[2m 24.97 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/pedidos--9UsfseB.js                     [39m[1m[2m 26.75 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/reclamaciones-DeEb2-07.js               [39m[1m[2m 31.25 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/WhatsappFab-QCYQ2RrB.js                 [39m[1m[2m 32.66 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/banners-CAhYW3WC.js                     [39m[1m[2m 33.24 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/categorias-aQkUoEft.js                  [39m[1m[2m 38.67 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/catalogo-D7dD2l4K.js                    [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug-Cx8UgU4i.js             [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/producto._id-Mh32cX-m.js                [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug._sub-28qYZa5h.js        [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tag._key-Do31j-uG.js                    [39m[1m[2m  0.69 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug._sub-ftp1BHvP.js        [39m[1m[2m  0.75 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/producto._id-AsYIZ7Dv.js                [39m[1m[2m  0.76 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug-BJ-Vi9m7.js             [39m[1m[2m  0.76 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tag._key-NzKHFo3W.js                    [39m[1m[2m  0.77 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/start-CbECrGna.js                       [39m[1m[2m  1.51 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ResponsiveImage-D5gW_X4c.js             [39m[1m[2m  3.33 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tag._key-zPJRIKiE.js                    [39m[1m[2m  3.98 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ProductFilters-BW58oxKh.js              [39m[1m[2m  4.07 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/image-optimizer-D8vM9-w9.js             [39m[1m[2m  4.46 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/admin-login-CnMDeIVt.js                 [39m[1m[2m  5.10 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/confirmacion-BoAJ9EAe.js                [39m[1m[2m  5.13 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug._sub-DyTcFybS.js        [39m[1m[2m  5.18 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/DeliveryZones-DDm77rRq.js               [39m[1m[2m  5.31 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/catalogo-BUtMNT9z.js                    [39m[1m[2m  6.11 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/admin-B_zhDlQg.js                       [39m[1m[2m  6.91 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug-DlIdXJeM.js             [39m[1m[2m  7.01 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/_tanstack-start-manifest_v-DhxIYUby.js  [39m[1m[2m  8.18 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/dashboard-DGuxxxhz.js                   [39m[1m[2m  9.40 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/config-CLN3I8Rv.js                      [39m[1m[2m  9.70 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/producto._id-M0kh99Ig.js                [39m[1m[2m 11.46 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/nosotros-DAKwZ2mr.js                    [39m[1m[2m 11.91 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ProductGrid-B5XkwJgC.js                 [39m[1m[2m 12.49 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/popup-DFTn6DE9.js                       [39m[1m[2m 15.33 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tags-DslrdlvH.js                        [39m[1m[2m 18.98 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/distritos-CtewqdaD.js                   [39m[1m[2m 21.15 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/worker-entry-CWhHQPKq.js                [39m[1m[2m 21.31 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ocasiones-DRnGOLEN.js                   [39m[1m[2m 21.93 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/colecciones-home-LFgbTQIC.js            [39m[1m[2m 24.56 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/libro-de-reclamaciones-BLLm_zSa.js      [39m[1m[2m 24.97 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/pedidos-CtoMpKn6.js                     [39m[1m[2m 26.75 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/reclamaciones-FNvem-gQ.js               [39m[1m[2m 31.25 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/WhatsappFab-CMlwE8FM.js                 [39m[1m[2m 32.66 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/banners-DEsHH4Jx.js                     [39m[1m[2m 33.24 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categorias-wp2L5EUB.js                  [39m[1m[2m 38.67 kB[22m[1m[22m
 [2mdist/server/[22m[36massets/vendor-lucide-gR_krM6D.js               [39m[1m[2m 42.71 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/productos-DfFoSR6B.js                   [39m[1m[2m 65.34 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/index-B5N38EWk.js                       [39m[1m[2m 93.18 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/checkout-CyJbiwAr.js                    [39m[1m[2m 99.41 kB[22m[1m[22m
-[2mdist/server/[22m[36massets/router-7Ct54O1h.js                      [39m[1m[2m474.93 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/productos-sLpqM04F.js                   [39m[1m[2m 65.34 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/index-DRH9YLEg.js                       [39m[1m[2m 93.23 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/checkout-Bv7TmKiH.js                    [39m[1m[2m 99.41 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/router-B4f-jN6f.js                      [39m[1m[2m474.93 kB[22m[1m[22m
 [2mdist/server/[22m[36massets/vendor-supabase-BBa_TrIY.js             [39m[1m[33m713.23 kB[39m[22m
-[2mdist/server/[22m[36massets/server-BZv_2v-Y.js                      [39m[1m[33m802.45 kB[39m[22m
-[32mÔ£ô built in 7.84s[39m
+[2mdist/server/[22m[36massets/server-QNilwkT0.js                      [39m[1m[33m802.45 kB[39m[22m
+[32mÔ£ô built in 7.58s[39m
 
 > postbuild
 > node scripts/postbuild.js

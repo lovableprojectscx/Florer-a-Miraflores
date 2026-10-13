@@ -1,14 +1,14 @@
-
+﻿
 Running 8 tests using 6 workers
 
-  -  1 [mobile] › tests\e2e\carrusel-tarjetas.spec.ts:82:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Celular 390: se ven 2 tarjetas completas y parte de la tercera, foto 1:1
-  -  2 [mobile] › tests\e2e\carrusel-tarjetas.spec.ts:8:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Escritorio 1440: primera tarjeta a <=16px del borde izquierdo y foto cuadrada 1:1 (tolerancia 2px)
-  -  3 [mobile] › tests\e2e\carrusel-tarjetas.spec.ts:50:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Escritorio 1920: primera tarjeta a <=16px, foto 1:1 y ancho aproximado ~360px
-  -  4 [mobile] › tests\e2e\carrusel-tarjetas.spec.ts:127:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Catálogo: fotos de producto cuadradas 1:1 en ProductGrid
-  ok 8 [desktop] › tests\e2e\carrusel-tarjetas.spec.ts:127:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Catálogo: fotos de producto cuadradas 1:1 en ProductGrid (4.8s)
-  ok 7 [desktop] › tests\e2e\carrusel-tarjetas.spec.ts:82:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Celular 390: se ven 2 tarjetas completas y parte de la tercera, foto 1:1 (5.1s)
-  ok 5 [desktop] › tests\e2e\carrusel-tarjetas.spec.ts:50:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Escritorio 1920: primera tarjeta a <=16px, foto 1:1 y ancho aproximado ~360px (6.8s)
-  ok 6 [desktop] › tests\e2e\carrusel-tarjetas.spec.ts:8:3 › Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a borde › Escritorio 1440: primera tarjeta a <=16px del borde izquierdo y foto cuadrada 1:1 (tolerancia 2px) (7.0s)
+  -  1 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:50:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1920: primera tarjeta a <=16px, foto 1:1 y ancho aproximado ~360px
+  -  2 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:82:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Celular 390: se ven 2 tarjetas completas y parte de la tercera, foto 1:1
+  -  3 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:8:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1440: primera tarjeta a <=16px del borde izquierdo y foto cuadrada 1:1 (tolerancia 2px)
+  -  4 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:124:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Cat├ílogo: fotos de producto cuadradas 1:1 en ProductGrid
+  ok 8 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:124:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Cat├ílogo: fotos de producto cuadradas 1:1 en ProductGrid (7.1s)
+  ok 7 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:82:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Celular 390: se ven 2 tarjetas completas y parte de la tercera, foto 1:1 (7.4s)
+  ok 6 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:50:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1920: primera tarjeta a <=16px, foto 1:1 y ancho aproximado ~360px (9.0s)
+  ok 5 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:8:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1440: primera tarjeta a <=16px del borde izquierdo y foto cuadrada 1:1 (tolerancia 2px) (9.6s)
 
   4 skipped
-  4 passed (17.6s)
+  4 passed (20.1s)

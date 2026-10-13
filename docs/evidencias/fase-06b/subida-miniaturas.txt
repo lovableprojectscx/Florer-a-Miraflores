@@ -1,7 +1,7 @@
 =====================================================================
  GENERADOR DE MINIATURAS WEBP (Fase 06-B)
  Modo: SUBIDA REAL (Admin Auth, upsert: false)
- Fecha: 2026-10-13T16:02:03.776Z
+ Fecha: 2026-10-13T18:04:25.191Z
 =====================================================================
 
 Autenticando en Supabase como administrador (pedidos@floreriamiraflores.com)...
@@ -11,8 +11,8 @@ Autenticación exitosa. User ID: 7a2e2d46-7d83-49ba-93f0-dec079e005f4
 Archivos encontrados en raíz: 3
   Procesadas con éxito: 3
   Errores de lectura/generación: 0
-  Archivos subidos nuevos: 6
-  Archivos saltados (ya existían): 0
+  Archivos subidos nuevos: 0
+  Archivos saltados (ya existían): 6
   Peso original total: 0.85 MB
   Peso miniaturas 480w: 0.03 MB (-96.2%)
   Peso miniaturas 960w: 0.09 MB (-89.5%)
@@ -21,11 +21,11 @@ Archivos encontrados en raíz: 3
 Archivos encontrados en raíz: 9
   Procesadas con éxito: 9
   Errores de lectura/generación: 0
-  Archivos subidos nuevos: 18
-  Archivos saltados (ya existían): 0
-  Peso original total: 2.62 MB
-  Peso miniaturas 480w: 0.14 MB (-94.7%)
-  Peso miniaturas 960w: 0.36 MB (-86.1%)
+  Archivos subidos nuevos: 2
+  Archivos saltados (ya existían): 16
+  Peso original total: 2.60 MB
+  Peso miniaturas 480w: 0.14 MB (-94.6%)
+  Peso miniaturas 960w: 0.37 MB (-85.9%)
 
 --- Bucket: [productos] ---
 Archivos encontrados en raíz: 484
@@ -47,8 +47,8 @@ Archivos encontrados en raíz: 484
   ... procesadas 480/484 imágenes
   Procesadas con éxito: 484
   Errores de lectura/generación: 0
-  Archivos subidos nuevos: 968
-  Archivos saltados (ya existían): 0
+  Archivos subidos nuevos: 0
+  Archivos saltados (ya existían): 968
   Peso original total: 119.51 MB
   Peso miniaturas 480w: 8.20 MB (-93.1%)
   Peso miniaturas 960w: 21.85 MB (-81.7%)
@@ -58,9 +58,9 @@ Archivos encontrados en raíz: 484
 =====================================================================
  Total imágenes originales:     496
  Total errores:                 0
- Total miniaturas subidas:      992
- Total miniaturas saltadas:     0
- Peso original total:           122.98 MB
+ Total miniaturas subidas:      2
+ Total miniaturas saltadas:     990
+ Peso original total:           122.96 MB
  Peso miniaturas 480w:          8.38 MB (-93.2%)
  Peso miniaturas 960w:          22.30 MB (-81.9%)
  Ahorro estimado móvil (480w):  -93.2%

@@ -102,7 +102,7 @@ export function ProductGrid({
                   params={{ id: `${slugify(p.nombre)}-${p.id}` }}
                   className="block flex-1 flex flex-col"
                 >
-                  <div className="relative overflow-hidden bg-[#FAF8F5] aspect-[4/5]">
+                  <div className="relative overflow-hidden bg-[#FAF8F5] aspect-square">
                     {label && (
                       <span
                         className={`absolute top-3 left-3 z-10 px-2.5 py-1 text-[9px] tracking-widest uppercase font-body font-medium rounded-xs shadow-xs ${color ? "text-white" : fallbackClass}`}

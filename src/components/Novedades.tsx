@@ -130,19 +130,19 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
   const srcSet = imagenSrcSet(imgSrc);
 
   return (
-    <article className="group flex-shrink-0 w-[45vw] sm:w-[42vw] md:w-[30vw] lg:w-[calc(25%-1rem)] xl:w-[280px] 2xl:w-[295px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-lg border border-[#E8DDD0]/50">
+    <article className="group flex-shrink-0 w-[calc((100vw-32px)/2.2)] sm:w-[calc((100vw-32px)/2.6)] md:w-[calc((100vw-32px)/3.2)] lg:w-[calc((100vw-32px)/4.2)] 2xl:w-[calc((100vw-32px)/5.2)] max-w-[380px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-lg border border-[#E8DDD0]/50">
       <Link
         to="/producto/$id"
         params={{ id: `${slugify(producto.nombre)}-${producto.id}` }}
         className="block"
       >
-        {/* Imagen en proporción 4:5 igual al catálogo */}
-        <div className="relative overflow-hidden bg-[#FAF8F5] aspect-[4/5]">
+        {/* Imagen en proporción 1:1 cuadrada igual al catálogo */}
+        <div className="relative overflow-hidden bg-[#FAF8F5] aspect-square">
           <ResponsiveImage
             url={imgSrc}
             fallbackUrl={imgSrc}
             anchoMiniatura={480}
-            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 25vw"
+            sizes="(min-width: 1536px) 365px, (min-width: 1024px) 340px, (min-width: 768px) 32vw, 45vw"
             alt={producto.nombre}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
@@ -261,12 +261,12 @@ function TagSection({ tag, productos }: TagSeccion) {
         </div>
       </div>
 
-      {/* Slider centrado con fotos balanceadas y márgenes elegantes */}
-      <div className="max-w-[1400px] mx-auto w-full px-5 sm:px-8 lg:px-12">
+      {/* Slider borde a borde (referencia: limafloralco.com) */}
+      <div className="w-full">
         <div
           ref={sliderRef}
           onScroll={updateCurrentIndex}
-          className="flex overflow-x-auto gap-3 sm:gap-4 md:gap-4.5 pb-3.5 snap-x snap-mandatory scrollbar-none w-full"
+          className="flex overflow-x-auto gap-2 pb-3.5 snap-x snap-mandatory scrollbar-none w-full px-4"
         >
           {productos.map((p) => (
             <ProductCard key={p.id} producto={p} />

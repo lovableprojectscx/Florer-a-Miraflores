@@ -1,7 +1,7 @@
 =====================================================================
  GENERADOR DE MINIATURAS WEBP (Fase 06-B)
  Modo: DRY-RUN (Simulación sin cambios)
- Fecha: 2026-10-13T16:00:18.053Z
+ Fecha: 2026-10-13T18:03:13.717Z
 =====================================================================
 
 --- Bucket: [banners] ---
@@ -16,9 +16,9 @@ Archivos encontrados en raíz: 3
 Archivos encontrados en raíz: 9
   Procesadas con éxito: 9
   Errores de lectura/generación: 0
-  Peso original total: 2.62 MB
-  Peso miniaturas 480w: 0.14 MB (-94.7%)
-  Peso miniaturas 960w: 0.36 MB (-86.1%)
+  Peso original total: 2.60 MB
+  Peso miniaturas 480w: 0.14 MB (-94.6%)
+  Peso miniaturas 960w: 0.37 MB (-85.9%)
 
 --- Bucket: [productos] ---
 Archivos encontrados en raíz: 484
@@ -33,7 +33,7 @@ Archivos encontrados en raíz: 484
 =====================================================================
  Total imágenes originales:     496
  Total errores:                 0
- Peso original total:           122.98 MB
+ Peso original total:           122.96 MB
  Peso miniaturas 480w:          8.38 MB (-93.2%)
  Peso miniaturas 960w:          22.30 MB (-81.9%)
  Ahorro estimado móvil (480w):  -93.2%
