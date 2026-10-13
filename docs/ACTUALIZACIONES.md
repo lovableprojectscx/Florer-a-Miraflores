@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.6.0** | 2026-10-12 | **Categorías / Admin** | Fase 03: Ocultamiento automático de categorías vacías en la web pública, selector agrupado `Padre › Hija` en `/admin/productos`, toasts y conteos en `/admin/categorias`, redirección de subcategorías movidas y scripts SQL `003`/`004`. |
 | **v1.5.1** | 2026-10-12 | **Diagnóstico** | Fase 02: Diagnóstico de categorías en solo lectura (`scripts/diagnostico-categorias.mjs`, `docs/sql/diagnostico-categorias.sql`, `docs/DIAGNOSTICO-CATEGORIAS.md`). |
 | **v1.5.0** | 2026-10-12 | **QA / Testing** | Base de pruebas automatizadas: Vitest (unitario + RLS), Playwright E2E (mobile/desktop) y comando único `npm run verify`. |
 | **v1.4.2** | 2026-10-08 | **Admin / Jerarquía** | Soporte explícito y visualización de subcategorías agrupadas por padre en Colecciones Home. |
@@ -26,6 +27,31 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.6.0] — 2026-10-12: Arreglo de Categorías, Visibilidad Automática y Mejoras de Admin (Fase 03)
+
+#### Contexto y Decisiones de Negocio
+- **D1 = B:** `"Nacimientos"` pasa a ser categoría padre en el menú principal con las subcategorías `"Niño"` (`nacimientos-nino`) y `"Niña"` (`nacimientos-nina`).
+- **D2 = A:** Cada producto pertenece a una única categoría (`categoria_id`), sin agregar `categorias_extra`.
+- **Regla de visibilidad pública:** Cualquier categoría o subcategoría con 0 productos activos (directos + hijas) se oculta automáticamente en la tienda pública, mientras sigue visible y administrable en `/admin`.
+
+#### Cambios Implementados
+1. **Utilidades puras de categorías (`src/lib/categorias-utils.ts`):**
+   - `filtrarCategoriasVisibles`, `calcularConteoProductosPorCategoria`, `armarOpcionesCategoriaSelect`, `buscarConflictoSlugCategoria`, `formatearErrorGuardadoCategoria` y `resolverRedireccionSubcategoria`.
+2. **Panel Admin (`src/routes/admin/productos.tsx`, `src/routes/admin/categorias.tsx`, `src/routes/__root.tsx`):**
+   - Montaje de `<Toaster />` (`sonner`) en `__root.tsx`.
+   - En `/admin/productos`: `<select>` de categoría agrupado con `<optgroup>` y etiquetas `"Padre › Hija"` (marcando inactivas con `"(inactiva)"`) tanto en el formulario modal como en el filtro del listado.
+   - En `/admin/categorias`: reemplazo de los 3 `alert()` por `toast` (`sonner`), validación previa y mapeo de error `23505` indicando en qué `<Padre> › <Nombre>` existe el slug duplicado (y si está inactiva), y columna de conteo de productos activos (`directos + hijas`) con badge `"No se ve en la web: 0 productos"`.
+3. **Ocultamiento de categorías vacías y redirección en web pública (`src/lib/queries.ts`, `src/routes/catalogo.tsx`, `src/routes/categoria.$slug.tsx`, `src/routes/categoria.$slug.$sub.tsx`):**
+   - `getCategorias()` y `getColecciones()` filtran automáticamente categorías sin productos activos.
+   - En `/categoria/:slug` se ocultan tarjetas de subcategorías vacías y se preserva el estado `"— próximamente"` al entrar directo por URL a una categoría vacía.
+   - En `/categoria/:slug/:sub` se ocultan hermanas vacías y se redirige automáticamente si la subcategoría pasó a ser categoría padre (`/categoria/ocasion/nacimientos` -> `/categoria/nacimientos`) o cambió de padre.
+4. **Scripts SQL y Guía de Panel:**
+   - `docs/sql/003-nacimientos-padre.sql` (idempotente con rollback comentado y `SELECT` de verificación).
+   - `docs/sql/004-tulipanes-reasignacion.sql` (completamente comentado con un `UPDATE` por cada uno de los 13 productos en `Tulipanes` padre).
+   - `docs/GUIA-PANEL-CATEGORIAS.md` con instrucciones paso a paso para la encargada.
+
+---
 
 ### [v1.5.1] — 2026-10-12: Diagnóstico de Categorías (Fase 02 — Solo Lectura)
 

@@ -66,6 +66,8 @@ function CategoriaPage() {
 
   if (hasChild) return <Outlet />;
 
+  const idsVisibles = new Set(categorias.map((c: CategoriaRow) => c.id));
+  const hijasVisibles = cat.hijas.filter((h: CategoriaRow) => idsVisibles.has(h.id));
   const hermanas = categorias.filter((c: CategoriaRow) => !c.parent_id && c.slug !== cat.slug);
 
   return (
@@ -93,14 +95,14 @@ function CategoriaPage() {
           </h1>
         </header>
 
-        {cat.hijas.length > 0 && (
-          // Subcategorías como tarjetas visuales
+        {hijasVisibles.length > 0 && (
+          // Subcategorías con productos activos como tarjetas visuales
           <section className="mb-12">
             <h2 className="font-display text-xl sm:text-2xl text-[#2C2420] mb-5">
               Variedades y Subcategorías
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {cat.hijas.map((sub: CategoriaRow) => (
+              {hijasVisibles.map((sub: CategoriaRow) => (
                 <Link
                   key={sub.id}
                   to="/categoria/$slug/$sub"
@@ -147,8 +149,8 @@ function CategoriaPage() {
               </p>
             )}
           </section>
-        ) : cat.hijas.length === 0 ? (
-          // Sin subcategorías ni productos -> Mostramos próximamente
+        ) : hijasVisibles.length === 0 ? (
+          // Sin subcategorías visibles ni productos -> Mostramos próximamente
           <section className="border border-[#E8DDD0] p-8 md:p-12 bg-[#F5EFE6]/40 text-center">
             <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>
             <p className="font-body font-light text-[#2C2420]/75">

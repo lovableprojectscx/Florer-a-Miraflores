@@ -166,3 +166,32 @@ Se han registrado con éxito los primeros **2 pedidos** de prueba en la tabla `p
    - **Desglose:** Subtotal: S/ 220.00, Delivery: S/ 10.00, Total: S/ 230.00
    - **Estado:** Pendiente
    - **Fecha/Hora de Creación:** 2026-05-19 19:43:27 (UTC)
+
+---
+
+## 8. Auditoría de Políticas RLS (`pg_policies`) y Scripts SQL de Fase 03
+
+### 8.1. Políticas RLS verificadas en producción (`categorias` y `productos`)
+
+Consultadas directamente sobre `pg_policies` en el proyecto `sdrkiomeesoctsxeidmu`:
+
+| Tabla | Policy | Comando (`cmd`) | Roles | `USING` (`qual`) | `WITH CHECK` |
+| :--- | :--- | :---: | :---: | :--- | :--- |
+| `categorias` | `Public Read categorias` | `SELECT` | `{public}` | `true` | `null` |
+| `categorias` | `Admin Write categorias` | `ALL` | `{public}` | `(auth.uid() IS NOT NULL)` | `null` |
+| `productos` | `Public Read productos` | `SELECT` | `{public}` | `true` | `null` |
+| `productos` | `Admin Write productos` | `ALL` | `{public}` | `(auth.uid() IS NOT NULL)` | `null` |
+
+- **Certificación de `DELETE` para `anon`:** No existe ninguna policy `DELETE` permisiva para usuarios no autenticados (`auth.uid() IS NULL`); únicamente sesiones autenticadas (`auth.uid() IS NOT NULL`) pueden ejecutar `INSERT`, `UPDATE` o `DELETE` sobre `categorias` y `productos`.
+
+### 8.2. Constraints verificados en `public.categorias`
+
+- `categorias_pkey`: `PRIMARY KEY (id)`
+- `categorias_slug_key`: `UNIQUE (slug)` (global a toda la tabla; las subcategorías con nombre repetido usan slug compuesto como `ramos-tulipanes`, `nacimientos-nino`, `nacimientos-nina`)
+- `categorias_parent_id_fkey`: `FOREIGN KEY (parent_id) REFERENCES categorias(id)`
+
+### 8.3. Scripts SQL de Fase 03 (`docs/sql/`)
+
+- [`docs/sql/003-nacimientos-padre.sql`](./sql/003-nacimientos-padre.sql): Promueve `"Nacimientos"` (`slug = 'nacimientos'`) a categoría principal (`parent_id = NULL`, `orden = 2`) e inserta de forma idempotente las subcategorías `"Niño"` (`slug = 'nacimientos-nino'`) y `"Niña"` (`slug = 'nacimientos-nina'`). Incluye consulta `SELECT` de verificación y bloque de rollback comentado.
+- [`docs/sql/004-tulipanes-reasignacion.sql`](./sql/004-tulipanes-reasignacion.sql): Script completamente comentado con los 13 `UPDATE` individuales para reasignar los productos que estaban en `"Tulipanes"` padre hacia sus subcategorías (`Tulipanes › Ramos`, `Tulipanes › Arreglos`, `Primaverales › Girasoles`, etc.).
+

@@ -25,6 +25,7 @@ import type {
   TagRow,
 } from "@/types/database";
 import { resolverClavesTag } from "@/lib/tag-utils";
+import { filtrarCategoriasVisibles } from "@/lib/categorias-utils";
 
 // ─── Helper interno ───────────────────────────────────────────────────────────
 
@@ -37,10 +38,10 @@ function throwOnError<T>(data: T | null, error: { message: string } | null): T {
 // ─── Categorías ───────────────────────────────────────────────────────────────
 
 /**
- * Devuelve todas las categorías activas ordenadas por `orden`.
- * Incluye tanto padres como hijas (parent_id puede ser null o un id).
+ * Devuelve todas las categorías activas de la BD sin filtrar las vacías,
+ * ordenadas por `orden`.
  */
-export async function getCategorias(): Promise<CategoriaRow[]> {
+export async function getTodasCategoriasActivas(): Promise<CategoriaRow[]> {
   const { data, error } = await supabase
     .from("categorias")
     .select("*")
@@ -48,6 +49,33 @@ export async function getCategorias(): Promise<CategoriaRow[]> {
     .order("orden", { ascending: true });
 
   return throwOnError(data, error);
+}
+
+/**
+ * Devuelve los `categoria_id` de todos los productos activos.
+ */
+export async function getCategoriaIdsConProductosActivos(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from("productos")
+    .select("categoria_id")
+    .eq("activo", true);
+
+  const rows = throwOnError(data, error) as { categoria_id: string | null }[];
+  return rows.map((r) => r.categoria_id).filter((id): id is string => Boolean(id));
+}
+
+/**
+ * Devuelve las categorías activas visibles en la web pública ordenadas por `orden`.
+ * Oculta automáticamente cualquier categoría padre o subcategoría que no tenga
+ * productos activos (directos o en subcategorías hijas activas).
+ */
+export async function getCategorias(): Promise<CategoriaRow[]> {
+  const [todas, idsConProductos] = await Promise.all([
+    getTodasCategoriasActivas(),
+    getCategoriaIdsConProductosActivos(),
+  ]);
+
+  return filtrarCategoriasVisibles(todas, idsConProductos);
 }
 
 /**
@@ -314,11 +342,12 @@ export async function getTodosProductosPorTag(clave: string): Promise<ProductoRo
  * Útil para renderizar el CategoryShowcase con nombre, slug e imagen real.
  */
 export async function getColecciones(): Promise<ColeccionConCategoria[]> {
-  // Paso 1: traer colecciones con datos de la categoría (incluyendo parent_id)
-  const { data, error } = await supabase
-    .from("colecciones_home")
-    .select(
-      `
+  // Paso 1: traer colecciones con datos de la categoría y las categorías visibles con productos
+  const [{ data, error }, categoriasVisibles] = await Promise.all([
+    supabase
+      .from("colecciones_home")
+      .select(
+        `
       *,
       categoria:categorias (
         id,
@@ -328,39 +357,47 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
         parent_id
       )
     `,
-    )
-    .eq("activo", true)
-    .order("orden", { ascending: true });
+      )
+      .eq("activo", true)
+      .order("orden", { ascending: true }),
+    getCategorias(),
+  ]);
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
 
-  const colecciones = (data ?? []) as ColeccionConCategoria[];
+  const idsVisibles = new Set(categoriasVisibles.map((c) => c.id));
 
-  // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas
+  // Ocultar colecciones cuya categoría esté inactiva o tenga 0 productos activos
+  const colecciones = ((data ?? []) as ColeccionConCategoria[]).filter((c) => {
+    const catId = (c.categoria as { id?: string } | null)?.id;
+    return Boolean(catId && idsVisibles.has(catId));
+  });
+
+  // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas visibles
   if (colecciones.length < 6) {
     const existingCatIds = new Set(
       colecciones.map((c) => (c.categoria as { id?: string })?.id).filter(Boolean),
     );
     const targetSlugs = ["cumpleanos", "ramos", "tulipanes", "girasoles", "arreglos-florales"];
-    const { data: extras } = await supabase
-      .from("categorias")
-      .select("id, nombre, slug, imagen_url, parent_id")
-      .in("slug", targetSlugs)
-      .eq("activo", true);
+    const extras = categoriasVisibles.filter((c) => targetSlugs.includes(c.slug));
 
-    if (extras) {
-      for (const ext of extras) {
-        if (!existingCatIds.has(ext.id) && colecciones.length < 6) {
-          existingCatIds.add(ext.id);
-          colecciones.push({
-            id: `extra-${ext.id}`,
-            categoria_id: ext.id,
-            imagen_custom_url: null,
-            orden: colecciones.length,
-            activo: true,
-            categoria: ext,
-          } as ColeccionConCategoria);
-        }
+    for (const ext of extras) {
+      if (!existingCatIds.has(ext.id) && colecciones.length < 6) {
+        existingCatIds.add(ext.id);
+        colecciones.push({
+          id: `extra-${ext.id}`,
+          categoria_id: ext.id,
+          imagen_custom_url: null,
+          orden: colecciones.length,
+          activo: true,
+          categoria: {
+            id: ext.id,
+            nombre: ext.nombre,
+            slug: ext.slug,
+            imagen_url: ext.imagen_url,
+            parent_id: ext.parent_id,
+          },
+        } as ColeccionConCategoria);
       }
     }
   }

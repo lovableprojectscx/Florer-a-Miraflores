@@ -90,3 +90,16 @@ JOIN pg_namespace nsp  ON nsp.oid = rel.relnamespace
 WHERE nsp.nspname = 'public'
   AND rel.relname = 'categorias'
 ORDER BY con.contype ASC, con.conname ASC;
+
+-- 6. Productos asignados directamente a la categoría padre "Tulipanes" (slug = 'tulipanes')
+SELECT
+  pr.id,
+  pr.nombre,
+  pr.precio,
+  pr.activo,
+  pr.orden
+FROM public.productos pr
+JOIN public.categorias c ON c.id = pr.categoria_id
+WHERE c.slug = 'tulipanes'
+ORDER BY pr.orden ASC, pr.nombre ASC;
+

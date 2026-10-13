@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -10,7 +10,9 @@ import {
   getCategorias,
   getConfig,
   getProductosPorCategoria,
+  getTodasCategoriasActivas,
 } from "@/lib/queries";
+import { resolverRedireccionSubcategoria } from "@/lib/categorias-utils";
 import type { CategoriaRow } from "@/types/database";
 
 export const Route = createFileRoute("/categoria/$slug/$sub")({
@@ -21,11 +23,19 @@ export const Route = createFileRoute("/categoria/$slug/$sub")({
       getConfig().catch(() => null),
     ]);
 
-    if (!cat) throw notFound();
-
     // Buscar la subcategoría hija por slug
-    const subcat = cat.hijas.find((h) => h.slug === params.sub);
-    if (!subcat) throw notFound();
+    const subcat = cat?.hijas.find((h) => h.slug === params.sub);
+    if (!cat || !subcat) {
+      const todasActivas = await getTodasCategoriasActivas().catch(() => []);
+      const target = resolverRedireccionSubcategoria(params.slug, params.sub, todasActivas);
+      if (target) {
+        if (target.to === "/categoria/$slug") {
+          throw redirect({ to: "/categoria/$slug", params: target.params });
+        }
+        throw redirect({ to: "/categoria/$slug/$sub", params: target.params });
+      }
+      throw notFound();
+    }
 
     // Traer productos de esta subcategoría
     const productos = await getProductosPorCategoria(subcat.id);
@@ -66,8 +76,11 @@ function SubPage() {
   // Filtros de precio y orden
   const { filtrados, orden, setOrden, rango, setRango } = useProductFilters(productos);
 
-  // Otras hijas de la misma categoría padre
-  const otrasSubs = cat.hijas.filter((s: CategoriaRow) => s.slug !== subcat.slug);
+  // Otras hijas visibles (con ≥1 producto activo) de la misma categoría padre
+  const idsVisibles = new Set(categorias.map((c: CategoriaRow) => c.id));
+  const otrasSubs = cat.hijas.filter(
+    (s: CategoriaRow) => s.slug !== subcat.slug && idsVisibles.has(s.id),
+  );
 
   return (
     <div className="min-h-screen bg-[#FDFAF6]">

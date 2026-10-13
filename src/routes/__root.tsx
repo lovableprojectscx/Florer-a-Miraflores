@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { CartDrawer } from "../components/CartDrawer";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -153,6 +154,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <Outlet />
       <CartDrawer />
+      <Toaster position="top-right" richColors />
     </QueryClientProvider>
   );
 }

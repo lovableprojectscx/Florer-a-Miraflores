@@ -8,9 +8,9 @@ Resumen priorizado. Detalle y notas en `../docs/PLAN-DE-TRABAJO.md`.
 
 - [ ] 🧑‍💻 **Paginación del catálogo** ("Ver más", lotes de 24) en `ProductGrid`. Plan definido.
 - [ ] 🧑‍💻 **Fotos del catálogo más grandes** (estilo Lima Floral): tarjetas más grandes, menos columnas.
-- [ ] ⚙️/🧑‍💻 **Arreglar "Nacimientos"** (no se refleja en la web): reproducir primero — ¿bug de admin o estaba inactiva/sin productos?
-- [ ] ⚙️ **Dividir "Nacimientos" en Niño y Niña** (subcategorías en panel).
-- [ ] ⚙️ **"Tulipanes" no se refleja en Ramos/Arreglos**: revisar subcategorías con productos asignados y activas.
+- [x] ⚙️/🧑‍💻 **Arreglar "Nacimientos"** (no se refleja en la web): diagnosticado en Fase 02 y resuelto en Fase 03 (pasa a categoría padre con redirección de `/categoria/ocasion/nacimientos`, ocultamiento automático de categorías vacías y `docs/sql/003-nacimientos-padre.sql`).
+- [x] ⚙️ **Dividir "Nacimientos" en Niño y Niña** (`nacimientos-nino` y `nacimientos-nina` en `docs/sql/003-nacimientos-padre.sql` + guía en `docs/GUIA-PANEL-CATEGORIAS.md`).
+- [x] ⚙️ **"Tulipanes" no se refleja en Ramos/Arreglos**: selector agrupado `Padre › Hija` en `/admin/productos`, ocultamiento de subcategorías vacías y `docs/sql/004-tulipanes-reasignacion.sql` + guía para reasignar los 13 productos de Tulipanes padre.
 - [ ] 🧑‍💻 **Estado "En preparación"** en pedidos (hoy: pendiente, pagado, en camino, entregado, cancelado).
 
 ## P2 — Post-lanzamiento (no bloquea)
