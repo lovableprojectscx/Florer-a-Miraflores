@@ -1,0 +1,101 @@
+=====================================================================
+ VERIFICACIÓN DE MINIATURAS EN SUPABASE STORAGE (Fase 06-B)
+ Fecha: 2026-10-13T16:07:46.099Z
+ Supabase URL: https://sdrkiomeesoctsxeidmu.supabase.co
+=====================================================================
+
+--- Verificando Bucket: [banners] ---
+  Imágenes originales en raíz: 3
+  Miniaturas encontradas en thumbs/480/: 3
+  Miniaturas encontradas en thumbs/960/: 3
+  Estado bucket: COBERTURA 100% (2 miniaturas por original)
+  Faltantes 480w: 0 | Faltantes 960w: 0
+
+--- Verificando Bucket: [categorias] ---
+  Imágenes originales en raíz: 9
+  Miniaturas encontradas en thumbs/480/: 9
+  Miniaturas encontradas en thumbs/960/: 9
+  Estado bucket: COBERTURA 100% (2 miniaturas por original)
+  Faltantes 480w: 0 | Faltantes 960w: 0
+
+--- Verificando Bucket: [productos] ---
+  Imágenes originales en raíz: 484
+  Miniaturas encontradas en thumbs/480/: 484
+  Miniaturas encontradas en thumbs/960/: 484
+  Estado bucket: COBERTURA 100% (2 miniaturas por original)
+  Faltantes 480w: 0 | Faltantes 960w: 0
+
+=====================================================================
+ RESUMEN DE CONTEO Y COBERTURA
+=====================================================================
+ Total originales analizados:          496
+ Total miniaturas 480w esperadas:      496 | Encontradas: 496
+ Total miniaturas 960w esperadas:      496 | Encontradas: 496
+ Total miniaturas requeridas (2x):     992
+ Total miniaturas presentes en storage: 992
+ Total miniaturas faltantes:           0
+=====================================================================
+
+=====================================================================
+ VERIFICACIÓN HTTP HEAD DE MUESTRA DE 50 MINIATURAS
+=====================================================================
+Muestra seleccionada: 50 URLs de miniaturas.
+
+[HEAD #01] HTTP 200 OK | banners/thumbs/480/1790270695139-uydtnn47k6.webp | image/webp | 10656 bytes
+[HEAD #02] HTTP 200 OK | categorias/thumbs/960/1791493352529-jzgnogf3kv.webp | image/webp | 36492 bytes
+[HEAD #03] HTTP 200 OK | productos/thumbs/480/1779384431608-hawo072r3fi.webp | image/webp | 37698 bytes
+[HEAD #04] HTTP 200 OK | productos/thumbs/960/1779399287023-syvu12pk55.webp | image/webp | 70412 bytes
+[HEAD #05] HTTP 200 OK | productos/thumbs/480/1779399296965-ko06uddfyjj.webp | image/webp | 46750 bytes
+[HEAD #06] HTTP 200 OK | productos/thumbs/960/1779399400361-5ao1zjxiyao.webp | image/webp | 42562 bytes
+[HEAD #07] HTTP 200 OK | productos/thumbs/480/1779399409791-0hvwrbiggy2n.webp | image/webp | 19598 bytes
+[HEAD #08] HTTP 200 OK | productos/thumbs/960/1779399417875-0ip4aiq9y18.webp | image/webp | 39470 bytes
+[HEAD #09] HTTP 200 OK | productos/thumbs/480/1779399427510-qc5jcjhm849.webp | image/webp | 11914 bytes
+[HEAD #10] HTTP 200 OK | productos/thumbs/960/1779399436148-f11z8xqhwut.webp | image/webp | 48202 bytes
+[HEAD #11] HTTP 200 OK | productos/thumbs/480/1790275681477-hl8fsbkuae6.webp | image/webp | 13976 bytes
+[HEAD #12] HTTP 200 OK | productos/thumbs/960/1791156487594-i220wbwgw9.webp | image/webp | 43036 bytes
+[HEAD #13] HTTP 200 OK | productos/thumbs/480/1791156503418-r5z8j8z8y5f.webp | image/webp | 15694 bytes
+[HEAD #14] HTTP 200 OK | productos/thumbs/960/1791156521154-q8j6oqjfvid.webp | image/webp | 56246 bytes
+[HEAD #15] HTTP 200 OK | productos/thumbs/480/1791156542268-k1fz1274yo.webp | image/webp | 17384 bytes
+[HEAD #16] HTTP 200 OK | productos/thumbs/960/1791156558257-adrehgs6e1v.webp | image/webp | 44440 bytes
+[HEAD #17] HTTP 200 OK | productos/thumbs/480/1791156575192-d1fxtl8to25.webp | image/webp | 18072 bytes
+[HEAD #18] HTTP 200 OK | productos/thumbs/960/1791253625791-vrh1pfh7ka9.webp | image/webp | 29220 bytes
+[HEAD #19] HTTP 200 OK | productos/thumbs/480/1791253630826-2x6tjy21j5c.webp | image/webp | 27736 bytes
+[HEAD #20] HTTP 200 OK | productos/thumbs/960/1791253635438-eulca01ewsn.webp | image/webp | 41954 bytes
+[HEAD #21] HTTP 200 OK | productos/thumbs/480/1791253639627-wlqvb34sitp.webp | image/webp | 21810 bytes
+[HEAD #22] HTTP 200 OK | productos/thumbs/960/1791253643236-8n44hdwxz4u.webp | image/webp | 55614 bytes
+[HEAD #23] HTTP 200 OK | productos/thumbs/480/1791253647886-0xxsrcxz46m.webp | image/webp | 20392 bytes
+[HEAD #24] HTTP 200 OK | productos/thumbs/960/1791253652217-fp5a9pjr14w.webp | image/webp | 40094 bytes
+[HEAD #25] HTTP 200 OK | productos/thumbs/480/1791253656638-usanjuf6km.webp | image/webp | 18478 bytes
+[HEAD #26] HTTP 200 OK | productos/thumbs/960/1791253661700-4692cso04ok.webp | image/webp | 52732 bytes
+[HEAD #27] HTTP 200 OK | productos/thumbs/480/1791253666108-glq5uptj3ys.webp | image/webp | 17792 bytes
+[HEAD #28] HTTP 200 OK | productos/thumbs/960/1791253670266-by5kyy9neuf.webp | image/webp | 53542 bytes
+[HEAD #29] HTTP 200 OK | productos/thumbs/480/1791253675122-44n428m4pux.webp | image/webp | 16492 bytes
+[HEAD #30] HTTP 200 OK | productos/thumbs/960/1791253679822-ram21b04ruj.webp | image/webp | 51314 bytes
+[HEAD #31] HTTP 200 OK | productos/thumbs/480/1791253684833-v9ioui7pq6f.webp | image/webp | 7934 bytes
+[HEAD #32] HTTP 200 OK | productos/thumbs/960/1791253688962-3my8pijvqte.webp | image/webp | 40228 bytes
+[HEAD #33] HTTP 200 OK | productos/thumbs/480/1791253694513-k16qcm1bdyg.webp | image/webp | 10482 bytes
+[HEAD #34] HTTP 200 OK | productos/thumbs/960/1791253699215-h1sfnufalxr.webp | image/webp | 39774 bytes
+[HEAD #35] HTTP 200 OK | productos/thumbs/480/1791253703773-o7wc0y69vwk.webp | image/webp | 13714 bytes
+[HEAD #36] HTTP 200 OK | productos/thumbs/960/1791253708167-i49gqt5egif.webp | image/webp | 73846 bytes
+[HEAD #37] HTTP 200 OK | productos/thumbs/480/1791253713257-nhsobmi8zt9.webp | image/webp | 16780 bytes
+[HEAD #38] HTTP 200 OK | productos/thumbs/960/1791253717761-36lox7hd9t.webp | image/webp | 43990 bytes
+[HEAD #39] HTTP 200 OK | productos/thumbs/480/1791253722836-nrmkfr8ylzc.webp | image/webp | 19100 bytes
+[HEAD #40] HTTP 200 OK | productos/thumbs/960/1791253726990-9nhpqvfatk.webp | image/webp | 39690 bytes
+[HEAD #41] HTTP 200 OK | productos/thumbs/480/1791253732300-zrff8gv3km.webp | image/webp | 21462 bytes
+[HEAD #42] HTTP 200 OK | productos/thumbs/960/1791253737088-dyfrjyyskal.webp | image/webp | 48304 bytes
+[HEAD #43] HTTP 200 OK | productos/thumbs/480/1791253741944-12gh9n4bejci.webp | image/webp | 19194 bytes
+[HEAD #44] HTTP 200 OK | productos/thumbs/960/1791253747405-r1lfib4ywcd.webp | image/webp | 35426 bytes
+[HEAD #45] HTTP 200 OK | productos/thumbs/480/1791253753244-l5tqlofdece.webp | image/webp | 13640 bytes
+[HEAD #46] HTTP 200 OK | productos/thumbs/960/1791253758076-3r9ob036frw.webp | image/webp | 38560 bytes
+[HEAD #47] HTTP 200 OK | productos/thumbs/480/1791253763470-3hku4tw6o88.webp | image/webp | 15002 bytes
+[HEAD #48] HTTP 200 OK | productos/thumbs/960/1791253768716-d7q5h7e3syk.webp | image/webp | 49784 bytes
+[HEAD #49] HTTP 200 OK | productos/thumbs/480/1791253773972-tmnftoajte.webp | image/webp | 19964 bytes
+[HEAD #50] HTTP 200 OK | productos/thumbs/960/1791313089008-4-z3mxflc.webp | image/webp | 45202 bytes
+
+=====================================================================
+ RESULTADO DE PRUEBAS HEAD (MUESTRA DE 50)
+=====================================================================
+ Exitosas (HTTP 200): 50/50
+ Fallidas:            0/50
+ Veredicto HTTP:      APROBADO (100% de la muestra responde 200 OK con Content-Type correcto)
+=====================================================================
