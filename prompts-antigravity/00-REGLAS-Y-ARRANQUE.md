@@ -28,8 +28,14 @@ Si un doc contradice al código, **manda el código**. Repórtalo, no lo "arregl
 
 - Solo hay **un** proyecto Supabase y es **producción** (`sdrkiomeesoctsxeidmu`). No hay staging.
 - **Prohibido** escribir, actualizar o borrar datos reales desde scripts o tests sin permiso explícito de Jack.
-- Cualquier cambio de esquema (tablas, columnas, constraints, policies) se entrega como archivo SQL en `docs/sql/NNN-descripcion.sql` (idempotente, con comentario de qué hace y cómo revertirlo). **Jack lo corre** en el SQL Editor de Supabase. Tú no lo aplicas.
-- Lecturas con la anon key (catálogo público) están permitidas para diagnosticar.
+- Tienes el MCP de Supabase. **Lecturas (SELECT) por MCP: permitidas** para diagnosticar y verificar.
+- **Escrituras (DDL o cambios de datos): primero el archivo, después la aprobación, al final la ejecución.**
+  1. Escribe el SQL en `docs/sql/NNN-descripcion.sql` (idempotente, con comentario de qué hace y bloque de reversa).
+  2. Antes de ejecutar, guarda en el reporte un SELECT del estado ANTES.
+  3. **No lo ejecutes hasta que Jack te diga "SQL NNN aprobado por el revisor".**
+  4. Al ejecutar, usa el MCP (apply_migration para DDL), corre el SELECT de verificación DESPUÉS y pega ambas salidas en el reporte.
+  5. Nunca `DROP`, `TRUNCATE` ni `DELETE` masivo sin aprobación explícita de esa sentencia.
+- Lecturas con la anon key (catálogo público) también están permitidas.
 
 ## 4. Git
 

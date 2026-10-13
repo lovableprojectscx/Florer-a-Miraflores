@@ -22,6 +22,7 @@ import { supabase } from "@/lib/supabase";
 import type { ProductoRow, ProductoTag, CategoriaRow, TagRow } from "@/types/database";
 import { convertToWebP } from "@/lib/image-optimizer";
 import { findTagByClave, resolverClavesTag } from "@/lib/tag-utils";
+import { armarOpcionesCategoriaSelect } from "@/lib/categorias-utils";
 
 export const Route = createFileRoute("/admin/productos")({
   head: () => ({ meta: [{ title: "Productos | Admin Florería Miraflores" }] }),
@@ -316,10 +317,14 @@ function ProductoForm({
               className="w-full h-10 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors"
             >
               <option value="">Seleccionar categoria...</option>
-              {categorias.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.nombre}
-                </option>
+              {armarOpcionesCategoriaSelect(categorias).map((grupo) => (
+                <optgroup key={grupo.groupLabel} label={grupo.groupLabel}>
+                  {grupo.options.map((opt) => (
+                    <option key={opt.id} value={opt.id}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
             {errors.categoria_id && (
@@ -1007,7 +1012,15 @@ function ProductosPage() {
         );
       }
 
-      const catMap = new Map(todasCats.map((c) => [c.id, c.nombre]));
+      const catById = new Map(todasCats.map((c) => [c.id, c]));
+      const catMap = new Map(
+        todasCats.map((c) => {
+          const padre = c.parent_id ? catById.get(c.parent_id) : undefined;
+          const base = padre ? `${padre.nombre} › ${c.nombre}` : c.nombre;
+          const inactiva = !c.activo || (padre ? !padre.activo : false);
+          return [c.id, `${base}${inactiva ? " (inactiva)" : ""}`];
+        }),
+      );
       const mapped: ProductoConCategoria[] = (prods ?? []).map((p: ProductoRow) => ({
         ...p,
         // Si el producto aún tiene el tag histórico en memoria, mostrarlo normalizado
@@ -1203,7 +1216,8 @@ function ProductosPage() {
     }
   }
 
-  const categoriasParaForm = categorias.filter((c) => c.activo);
+  const categoriasParaForm = categorias;
+  const gruposCategoriasFiltro = armarOpcionesCategoriaSelect(categorias);
   const hasActiveFilters =
     searchQuery.trim() !== "" ||
     filterCategoria !== "todos" ||
@@ -1274,10 +1288,14 @@ function ProductosPage() {
               >
                 <option value="todos">Categorías (Todas)</option>
                 <option value="sin_categoria">Sin Categoría</option>
-                {categorias.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.nombre}
-                  </option>
+                {gruposCategoriasFiltro.map((grupo) => (
+                  <optgroup key={grupo.groupLabel} label={grupo.groupLabel}>
+                    {grupo.options.map((opt) => (
+                      <option key={opt.id} value={opt.id}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </optgroup>
                 ))}
               </select>
             </div>

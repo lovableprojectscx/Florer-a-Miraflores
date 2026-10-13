@@ -16,6 +16,12 @@ import {
 import { supabase } from "@/lib/supabase";
 import type { CategoriaRow } from "@/types/database";
 import { convertToWebP } from "@/lib/image-optimizer";
+import { toast } from "sonner";
+import {
+  buscarConflictoSlugCategoria,
+  calcularConteoProductosPorCategoria,
+  formatearErrorGuardadoCategoria,
+} from "@/lib/categorias-utils";
 
 export const Route = createFileRoute("/admin/categorias")({
   head: () => ({ meta: [{ title: "Categorías | Admin Florería Miraflores" }] }),
@@ -102,6 +108,9 @@ function TableSkeleton() {
           </td>
           <td className="px-4 py-3">
             <div className="h-4 w-32 bg-[#F5EFE6] rounded" />
+          </td>
+          <td className="px-4 py-3">
+            <div className="h-4 w-28 bg-[#F5EFE6] rounded" />
           </td>
           <td className="px-4 py-3">
             <div className="h-4 w-28 bg-[#F5EFE6] rounded" />
@@ -418,6 +427,9 @@ function ConfirmDelete({
 
 function CategoriasPage() {
   const [categorias, setCategorias] = useState<CategoriaRow[]>([]);
+  const [conteosProductos, setConteosProductos] = useState<
+    Record<string, { directos: number; hijas: number; total: number }>
+  >({});
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [editando, setEditando] = useState<CategoriaRow | null>(null);
@@ -428,16 +440,27 @@ function CategoriasPage() {
   const cargarDatos = useCallback(async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from("categorias")
-        .select("*")
-        .order("orden", { ascending: true })
-        .order("nombre", { ascending: true });
+      const [catsRes, prodsRes] = await Promise.all([
+        supabase
+          .from("categorias")
+          .select("*")
+          .order("orden", { ascending: true })
+          .order("nombre", { ascending: true }),
+        supabase.from("productos").select("categoria_id").eq("activo", true),
+      ]);
 
-      if (error) throw error;
-      setCategorias((data ?? []) as CategoriaRow[]);
+      if (catsRes.error) throw catsRes.error;
+      if (prodsRes.error) throw prodsRes.error;
+
+      const cats = (catsRes.data ?? []) as CategoriaRow[];
+      const prodCatIds = (prodsRes.data ?? []).map(
+        (p: { categoria_id: string | null }) => p.categoria_id,
+      );
+      setCategorias(cats);
+      setConteosProductos(calcularConteoProductosPorCategoria(cats, prodCatIds));
     } catch (err) {
       console.error("Error al cargar categorías:", err);
+      toast.error("Error al cargar las categorías.");
     } finally {
       setLoading(false);
     }
@@ -472,6 +495,12 @@ function CategoriasPage() {
   const treeData = buildTree();
 
   async function handleCreate(form: FormState) {
+    const conflicto = buscarConflictoSlugCategoria(form.slug, categorias);
+    if (conflicto) {
+      toast.error(conflicto);
+      return;
+    }
+
     setSaving(true);
     try {
       // Obtener el máximo orden de las categorías en el mismo nivel
@@ -489,10 +518,17 @@ function CategoriasPage() {
 
       if (error) throw error;
       setShowCreate(false);
+      toast.success("Categoría creada correctamente.");
       await cargarDatos();
     } catch (err) {
       console.error(err);
-      alert("Error al guardar la categoría. Revisa si el slug ya existe.");
+      toast.error(
+        formatearErrorGuardadoCategoria(
+          err as { code?: string; message?: string },
+          form.slug,
+          categorias,
+        ),
+      );
     } finally {
       setSaving(false);
     }
@@ -500,6 +536,13 @@ function CategoriasPage() {
 
   async function handleEdit(form: FormState) {
     if (!editando) return;
+
+    const conflicto = buscarConflictoSlugCategoria(form.slug, categorias, editando.id);
+    if (conflicto) {
+      toast.error(conflicto);
+      return;
+    }
+
     setSaving(true);
     try {
       const { error } = await supabase
@@ -515,10 +558,18 @@ function CategoriasPage() {
 
       if (error) throw error;
       setEditando(null);
+      toast.success("Categoría actualizada correctamente.");
       await cargarDatos();
     } catch (err) {
       console.error(err);
-      alert("Error al actualizar la categoría. Revisa si el slug ya existe.");
+      toast.error(
+        formatearErrorGuardadoCategoria(
+          err as { code?: string; message?: string },
+          form.slug,
+          categorias,
+          editando.id,
+        ),
+      );
     } finally {
       setSaving(false);
     }
@@ -536,10 +587,11 @@ function CategoriasPage() {
       }
 
       setEliminando(null);
+      toast.success("Categoría eliminada correctamente.");
       await cargarDatos();
     } catch (err) {
       console.error(err);
-      alert(
+      toast.error(
         "No se pudo eliminar la categoría. Asegúrate de que no tenga subcategorías o dependencias activas.",
       );
     }
@@ -621,7 +673,7 @@ function CategoriasPage() {
 
       {/* Tabla */}
       <div className="hidden md:block bg-white border border-[#E8DDD0] overflow-x-auto">
-        <table className="w-full min-w-[750px]">
+        <table className="w-full min-w-[850px]">
           <thead>
             <tr className="border-b border-[#E8DDD0] bg-[#FDFAF6]">
               <th className="px-4 py-3 text-left w-16" />
@@ -633,6 +685,9 @@ function CategoriasPage() {
               </th>
               <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
                 Tipo
+              </th>
+              <th className="px-4 py-3 text-left font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Productos
               </th>
               <th className="px-4 py-3 text-center font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
                 Orden
@@ -650,7 +705,7 @@ function CategoriasPage() {
               <TableSkeleton />
             ) : treeData.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-12 text-center font-body text-sm text-[#8A7A6E]">
+                <td colSpan={8} className="px-4 py-12 text-center font-body text-sm text-[#8A7A6E]">
                   No hay categorías aún. Crea la primera con el botón de arriba.
                 </td>
               </tr>
@@ -660,6 +715,9 @@ function CategoriasPage() {
                 const parentCatName = isChild
                   ? categorias.find((c) => c.id === cat.parent_id)?.nombre
                   : null;
+                const conteo = conteosProductos[cat.id] ?? { directos: 0, hijas: 0, total: 0 };
+                const tieneSubcategorias =
+                  !isChild && categorias.some((c) => c.parent_id === cat.id);
 
                 // Encontrar index en su propio nivel para habilitar/deshabilitar reordenar
                 const levelCats = categorias.filter((c) => c.parent_id === cat.parent_id);
@@ -720,6 +778,26 @@ function CategoriasPage() {
                       ) : (
                         <span className="font-medium text-[#C4956A]">Principal</span>
                       )}
+                    </td>
+
+                    {/* Productos activos */}
+                    <td className="px-4 py-3 text-xs font-body text-[#2C2420]">
+                      <div className="flex flex-col gap-1 items-start">
+                        <span>
+                          <strong>{conteo.total}</strong>{" "}
+                          {conteo.total === 1 ? "activo" : "activos"}
+                          {tieneSubcategorias && (
+                            <span className="text-[#8A7A6E] ml-1">
+                              ({conteo.directos} directos + {conteo.hijas} hijas)
+                            </span>
+                          )}
+                        </span>
+                        {conteo.total === 0 && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-sm bg-amber-50 border border-amber-200 text-amber-800 font-body text-[11px] font-medium">
+                            No se ve en la web: 0 productos
+                          </span>
+                        )}
+                      </div>
                     </td>
 
                     {/* Orden ↑↓ */}
@@ -815,6 +893,8 @@ function CategoriasPage() {
             const parentCatName = isChild
               ? categorias.find((c) => c.id === cat.parent_id)?.nombre
               : null;
+            const conteo = conteosProductos[cat.id] ?? { directos: 0, hijas: 0, total: 0 };
+            const tieneSubcategorias = !isChild && categorias.some((c) => c.parent_id === cat.id);
 
             // Encontrar index en su propio nivel para habilitar/deshabilitar reordenar
             const levelCats = categorias.filter((c) => c.parent_id === cat.parent_id);
@@ -862,7 +942,21 @@ function CategoriasPage() {
                         <span className="font-body text-[10px] text-[#8A7A6E]">
                           {isChild ? `Sub de ${parentCatName}` : "Principal"}
                         </span>
+                        <span className="font-body text-[10px] text-[#2C2420]">
+                          · <strong>{conteo.total}</strong>{" "}
+                          {conteo.total === 1 ? "activo" : "activos"}
+                          {tieneSubcategorias
+                            ? ` (${conteo.directos} directos + ${conteo.hijas} hijas)`
+                            : ""}
+                        </span>
                       </div>
+                      {conteo.total === 0 && (
+                        <div className="mt-1.5">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-sm bg-amber-50 border border-amber-200 text-amber-800 font-body text-[10px] font-medium">
+                            No se ve en la web: 0 productos
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
