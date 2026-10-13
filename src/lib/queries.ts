@@ -354,7 +354,8 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
         nombre,
         slug,
         imagen_url,
-        parent_id
+        parent_id,
+        activo
       )
     `,
       )
@@ -365,13 +366,15 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
 
   if (error) throw new Error(`[Supabase] ${error.message}`);
 
-  const idsVisibles = new Set(categoriasVisibles.map((c) => c.id));
-
-  // Ocultar colecciones cuya categoría esté inactiva o tenga 0 productos activos
-  const colecciones = ((data ?? []) as ColeccionConCategoria[]).filter((c) => {
-    const catId = (c.categoria as { id?: string } | null)?.id;
-    return Boolean(catId && idsVisibles.has(catId));
-  });
+  // Las colecciones configuradas por Jack deben mostrarse SIEMPRE en su orden,
+  // salvo que la categoría esté desactivada (activo = false). Si tiene 0 productos activos,
+  // la colección se muestra igual.
+  const colecciones = (
+    (data ?? []) as (ColeccionConCategoria & { categoria: { activo?: boolean } })[]
+  ).filter((c) => {
+    const cat = c.categoria as { id?: string; activo?: boolean } | null;
+    return Boolean(cat?.id && cat.activo !== false);
+  }) as ColeccionConCategoria[];
 
   // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas visibles
   if (colecciones.length < 6) {

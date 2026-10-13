@@ -151,4 +151,52 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
       )
       .toBe(24);
   });
+
+  test("Banner Hero: en desktop 1440 carga original sin /thumbs/, en mobile 390 carga sin errores (Fase 06-C)", async ({
+    page,
+  }, testInfo) => {
+    await page.addInitScript(() => sessionStorage.setItem("fm_popup_seen", "1"));
+    await page.goto("/");
+    await waitForHydration(page, "main");
+
+    const heroSection = page.locator("section.w-full.bg-white").first();
+    await expect(heroSection).toBeVisible();
+
+    const bannerImg = heroSection.locator("img").first();
+    await expect(bannerImg).toBeVisible();
+
+    // Esperar a que la imagen complete su carga
+    await expect
+      .poll(async () => {
+        return await bannerImg.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        );
+      })
+      .toBe(true);
+
+    const currentSrc = await bannerImg.evaluate((img: HTMLImageElement) => img.currentSrc);
+
+    if (testInfo.project.name === "desktop") {
+      // En desktop 1440 el navegador selecciona el candidato original (2560w), sin /thumbs/
+      expect(currentSrc).not.toContain("/thumbs/");
+      const domNaturalWidth = await bannerImg.evaluate((img: HTMLImageElement) => img.naturalWidth);
+      const naturalWidth = await bannerImg.evaluate(async (img: HTMLImageElement) => {
+        const probe = new Image();
+        probe.src = img.currentSrc;
+        await probe.decode();
+        return probe.naturalWidth;
+      });
+      console.log(
+        `[E2E desktop 1440] Banner activo domNaturalWidth (density-corrected): ${domNaturalWidth}`,
+      );
+      console.log(
+        `[E2E desktop 1440] Banner activo naturalWidth (original cargado): ${naturalWidth}`,
+      );
+      expect(naturalWidth).toBe(2560);
+    } else {
+      // En mobile 390 el banner carga correctamente con dimensiones naturales > 0 sin error
+      const naturalWidth = await bannerImg.evaluate((img: HTMLImageElement) => img.naturalWidth);
+      expect(naturalWidth).toBeGreaterThan(0);
+    }
+  });
 });

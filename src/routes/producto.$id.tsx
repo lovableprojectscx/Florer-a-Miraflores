@@ -210,6 +210,7 @@ function ProductPage() {
                   url={imagenes[activeImg]}
                   fallbackUrl={imagenes[activeImg] || fallbackImg}
                   anchoMiniatura={960}
+                  originalWidth={1600}
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   alt={product.nombre}
                   fetchPriority="high"
