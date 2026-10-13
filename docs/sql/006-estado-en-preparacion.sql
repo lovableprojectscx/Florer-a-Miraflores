@@ -18,11 +18,7 @@
 
 BEGIN;
 
--- 1. Eliminar cualquier constraint previo si existiera
-ALTER TABLE public.pedidos
-  DROP CONSTRAINT IF EXISTS pedidos_estado_check;
-
--- 2. Agregar la restricción CHECK con los 6 estados permitidos
+-- Agregar la restricción CHECK con los 6 estados permitidos
 ALTER TABLE public.pedidos
   ADD CONSTRAINT pedidos_estado_check
   CHECK (estado IN ('pendiente', 'en_preparacion', 'en_camino', 'entregado', 'pagado', 'cancelado'));

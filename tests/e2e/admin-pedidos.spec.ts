@@ -11,7 +11,7 @@ test.describe("Admin Pedidos E2E — Estados y 'En preparación'", () => {
     );
 
     // Permitir error 404 de imagen de producto en pedidos de prueba históricos en BD
-    allowConsoleErrors([/product-novedad-velvet\.jpg/i, /assets/i]);
+    allowConsoleErrors([/product-novedad-velvet\.jpg/i]);
 
     // Iniciar sesión
     await page.goto("/admin-login");

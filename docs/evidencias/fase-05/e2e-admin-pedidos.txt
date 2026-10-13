@@ -1,0 +1,10 @@
+﻿
+Running 4 tests using 4 workers
+
+  -  4 [desktop] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:102:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ cambiar estado de pedido real (solo bajo autorizaci├│n con E2E_ALLOW_WRITES=1 y pedido [E2E])
+  -  2 [mobile] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:102:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ cambiar estado de pedido real (solo bajo autorizaci├│n con E2E_ALLOW_WRITES=1 y pedido [E2E])
+  ok 3 [desktop] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:41:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ filtro 'En preparaci├│n' existe, permite filtrar y el modal de detalle muestra los 6 estados (solo lectura) (5.2s)
+  ok 1 [mobile] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:41:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ filtro 'En preparaci├│n' existe, permite filtrar y el modal de detalle muestra los 6 estados (solo lectura) (5.9s)
+
+  2 skipped
+  2 passed (15.8s)
