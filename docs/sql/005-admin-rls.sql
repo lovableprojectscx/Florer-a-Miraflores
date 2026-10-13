@@ -67,21 +67,31 @@ $$;
 GRANT EXECUTE ON FUNCTION public.is_admin() TO anon, authenticated, service_role;
 
 -- -----------------------------------------------------------------------------
--- 3. Alta del usuario administrador confirmado por Jack (Guarda 1)
+-- 3. Alta del usuario administrador único confirmado por Jack (Guarda 1)
+--    Admin único: pedidos@floreriamiraflores.com
+--    (test_admin_temp@floreriamiraflores.com NO se agrega a public.admins)
 -- -----------------------------------------------------------------------------
--- IMPORTANTE: Reemplazar '<EMAIL_ADMIN_CONFIRMADO_POR_JACK>' por el email real
--- confirmado por Jack antes de ejecutar.
+DELETE FROM public.admins
+WHERE lower(email) <> 'pedidos@floreriamiraflores.com';
+
 INSERT INTO public.admins (user_id, email)
 SELECT id, email
 FROM auth.users
-WHERE lower(email) = lower('<EMAIL_ADMIN_CONFIRMADO_POR_JACK>')
+WHERE lower(email) = 'pedidos@floreriamiraflores.com'
 ON CONFLICT (user_id) DO UPDATE
   SET email = EXCLUDED.email;
 
 DO $$
+DECLARE
+  v_count integer;
+  v_email text;
 BEGIN
-  IF NOT EXISTS (SELECT 1 FROM public.admins) THEN
-    RAISE EXCEPTION 'ABORTADO: public.admins está vacía. Confirma el email del admin en auth.users antes de aplicar las policies.';
+  SELECT count(*), min(lower(email))
+  INTO v_count, v_email
+  FROM public.admins;
+
+  IF v_count <> 1 OR v_email <> 'pedidos@floreriamiraflores.com' THEN
+    RAISE EXCEPTION 'ABORTADO: public.admins debe tener exactamente 1 fila con pedidos@floreriamiraflores.com (actual: count=%, email=%)', v_count, coalesce(v_email, 'NULL');
   END IF;
 END
 $$;
