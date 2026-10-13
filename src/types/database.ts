@@ -31,6 +31,7 @@ export type ConfigUpdate = Partial<ConfigInsert>;
 export interface BannerRow {
   id: string;
   imagen_url: string;
+  imagen_mobile_url?: string | null;
   titulo: string | null;
   subtexto: string | null;
   cta_texto: string | null;

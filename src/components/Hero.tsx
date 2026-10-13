@@ -76,8 +76,6 @@ export function Hero({ banners }: Props) {
 
   // Proporción exacta de banner 2560x960 px (ratio 8:3)
   // en todos los dispositivos para que el banner se vea 100% completo sin recortes verticales ni horizontales.
-  const containerClasses = "relative w-full overflow-hidden bg-background aspect-[2560/960]";
-
   return (
     <section className="w-full bg-white">
       {/* Contenedor del banner */}
@@ -91,25 +89,34 @@ export function Hero({ banners }: Props) {
       >
         {/* Slider track */}
         <div
-          className="flex transition-transform duration-700 ease-in-out w-full"
+          className="flex items-start transition-transform duration-700 ease-in-out w-full"
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
           {displayBanners.map((ban, banIdx) => {
             const isFirst = banIdx === 0;
+            const hasMobileImg = Boolean(ban.imagen_mobile_url);
+            const slideAspectClasses = hasMobileImg
+              ? "aspect-[4/5] md:aspect-[2560/960]"
+              : "aspect-[2560/960]";
 
             const img = (
-              <ResponsiveImage
-                url={ban.imagen_url}
-                fallbackUrl={ban.imagen_url ?? heroImg}
-                anchoMiniatura={960}
-                originalWidth={2560}
-                anchosMiniatura={[960]}
-                sizes="100vw"
-                fetchPriority={isFirst ? "high" : "auto"}
-                loading={isFirst ? "eager" : "lazy"}
-                alt={ban.titulo ?? "Banner Florería Miraflores"}
-                className="w-full h-full object-cover object-center block select-none"
-              />
+              <picture className="w-full h-full block">
+                {hasMobileImg && (
+                  <source media="(max-width: 767px)" srcSet={ban.imagen_mobile_url!} />
+                )}
+                <ResponsiveImage
+                  url={ban.imagen_url}
+                  fallbackUrl={ban.imagen_url ?? heroImg}
+                  anchoMiniatura={960}
+                  originalWidth={2560}
+                  anchosMiniatura={[960]}
+                  sizes="100vw"
+                  fetchPriority={isFirst ? "high" : "auto"}
+                  loading={isFirst ? "eager" : "lazy"}
+                  alt={ban.titulo ?? "Banner Florería Miraflores"}
+                  className="w-full h-full object-cover object-center block select-none"
+                />
+              </picture>
             );
 
             const content = (
@@ -142,7 +149,7 @@ export function Hero({ banners }: Props) {
             return (
               <div
                 key={ban.id}
-                className={`w-full flex-shrink-0 relative select-none ${containerClasses}`}
+                className={`w-full flex-shrink-0 relative select-none bg-background overflow-hidden ${slideAspectClasses}`}
               >
                 {ban.cta_link ? (
                   <a href={ban.cta_link} className="block w-full h-full relative">

@@ -38,6 +38,7 @@ interface FormState {
   cta_texto: string;
   cta_link: string;
   imagen_url: string;
+  imagen_mobile_url: string;
   activo: boolean;
 }
 
@@ -47,6 +48,7 @@ const EMPTY_FORM: FormState = {
   cta_texto: "",
   cta_link: "",
   imagen_url: "",
+  imagen_mobile_url: "",
   activo: true,
 };
 
@@ -54,6 +56,10 @@ const EMPTY_FORM: FormState = {
 
 async function subirImagen(file: File): Promise<string> {
   return subirImagenConMiniaturas(file, BUCKET, 2560);
+}
+
+async function subirImagenMobile(file: File): Promise<string> {
+  return subirImagenConMiniaturas(file, BUCKET, 1080);
 }
 
 async function eliminarImagenStorage(url: string) {
@@ -109,6 +115,10 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const [uploadingMobile, setUploadingMobile] = useState(false);
+  const [uploadMobileError, setUploadMobileError] = useState<string | null>(null);
+  const mobileFileRef = useRef<HTMLInputElement>(null);
+
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => ({ ...prev, [key]: undefined }));
@@ -137,9 +147,38 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
     }
   }
 
+  async function handleMobileFileChange(file: File | undefined) {
+    if (!file) return;
+    setUploadMobileError(null);
+    if (!ACCEPTED_TYPES.includes(file.type)) {
+      setUploadMobileError("Solo se aceptan imágenes JPG, PNG o WebP.");
+      return;
+    }
+    setUploadingMobile(true);
+    try {
+      const url = await subirImagenMobile(file);
+      setForm((prev) => ({ ...prev, imagen_mobile_url: url }));
+    } catch (err) {
+      setUploadMobileError(
+        err instanceof Error
+          ? err.message
+          : "Error al subir la imagen para celular. Verifica que exista el bucket 'banners'.",
+      );
+    } finally {
+      setUploadingMobile(false);
+      if (mobileFileRef.current) mobileFileRef.current.value = "";
+    }
+  }
+
   async function handleRemoveImagen() {
     const url = form.imagen_url;
     setForm((prev) => ({ ...prev, imagen_url: "" }));
+    if (url) void eliminarImagenStorage(url);
+  }
+
+  async function handleRemoveMobileImagen() {
+    const url = form.imagen_mobile_url;
+    setForm((prev) => ({ ...prev, imagen_mobile_url: "" }));
     if (url) void eliminarImagenStorage(url);
   }
 
@@ -226,6 +265,68 @@ function BannerForm({ initial, saving, onClose, onSave, titulo }: BannerFormProp
             {uploadError && (
               <p className="mt-2 font-body text-xs text-red-500 bg-red-50 border border-red-200 px-3 py-2">
                 {uploadError}
+              </p>
+            )}
+          </div>
+
+          {/* Imagen para celular (1080 x 1350, 4:5, opcional) */}
+          <div className="pt-2 border-t border-[#E8DDD0]/70">
+            <div className="flex items-center justify-between mb-2">
+              <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Imagen para celular (1080 x 1350, 4:5)
+              </label>
+              <span className="font-body text-[10px] tracking-wider uppercase text-[#8A7A6E]/70 bg-[#F5EFE6] px-2 py-0.5 rounded-xs">
+                Opcional
+              </span>
+            </div>
+            {form.imagen_mobile_url ? (
+              <div className="relative group w-36 aspect-[4/5] bg-[#F5EFE6] overflow-hidden border border-[#E8DDD0] rounded-sm">
+                <img
+                  src={form.imagen_mobile_url}
+                  alt="Banner para celular"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                  <button
+                    type="button"
+                    onClick={handleRemoveMobileImagen}
+                    className="opacity-0 group-hover:opacity-100 transition-opacity bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 font-body text-[10px] tracking-widest uppercase rounded-xs"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <label className="flex flex-col items-center justify-center w-full p-4 border-2 border-dashed border-[#E8DDD0] hover:border-[#C4956A] bg-[#FDFAF6] cursor-pointer transition-colors rounded-sm">
+                {uploadingMobile ? (
+                  <Loader2 className="h-5 w-5 text-[#C4956A] animate-spin" strokeWidth={1.5} />
+                ) : (
+                  <>
+                    <Upload className="h-4 w-4 text-[#8A7A6E] mb-1" strokeWidth={1.5} />
+                    <span className="font-body text-xs tracking-widest uppercase text-[#8A7A6E] text-center px-4">
+                      Subir imagen para celular (1080 x 1350, 4:5)
+                    </span>
+                    <span className="font-body text-[10px] text-[#C4956A] mt-1 text-center px-4">
+                      Proporción vertical 4:5. Margen de seguridad recomendado: 100 px.
+                    </span>
+                    <span className="font-body text-[9px] text-[#8A7A6E] mt-0.5 text-center px-4">
+                      Si no se sube, en celular se mantiene la versión horizontal en 8:3.
+                    </span>
+                  </>
+                )}
+                <input
+                  ref={mobileFileRef}
+                  type="file"
+                  accept=".jpg,.jpeg,.png,.webp"
+                  className="hidden"
+                  disabled={uploadingMobile}
+                  onChange={(e) => handleMobileFileChange(e.target.files?.[0])}
+                />
+              </label>
+            )}
+            {uploadMobileError && (
+              <p className="mt-2 font-body text-xs text-red-500 bg-red-50 border border-red-200 px-3 py-2">
+                {uploadMobileError}
               </p>
             )}
           </div>
@@ -414,7 +515,7 @@ function BannersPage() {
     try {
       const maxOrden = banners.reduce((max, b) => Math.max(max, b.orden), 0);
 
-      const { error } = await supabase.from("banners").insert({
+      const insertData: Record<string, unknown> = {
         titulo: form.titulo.trim() || null,
         subtexto: form.subtexto.trim() || null,
         cta_texto: form.cta_texto.trim() || null,
@@ -422,7 +523,12 @@ function BannersPage() {
         imagen_url: form.imagen_url,
         activo: form.activo,
         orden: maxOrden + 1,
-      });
+      };
+      if (form.imagen_mobile_url) {
+        insertData.imagen_mobile_url = form.imagen_mobile_url.trim();
+      }
+
+      const { error } = await supabase.from("banners").insert(insertData);
 
       if (error) throw error;
       setShowCreate(false);
@@ -447,6 +553,7 @@ function BannersPage() {
           cta_texto: form.cta_texto.trim() || null,
           cta_link: form.cta_link.trim() || null,
           imagen_url: form.imagen_url,
+          imagen_mobile_url: form.imagen_mobile_url.trim() || null,
           activo: form.activo,
         })
         .eq("id", editando.id);
@@ -471,6 +578,9 @@ function BannersPage() {
       // Borrar de storage
       if (eliminando.imagen_url) {
         void eliminarImagenStorage(eliminando.imagen_url);
+      }
+      if (eliminando.imagen_mobile_url) {
+        void eliminarImagenStorage(eliminando.imagen_mobile_url);
       }
 
       setEliminando(null);
@@ -611,6 +721,13 @@ function BannersPage() {
                           </div>
                         )}
                       </div>
+                      {ban.imagen_mobile_url && (
+                        <div className="mt-1 flex items-center gap-1">
+                          <span className="font-body text-[9px] tracking-wider uppercase text-[#4E7A43] bg-[#EEF5EC] border border-[#CDE3C8] px-1.5 py-0.5 rounded-xs">
+                            Celular 4:5 ✓
+                          </span>
+                        </div>
+                      )}
                     </td>
 
                     {/* Contenido (Título + Subtexto) */}
@@ -756,6 +873,13 @@ function BannersPage() {
                     </div>
                   )}
                 </div>
+                {ban.imagen_mobile_url && (
+                  <div>
+                    <span className="font-body text-[9px] tracking-wider uppercase text-[#4E7A43] bg-[#EEF5EC] border border-[#CDE3C8] px-1.5 py-0.5 rounded-xs">
+                      Celular 4:5 ✓
+                    </span>
+                  </div>
+                )}
 
                 {/* Contenido */}
                 <div>
@@ -870,6 +994,7 @@ function BannersPage() {
             cta_texto: editando.cta_texto ?? "",
             cta_link: editando.cta_link ?? "",
             imagen_url: editando.imagen_url,
+            imagen_mobile_url: editando.imagen_mobile_url ?? "",
             activo: editando.activo,
           }}
           saving={saving}
