@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 | Versión | Fecha | Tipo | Resumen de Cambios |
 | :---: | :---: | :---: | :--- |
+| **v1.5.1** | 2026-10-12 | **Diagnóstico** | Fase 02: Diagnóstico de categorías en solo lectura (`scripts/diagnostico-categorias.mjs`, `docs/sql/diagnostico-categorias.sql`, `docs/DIAGNOSTICO-CATEGORIAS.md`). |
 | **v1.5.0** | 2026-10-12 | **QA / Testing** | Base de pruebas automatizadas: Vitest (unitario + RLS), Playwright E2E (mobile/desktop) y comando único `npm run verify`. |
 | **v1.4.2** | 2026-10-08 | **Admin / Jerarquía** | Soporte explícito y visualización de subcategorías agrupadas por padre en Colecciones Home. |
 | **v1.4.1** | 2026-10-08 | **UI / Navbar** | Retiro de botones "Catálogo", "Nosotros" y "Preguntas" del menú superior del Header para una vista limpia y enfocada en flores. |
@@ -26,6 +27,18 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 ## Detalle de Hitos y Actualizaciones
 
+### [v1.5.1] — 2026-10-12: Diagnóstico de Categorías (Fase 02 — Solo Lectura)
+
+#### Contexto y Objetivo
+Diagnosticar con evidencia real la causa de los 3 reclamos sobre categorías (*"Nacimientos no se refleja / no deja subirla"*, *"Dividir Nacimientos en Niño y Niña"*, *"Tulipanes no se refleja en Ramos y Arreglos"*) sin modificar ningún dato de producción.
+
+#### Entregables Implementados
+1. **Script de diagnóstico con `anon key` (`scripts/diagnostico-categorias.mjs`):** Consulta en solo lectura (`SELECT`) el árbol de las 29 categorías activas y los 402 productos activos, identificando subcategorías con 0 productos (`Tulipanes › Arreglos` tiene `0` productos mientras que `Tulipanes` padre tiene `13`), la existencia de `Ocasión › Nacimientos` (`39` productos activos) y la colisión de nombres duplicados (`"Ramos"`) en el `<select>` plano de `/admin/productos`.
+2. **Consultas SQL para el SQL Editor (`docs/sql/diagnostico-categorias.sql`):** Archivo de solo `SELECT` para inspeccionar filas inactivas, conteos totales, productos sin categoría, `pg_policies` y constraints de `categorias`.
+3. **Informe técnico y matriz de decisiones (`docs/DIAGNOSTICO-CATEGORIAS.md`):** Documenta causas confirmadas, clasificación y opciones D1 (`Niño/Niña`) y D2 (`Tulipanes en Ramos/Arreglos`).
+
+---
+
 ### [v1.5.0] — 2026-10-12: Base de Pruebas Automatizadas (Vitest + Playwright + RLS + Verify)
 
 #### Contexto y Objetivo
@@ -37,10 +50,10 @@ Establecer los cimientos de calidad y verificación continua antes de las siguie
    - Extracción de `checkoutSchema` y `getFechaMinima` desde `src/routes/checkout.tsx` hacia `src/lib/checkout-schema.ts` sin cambiar su comportamiento.
    - Cobertura de `useCartStore` (`cart.test.ts`), `slugify` y `extractIdFromSlug` (`utils.test.ts`), utilidades de tags (`tag-utils.test.ts`), `useProductFilters` (`product-filters.test.ts`), validación de checkout (`checkout-schema.test.ts`, incluyendo `it.fails` documentado para el bug de zona horaria UTC en `getFechaMinima`) y `crearPedido` con cliente Supabase mockeado (`queries.test.ts`).
 2. **Pruebas de Seguridad RLS (`vitest.rls.config.ts` + `tests/rls/rls.test.ts`):**
-   - Verificación con `anon key` real de lectura pública en `productos`, `categorias`, `banners`, `distritos` y `config`, bloqueo de lectura en `pedidos` y bloqueo de escritura (`INSERT`/`UPDATE`/`DELETE`) en `productos` y `categorias` usando UUID inexistente.
+   - Verificación con `anon key` real de lectura pública en `productos`, `categorias`, `banners`, `distritos` y `config`, bloqueo de lectura en `pedidos` y bloqueo de escritura en `productos` y `categorias` exigiendo código `42501` en `INSERT` y usando un `id` real con predicados seguros en `UPDATE` y `DELETE`.
 3. **Pruebas End-to-End (`playwright.config.ts` + `tests/e2e/`):**
    - Ejecución en proyectos `mobile` (`Pixel 7`) y `desktop` (`1440×900`) contra el servidor de desarrollo en puerto `8080`.
-   - Fixture común (`tests/e2e/fixtures.ts`) que falla ante `console.error` o `pageerror` inesperados.
+   - Fixture común (`tests/e2e/fixtures.ts`) que falla ante `console.error` o `pageerror` no permitidos, con `allowConsoleErrors` por URL para el test de ruta inexistente.
    - Suites: `smoke.spec.ts`, `catalogo.spec.ts`, `carrito.spec.ts`, `checkout.spec.ts` (con interceptación obligatoria de `POST **/rest/v1/pedidos*`) y `admin.spec.ts`.
 4. **Pipeline de Verificación (`npm run verify` y `.github/workflows/verify.yml`):**
    - Limpieza de errores triviales de tipado (`error: unknown` en `errorComponent` de rutas) y lint (`no-explicit-any`, `prefer-const`, `no-empty-object-type`), dejando `lint`, `typecheck`, `test` y `build` en verde.

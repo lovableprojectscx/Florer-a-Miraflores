@@ -10,6 +10,7 @@
 | [BASE-DE-DATOS.md](./BASE-DE-DATOS.md) | Configuración de Supabase: esquemas de tablas, RLS, extensiones, relaciones y políticas de Storage. |
 | [INCIDENCIAS-Y-SOLUCIONES.md](./INCIDENCIAS-Y-SOLUCIONES.md) | Informe técnico de problemas detectados en desarrollo (tags, persistencia visual en admin) y sus soluciones. |
 | [TESTING.md](./TESTING.md) | Guía de pruebas automatizadas (Vitest unitario, Vitest RLS y Playwright E2E mobile/desktop) y regla de protección de datos de producción. |
+| [DIAGNOSTICO-CATEGORIAS.md](./DIAGNOSTICO-CATEGORIAS.md) | Diagnóstico de solo lectura sobre la jerarquía de categorías, conteo de productos, causas de los 3 reclamos de categorías y matriz de decisiones D1/D2. |
 | [PLAN-DE-TRABAJO.md](./PLAN-DE-TRABAJO.md) | Backlog priorizado de mejoras y pendientes antes y después del lanzamiento. |
 
 ### Documentos relacionados (fuera de `docs/`)
