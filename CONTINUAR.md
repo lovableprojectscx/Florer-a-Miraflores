@@ -40,7 +40,7 @@ Chat nuevo en Cowork → misma carpeta conectada (`floreria-miraflo-main`) → c
 4. SQL: Antigravity lo escribe y lo ejecuta por MCP solo después de "SQL NNN aprobado por el revisor". Si el SQL cambia después de aprobado, se detiene y lo vuelve a mostrar. En lo crítico, pedir salida CRUDA del MCP.
 5. Merge solo con APROBADO.
 
-## Estado al 13-10-2026 (Fase 06 — Certificación)
+## Estado al 13-10-2026 (Fase 06-B — Rendimiento e Imágenes Livianas Completada)
 
 - APROBADAS y mergeadas en master local:
   - Fase 01: Base de pruebas automatizadas (`npm run verify`).
@@ -49,16 +49,21 @@ Chat nuevo en Cowork → misma carpeta conectada (`floreria-miraflo-main`) → c
   - Fase 03-B: Seguridad RLS (`docs/sql/005-admin-rls.sql` aplicado, admin único: `pedidos@floreriamiraflores.com`).
   - Fase 04: Catálogo (fotos 4:5 + paginación incremental "Ver más" de 24).
   - Fase 05: Pedidos / checkout (`docs/sql/006-pedidos-estado-check.sql` aplicado, hora de Lima en checkout, deduplicación de número de pedido).
-  - Fase 06 (en rama `fase-06-certificacion`): Certificación pre-lanzamiento (`VEREDICTO: GO con condiciones`).
-    - RF-017 / RF-018 completados con test E2E.
-    - Test de compra completa E2E con interceptación segura y sin pedidos falsos.
-    - Auditoría de desbordamiento en 360/390/1440px: 0 overflow.
-    - 412 imágenes auditadas: 412 válidas (0 rotas).
-    - SEO: sitemap.xml (437 URLs), robots.txt, `<html lang="es">`.
-    - Lighthouse móvil en build de producción: 100 SEO, 100 Best Practices.
+  - Fase 06: Certificación pre-lanzamiento (cobertura E2E, sitemap, robots.txt, 0 overflow).
+  - Fase 06-B: **Imágenes livianas y rendimiento móvil**:
+    - Generación y subida de 992 miniaturas WebP (480w y 960w) cubriendo el 100% de las 496 imágenes originales en Supabase Storage (script autenticado como admin, sin service role key, `upsert: false`).
+    - Verificación completa con 50/50 peticiones HTTP HEAD en 200 OK.
+    - Componente unificado `<ResponsiveImage>` con fallback robusto que retira `srcset`/`sizes` ante errores y prueba E2E en Playwright con bloqueo 404 (`6 passed`).
+    - Carrusel de Novedades del Home en proporción 4:5 con tarjetas grandes (45% en móvil).
+    - Preconnect a Supabase en `<head>` de `__root.tsx`.
+    - Reducción del Home de 14.0 MB a 1.70 MB (-87.8%), LCP móvil de 40 s a 5.1 s local, Accesibilidad 96/100, Best Practices 100/100, SEO 100/100.
+    - Veredicto en `docs/CERTIFICACION-LANZAMIENTO.md`: **GO condicionado**.
+
 - Pendientes asignados a Jack antes del despliegue:
-  1. Push a GitHub (`git push origin master`) cuando se autorice.
-  2. Borrar `test_admin_temp@floreriamiraflores.com` en Supabase Auth.
-  3. Desactivar "Allow new users to sign up" en Supabase Auth.
-  4. Repartir productos en Nacimientos Niño/Niña en el panel.
-  5. Confirmar tabla de Tulipanes (`docs/sql/004-tulipanes-reasignacion.sql`).
+  1. Push a GitHub (`git push origin master`) para disparar el build productivo de Vercel.
+  2. Medir Lighthouse sobre la URL de Vercel tras el push (verificar compresión Brotli y CDN Edge).
+  3. Revisión / eliminación de pedidos de prueba (`FM-TEST01`, etc.) en la tabla `pedidos` de producción.
+  4. Borrar `test_admin_temp@floreriamiraflores.com` en Supabase Auth (*Authentication > Users*).
+  5. Desactivar "Allow new users to sign up" en Supabase Auth (*Authentication > Providers > Email*).
+  6. Repartir productos en Nacimientos Niño/Niña en el panel administrativo.
+  7. Confirmar tabla de Tulipanes (`docs/sql/004-tulipanes-reasignacion.sql`).
