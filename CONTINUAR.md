@@ -63,7 +63,7 @@ Chat nuevo en Cowork → misma carpeta conectada (`floreria-miraflo-main`) → c
   1. Push a GitHub (`git push origin master`) para disparar el build productivo de Vercel.
   2. Medir Lighthouse sobre la URL de Vercel tras el push (verificar compresión Brotli y CDN Edge).
   3. Revisión / eliminación de pedidos de prueba (`FM-TEST01`, etc.) en la tabla `pedidos` de producción.
-  4. Borrar `test_admin_temp@floreriamiraflores.com` en Supabase Auth (*Authentication > Users*).
-  5. Desactivar "Allow new users to sign up" en Supabase Auth (*Authentication > Providers > Email*).
+  4. Borrar `test_admin_temp@floreriamiraflores.com` en Supabase Auth (_Authentication > Users_).
+  5. Desactivar "Allow new users to sign up" en Supabase Auth (_Authentication > Providers > Email_).
   6. Repartir productos en Nacimientos Niño/Niña en el panel administrativo.
   7. Confirmar tabla de Tulipanes (`docs/sql/004-tulipanes-reasignacion.sql`).

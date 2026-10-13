@@ -13,7 +13,7 @@ const ZONES = [
 
 export function DeliveryZones() {
   return (
-    <section id="delivery" className="px-5 md:px-12 lg:px-16 py-16 md:py-24 bg-[#FAF8F5]/60">
+    <section id="delivery" className="px-5 md:px-12 lg:px-16 py-8 md:py-12 bg-[#FAF8F5]/60">
       <div className="max-w-[1536px] mx-auto">
         {/* Encabezado */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">

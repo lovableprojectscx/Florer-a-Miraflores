@@ -236,9 +236,9 @@ function TagSection({ tag, productos }: TagSeccion) {
   };
 
   return (
-    <section id={`tag-${tag.clave}`} className="py-12 md:py-16 overflow-hidden">
+    <section id={`tag-${tag.clave}`} className="py-6 md:py-8 overflow-hidden">
       {/* Encabezado centrado estéticamente */}
-      <div className="max-w-2xl mx-auto text-center px-4 sm:px-6 mb-7 sm:mb-9">
+      <div className="max-w-2xl mx-auto text-center px-4 sm:px-6 mb-4 sm:mb-5">
         <h2 className="font-display text-[#1E1E1D] text-2xl sm:text-3xl md:text-[34px] font-light md:font-normal leading-tight tracking-tight">
           {tag.nombre}
         </h2>
@@ -275,7 +275,7 @@ function TagSection({ tag, productos }: TagSeccion) {
       </div>
 
       {/* Controles de paginación y botón "Ver más productos" */}
-      <div className="flex flex-col items-center justify-center gap-3.5 sm:gap-4 mt-6 sm:mt-8">
+      <div className="flex flex-col items-center justify-center gap-2.5 mt-3 sm:mt-4">
         {total > 1 && (
           <div className="flex items-center gap-2 text-xs font-body text-[#595753] select-none">
             <button
@@ -301,7 +301,7 @@ function TagSection({ tag, productos }: TagSeccion) {
         <Link
           to="/tag/$key"
           params={{ key: tag.clave }}
-          className="inline-flex items-center justify-center px-8 py-3 bg-[#2C2420] hover:bg-[#433934] text-white text-[11px] tracking-[0.18em] uppercase font-body font-medium rounded-md transition-colors duration-300 shadow-xs"
+          className="inline-flex items-center justify-center px-8 py-2.5 bg-[#2C2420] hover:bg-[#433934] text-white text-[11px] tracking-[0.18em] uppercase font-body font-medium rounded-md transition-colors duration-300 shadow-xs"
         >
           Ver más productos
         </Link>

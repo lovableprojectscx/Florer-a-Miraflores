@@ -1,0 +1,206 @@
+
+> verify
+> npm run lint && npm run typecheck && npm run test && npm run build
+
+
+> lint
+> eslint .
+
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ProductFilters.tsx
+  15:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  32:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\badge.tsx
+  32:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\button.tsx
+  49:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\form.tsx
+  163:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\navigation-menu.tsx
+  111:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\sidebar.tsx
+  743:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\toggle.tsx
+  42:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+✖ 8 problems (0 errors, 8 warnings)
+
+
+> typecheck
+> tsc --noEmit
+
+
+> test
+> vitest run
+
+
+ RUN  v5.0.4 C:/Users/JACK FRANKLIN/Desktop/Proyectos Idenza/Trabajos-Mayo/Floreria miraflores/floreria-miraflo-main
+
+ ✓ tests/unit/tag-utils.test.ts (9 tests) 12ms
+ ✓ tests/unit/cart.test.ts (7 tests) 11ms
+ ✓ tests/unit/image-utils.test.ts (14 tests) 15ms
+ ✓ tests/unit/categorias-utils.test.ts (14 tests) 31ms
+ ✓ tests/unit/checkout-schema.test.ts (7 tests) 48ms
+ ✓ tests/unit/queries.test.ts (15 tests) 25ms
+ ✓ tests/unit/use-ver-mas.test.ts (7 tests) 52ms
+ ✓ tests/unit/utils.test.ts (6 tests) 7ms
+ ✓ tests/unit/product-filters.test.ts (3 tests) 28ms
+ ✓ tests/unit/ProductGrid.test.tsx (3 tests) 421ms
+   ✓ ProductGrid — paginación 'Ver más' y placeholder de imagen (3)
+     ✓ con 30 productos y tamanoLote=24 muestra 24 tarjetas y el botón 'Ver más'; tras clic muestra 30 y el botón desaparece 345ms
+
+ Test Files  10 passed (10)
+      Tests  85 passed (85)
+   Start at  11:32:13
+   Duration  5.85s (environment 82%, setup 13%, import 2%, tests 2%, transform 1%, worker 1%)
+
+
+> build
+> vite build
+
+vite v7.3.3 building client environment for production...
+transforming...
+✓ 2138 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/client/.assetsignore                                    0.02 kB
+dist/client/assets/product-tulipanes-BC0rNiOg.webp          31.36 kB
+dist/client/assets/product-box-romantico-BTuwwvPY.webp      34.62 kB
+dist/client/assets/product-novedad-velvet-MCV19rEe.webp     41.44 kB
+dist/client/assets/product-ramo-primavera-CiRCRxpz.webp     47.53 kB
+dist/client/assets/product-arreglo-especial-CRvYK_-E.webp   48.62 kB
+dist/client/assets/product-novedad-pampas-CgdssaDB.webp     53.48 kB
+dist/client/assets/product-novedad-aurora-BXLA2eR-.webp     54.77 kB
+dist/client/assets/product-corona-CuhhlEMa.webp             67.90 kB
+dist/client/assets/product-box-sorpresa-DDn5XeVm.webp       74.58 kB
+dist/client/assets/hero-flowers-BvA6XZaO.webp               89.62 kB
+dist/client/assets/logo-miraflores-DDxBf7Kq.webp           101.38 kB
+dist/client/assets/about-boutique-DCIO9u4d.webp            108.02 kB
+dist/client/assets/styles-is1Mq9Py.css                     131.35 kB │ gzip:  21.06 kB
+dist/client/assets/logo-miraflores-CgMYqKoi.js               0.06 kB │ gzip:   0.08 kB
+dist/client/assets/categoria._slug._sub-TfD8FOar.js          0.45 kB │ gzip:   0.32 kB
+dist/client/assets/catalogo-DFaY2AHk.js                      0.46 kB │ gzip:   0.33 kB
+dist/client/assets/categoria._slug-Bs3eHTin.js               0.46 kB │ gzip:   0.33 kB
+dist/client/assets/producto._id-6GAxrdNU.js                  0.46 kB │ gzip:   0.33 kB
+dist/client/assets/categoria._slug._sub-vGYIAAlM.js          0.46 kB │ gzip:   0.33 kB
+dist/client/assets/producto._id-B9ftKFbu.js                  0.46 kB │ gzip:   0.32 kB
+dist/client/assets/categoria._slug-uSJ4C5A6.js               0.46 kB │ gzip:   0.33 kB
+dist/client/assets/tag._key-Ci6BNd4p.js                      0.47 kB │ gzip:   0.33 kB
+dist/client/assets/tag._key-DubRVYP5.js                      0.48 kB │ gzip:   0.34 kB
+dist/client/assets/ResponsiveImage-Dk3Rpkc9.js               1.38 kB │ gzip:   0.78 kB
+dist/client/assets/image-optimizer-DTiuPQQB.js               2.27 kB │ gzip:   1.12 kB
+dist/client/assets/tag._key-CDUEzLcZ.js                      2.50 kB │ gzip:   1.17 kB
+dist/client/assets/ProductFilters-NJweLwRx.js                2.51 kB │ gzip:   1.17 kB
+dist/client/assets/admin-login-CZ_KAeJ0.js                   3.22 kB │ gzip:   1.29 kB
+dist/client/assets/categoria._slug._sub-C70lrXhk.js          3.23 kB │ gzip:   1.39 kB
+dist/client/assets/catalogo-DcrPgk6L.js                      3.37 kB │ gzip:   1.53 kB
+dist/client/assets/DeliveryZones-CzKrgalp.js                 3.57 kB │ gzip:   1.12 kB
+dist/client/assets/confirmacion-CJOntDvQ.js                  3.59 kB │ gzip:   1.72 kB
+dist/client/assets/admin-BPaRiDl_.js                         4.32 kB │ gzip:   1.53 kB
+dist/client/assets/categoria._slug-DCSkCrR5.js               4.33 kB │ gzip:   1.75 kB
+dist/client/assets/dashboard-Buwt_O2-.js                     5.92 kB │ gzip:   1.85 kB
+dist/client/assets/config-B1qlnuCP.js                        6.15 kB │ gzip:   2.06 kB
+dist/client/assets/ProductGrid-7-MI980R.js                   6.61 kB │ gzip:   2.53 kB
+dist/client/assets/producto._id-F4zKL7CP.js                  6.88 kB │ gzip:   2.33 kB
+dist/client/assets/nosotros-CGuvWGva.js                      8.27 kB │ gzip:   2.59 kB
+dist/client/assets/popup-mhxPr-WR.js                         9.54 kB │ gzip:   3.25 kB
+dist/client/assets/tags-BcLg-714.js                         11.68 kB │ gzip:   3.23 kB
+dist/client/assets/distritos-BJKQ5NLO.js                    12.81 kB │ gzip:   3.21 kB
+dist/client/assets/ocasiones-BQS83Nlp.js                    13.27 kB │ gzip:   3.42 kB
+dist/client/assets/colecciones-home-Bwjs74Tn.js             13.77 kB │ gzip:   3.64 kB
+dist/client/assets/pedidos-BLa6IxRk.js                      15.96 kB │ gzip:   3.70 kB
+dist/client/assets/libro-de-reclamaciones-CqWbe7b2.js       18.76 kB │ gzip:   5.42 kB
+dist/client/assets/WhatsappFab-D67toVp7.js                  19.98 kB │ gzip:   5.31 kB
+dist/client/assets/banners-3WT7KCdc.js                      20.39 kB │ gzip:   4.67 kB
+dist/client/assets/reclamaciones-CEBaNJ6n.js                22.49 kB │ gzip:   5.00 kB
+dist/client/assets/categorias-QBe9BEAj.js                   22.62 kB │ gzip:   5.39 kB
+dist/client/assets/vendor-lucide-NzBk3sgo.js                24.42 kB │ gzip:   9.20 kB
+dist/client/assets/productos-DxX7Iwop.js                    37.83 kB │ gzip:   8.89 kB
+dist/client/assets/checkout--evXnoj3.js                     44.98 kB │ gzip:  15.07 kB
+dist/client/assets/index-prBE0wDy.js                        47.89 kB │ gzip:  15.55 kB
+dist/client/assets/vendor-supabase-Dh6eHXVI.js             207.32 kB │ gzip:  54.19 kB
+dist/client/assets/index-DdRM6FIz.js                       485.50 kB │ gzip: 149.49 kB
+✓ built in 8.30s
+vite v7.3.3 building ssr environment for production...
+transforming...
+✓ 2200 modules transformed.
+rendering chunks...
+Using secrets defined in .env.local
+dist/server/.dev.vars                                        0.30 kB
+dist/server/wrangler.json                                    1.41 kB
+dist/server/.vite/manifest.json                             22.23 kB
+dist/server/assets/product-tulipanes-BC0rNiOg.webp          31.36 kB
+dist/server/assets/product-box-romantico-BTuwwvPY.webp      34.62 kB
+dist/server/assets/product-novedad-velvet-MCV19rEe.webp     41.44 kB
+dist/server/assets/product-ramo-primavera-CiRCRxpz.webp     47.53 kB
+dist/server/assets/product-arreglo-especial-CRvYK_-E.webp   48.62 kB
+dist/server/assets/product-novedad-pampas-CgdssaDB.webp     53.48 kB
+dist/server/assets/product-novedad-aurora-BXLA2eR-.webp     54.77 kB
+dist/server/assets/product-corona-CuhhlEMa.webp             67.90 kB
+dist/server/assets/product-box-sorpresa-DDn5XeVm.webp       74.58 kB
+dist/server/assets/hero-flowers-BvA6XZaO.webp               89.62 kB
+dist/server/assets/logo-miraflores-DDxBf7Kq.webp           101.38 kB
+dist/server/assets/about-boutique-DCIO9u4d.webp            108.02 kB
+dist/server/assets/styles-is1Mq9Py.css                     131.35 kB
+dist/server/assets/logo-miraflores-uWsZPdFg.js               0.08 kB
+dist/server/index.js                                         0.10 kB
+dist/server/assets/empty-plugin-adapters-BFgPZ6_d.js         0.13 kB
+dist/server/assets/catalogo-CyFqx0a_.js                      0.68 kB
+dist/server/assets/categoria._slug-BJmsUpd_.js               0.68 kB
+dist/server/assets/producto._id-C8EF5HG-.js                  0.68 kB
+dist/server/assets/categoria._slug._sub-HqqsEBCn.js          0.68 kB
+dist/server/assets/tag._key-Dl5c4rHm.js                      0.69 kB
+dist/server/assets/categoria._slug._sub-BqJsFZeK.js          0.75 kB
+dist/server/assets/producto._id-COHyKCCj.js                  0.76 kB
+dist/server/assets/categoria._slug-Dkmy1GKe.js               0.76 kB
+dist/server/assets/tag._key-C0AMuRcA.js                      0.77 kB
+dist/server/assets/start-DYIeVa6h.js                         1.51 kB
+dist/server/assets/ResponsiveImage-BGNOrD7w.js               2.94 kB
+dist/server/assets/tag._key-DRqS4Irr.js                      3.98 kB
+dist/server/assets/ProductFilters-JyO1CF8D.js                4.07 kB
+dist/server/assets/image-optimizer-BbyYc5zd.js               4.46 kB
+dist/server/assets/admin-login-CDSHxEbg.js                   5.10 kB
+dist/server/assets/confirmacion-VWfKUFdN.js                  5.13 kB
+dist/server/assets/categoria._slug._sub-Dw0LUtjG.js          5.18 kB
+dist/server/assets/DeliveryZones-D6QXBA1m.js                 5.31 kB
+dist/server/assets/catalogo-D5ukXfBl.js                      6.11 kB
+dist/server/assets/admin-DXlVyw9A.js                         6.91 kB
+dist/server/assets/categoria._slug-BLflAPu7.js               7.01 kB
+dist/server/assets/_tanstack-start-manifest_v-Cu-zP4Qn.js    8.18 kB
+dist/server/assets/dashboard-BLjsJ_KC.js                     9.40 kB
+dist/server/assets/config-CotzYrmV.js                        9.70 kB
+dist/server/assets/producto._id-BjdL6mDJ.js                 11.44 kB
+dist/server/assets/nosotros-PuEhyFzY.js                     11.91 kB
+dist/server/assets/ProductGrid-CVqQBT9D.js                  12.49 kB
+dist/server/assets/popup-BU5LLqLn.js                        15.33 kB
+dist/server/assets/tags-Bh90n5jn.js                         18.98 kB
+dist/server/assets/distritos-CvXCS6GL.js                    21.15 kB
+dist/server/assets/worker-entry-7uhMZ63u.js                 21.31 kB
+dist/server/assets/ocasiones-D18zwC2N.js                    21.93 kB
+dist/server/assets/colecciones-home-DSwwfUIl.js             23.07 kB
+dist/server/assets/libro-de-reclamaciones-wBGhOfCB.js       24.97 kB
+dist/server/assets/pedidos-C36Slj_C.js                      26.75 kB
+dist/server/assets/reclamaciones-TjZ5lptf.js                31.25 kB
+dist/server/assets/WhatsappFab-BAgLy_T5.js                  32.66 kB
+dist/server/assets/banners-BBBFDYBw.js                      33.24 kB
+dist/server/assets/categorias-C-HDOk73.js                   38.67 kB
+dist/server/assets/vendor-lucide-Cjc4eZD4.js                42.36 kB
+dist/server/assets/productos-DmEq66J4.js                    65.34 kB
+dist/server/assets/index-GQE7fqVF.js                        93.13 kB
+dist/server/assets/checkout-Clx6ln95.js                     99.41 kB
+dist/server/assets/router-DyrJRj4B.js                      474.98 kB
+dist/server/assets/vendor-supabase-BBa_TrIY.js             713.23 kB
+dist/server/assets/server-TmCkXtFA.js                      802.45 kB
+✓ built in 7.73s
+
+> postbuild
+> node scripts/postbuild.js
+
+Postbuild: Copied dist/client files to dist/
+Postbuild: Created dist/server/server.js for preview compatibility

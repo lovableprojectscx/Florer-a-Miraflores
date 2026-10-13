@@ -39,7 +39,7 @@ export function CategoryShowcase({ colecciones }: Props) {
   return (
     <section
       id="categorias"
-      className="px-5 md:px-12 lg:px-16 py-14 md:py-20 animate-fade-in-up bg-[#FAF8F5]/60"
+      className="px-5 md:px-12 lg:px-16 py-8 md:py-12 animate-fade-in-up bg-[#FAF8F5]/60"
     >
       <div className="max-w-[1380px] mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
