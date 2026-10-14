@@ -12,6 +12,12 @@ import pampas from "@/assets/product-novedad-pampas.webp";
 import velvet from "@/assets/product-novedad-velvet.webp";
 import aurora from "@/assets/product-novedad-aurora.webp";
 
+// ─── Configuración de zoom y encuadre en fotos de producto del Home ─────────
+// Referencia: limafloralco.com (donde las flores llenan la foto cuadrada 1:1).
+// Valores evaluados para Sofía: 1.00, 1.15, 1.25 (por defecto en Fase 06-E), 1.35.
+export const ZOOM_FOTO_HOME = 1.25;
+export const OBJECT_POSITION_FOTO_HOME = "center 40%";
+
 // ─── Fallback cuando no hay datos en Supabase ────────────────────────────────
 
 const FALLBACK_TAG: TagRow = {
@@ -169,7 +175,13 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
             sizes="(min-width: 1920px) 450px, (min-width: 1440px) 335px, (min-width: 1024px) 24vw, (min-width: 768px) 31vw, 45vw"
             alt={producto.nombre}
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+            style={
+              {
+                "--zoom-base": ZOOM_FOTO_HOME,
+                objectPosition: OBJECT_POSITION_FOTO_HOME,
+              } as React.CSSProperties
+            }
+            className="w-full h-full object-cover transition-transform duration-700 ease-out scale-[var(--zoom-base)] group-hover:scale-[calc(var(--zoom-base)*1.05)] will-change-transform"
           />
         </div>
 
