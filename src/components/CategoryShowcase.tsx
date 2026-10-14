@@ -121,57 +121,63 @@ export function CategoryShowcase({ colecciones }: Props) {
                   className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
                 />
 
+                {/* Degradado suave SOLO en el tercio inferior (de negro ~55% abajo a transparente) */}
+                <div
+                  className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/60 via-black/25 to-transparent pointer-events-none"
+                  aria-hidden="true"
+                />
+
                 {/* Badge editorial superior para las primeras tarjetas */}
                 {isHero && (
-                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
-                    <span className="px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-body font-medium text-[#2C2420] border border-[#E8DDD0]/80 shadow-xs">
+                  <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5">
+                    <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-body font-medium text-[#2C2420] border border-white/60 shadow-xs">
                       Colección Destacada
                     </span>
                   </div>
                 )}
 
                 {isVerticalSide && (
-                  <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5">
-                    <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body font-medium text-[#2C2420] border border-[#E8DDD0]/80 shadow-xs">
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                    <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/90 backdrop-blur-md text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body font-medium text-[#2C2420] border border-white/60 shadow-xs">
                       Exclusivo
                     </span>
                   </div>
                 )}
 
-                {/* Contenido textual en cápsula blanca limpia (sin sombreado oscuro en la foto) */}
+                {/* Contenido textual directo sobre la foto (sin cápsulas blancas) */}
                 {isHero ? (
-                  <div className="absolute inset-x-4 bottom-4 sm:inset-x-6 sm:bottom-6 p-4 sm:p-6 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E8DDD0]/60 shadow-sm flex flex-col justify-between sm:flex-row sm:items-center gap-3 transition-all duration-300 group-hover:shadow-md">
+                  <div className="absolute inset-x-4 bottom-4 sm:inset-x-6 sm:bottom-6 flex flex-col justify-end sm:flex-row sm:items-end sm:justify-between gap-3">
                     <div>
-                      <p className="text-[10px] sm:text-xs tracking-[0.22em] uppercase font-body text-[#8A7A6E] font-medium mb-0.5">
+                      <p className="text-[10px] sm:text-xs tracking-[0.22em] uppercase font-body text-white/80 font-medium mb-1 drop-shadow-xs">
                         Edición de Autor
                       </p>
-                      <h3 className="font-display font-normal text-xl sm:text-3xl text-[#2C2420] leading-tight">
+                      <h3 className="font-display font-normal text-2xl sm:text-3xl lg:text-4xl text-white leading-tight drop-shadow-sm">
                         {cat.nombre}
                       </h3>
-                      <p className="mt-1 font-body text-xs sm:text-sm text-[#2C2420]/75 font-light line-clamp-1 hidden md:block">
+                      <p className="mt-1 font-body text-xs sm:text-sm text-white/85 font-light line-clamp-1 hidden md:block drop-shadow-xs">
                         Diseños florales concebidos con armonía, sensibilidad y las rosas más
                         frescas.
                       </p>
                     </div>
                     <div className="flex-shrink-0">
-                      <span className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-[#2C2420] text-white text-xs font-body uppercase tracking-[0.16em] font-medium rounded-xl group-hover:bg-[#1a1513] transition-all">
+                      <span className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 bg-white text-[#2C2420] text-xs font-body uppercase tracking-[0.16em] font-medium rounded-xl hover:bg-white/90 transition-all shadow-sm group-hover:shadow-md">
                         <span>Explorar Colección</span>
                         <span className="transition-transform group-hover:translate-x-1">→</span>
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4 p-3 sm:p-4 bg-white/95 backdrop-blur-md rounded-xl border border-[#E8DDD0]/60 shadow-sm transition-all duration-300 group-hover:shadow-md flex flex-col justify-between">
+                  <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4 flex flex-col justify-end">
                     <div>
-                      <p className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body text-[#8A7A6E] font-medium mb-0.5">
+                      <p className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-body text-white/80 font-medium mb-0.5 drop-shadow-xs">
                         Colección
                       </p>
-                      <h3 className="font-display font-normal text-sm sm:text-base lg:text-lg text-[#2C2420] leading-snug line-clamp-1">
+                      <h3 className="font-display font-normal text-base sm:text-lg lg:text-xl text-white leading-snug line-clamp-1 drop-shadow-sm">
                         {cat.nombre}
                       </h3>
                     </div>
-                    <div className="mt-1.5 sm:mt-2 flex items-center">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] tracking-[0.16em] uppercase font-body font-medium text-[#2C2420]/80 group-hover:text-[#2C2420] transition-colors">
+                    <div className="mt-1 sm:mt-1.5 flex items-center">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] tracking-[0.16em] uppercase font-body font-medium text-white/90 group-hover:text-white transition-colors drop-shadow-xs">
                         <span>Explorar</span>
                         <span className="transition-transform group-hover:translate-x-1">→</span>
                       </span>
