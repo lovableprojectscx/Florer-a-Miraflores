@@ -564,7 +564,7 @@ export async function getTestimonios(): Promise<TestimonioRow[]> {
       .order("created_at", { ascending: false });
 
     if (error) {
-      if (error.code === "42P01" || error.message?.includes("testimonios")) {
+      if (error.code === "42P01" || error.code === "PGRST205") {
         return [];
       }
       throw new Error(`[Supabase] ${error.message}`);
@@ -574,7 +574,7 @@ export async function getTestimonios(): Promise<TestimonioRow[]> {
   } catch (err) {
     if (
       err instanceof Error &&
-      (err.message.includes("42P01") || err.message.includes("testimonios"))
+      (err.message.includes("42P01") || err.message.includes("PGRST205"))
     ) {
       return [];
     }
@@ -597,7 +597,7 @@ export async function getTestimoniosHome(): Promise<TestimonioRow[]> {
       .limit(6);
 
     if (error) {
-      if (error.code === "42P01" || error.message?.includes("testimonios")) {
+      if (error.code === "42P01" || error.code === "PGRST205") {
         return [];
       }
       throw new Error(`[Supabase] ${error.message}`);
@@ -607,7 +607,7 @@ export async function getTestimoniosHome(): Promise<TestimonioRow[]> {
   } catch (err) {
     if (
       err instanceof Error &&
-      (err.message.includes("42P01") || err.message.includes("testimonios"))
+      (err.message.includes("42P01") || err.message.includes("PGRST205"))
     ) {
       return [];
     }
