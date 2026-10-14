@@ -84,3 +84,17 @@ Prohibido escribir "listo", "funciona" o "todo OK" sin la evidencia de arriba. S
 Responde a Jack en **español**, tono cercano y directo.
 
 Si este prompt te llegó solo, cuando termines de leer responde únicamente: "Contexto leído. Rama de deploy: <la que encontraste o "no lo sé, confírmamela">. Listo para la fase que me pases." y espera el siguiente prompt. Si te llegó junto con el prompt de una fase (debajo de una línea `---`), lee el contexto, dime la rama de deploy en una línea y empieza esa fase.
+
+---
+
+## Reglas de velocidad (obligatorias desde el 13-10-2026)
+
+1. **Un solo dev server por sesión:** arráncalo una vez y NO lo mates ni lo reinicies salvo que se caiga. Si hay otra conversación trabajando en paralelo en otra carpeta, usa un puerto distinto.
+2. **Cada comando largo se corre UNA vez y se guarda en archivo al mismo tiempo:**
+   `npm run verify 2>&1 | Tee-Object -FilePath docs/evidencias/<fase>/verify.txt` (igual para E2E). Prohibido correrlo para "ver" y luego otra vez para "guardar".
+3. **Para esperar un comando, espera de una vez hasta que termine;** no revises su estado cada pocos segundos.
+4. **Mientras trabajas:** solo los tests de lo que tocaste. `verify` + E2E completos UNA sola vez al final de la fase (eso no se salta nunca).
+5. **Capturas:** reutiliza UN script (`scripts/capturar.mjs` con parámetros url, anchos y salida). No crees scripts nuevos por cada captura. Solo las capturas que pide el prompt.
+6. **No releas archivos** que ya leíste en esta conversación salvo que hayan cambiado.
+7. **Nunca descartes cambios** (`git checkout --`, `git restore`, `Remove-Item`) sin escribirlo en el reporte.
+8. **Push solo a `master`** (Vercel despliega desde `master`). No toques `main` ni subas ramas que el prompt no pida.

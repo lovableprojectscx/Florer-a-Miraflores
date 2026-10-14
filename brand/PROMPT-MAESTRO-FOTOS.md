@@ -71,35 +71,47 @@ Formato de salida: imagen cuadrada 1:1, arreglo centrado con aire alrededor.
 
 ---
 
-## PARTE C — Biblioteca de fondos (elige uno, on-brand)
+## PARTE C — Biblioteca de fondos
 
-Todos van con la línea _"premium, femenino, elegante"_. Los primeros dos son los más seguros para catálogo.
+El secreto para que se vea caro (como Lima Floral) NO es un fondo liso: es una **escena de boutique con el fondo desenfocado** (bokeh) y el arreglo nítido adelante. Por eso casi todos estos llevan **poca profundidad de campo**.
 
-1. **Estudio marfil minimalista** _(recomendado para catálogo)_
-   `un fondo liso color marfil / blanco cálido, superficie del mismo tono, estilo estudio limpio y minimalista`
+> 💡 Para cualquier fondo con escena, agrega siempre al prompt: *"profundidad de campo baja: arreglo totalmente nítido en primer plano, fondo suavemente desenfocado (bokeh). El fondo NO debe tener flores sueltas reconocibles que se confundan con el producto."*
 
-2. **Rosa empolvado suave** _(match con la identidad actual del sitio)_
-   `un fondo degradado en rosa empolvado muy suave (#C4848A desaturado) con superficie clara, luz cálida`
+### Fondos tipo AMBIENTE (con bokeh — los que se ven premium) ⭐
 
-3. **Champagne / crema con textura de tela** _(match con la paleta de la propuesta original)_
-   `un fondo color champagne cremoso con una tela de lino sutilmente texturizada, elegante y cálido`
+1. **Boutique de lujo desenfocada** _(el look Lima Floral — recomendado)_
+   `una elegante boutique floral de fondo totalmente desenfocado: floreros claros, luz cálida y pared con paneles en tonos crema y rosa suave, todo fuera de foco (bokeh). El arreglo nítido en primer plano sobre una superficie de mármol blanco. Poca profundidad de campo.`
 
-4. **Mármol claro premium**
-   `una superficie de mármol blanco con vetas grises muy suaves y un fondo claro difuminado`
+2. **Mármol con ventana luminosa detrás**
+   `superficie de mármol blanco nítida en primer plano y, detrás, una ventana amplia con luz natural difusa y una sala clara desenfocada. Bokeh suave, aire luminoso y sofisticado.`
 
-5. **Seda drapeada beige**
-   `un fondo de seda beige drapeada con pliegues suaves, iluminación cálida de boutique`
+3. **Atelier floral cálido**
+   `un rincón de taller floral de alta gama al fondo (estantería con jarrones y flores fuera de foco, tonos tierra y crema), desenfocado; el arreglo nítido adelante sobre mesa de piedra clara. Luz cálida de boutique.`
 
-6. **Madera clara + pared neutra**
-   `una mesa de madera clara natural frente a una pared en tono arena neutro, estilo hogar elegante`
+4. **Seda / cortina drapeada con bokeh dorado**
+   `fondo de seda o cortina clara drapeada, suavemente desenfocada, con destellos dorados (bokeh). Superficie elegante en primer plano. Ambiente romántico y premium.`
 
-7. **Editorial oscuro (para arreglos claros / premium)**
-   `un fondo carbón profundo y elegante con luz focal suave sobre el arreglo, estilo editorial de lujo`
+5. **Jardín / terraza suave** _(ideal primaverales, girasoles, tulipanes)_
+   `al fondo un jardín o terraza elegante muy desenfocado, con verde y luz natural cálida en bokeh; el arreglo nítido sobre una mesa clara. Fresco y luminoso.`
 
-8. **Escena de fecha especial** _(para campañas: San Valentín, Día de la Madre)_
-   `un fondo cálido con bokeh dorado suave desenfocado, ambiente romántico y sofisticado, sin objetos definidos`
+6. **Editorial oscuro con haz de luz** _(para arreglos claros / premium)_
+   `fondo carbón profundo y elegante, desenfocado, con un haz de luz focal suave sobre el arreglo. Dramático, de lujo, estilo revista.`
 
-> Para **defunción/coronas**: usa el fondo 1 o 4 (marfil o mármol), luz sobria, nada romántico.
+### Fondos LISOS (base, para máxima consistencia de catálogo)
+
+7. **Estudio marfil minimalista** `fondo liso marfil / blanco cálido, superficie del mismo tono, estudio limpio.`
+8. **Rosa empolvado suave** `fondo degradado rosa empolvado muy suave (#C4848A desaturado), superficie clara, luz cálida.`
+9. **Mármol claro premium** `superficie de mármol blanco con vetas grises muy suaves y fondo claro difuminado.`
+
+> Para **defunción/coronas**: usa 7 o 9 (marfil o mármol), luz sobria, sin bokeh romántico.
+
+### Cómo variar SIN perder coherencia (clave)
+
+No uses 8 fondos distintos al azar (se ve desordenado). La fórmula pro:
+
+- Elige **UNA escena base** para casi todo el catálogo (recomiendo la #1, boutique desenfocada). Da el look caro y uniforme de Lima Floral.
+- Permite **1–2 variantes** por tipo de producto: premium/cajas → #1 o #6; clásicos → #2 o #9; primaverales → #5; fechas especiales → #4.
+- Mantén siempre la **misma temperatura de luz** (cálida) y el **mismo encuadre**. Así cada foto respira distinto pero la colección se ve de una sola marca.
 
 ---
 
