@@ -224,3 +224,43 @@ Mediante consulta MCP a `pg_constraint`:
 
 - [`docs/sql/verificar-estado-pedidos.sql`](./sql/verificar-estado-pedidos.sql): Consulta de sólo lectura (`SELECT`) de constraints, estados agrupados y políticas RLS activas en `pedidos`.
 - [`docs/sql/006-estado-en-preparacion.sql`](./sql/006-estado-en-preparacion.sql): Script idempotente con guarda y rollback que formaliza el `CHECK (estado IN ('pendiente', 'en_preparacion', 'en_camino', 'entregado', 'pagado', 'cancelado'))`. Queda preparado para su aplicación únicamente si Jack y el revisor deciden restringirlo a nivel DDL.
+
+---
+
+## 10. Testimonios y Reseñas (Fase 07)
+
+### 10.1. Tabla `public.testimonios`
+
+Creada mediante [`docs/sql/007-testimonios.sql`](./sql/007-testimonios.sql) para almacenar reseñas reales elegidas y copiadas a mano desde Google, WhatsApp, Facebook o Directo.
+
+| Columna | Tipo | Nulo | Default / Constraint | Descripción |
+| :--- | :--- | :---: | :--- | :--- |
+| `id` | `uuid` | NO | `gen_random_uuid()` PK | Identificador único |
+| `nombre` | `text` | NO | — | Nombre como figura en la reseña original (ej. "María P.") |
+| `texto` | `text` | NO | — | Texto íntegro de la reseña, copiado tal cual |
+| `estrellas` | `integer` | NO | `CHECK (estrellas BETWEEN 1 AND 5)` | Calificación de 1 a 5 estrellas |
+| `fecha` | `date` | SÍ | `null` | Fecha original de publicación de la reseña |
+| `fuente` | `text` | NO | `'google'`, `CHECK in ('google','whatsapp','facebook','directo')` | Plataforma de procedencia |
+| `enlace_original` | `text` | SÍ | `null` | Enlace opcional directo a la reseña |
+| `imagen_url` | `text` | SÍ | `null` | Foto opcional del arreglo entregado en Storage |
+| `destacado` | `boolean` | NO | `false` | Bandera para priorizar en listados y carrusel Home |
+| `orden` | `integer` | NO | `0` | Posición ordinal para ordenamiento manual |
+| `activo` | `boolean` | NO | `true` | Visibilidad en catálogo público |
+| `created_at` | `timestamptz` | NO | `now()` | Fecha y hora de creación del registro |
+
+### 10.2. Políticas RLS en `public.testimonios`
+
+- `Public Read testimonios`: `FOR SELECT TO public USING (activo = true OR is_admin())` (el público sólo ve testimonios activos; administradores ven todos).
+- `Admin Write testimonios`: `FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin())` (únicamente administradores registrados en `public.admins` pueden insertar, modificar o eliminar).
+
+### 10.3. Extensiones en `public.config`
+
+- `google_reviews_url text`: Enlace al perfil de Google Maps/Business.
+- `google_rating numeric(2,1)`: Promedio real de puntuación en Google (ej. 4.9).
+- `google_reviews_count integer`: Conteo total de reseñas en Google (ej. 120).
+- `mostrar_resenas_home boolean DEFAULT false`: Conmutador para mostrar la franja en la portada (requiere adicionalmente >= 3 activas).
+
+### 10.4. Bucket de Supabase Storage `testimonios`
+
+- Bucket público con políticas de subida, actualización y eliminación restringidas a `is_admin()`. Las miniaturas optimizadas se gestionan con `subirImagenConMiniaturas`.
+

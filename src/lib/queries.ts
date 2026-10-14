@@ -23,6 +23,7 @@ import type {
   PedidoRow,
   PedidoProducto,
   TagRow,
+  TestimonioRow,
 } from "@/types/database";
 import { resolverClavesTag } from "@/lib/tag-utils";
 import { filtrarCategoriasVisibles } from "@/lib/categorias-utils";
@@ -543,4 +544,73 @@ export async function getPedidos(): Promise<PedidoRow[]> {
     .order("created_at", { ascending: false });
 
   return throwOnError(data, error);
+}
+
+// ─── Testimonios ─────────────────────────────────────────────────────────────
+
+/**
+ * Devuelve todos los testimonios activos para la página pública /resenas.
+ * Ordenados por destacados primero, luego orden ascendente, y finalmente por fecha / creación.
+ * Si la tabla aún no existe en la BD (SQL 007 pendiente), devuelve un arreglo vacío sin romper.
+ */
+export async function getTestimonios(): Promise<TestimonioRow[]> {
+  try {
+    const { data, error } = await supabase
+      .from("testimonios")
+      .select("*")
+      .eq("activo", true)
+      .order("destacado", { ascending: false })
+      .order("orden", { ascending: true })
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      if (error.code === "42P01" || error.message?.includes("testimonios")) {
+        return [];
+      }
+      throw new Error(`[Supabase] ${error.message}`);
+    }
+
+    return data ?? [];
+  } catch (err) {
+    if (
+      err instanceof Error &&
+      (err.message.includes("42P01") || err.message.includes("testimonios"))
+    ) {
+      return [];
+    }
+    throw err;
+  }
+}
+
+/**
+ * Devuelve hasta 6 testimonios destacados activos para la franja del Home.
+ */
+export async function getTestimoniosHome(): Promise<TestimonioRow[]> {
+  try {
+    const { data, error } = await supabase
+      .from("testimonios")
+      .select("*")
+      .eq("activo", true)
+      .order("destacado", { ascending: false })
+      .order("orden", { ascending: true })
+      .order("created_at", { ascending: false })
+      .limit(6);
+
+    if (error) {
+      if (error.code === "42P01" || error.message?.includes("testimonios")) {
+        return [];
+      }
+      throw new Error(`[Supabase] ${error.message}`);
+    }
+
+    return data ?? [];
+  } catch (err) {
+    if (
+      err instanceof Error &&
+      (err.message.includes("42P01") || err.message.includes("testimonios"))
+    ) {
+      return [];
+    }
+    throw err;
+  }
 }

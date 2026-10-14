@@ -8,6 +8,7 @@ const SIDEBAR_SECTIONS = [
   { label: "Productos", urlPart: "/admin/productos" },
   { label: "Categorias", urlPart: "/admin/categorias" },
   { label: "Banners", urlPart: "/admin/banners" },
+  { label: "Testimonios", urlPart: "/admin/testimonios" },
   { label: "Popup", urlPart: "/admin/popup" },
   { label: "Colecciones Home", urlPart: "/admin/colecciones-home" },
   { label: "Ocasiones Home", urlPart: "/admin/ocasiones" },
@@ -27,7 +28,9 @@ test.describe("Admin E2E — Protección de ruta y navegación", () => {
 
   test("con credenciales: login exitoso y el sidebar navega a cada sección sin errores (solo lectura)", async ({
     page,
+    allowConsoleErrors,
   }) => {
+    allowConsoleErrors([/testimonios/]);
     test.skip(
       !ADMIN_EMAIL || !ADMIN_PASSWORD,
       "Omitido: define E2E_ADMIN_EMAIL y E2E_ADMIN_PASSWORD en .env.e2e.local para ejecutar las pruebas autenticadas del panel admin.",

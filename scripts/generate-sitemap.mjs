@@ -31,6 +31,7 @@ async function main() {
   const urls = [
     { loc: `${BASE_URL}/`, priority: "1.0", changefreq: "daily" },
     { loc: `${BASE_URL}/catalogo`, priority: "0.9", changefreq: "daily" },
+    { loc: `${BASE_URL}/resenas`, priority: "0.8", changefreq: "weekly" },
     { loc: `${BASE_URL}/nosotros`, priority: "0.7", changefreq: "monthly" },
     { loc: `${BASE_URL}/libro-de-reclamaciones`, priority: "0.3", changefreq: "yearly" },
   ];

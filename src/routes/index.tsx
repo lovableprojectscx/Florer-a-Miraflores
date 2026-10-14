@@ -9,6 +9,7 @@ import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { PopupModal } from "@/components/PopupModal";
+import { HomeTestimonios } from "@/components/HomeTestimonios";
 import type { TagSeccion } from "@/components/Novedades";
 
 import {
@@ -19,18 +20,20 @@ import {
   getPopup,
   getTags,
   getProductosPorTag,
+  getTestimoniosHome,
 } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     // Fetch paralelo — todos los datos del home en una sola ronda
-    const [categorias, config, colecciones, banners, popup, tags] = await Promise.all([
+    const [categorias, config, colecciones, banners, popup, tags, testimonios] = await Promise.all([
       getCategorias(),
       getConfig().catch(() => null),
       getColecciones().catch(() => []),
       getBanners().catch(() => []),
       getPopup().catch(() => null),
       getTags().catch(() => []),
+      getTestimoniosHome().catch(() => []),
     ]);
 
     // Para cada tag activo, cargar sus productos en paralelo para el slider
@@ -44,7 +47,7 @@ export const Route = createFileRoute("/")({
       });
     }
 
-    return { categorias, config, colecciones, banners, popup, tagSecciones };
+    return { categorias, config, colecciones, banners, popup, tagSecciones, testimonios };
   },
 
   head: () => ({
@@ -68,7 +71,8 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { categorias, config, colecciones, banners, popup, tagSecciones } = Route.useLoaderData();
+  const { categorias, config, colecciones, banners, popup, tagSecciones, testimonios } =
+    Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,6 +82,7 @@ function HomePage() {
         <Hero banners={banners} />
         <Novedades tagSecciones={tagSecciones} />
         <CategoryShowcase colecciones={colecciones} />
+        <HomeTestimonios testimonios={testimonios} config={config} />
         <DeliveryZones />
         <Faq />
       </main>
