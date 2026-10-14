@@ -62,6 +62,30 @@ const FALLBACK_PRODUCTOS: ProductoRow[] = [
     orden: 2,
     created_at: "",
   },
+  {
+    id: "luna-blanca",
+    nombre: "Luna Blanca",
+    descripcion: "Lirios y rosas blancas en florero de vidrio",
+    precio: 195,
+    imagenes: [aurora],
+    tags: ["novedad"],
+    categoria_id: null,
+    activo: true,
+    orden: 3,
+    created_at: "",
+  },
+  {
+    id: "sol-radiante",
+    nombre: "Sol Radiante",
+    descripcion: "Girasoles frescos y follaje silvestre",
+    precio: 175,
+    imagenes: [velvet],
+    tags: ["novedad"],
+    categoria_id: null,
+    activo: true,
+    orden: 4,
+    created_at: "",
+  },
 ];
 
 export interface TagSeccion {
@@ -130,7 +154,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
   const srcSet = imagenSrcSet(imgSrc);
 
   return (
-    <article className="group flex-shrink-0 w-[calc((100vw-32px)/2.2)] sm:w-[calc((100vw-32px)/2.6)] md:w-[calc((100vw-32px)/3.2)] lg:w-[calc((100vw-32px)/4.2)] 2xl:w-[calc((100vw-32px)/5.2)] max-w-[380px] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-lg border border-[#E8DDD0]/50">
+    <article className="group flex-shrink-0 w-[calc((100vw-32px)/2.2)] sm:w-[calc((100vw-32px)/2.6)] md:w-[calc((100vw-32px)/3.2)] lg:w-[calc((100vw-32px)/4.2)] select-none flex flex-col justify-between bg-[#F7F7F7] overflow-hidden transition-all duration-300 hover:shadow-md rounded-lg border border-[#E8DDD0]/50">
       <Link
         to="/producto/$id"
         params={{ id: `${slugify(producto.nombre)}-${producto.id}` }}
@@ -142,7 +166,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
             url={imgSrc}
             fallbackUrl={imgSrc}
             anchoMiniatura={480}
-            sizes="(min-width: 1536px) 365px, (min-width: 1024px) 340px, (min-width: 768px) 32vw, 45vw"
+            sizes="(min-width: 1920px) 450px, (min-width: 1440px) 335px, (min-width: 1024px) 24vw, (min-width: 768px) 31vw, 45vw"
             alt={producto.nombre}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
@@ -263,16 +287,18 @@ function TagSection({ tag, productos }: TagSeccion) {
         </div>
       </div>
 
-      {/* Slider borde a borde con margen derecho seguro para no solapar el botón flotante */}
+      {/* Slider borde a borde con espaciador final para no solapar el botón flotante */}
       <div className="w-full">
         <div
           ref={sliderRef}
           onScroll={updateCurrentIndex}
-          className="flex overflow-x-auto gap-2 pb-3.5 snap-x snap-mandatory scrollbar-none w-full px-4 pr-16 sm:pr-6"
+          className="flex overflow-x-auto gap-2 pb-3.5 snap-x snap-mandatory scrollbar-none w-full px-4"
         >
           {productos.map((p) => (
             <ProductCard key={p.id} producto={p} />
           ))}
+          {/* Espaciador final para margen seguro de WhatsApp al final del scroll */}
+          <div className="flex-shrink-0 w-12 sm:w-2" aria-hidden="true" />
         </div>
       </div>
 

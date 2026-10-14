@@ -131,7 +131,7 @@ function CheckoutPage() {
           <form
             onSubmit={handleSubmit(onSubmit)}
             noValidate
-            className="w-full lg:w-[60%] space-y-10"
+            className="w-full lg:w-[60%] space-y-10 pb-12 sm:pb-0"
           >
             {/* ── Datos del cliente ── */}
             <fieldset>

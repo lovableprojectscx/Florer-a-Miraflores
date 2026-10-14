@@ -12,7 +12,7 @@ async function run() {
       deviceScaleFactor: 2,
     });
     await page.addInitScript(() => sessionStorage.setItem("fm_popup_seen", "1"));
-    
+
     // Captura de catálogo con tarjetas alineadas
     await page.goto(`${BASE_URL}/catalogo`, { waitUntil: "networkidle" });
     await page.waitForTimeout(1500);

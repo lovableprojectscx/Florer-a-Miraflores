@@ -2,9 +2,10 @@ import type { ConfigRow } from "@/types/database";
 
 interface Props {
   config?: ConfigRow | null;
+  className?: string;
 }
 
-export function WhatsappFab({ config }: Props) {
+export function WhatsappFab({ config, className }: Props) {
   const whatsapp = config?.whatsapp ?? "+51 999 600 482";
   return (
     <a
@@ -12,7 +13,7 @@ export function WhatsappFab({ config }: Props) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chatea por WhatsApp con Florería Miraflores"
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 group select-none"
+      className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 group select-none ${className ?? ""}`}
     >
       {/* Speech bubble pill tag */}
       <div className="hidden sm:flex items-center gap-1.5 bg-white text-[#2C2420] text-xs font-body py-2 px-4 rounded-full shadow-lg border border-[#E8DDD0] transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">

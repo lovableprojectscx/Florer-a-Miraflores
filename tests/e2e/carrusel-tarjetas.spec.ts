@@ -5,7 +5,7 @@ test.describe("Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a bor
     await page.addInitScript(() => sessionStorage.setItem("fm_popup_seen", "1"));
   });
 
-  test("Escritorio 1440: primera tarjeta a <=16px del borde izquierdo y foto cuadrada 1:1 (tolerancia 2px)", async ({
+  test("Escritorio 1440: primera tarjeta a <=16px del borde izquierdo, foto cuadrada 1:1 y se ven 4 completas", async ({
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop", "Solo desktop");
@@ -16,7 +16,11 @@ test.describe("Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a bor
     const novedades = page.locator("#novedades").first();
     await expect(novedades).toBeVisible();
 
-    const firstCard = novedades.locator("article").first();
+    const cards = novedades.locator("article");
+    const count = await cards.count();
+    expect(count).toBeGreaterThanOrEqual(4);
+
+    const firstCard = cards.first();
     await expect(firstCard).toBeVisible();
 
     // Primera tarjeta empieza a <= 16px del borde izquierdo
@@ -31,6 +35,30 @@ test.describe("Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a bor
     expect(imgBox).not.toBeNull();
     const diff = Math.abs(imgBox!.width - imgBox!.height);
     expect(diff).toBeLessThanOrEqual(2);
+
+    // Se ven 4 tarjetas completas dentro del viewport (1440px)
+    const card1 = await cards.nth(0).boundingBox();
+    const card2 = await cards.nth(1).boundingBox();
+    const card3 = await cards.nth(2).boundingBox();
+    const card4 = await cards.nth(3).boundingBox();
+
+    expect(card1).not.toBeNull();
+    expect(card2).not.toBeNull();
+    expect(card3).not.toBeNull();
+    expect(card4).not.toBeNull();
+
+    expect(card1!.x + card1!.width).toBeLessThanOrEqual(1440);
+    expect(card2!.x + card2!.width).toBeLessThanOrEqual(1440);
+    expect(card3!.x + card3!.width).toBeLessThanOrEqual(1440);
+    expect(card4!.x + card4!.width).toBeLessThanOrEqual(1440);
+
+    // Si hay 5 o más tarjetas, la 5ª empieza dentro del viewport pero se corta (~4.2 visibles)
+    if (count >= 5) {
+      const card5 = await cards.nth(4).boundingBox();
+      expect(card5).not.toBeNull();
+      expect(card5!.x).toBeLessThan(1440);
+      expect(card5!.x + card5!.width).toBeGreaterThan(1440);
+    }
 
     // Paginación (1/N) y botón "Ver más productos"
     const contador = novedades.getByText(/\d+\s*\/\s*\d+/).first();
@@ -47,7 +75,7 @@ test.describe("Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a bor
     expect(await verMasBtn.getAttribute("href")).toContain("/tag/");
   });
 
-  test("Escritorio 1920: primera tarjeta a <=16px, foto 1:1 y ancho aproximado ~360px", async ({
+  test("Escritorio 1920: primera tarjeta a <=16px, foto 1:1, ancho 430–470px y se ven 4 completas", async ({
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop", "Solo desktop");
@@ -58,7 +86,11 @@ test.describe("Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a bor
     const novedades = page.locator("#novedades").first();
     await expect(novedades).toBeVisible();
 
-    const firstCard = novedades.locator("article").first();
+    const cards = novedades.locator("article");
+    const count = await cards.count();
+    expect(count).toBeGreaterThanOrEqual(4);
+
+    const firstCard = cards.first();
     await expect(firstCard).toBeVisible();
 
     // Primera tarjeta a <= 16px
@@ -74,9 +106,33 @@ test.describe("Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a bor
     const diff = Math.abs(imgBox!.width - imgBox!.height);
     expect(diff).toBeLessThanOrEqual(2);
 
-    // Tarjeta ~ 360px (entre 340 y 380px)
-    expect(cardBox!.width).toBeGreaterThanOrEqual(340);
-    expect(cardBox!.width).toBeLessThanOrEqual(380);
+    // Tarjeta mide 430–470px (~450px)
+    expect(cardBox!.width).toBeGreaterThanOrEqual(430);
+    expect(cardBox!.width).toBeLessThanOrEqual(470);
+
+    // Se ven 4 tarjetas completas dentro del viewport (1920px)
+    const card1 = await cards.nth(0).boundingBox();
+    const card2 = await cards.nth(1).boundingBox();
+    const card3 = await cards.nth(2).boundingBox();
+    const card4 = await cards.nth(3).boundingBox();
+
+    expect(card1).not.toBeNull();
+    expect(card2).not.toBeNull();
+    expect(card3).not.toBeNull();
+    expect(card4).not.toBeNull();
+
+    expect(card1!.x + card1!.width).toBeLessThanOrEqual(1920);
+    expect(card2!.x + card2!.width).toBeLessThanOrEqual(1920);
+    expect(card3!.x + card3!.width).toBeLessThanOrEqual(1920);
+    expect(card4!.x + card4!.width).toBeLessThanOrEqual(1920);
+
+    // Si hay 5 o más tarjetas, la 5ª empieza dentro del viewport pero se corta (~4.2 visibles)
+    if (count >= 5) {
+      const card5 = await cards.nth(4).boundingBox();
+      expect(card5).not.toBeNull();
+      expect(card5!.x).toBeLessThan(1920);
+      expect(card5!.x + card5!.width).toBeGreaterThan(1920);
+    }
   });
 
   test("Celular 390: se ven 2 tarjetas completas y parte de la tercera, foto 1:1", async ({

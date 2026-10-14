@@ -56,7 +56,12 @@ describe("checkoutSchema", () => {
   });
 
   it("rechaza la fecha de hoy (mínimo mañana)", () => {
-    const hoy = new Date().toISOString().split("T")[0];
+    const hoy = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Lima",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date());
     const res = checkoutSchema.safeParse({
       ...baseValidData(),
       fecha_entrega: hoy,

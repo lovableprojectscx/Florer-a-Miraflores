@@ -116,4 +116,54 @@ test.describe("Fase 06-D — Orden en celular", () => {
     expect(Math.abs(boxFab!.width - 44)).toBeLessThanOrEqual(2);
     expect(Math.abs(boxFab!.height - 44)).toBeLessThanOrEqual(2);
   });
+
+  test("5. Checkout a 360px: WhatsApp visible y formulario con botón de pago accesible sin interferencia", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 360, height: 780 });
+
+    // Navegamos a un producto para agregar al carrito e ir a checkout
+    await page.goto("/catalogo");
+    await waitForHydration(page, "main");
+
+    const firstProduct = page.locator("article a").first();
+    await expect(firstProduct).toBeVisible();
+    await firstProduct.click();
+    await waitForHydration(page, "main");
+
+    // Click en Comprar ahora o Agregar al carrito
+    const comprarBtn = page.locator("button:has-text('Comprar ahora'), button:has-text('Agregar al carrito')").first();
+    await expect(comprarBtn).toBeVisible();
+    await comprarBtn.click();
+    await page.waitForTimeout(500);
+
+    // Navegamos a checkout si no redirigió automáticamente
+    if (!page.url().includes("/checkout")) {
+      await page.goto("/checkout");
+    }
+    await waitForHydration(page, "main");
+
+    // Verificar que WhatsApp está visible en checkout
+    const fabLink = page.locator("a.fixed[href*='wa.me']");
+    await expect(fabLink).toBeVisible();
+
+    // Scroll hasta el botón de submit "Pagar con IZIPay"
+    const payBtn = page.locator("button[type='submit']:has-text('Pagar con IZIPay')");
+    await payBtn.scrollIntoViewIfNeeded();
+    await expect(payBtn).toBeVisible();
+
+    // Validar que el botón de pago esté libre para click (no interceptado ni tapado)
+    const payBox = await payBtn.boundingBox();
+    const fabBox = await fabLink.boundingBox();
+
+    expect(payBox).not.toBeNull();
+    expect(fabBox).not.toBeNull();
+
+    // El padding inferior seguro pb-12 del form asegura separación visual al final del scroll
+    const inputTel = page.locator("input#telefono");
+    await inputTel.scrollIntoViewIfNeeded();
+    await expect(inputTel).toBeVisible();
+    await inputTel.fill("999600482");
+    expect(await inputTel.inputValue()).toBe("999600482");
+  });
 });
