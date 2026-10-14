@@ -95,6 +95,14 @@ export function Footer({ config }: Props) {
                   Nuestro Atelier
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/resenas"
+                  className="hover:text-[#2C2420] hover:translate-x-1 inline-block transition-all duration-200"
+                >
+                  Reseñas
+                </Link>
+              </li>
               {[
                 { label: "Zonas de Delivery y Cobertura", href: "/#delivery" },
                 { label: "Preguntas Frecuentes", href: "/#faq" },

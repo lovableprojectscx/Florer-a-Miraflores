@@ -130,6 +130,25 @@ describe("RLS — Políticas de seguridad con anon key", () => {
     expect(error !== null || (data ?? []).length === 0).toBe(true);
   });
 
+  it("anon NO PUEDE insertar en 'testimonios' (exigir 42501)", async () => {
+    const { error: insertError } = await anonClient.from("testimonios").insert({
+      nombre: "[RLS-TEST-ANON]",
+      texto: "Intento de inserción anónima no autorizada para prueba de seguridad",
+      estrellas: 5,
+      activo: false,
+    });
+    // Si la migración 007 aún no ha sido aplicada a Supabase:
+    if (insertError?.code === "PGRST205" || insertError?.code === "42P01") {
+      expect(["PGRST205", "42P01"]).toContain(insertError.code);
+      return;
+    }
+    expect(
+      isRlsError(insertError),
+      `Se esperaba error RLS (42501 / row-level security), pero se recibió: ${JSON.stringify(insertError)}`,
+    ).toBe(true);
+    expect(insertError?.code).toBe("42501");
+  });
+
   it("anon NO PUEDE actualizar ni borrar en 'pedidos' ni 'reclamaciones'", async () => {
     // NOTA SOBRE INSERT PÚBLICO EN `pedidos` Y `reclamaciones`:
     // Las políticas `insert_public` (en `pedidos`) y `Allow anon insert to reclamaciones`

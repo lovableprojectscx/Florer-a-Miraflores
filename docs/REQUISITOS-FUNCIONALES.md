@@ -188,6 +188,16 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 
 ---
 
+## 10.1. Reseñas y Testimonios Reales (Fase 07)
+
+| ID      | Requisito                                                                                                  | Prioridad | Estado | Fuente                          |
+| ------- | ---------------------------------------------------------------------------------------------------------- | --------- | ------ | ------------------------------- |
+| RF-100  | Página pública `/resenas` con grilla de tarjetas, estrellas, texto expandible, nombre, fecha y foto opcional | Alta      | ✅     | Prompt 07 (Decisión Jack)       |
+| RF-101  | Resumen de Google («★ 4,9 · 120 reseñas») y botón "Ver todas en Google" basado en datos reales de `config`   | Alta      | ✅     | Prompt 07 (Decisión Jack)       |
+| RF-102  | Franja carrusel horizontal en Home debajo de Colecciones, con regla: `mostrar_resenas_home = true` y >= 3 activas | Media     | ✅     | Prompt 07 (Decisión Jack)       |
+| RF-103  | Enlace a `/resenas` en Footer y en sitemap.xml (sin JSON-LD artificial según directrices de Google)       | Media     | ✅     | Prompt 07 (SEO)                 |
+| RF-104  | Módulo admin `/admin/testimonios`: CRUD, selector visual 1-5 estrellas, fotos WebP, aviso de no inventar y fallback SQL 007 | Alta      | ✅     | Prompt 07 (Panel Administrativo)|
+
 ## 11. Requisitos No Funcionales (RNF)
 
 | ID     | Requisito                                                                                         | Prioridad | Estado | Fuente                     |

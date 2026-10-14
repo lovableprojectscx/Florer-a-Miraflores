@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Menu,
   X,
+  Star,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import logoImg from "@/assets/logo-miraflores.webp";
@@ -39,6 +40,7 @@ const NAV_ITEMS = [
   { to: "/admin/productos", label: "Productos", icon: Package },
   { to: "/admin/categorias", label: "Categorias", icon: FolderTree },
   { to: "/admin/banners", label: "Banners", icon: Image },
+  { to: "/admin/testimonios", label: "Testimonios", icon: Star },
   { to: "/admin/popup", label: "Popup", icon: Megaphone },
   { to: "/admin/colecciones-home", label: "Colecciones Home", icon: LayoutGrid },
   { to: "/admin/ocasiones", label: "Ocasiones Home", icon: Heart },

@@ -1,0 +1,137 @@
+﻿
+Running 86 tests using 1 worker
+
+  ok  1 [mobile] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:41:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ filtro 'En preparaci├│n' existe, permite filtrar y el modal de detalle muestra los 6 estados (solo lectura) (5.5s)
+  -   2 [mobile] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:102:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ cambiar estado de pedido real (solo bajo autorizaci├│n con E2E_ALLOW_WRITES=1 y pedido [E2E])
+  ok  3 [mobile] ÔÇ║ tests\e2e\admin.spec.ts:23:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ /admin sin sesi├│n redirige autom├íticamente al login (/admin-login) (848ms)
+  ok  4 [mobile] ÔÇ║ tests\e2e\admin.spec.ts:29:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ con credenciales: login exitoso y el sidebar navega a cada secci├│n sin errores (solo lectura) (11.2s)
+  ok  5 [mobile] ÔÇ║ tests\e2e\carrito.spec.ts:9:3 ÔÇ║ Carrito E2E ÔÇö Drawer y operaciones ÔÇ║ agregar producto abre el drawer, actualiza contador del header, +/- cambia subtotal y eliminar vac├¡a (2.3s)
+  -   6 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:8:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1440: primera tarjeta a <=16px del borde izquierdo, foto cuadrada 1:1 y se ven 4 completas
+  -   7 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:78:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1920: primera tarjeta a <=16px, foto 1:1, ancho 430ÔÇô470px y se ven 4 completas
+  -   8 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:138:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Celular 390: se ven 2 tarjetas completas y parte de la tercera, foto 1:1
+  -   9 [mobile] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:183:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Cat├ílogo: fotos de producto cuadradas 1:1 en ProductGrid
+  ok 10 [mobile] ÔÇ║ tests\e2e\catalogo-paginacion.spec.ts:4:3 ÔÇ║ Cat├ílogo E2E ÔÇö Paginaci├│n 'Ver m├ís' y layout de tarjetas ÔÇ║ muestra m├íximo 24 tarjetas al inicio, 'Ver m├ís' carga lotes hasta el total y desaparece, y cambiar filtro reinicia a 24 (4.6s)
+  ok 11 [mobile] ÔÇ║ tests\e2e\catalogo-paginacion.spec.ts:55:3 ÔÇ║ Cat├ílogo E2E ÔÇö Paginaci├│n 'Ver m├ís' y layout de tarjetas ÔÇ║ respeta columnas por viewport (mobile: 2 cols >=165px; desktop 1440: 4 cols) y sin scroll horizontal (1.6s)
+  ok 12 [mobile] ÔÇ║ tests\e2e\catalogo-paginacion.spec.ts:99:3 ÔÇ║ Cat├ílogo E2E ÔÇö Paginaci├│n 'Ver m├ís' y layout de tarjetas ÔÇ║ al hacer scroll hasta el final del primer lote, todas las <img> de las 24 tarjetas cargan con naturalWidth > 0 (2.9s)
+  ok 13 [mobile] ÔÇ║ tests\e2e\catalogo.spec.ts:12:3 ÔÇ║ Cat├ílogo E2E ÔÇö Filtros y ordenamiento ÔÇ║ muestra productos, filtra por categor├¡a cambiando el contador y ordena por precio real (1.6s)
+  ok 14 [mobile] ÔÇ║ tests\e2e\categorias.spec.ts:4:3 ÔÇ║ Categor├¡as p├║blicas ÔÇö visibilidad y navegaci├│n sin categor├¡as vac├¡as ÔÇ║ Todas las categor├¡as y subcategor├¡as visibles en el men├║ abren sin 404, tienen >= 1 producto y ninguna muestra 'pr├│ximamente' (13.7s)
+  ok 15 [mobile] ÔÇ║ tests\e2e\categorias.spec.ts:80:3 ÔÇ║ Categor├¡as p├║blicas ÔÇö visibilidad y navegaci├│n sin categor├¡as vac├¡as ÔÇ║ /categoria/ocasion/nacimientos no da 404 (funciona antes de SQL 003 y redirige a /categoria/nacimientos despu├®s) (1.9s)
+  ok 16 [mobile] ÔÇ║ tests\e2e\categorias.spec.ts:94:3 ÔÇ║ Categor├¡as p├║blicas ÔÇö visibilidad y navegaci├│n sin categor├¡as vac├¡as ÔÇ║ Entrar directo por URL a una categor├¡a vac├¡a (/categoria/defuncion) no da 404, muestra 'pr├│ximamente' y oculta tarjetas de subcategor├¡as vac├¡as (1.5s)
+  ok 17 [mobile] ÔÇ║ tests\e2e\checkout.spec.ts:10:3 ÔÇ║ Checkout E2E ÔÇö Flujo completo con interceptaci├│n segura ÔÇ║ carrito vac├¡o redirige autom├íticamente a / (1.4s)
+  ok 18 [mobile] ÔÇ║ tests\e2e\checkout.spec.ts:15:3 ÔÇ║ Checkout E2E ÔÇö Flujo completo con interceptaci├│n segura ÔÇ║ muestra errores inline al enviar vac├¡o, suma delivery al elegir distrito y completa pedido interceptado hacia /confirmacion (3.5s)
+  ok 19 [mobile] ÔÇ║ tests\e2e\checkout.spec.ts:113:3 ÔÇ║ Checkout E2E ÔÇö Flujo completo con interceptaci├│n segura ÔÇ║ con el reloj del navegador fijado a las 20:00 en Lima, el min del input es ma├▒ana y elegir hoy muestra error (3.5s)
+  ok 20 [mobile] ÔÇ║ tests\e2e\home-acciones.spec.ts:9:3 ÔÇ║ Home E2E ÔÇö Acciones r├ípidas en tarjetas (RF-017 / RF-018) ÔÇ║ RF-017: Bot├│n 'Agregar al carrito' agrega producto y abre el drawer sin navegar (2.7s)
+  ok 21 [mobile] ÔÇ║ tests\e2e\home-acciones.spec.ts:40:3 ÔÇ║ Home E2E ÔÇö Acciones r├ípidas en tarjetas (RF-017 / RF-018) ÔÇ║ RF-018: Bot├│n 'Compartir' copia la URL del producto al portapapeles (2.3s)
+  ok 22 [mobile] ÔÇ║ tests\e2e\orden-movil.spec.ts:8:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 1. Bento de Colecciones a 390px: sin huecos vac├¡os y todas las tarjetas chicas con la misma altura (2.1s)
+  ok 23 [mobile] ÔÇ║ tests\e2e\orden-movil.spec.ts:57:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 3. Nombres de producto en tarjetas: altura reservada de 2 l├¡neas para alineaci├│n (1.4s)
+  ok 24 [mobile] ÔÇ║ tests\e2e\orden-movil.spec.ts:99:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 4. WhatsApp flotante: compacto en m├│vil (44px) y con espacio para no tapar bot├│n compartir (2.1s)
+  ok 25 [mobile] ÔÇ║ tests\e2e\orden-movil.spec.ts:120:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 5. Checkout a 360px: WhatsApp visible y formulario con bot├│n de pago accesible sin interferencia (2.4s)
+  ok 26 [mobile] ÔÇ║ tests\e2e\recorrido-compra.spec.ts:4:3 ÔÇ║ Recorrido Completo de Compra y Auditor├¡a Pre-Lanzamiento ÔÇ║ Flujo E2E completo: Home -> Categor├¡a -> Producto -> Carrito -> Checkout -> Confirmaci├│n (con mock de POST) (5.6s)
+  ok 27 [mobile] ÔÇ║ tests\e2e\recorrido-compra.spec.ts:103:3 ÔÇ║ Recorrido Completo de Compra y Auditor├¡a Pre-Lanzamiento ÔÇ║ Auditor├¡a de desbordamiento horizontal (no overflow) en 360px, 390px y 1440px (9.2s)
+  ok 28 [mobile] ÔÇ║ tests\e2e\recorrido-compra.spec.ts:133:3 ÔÇ║ Recorrido Completo de Compra y Auditor├¡a Pre-Lanzamiento ÔÇ║ Auditor├¡a de enlaces de WhatsApp: FAB y confirmaci├│n formatean enlace v├ílido a wa.me (2.2s)
+  ok 29 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:15:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ P├ígina p├║blica /resenas carga sin errores, con t├¡tulo correcto y sin scroll horizontal (1.3s)
+  ok 30 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:54:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Footer contiene enlace a /resenas y navega correctamente (2.1s)
+node.exe : [WebServer] Error: aborted
+En C:\Program Files\nodejs\npx.ps1: 29 Carácter: 3
++   & $NODE_EXE $NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] Error: aborted:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer]     at abortIncoming (node:_http_server:811:17)
+[WebServer]     at socketOnClose (node:_http_server:805:3)
+[WebServer]     at Socket.emit (node:events:530:35)
+[WebServer]     at TCP.<anonymous> (node:net:346:12)
+[WebServer]     at TCP.callbackTrampoline (node:internal/async_hooks:130:17) {
+[WebServer]   code: 'ECONNRESET'
+[WebServer] }
+[WebServer] Error: aborted
+[WebServer]     at abortIncoming (node:_http_server:811:17)
+[WebServer]     ... 3 lines matching cause stack trace ...
+[WebServer]     at TCP.callbackTrampoline (node:internal/async_hooks:130:17) {
+[WebServer]   cause: Error: aborted
+[WebServer]       at abortIncoming (node:_http_server:811:17)
+[WebServer]       at socketOnClose (node:_http_server:805:3)
+[WebServer]       at Socket.emit (node:events:530:35)
+[WebServer]       at TCP.<anonymous> (node:net:346:12)
+[WebServer]       at TCP.callbackTrampoline (node:internal/async_hooks:130:17) {
+[WebServer]     code: 'ECONNRESET'
+[WebServer]   },
+[WebServer]   status: 500,
+[WebServer]   statusText: undefined,
+[WebServer]   headers: undefined,
+[WebServer]   data: undefined,
+[WebServer]   body: undefined,
+[WebServer]   unhandled: true
+[WebServer] }
+  ok 31 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:62:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Home: la franja de testimonios respeta la regla de visibilidad (2.4s)
+[WebServer] Error: h3 swallowed SSR error: {"status":500,"unhandled":true,"message":"HTTPError"}
+[WebServer]     at normalizeCatastrophicSsrResponse (eval at runInlinedModule (file:///C:/Users/JACK%20FRANKLIN/Desktop
+/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-resenas/node_modules/vite/dist/node/module-runner.js:9
+13:9), <anonymous>:50:73)
+[WebServer]     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[WebServer]     at async Object.fetch (eval at runInlinedModule (file:///C:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20I
+denza/Trabajos-Mayo/Floreria%20miraflores/floreria-resenas/node_modules/vite/dist/node/module-runner.js:913:9), 
+<anonymous>:58:14)
+[WebServer]     at async file:///C:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflore
+s/floreria-resenas/node_modules/@tanstack/start-plugin-core/dist/esm/vite/dev-server-plugin/plugin.js:79:36
+  ok 32 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:79:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin /admin/testimonios: carga panel de gesti├│n y formulario (3.3s)
+  -  33 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:152:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin CRUD: solo con E2E_ALLOW_WRITES=1 crea y elimina '[E2E] testimonio'
+  ok 34 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:8:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Home (/) carga sin errores y tiene <title> correcto (2.4s)
+  ok 35 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:18:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Cat├ílogo (/catalogo) carga sin errores y tiene <title> correcto (1.6s)
+  ok 36 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:30:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Nosotros (/nosotros) carga sin errores y tiene <title> correcto (1.4s)
+  ok 37 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:36:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Libro de Reclamaciones (/libro-de-reclamaciones) carga sin errores y tiene <title> correcto (1.1s)
+  ok 38 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:46:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Categor├¡a real (/categoria/:slug) y Producto real (/producto/:id) extra├¡dos del cat├ílogo cargan con <title> correcto (2.7s)
+  ok 39 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:75:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Ruta inexistente muestra mensaje de no encontrado (1.1s)
+  ok 40 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:5:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Home: Novedades y Categor├¡as configuran URLs de miniaturas y srcSet con thumbs/ (2.4s)
+  ok 41 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:44:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Cat├ílogo: productos cargan miniaturas 480w y srcSet responsive (2.2s)
+  ok 42 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:65:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Demostraci├│n de Fallback (Punto 2): bloqueo 404 en /thumbs/ en Home y Cat├ílogo recupera todas las im├ígenes originales con naturalWidth > 0 (7.8s)
+  ok 43 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:155:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Banner Hero: en desktop 1440 carga original sin /thumbs/, en mobile 390 carga sin errores (Fase 06-C) (2.4s)
+  ok 44 [desktop] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:41:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ filtro 'En preparaci├│n' existe, permite filtrar y el modal de detalle muestra los 6 estados (solo lectura) (2.3s)
+  -  45 [desktop] ÔÇ║ tests\e2e\admin-pedidos.spec.ts:102:3 ÔÇ║ Admin Pedidos E2E ÔÇö Estados y 'En preparaci├│n' ÔÇ║ cambiar estado de pedido real (solo bajo autorizaci├│n con E2E_ALLOW_WRITES=1 y pedido [E2E])
+  ok 46 [desktop] ÔÇ║ tests\e2e\admin.spec.ts:23:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ /admin sin sesi├│n redirige autom├íticamente al login (/admin-login) (851ms)
+  ok 47 [desktop] ÔÇ║ tests\e2e\admin.spec.ts:29:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ con credenciales: login exitoso y el sidebar navega a cada secci├│n sin errores (solo lectura) (2.8s)
+  ok 48 [desktop] ÔÇ║ tests\e2e\carrito.spec.ts:9:3 ÔÇ║ Carrito E2E ÔÇö Drawer y operaciones ÔÇ║ agregar producto abre el drawer, actualiza contador del header, +/- cambia subtotal y eliminar vac├¡a (2.1s)
+  ok 49 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:8:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1440: primera tarjeta a <=16px del borde izquierdo, foto cuadrada 1:1 y se ven 4 completas (3.1s)
+  ok 50 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:78:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Escritorio 1920: primera tarjeta a <=16px, foto 1:1, ancho 430ÔÇô470px y se ven 4 completas (2.2s)
+  ok 51 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:138:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Celular 390: se ven 2 tarjetas completas y parte de la tercera, foto 1:1 (2.0s)
+  ok 52 [desktop] ÔÇ║ tests\e2e\carrusel-tarjetas.spec.ts:183:3 ÔÇ║ Problema 4 ÔÇö Tarjetas de producto 1:1 y carrusel de borde a borde ÔÇ║ Cat├ílogo: fotos de producto cuadradas 1:1 en ProductGrid (1.4s)
+  ok 53 [desktop] ÔÇ║ tests\e2e\catalogo-paginacion.spec.ts:4:3 ÔÇ║ Cat├ílogo E2E ÔÇö Paginaci├│n 'Ver m├ís' y layout de tarjetas ÔÇ║ muestra m├íximo 24 tarjetas al inicio, 'Ver m├ís' carga lotes hasta el total y desaparece, y cambiar filtro reinicia a 24 (4.6s)
+  ok 54 [desktop] ÔÇ║ tests\e2e\catalogo-paginacion.spec.ts:55:3 ÔÇ║ Cat├ílogo E2E ÔÇö Paginaci├│n 'Ver m├ís' y layout de tarjetas ÔÇ║ respeta columnas por viewport (mobile: 2 cols >=165px; desktop 1440: 4 cols) y sin scroll horizontal (1.6s)
+  ok 55 [desktop] ÔÇ║ tests\e2e\catalogo-paginacion.spec.ts:99:3 ÔÇ║ Cat├ílogo E2E ÔÇö Paginaci├│n 'Ver m├ís' y layout de tarjetas ÔÇ║ al hacer scroll hasta el final del primer lote, todas las <img> de las 24 tarjetas cargan con naturalWidth > 0 (3.0s)
+  ok 56 [desktop] ÔÇ║ tests\e2e\catalogo.spec.ts:12:3 ÔÇ║ Cat├ílogo E2E ÔÇö Filtros y ordenamiento ÔÇ║ muestra productos, filtra por categor├¡a cambiando el contador y ordena por precio real (1.6s)
+  ok 57 [desktop] ÔÇ║ tests\e2e\categorias.spec.ts:4:3 ÔÇ║ Categor├¡as p├║blicas ÔÇö visibilidad y navegaci├│n sin categor├¡as vac├¡as ÔÇ║ Todas las categor├¡as y subcategor├¡as visibles en el men├║ abren sin 404, tienen >= 1 producto y ninguna muestra 'pr├│ximamente' (14.8s)
+  ok 58 [desktop] ÔÇ║ tests\e2e\categorias.spec.ts:80:3 ÔÇ║ Categor├¡as p├║blicas ÔÇö visibilidad y navegaci├│n sin categor├¡as vac├¡as ÔÇ║ /categoria/ocasion/nacimientos no da 404 (funciona antes de SQL 003 y redirige a /categoria/nacimientos despu├®s) (2.0s)
+  ok 59 [desktop] ÔÇ║ tests\e2e\categorias.spec.ts:94:3 ÔÇ║ Categor├¡as p├║blicas ÔÇö visibilidad y navegaci├│n sin categor├¡as vac├¡as ÔÇ║ Entrar directo por URL a una categor├¡a vac├¡a (/categoria/defuncion) no da 404, muestra 'pr├│ximamente' y oculta tarjetas de subcategor├¡as vac├¡as (1.3s)
+  ok 60 [desktop] ÔÇ║ tests\e2e\checkout.spec.ts:10:3 ÔÇ║ Checkout E2E ÔÇö Flujo completo con interceptaci├│n segura ÔÇ║ carrito vac├¡o redirige autom├íticamente a / (1.2s)
+  ok 61 [desktop] ÔÇ║ tests\e2e\checkout.spec.ts:15:3 ÔÇ║ Checkout E2E ÔÇö Flujo completo con interceptaci├│n segura ÔÇ║ muestra errores inline al enviar vac├¡o, suma delivery al elegir distrito y completa pedido interceptado hacia /confirmacion (3.9s)
+  ok 62 [desktop] ÔÇ║ tests\e2e\checkout.spec.ts:113:3 ÔÇ║ Checkout E2E ÔÇö Flujo completo con interceptaci├│n segura ÔÇ║ con el reloj del navegador fijado a las 20:00 en Lima, el min del input es ma├▒ana y elegir hoy muestra error (3.3s)
+  ok 63 [desktop] ÔÇ║ tests\e2e\home-acciones.spec.ts:9:3 ÔÇ║ Home E2E ÔÇö Acciones r├ípidas en tarjetas (RF-017 / RF-018) ÔÇ║ RF-017: Bot├│n 'Agregar al carrito' agrega producto y abre el drawer sin navegar (2.2s)
+  ok 64 [desktop] ÔÇ║ tests\e2e\home-acciones.spec.ts:40:3 ÔÇ║ Home E2E ÔÇö Acciones r├ípidas en tarjetas (RF-017 / RF-018) ÔÇ║ RF-018: Bot├│n 'Compartir' copia la URL del producto al portapapeles (2.3s)
+  ok 65 [desktop] ÔÇ║ tests\e2e\orden-movil.spec.ts:8:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 1. Bento de Colecciones a 390px: sin huecos vac├¡os y todas las tarjetas chicas con la misma altura (2.1s)
+  ok 66 [desktop] ÔÇ║ tests\e2e\orden-movil.spec.ts:57:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 3. Nombres de producto en tarjetas: altura reservada de 2 l├¡neas para alineaci├│n (1.4s)
+  ok 67 [desktop] ÔÇ║ tests\e2e\orden-movil.spec.ts:99:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 4. WhatsApp flotante: compacto en m├│vil (44px) y con espacio para no tapar bot├│n compartir (2.0s)
+  ok 68 [desktop] ÔÇ║ tests\e2e\orden-movil.spec.ts:120:3 ÔÇ║ Fase 06-D ÔÇö Orden en celular ÔÇ║ 5. Checkout a 360px: WhatsApp visible y formulario con bot├│n de pago accesible sin interferencia (2.6s)
+  ok 69 [desktop] ÔÇ║ tests\e2e\recorrido-compra.spec.ts:4:3 ÔÇ║ Recorrido Completo de Compra y Auditor├¡a Pre-Lanzamiento ÔÇ║ Flujo E2E completo: Home -> Categor├¡a -> Producto -> Carrito -> Checkout -> Confirmaci├│n (con mock de POST) (6.1s)
+  ok 70 [desktop] ÔÇ║ tests\e2e\recorrido-compra.spec.ts:103:3 ÔÇ║ Recorrido Completo de Compra y Auditor├¡a Pre-Lanzamiento ÔÇ║ Auditor├¡a de desbordamiento horizontal (no overflow) en 360px, 390px y 1440px (8.8s)
+  ok 71 [desktop] ÔÇ║ tests\e2e\recorrido-compra.spec.ts:133:3 ÔÇ║ Recorrido Completo de Compra y Auditor├¡a Pre-Lanzamiento ÔÇ║ Auditor├¡a de enlaces de WhatsApp: FAB y confirmaci├│n formatean enlace v├ílido a wa.me (2.1s)
+  ok 72 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:15:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ P├ígina p├║blica /resenas carga sin errores, con t├¡tulo correcto y sin scroll horizontal (1.2s)
+  ok 73 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:54:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Footer contiene enlace a /resenas y navega correctamente (2.2s)
+  ok 74 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:62:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Home: la franja de testimonios respeta la regla de visibilidad (2.2s)
+  ok 75 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:79:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin /admin/testimonios: carga panel de gesti├│n y formulario (22.8s)
+  -  76 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:152:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin CRUD: solo con E2E_ALLOW_WRITES=1 crea y elimina '[E2E] testimonio'
+  ok 77 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:8:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Home (/) carga sin errores y tiene <title> correcto (2.2s)
+  ok 78 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:18:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Cat├ílogo (/catalogo) carga sin errores y tiene <title> correcto (1.6s)
+  ok 79 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:30:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Nosotros (/nosotros) carga sin errores y tiene <title> correcto (1.2s)
+  ok 80 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:36:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Libro de Reclamaciones (/libro-de-reclamaciones) carga sin errores y tiene <title> correcto (1.2s)
+  ok 81 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:46:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Categor├¡a real (/categoria/:slug) y Producto real (/producto/:id) extra├¡dos del cat├ílogo cargan con <title> correcto (3.1s)
+  ok 82 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:75:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Ruta inexistente muestra mensaje de no encontrado (1.1s)
+  ok 83 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:5:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Home: Novedades y Categor├¡as configuran URLs de miniaturas y srcSet con thumbs/ (2.3s)
+  ok 84 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:44:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Cat├ílogo: productos cargan miniaturas 480w y srcSet responsive (1.5s)
+  ok 85 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:65:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Demostraci├│n de Fallback (Punto 2): bloqueo 404 en /thumbs/ en Home y Cat├ílogo recupera todas las im├ígenes originales con naturalWidth > 0 (18.3s)
+[E2E desktop 1440] Banner activo domNaturalWidth (density-corrected): 1440
+[E2E desktop 1440] Banner activo naturalWidth (original cargado): 2560
+  ok 86 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:155:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Banner Hero: en desktop 1440 carga original sin /thumbs/, en mobile 390 carga sin errores (Fase 06-C) (2.2s)
+
+  8 skipped
+  78 passed (4.7m)

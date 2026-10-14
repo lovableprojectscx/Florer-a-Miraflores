@@ -21,6 +21,10 @@ export interface ConfigRow {
   tiktok_url: string | null;
   facebook_url: string | null;
   libro_reclamaciones_activo: boolean;
+  google_reviews_url?: string | null;
+  google_rating?: number | null;
+  google_reviews_count?: number | null;
+  mostrar_resenas_home?: boolean;
 }
 
 export type ConfigInsert = Omit<ConfigRow, "id">;
@@ -218,6 +222,28 @@ export type PedidoInsert = Omit<PedidoRow, "id" | "izi_transaction_id" | "create
 };
 export type PedidoUpdate = Partial<Pick<PedidoRow, "estado" | "izi_transaction_id" | "notas">>;
 
+// ─── testimonios ─────────────────────────────────────────────────────────────
+
+export type TestimonioFuente = "google" | "whatsapp" | "facebook" | "directo";
+
+export interface TestimonioRow {
+  id: string;
+  nombre: string;
+  texto: string;
+  estrellas: number;
+  fecha: string | null; // date → YYYY-MM-DD
+  fuente: TestimonioFuente;
+  enlace_original: string | null;
+  imagen_url: string | null;
+  destacado: boolean;
+  orden: number;
+  activo: boolean;
+  created_at: string;
+}
+
+export type TestimonioInsert = Omit<TestimonioRow, "id" | "created_at">;
+export type TestimonioUpdate = Partial<TestimonioInsert>;
+
 // --- Database (interfaz para el cliente tipado de Supabase) ---
 
 export interface Database {
@@ -287,6 +313,12 @@ export interface Database {
         Row: PedidoRow;
         Insert: PedidoInsert;
         Update: PedidoUpdate;
+        Relationships: [];
+      };
+      testimonios: {
+        Row: TestimonioRow;
+        Insert: TestimonioInsert;
+        Update: TestimonioUpdate;
         Relationships: [];
       };
     };

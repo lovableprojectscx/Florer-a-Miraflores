@@ -6,9 +6,53 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 ## Índice de Versiones e Hitos
 
-|  Versión   |   Fecha    |          Tipo          | Resumen de Cambios                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| :--------: | :--------: | :--------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **v1.9.0** | 2026-10-13 | **Certificación / QA** | Fase 06: Certificación pre-lanzamiento (`VEREDICTO: GO con condiciones`). Implementación y verificación de RF-017 (agregar al carrito desde el home) y RF-018 (compartir producto con portapapeles/toast); test E2E de flujo completo de compra y auditoría de desbordamiento horizontal en 360/390/1440px; auditoría de 412 imágenes (0 rotas); sitemap.xml (437 URLs) y robots.txt; `<html lang="es">`; Lighthouse móvil (100 SEO, 100 Best Practices); checklist manual y acta de certificación. |
+|  Versión    |   Fecha    |          Tipo          | Resumen de Cambios                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| :---------: | :--------: | :--------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **v1.10.0** | 2026-10-13 | **Reseñas / Admin**    | Fase 07: Reseñas reales elegidas a mano de Google (opción D). Página `/resenas` con grilla de tarjetas, estrellas, texto expandible y resumen real («★ 4,9 · 120 reseñas»); carrusel horizontal en Home condicionado a `mostrar_resenas_home = true` y >= 3 activas; panel admin `/admin/testimonios` con CRUD completo, selector 1-5 estrellas, fotos WebP, aviso de autenticidad y resiliencia ante SQL 007 pendiente; enlace en Footer y sitemap.xml; tests unitarios, RLS y E2E. |
+| **v1.9.0**  | 2026-10-13 | **Certificación / QA** | Fase 06: Certificación pre-lanzamiento (`VEREDICTO: GO con condiciones`). Implementación y verificación de RF-017 (agregar al carrito desde el home) y RF-018 (compartir producto con portapapeles/toast); test E2E de flujo completo de compra y auditoría de desbordamiento horizontal en 360/390/1440px; auditoría de 412 imágenes (0 rotas); sitemap.xml (437 URLs) y robots.txt; `<html lang="es">`; Lighthouse móvil (100 SEO, 100 Best Practices); checklist manual y acta de certificación. |
+
+---
+
+## Detalle de Hitos y Actualizaciones
+
+### [v1.10.0] — 2026-10-13: Reseñas Reales y Testimonios de Google (Fase 07)
+
+#### Contexto y Objetivo
+
+Implementar el sistema de opiniones de clientes basado en la **opción D** definida por Jack: reseñas reales seleccionadas y copiadas manualmente desde el perfil de Google Business a la base de datos a través del panel de administración, complementado con un botón directo para consultar todas las reseñas en Google. NADA de scraping no oficial ni widgets de terceros. Cumplimiento de directrices de Google impidiendo marcado JSON-LD artificial sobre reseñas elegidas por el propio negocio.
+
+#### Cambios Implementados
+
+1. **Página pública `/resenas` (`src/routes/resenas.tsx`):**
+   - Encabezado editorial «Lo que dicen nuestros clientes».
+   - Resumen dinámico y verídico extraído de `config`: «★ 4,9 · 120 reseñas en Google» (no se muestra si falta el rating o conteo).
+   - Botón «Ver todas en Google» con enlace directo seguro (`target="_blank"`, `rel="noopener noreferrer"`).
+   - Grilla responsive de tarjetas (`src/components/ResenaCard.tsx`): 5 estrellas, corte de texto a ~6 líneas con desplegable «Leer más / Leer menos», autor, fecha amigable, badge de procedencia (Google, WhatsApp, Facebook, Cliente verificado) y visor modal para foto del arreglo.
+   - Estado vacío elegante cuando no hay testimonios registrados.
+   - Metadatos SEO limpios sin marcado estructurado prohibido (`AggregateRating` / `Review`).
+2. **Franja horizontal en Home (`src/components/HomeTestimonios.tsx`):**
+   - Carrusel horizontal con snap scrolling ubicado inmediatamente debajo de Colecciones Home.
+   - Regla estricta de visualización: únicamente se renderiza si `mostrar_resenas_home = true` Y existen al menos 3 reseñas activas.
+   - Enlace directo «Ver todas las reseñas» hacia `/resenas`.
+3. **Enlaces y Navegación:**
+   - Enlace «Reseñas» incorporado en el pie de página (`src/components/Footer.tsx`) bajo la sección de Sobre Nosotros.
+   - Menú de navegación principal del Header intacto según especificación.
+   - Ruta `/resenas` agregada al generador de sitemap (`scripts/generate-sitemap.mjs`).
+4. **Módulo de Administración `/admin/testimonios` (`src/routes/admin/testimonios.tsx`):**
+   - Enlace con icono `Star` incorporado en el sidebar lateral de administración (`src/routes/admin.tsx`).
+   - CRUD completo: creación, edición, toggle inmediato de estado activo/inactivo, toggle de destacado, reordenamiento ordinal (↑/↓) y eliminación con diálogo de confirmación.
+   - Formulario modal con selector interactivo visual de 1 a 5 estrellas, carga optimizada de fotos a WebP en el bucket `testimonios` mediante `subirImagenConMiniaturas`.
+   - Banner de advertencia fija de autenticidad: *«Copia la reseña tal cual aparece en Google. No la edites ni inventes reseñas.»*
+   - Bloque integrado de configuración de Google: edición de URL del perfil, puntuación (rating), total de reseñas y toggle de visibilidad en el Home.
+   - Resiliencia arquitectónica: si la tabla `public.testimonios` aún no ha sido migrada, la pantalla no se rompe y muestra un aviso informativo de migración pendiente.
+5. **Base de Datos y Seguridad (`docs/sql/007-testimonios.sql`):**
+   - DDL idempotente para tabla `public.testimonios` con RLS estricto (`is_admin()` para escritura, lectura pública filtrada por `activo = true OR is_admin()`).
+   - Campos de Google agregados a `public.config`.
+   - Bucket de almacenamiento `testimonios` con políticas seguras.
+6. **Pruebas Automatizadas:**
+   - Vitest: 16 pruebas unitarias (`tests/unit/resenas-utils.test.ts`) cubriendo validación del formulario (estrellas 1-5, texto >= 10 caracteres, nombre obligatorio), formateo decimal con coma («4,9») y regla de visibilidad en Home.
+   - RLS: prueba de rechazo 42501 para inserciones anónimas en `tests/rls/rls.test.ts`.
+   - Playwright: suite completa en `tests/e2e/resenas.spec.ts` validando carga responsiva a 390px y 1440px, ausencia de scroll horizontal, navegación y panel admin.
 | **v1.8.0** | 2026-10-13 | **Pedidos / Checkout** | Fase 05: Certificación de estado `"En preparación"`, selector reordenado según flujo operativo y toasts en `/admin/pedidos`; corrección de fecha mínima en Lima (`America/Lima`) en `getFechaMinima()`; reintento automático ante colisión de número de pedido (código 23505) en `crearPedido()`; documentación de riesgo de montos y trigger borrador en `docs/SEGURIDAD.md`; tests E2E y unitarios.                                                                                               |
 | **v1.7.0** | 2026-10-12 |   **Catálogo / UI**    | Fase 04: Paginación incremental `"Ver más"` en lotes de 24 (`use-ver-mas.ts`), fotos protagonistas `aspect-[4/5]`, grilla máximo 4 columnas (`grid-cols-2 md:grid-cols-3 xl:grid-cols-4`), `decoding="async"`, `sizes` y placeholder explícito en `ProductGrid`.                                                                                                                                                                                                                                    |
 | **v1.6.1** | 2026-10-12 |  **Seguridad / RLS**   | Fase 03-B: Endurecimiento de políticas RLS con tabla `public.admins`, función `public.is_admin()`, script `docs/sql/005-admin-rls.sql`, auditoría de `pedidos`/`reclamaciones`/`storage` y tests E2E de las 12 secciones de `/admin`.                                                                                                                                                                                                                                                               |
