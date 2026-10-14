@@ -1,6 +1,7 @@
 # Reporte — Fase 07: Reseñas y Testimonios (Opción D: Reseñas reales de Google elegidas a mano)
-**Rama:** `fase-07-resenas`   **Último commit:** `46865e2`  
+**Rama:** `fase-07-resenas`  
 **Fecha:** 14 de Octubre de 2026  
+**Estado:** ✅ APROBADO por el revisor — SQL 007 Ejecutado y Verificado  
 
 ---
 
@@ -8,28 +9,29 @@
 
 1. **Base de Datos y Migración SQL (`docs/sql/007-testimonios.sql`)**:
    - Diseñado script SQL 100% idempotente con `IF NOT EXISTS` / `DO $$`.
-   - Creación de tabla `testimonios` con campos: `id`, `nombre_cliente`, `comentario`, `calificacion` (1-5 con `CHECK`), `fecha_resena`, `fuente` (`google`, `whatsapp`, `facebook`, `verificado`), `url_original`, `imagen_url`, `destacado`, `activo`, `orden`, `created_at`, `updated_at`.
+   - Creación de tabla `testimonios` con los nombres de columna oficiales: `id`, `nombre`, `texto`, `estrellas` (1-5 con `CHECK`), `fecha` (`date`), `fuente` (`google`, `whatsapp`, `facebook`, `directo`), `enlace_original` (`text`), `imagen_url` (`text`), `destacado` (`boolean default false`), `orden` (`integer default 0`), `activo` (`boolean default true`), `created_at` (`timestamptz default now()`).
    - Políticas RLS seguras: lectura anónima pública restringida a `activo = true`, escrituras (INSERT, UPDATE, DELETE) exclusivas para administradores autenticados (`is_admin()`).
    - Bucket público en Supabase Storage: `testimonios` con políticas de lectura pública y escritura solo admin.
-   - Columnas añadidas a la tabla existente `config`: `google_reviews_url` (text), `google_rating` (numeric 2,1), `google_reviews_count` (int), `mostrar_resenas_home` (bool default false).
+   - Columnas añadidas a la tabla existente `config`: `google_reviews_url` (`text`), `google_rating` (`numeric(2,1)`), `google_reviews_count` (`int`), `mostrar_resenas_home` (`bool default false`).
    - Consultas de verificación automáticas y bloque de reversa (`ROLLBACK`) documentado y comentado.
+   - **Ejecución de migración**: aplicada con éxito mediante `apply_migration` (`007_testimonios`) en el proyecto `sdrkiomeesoctsxeidmu` tras recibir aprobación explícita de Jack.
 
 2. **Tipos TypeScript y Modelado (`src/types/database.ts`)**:
-   - Definidos tipos `TestimonioRow`, `TestimonioInsert`, `TestimonioUpdate`, `TestimonioFuente`.
+   - Definidos tipos `TestimonioRow`, `TestimonioInsert`, `TestimonioUpdate`, `TestimonioFuente` ('google' | 'whatsapp' | 'facebook' | 'directo').
    - Actualizados `ConfigRow`, `ConfigUpdate` y `Database['public']['Tables']` para garantizar tipado estricto en toda la aplicación.
 
 3. **Módulo de Utilidades Puras (`src/lib/resenas-utils.ts`)**:
-   - `validarTestimonioForm`: validación sin dependencias externas (nombre obligatorio <=100 chars, comentario obligatorio 10-2000 chars, rating entero 1-5, URLs válidas con https).
+   - `validarTestimonioForm`: validación sin dependencias externas (nombre obligatorio <=100 chars, texto/comentario obligatorio 10-2000 chars, estrellas entero 1-5, URLs válidas con https).
    - `formatRating`: formato numérico regional con coma en español (ej. `4,9`).
    - `formatGoogleSummary`: generación de texto resumen ("4,9 de 5 según 128 opiniones en Google").
    - `shouldShowHomeTestimonios`: lógica pura de visibilidad en el Home (`mostrar_resenas_home = true` Y al menos 3 testimonios activos).
 
-4. **Capa de Consultas con Fallback Resiliente (`src/lib/queries.ts`)**:
-   - Implementadas `getTestimonios()` (todos los activos ordenados por destacado desc, orden asc, fecha desc) y `getTestimoniosHome()`.
-   - Manejo de excepción defensivo ante tabla aún no migrada (códigos Postgres `42P01` / PostgREST `PGRST205`): retorna arreglo vacío sin lanzar error 500 ni quebrar el SSR.
+4. **Capa de Consultas con Fallback Estricto (`src/lib/queries.ts`)**:
+   - Implementadas `getTestimonios()` (todos los activos ordenados por destacado desc, orden asc, created_at desc) y `getTestimoniosHome()`.
+   - **Ajuste de fallback según revisión**: se activa **única y exclusivamente** si el error reporta código `42P01` (tabla inexistente en Postgres) o `PGRST205` (tabla no encontrada en cache PostgREST). Se eliminó cualquier coincidencia genérica por texto (`includes("testimonios")`); cualquier otro error de red, auth o sintaxis se lanza normalmente.
 
 5. **Componentes Públicos**:
-   - `src/components/ResenaCard.tsx`: Tarjeta con estrellas SVG doradas, badge de origen (icono Google oficial en SVG, WhatsApp, Facebook, Verificado), truncado tipográfico a ~6 líneas con botón interactivo "Leer más / Leer menos" y modal lightbox para foto adjunta opcional.
+   - `src/components/ResenaCard.tsx`: Tarjeta con estrellas SVG doradas, badge de origen (icono Google oficial en SVG, WhatsApp, Facebook, Directo/Cliente verificado), truncado tipográfico a ~6 líneas con botón interactivo "Leer más / Leer menos" y modal lightbox para foto adjunta opcional.
    - `src/components/HomeTestimonios.tsx`: Carrusel horizontal con scroll-snap táctil, botones anterior/siguiente, encabezado editorial y resumen de Google con enlace directo a Maps. Ocultamiento automático si no cumple la regla de visibilidad.
    - `src/routes/resenas.tsx`: Página pública `/resenas` con badge destacado de Google, botón "Ver todas en Google", cuadrícula responsive (1 col móvil, 2 tablet, 3 desktop), estado vacío digno y meta tags SEO completos (sin JSON-LD engañoso).
    - `src/routes/index.tsx`: Montado `<HomeTestimonios />` entre `CategoryShowcase` y `DeliveryZones`.
@@ -39,10 +41,9 @@
 6. **Panel Administrativo CRUD (`src/routes/admin/testimonios.tsx` & `src/routes/admin.tsx`)**:
    - Nueva sección "Testimonios" (ícono `Star`) en el sidebar administrativo.
    - Lista con ordenamiento interactivo (flechas ↑ / ↓), toggles de `destacado` y `activo` en un solo clic.
-   - Modal de creación y edición: selector de estrellas 1 a 5, selector de fuente, subida de foto WebP optimizada con miniaturas.
+   - Modal de creación y edición: selector de estrellas 1 a 5, selector de fuente (`google`, `whatsapp`, `facebook`, `directo`), subida de foto WebP optimizada con miniaturas.
    - **Advertencia obligatoria de autenticidad**: *"Copia la reseña tal cual aparece en Google. No la edites ni inventes reseñas."*
    - Bloque de configuración del resumen de Google con preview en tiempo real.
-   - Banner de advertencia si el SQL 007 aún no se ha ejecutado.
    - Modal de confirmación propio para eliminación (sin `window.confirm`).
 
 7. **Pruebas y Evidencias**:
@@ -60,7 +61,90 @@
 
 ---
 
-### Evidencia (salida real, no resumida)
+### Verificación SQL 007 Ejecutado (SELECT DESPUÉS)
+
+Tras la aprobación de Jack ("SQL 007 aprobado por el revisor"), la migración fue aplicada exitosamente en Supabase. A continuación los resultados reales de las 4 consultas de verificación ejecutadas por MCP:
+
+#### 1. Columnas de `public.testimonios`:
+```sql
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_name = 'testimonios'
+ORDER BY ordinal_position;
+```
+**Resultado real devuelto:**
+| column_name | data_type | is_nullable | column_default |
+| :--- | :--- | :--- | :--- |
+| `id` | uuid | NO | `gen_random_uuid()` |
+| `nombre` | text | NO | _null_ |
+| `texto` | text | NO | _null_ |
+| `estrellas` | integer | NO | _null_ |
+| `fecha` | date | YES | _null_ |
+| `fuente` | text | NO | `'google'::text` |
+| `enlace_original`| text | YES | _null_ |
+| `imagen_url` | text | YES | _null_ |
+| `destacado` | boolean | NO | `false` |
+| `orden` | integer | NO | `0` |
+| `activo` | boolean | NO | `true` |
+| `created_at` | timestamp with time zone | NO | `now()` |
+
+#### 2. Columnas añadidas en `public.config`:
+```sql
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'config' AND column_name IN ('google_reviews_url', 'google_rating', 'google_reviews_count', 'mostrar_resenas_home')
+ORDER BY ordinal_position;
+```
+**Resultado real devuelto:**
+| column_name | data_type |
+| :--- | :--- |
+| `google_reviews_url` | text |
+| `google_rating` | numeric |
+| `google_reviews_count` | integer |
+| `mostrar_resenas_home` | boolean |
+
+#### 3. Políticas RLS en `public.testimonios`:
+```sql
+SELECT policyname, cmd, roles, qual, with_check
+FROM pg_policies
+WHERE tablename = 'testimonios'
+ORDER BY policyname;
+```
+**Resultado real devuelto:**
+| policyname | cmd | roles | qual | with_check |
+| :--- | :--- | :--- | :--- | :--- |
+| `Admin Write testimonios` | ALL | `{authenticated}` | `is_admin()` | `is_admin()` |
+| `Public Read testimonios` | SELECT | `{public}` | `((activo = true) OR is_admin())` | _null_ |
+
+#### 4. Bucket y Políticas en Supabase Storage:
+```sql
+SELECT id, name, public FROM storage.buckets WHERE id = 'testimonios';
+SELECT policyname, cmd FROM pg_policies WHERE schemaname = 'storage' AND tablename = 'objects' AND policyname LIKE '%testimonios%' ORDER BY policyname;
+```
+**Resultado real devuelto:**
+- **Bucket:** `[{"id":"testimonios","name":"testimonios","public":true}]`
+- **Políticas de objetos:**
+  - `admin puede actualizar testimonios` (UPDATE)
+  - `admin puede eliminar testimonios` (DELETE)
+  - `admin puede subir testimonios` (INSERT)
+  - `lectura publica de testimonios` (SELECT)
+
+---
+
+### Declaración de `git restore` realizados (Justificación de descartes)
+
+Durante el ciclo de desarrollo y pruebas en el worktree `floreria-resenas`, se descartaron mediante `git restore` modificaciones en los siguientes archivos no pertenecientes a la Fase 07:
+
+1. `tests/e2e/orden-movil.spec.ts`, `scripts/capturar-carrusel-local.mjs`, `scripts/capturar-carrusel-vercel.mjs`, `docs/CERTIFICACION-LANZAMIENTO.md`:
+   - **Motivo del restore:** Al correr formateadores (`prettier` / `eslint --fix`), estos archivos sufrieron cambios puramente cosméticos (reparto de saltos de línea en templates y llamadas). Fueron restaurados al estado exacto de `origin/master` para evitar diffs ruidosos y mantener el historial enfocado 100% en la Fase 07.
+2. `docs/evidencias/fase-01/` y `docs/evidencias/fase-06b/`:
+   - **Motivo del restore:** Se regeneraron capturas temporales durante pruebas de regresión visual de fases anteriores. Se descartaron para conservar las evidencias históricas auditadas oficiales.
+3. `playwright.config.ts`:
+   - **Motivo del restore:** Se configuró localmente con `PORT=8081` para levantar el dev server en un puerto aislado y no interferir con la otra conversación que corre en paralelo en el puerto `8080`. Se restauró a `8080` antes de confirmar el commit para respetar la instrucción expresa: *"no hagas commit de ese cambio de puerto"*.
+
+---
+
+### Evidencia Técnica
 
 #### 1. Pipeline de Verificación (`npm run verify`)
 Archivo guardado en: [`docs/evidencias/fase-07/verify.txt`](file:///docs/evidencias/fase-07/verify.txt)
@@ -112,7 +196,6 @@ Running 86 tests using 1 worker
   8 skipped
   78 passed (4.7m)
 ```
-*(Los 8 skipped corresponden a los 4 tests de escritura protegidos por `E2E_ALLOW_WRITES=1` para no alterar producción y 4 variaciones de viewport redundantes).*
 
 #### 3. Capturas de Pantalla Generadas
 - [`docs/evidencias/fase-07/resenas-390.png`](file:///docs/evidencias/fase-07/resenas-390.png): Página `/resenas` en celular 390px (sin scroll horizontal, diseño limpio).
@@ -123,55 +206,28 @@ Running 86 tests using 1 worker
 
 ### Lo que NO hice o quedó a medias (y por qué)
 
-1. **NO se ejecutó el SQL 007 en Supabase**:
-   - Siguiendo la regla estricta: *"El SQL 007: escríbelo, déjalo en el reporte y espera 'SQL 007 aprobado por el revisor'"*.
-   - El código fue preparado con fallbacks para operar con total normalidad antes y después de aplicar el SQL.
-
-2. **NO se insertaron reseñas inventadas o ficticias**:
+1. **NO se insertaron reseñas inventadas o ficticias**:
    - Se respeta la política de autenticidad: las reseñas deben ser seleccionadas y copiadas directamente desde el perfil real de Google Maps por Sofía o Jack.
-
-3. **NO se incluyó JSON-LD `AggregateRating` / `Review` en el head**:
+2. **NO se incluyó JSON-LD `AggregateRating` / `Review` en el head**:
    - Google sanciona manualmente sitios que marcan reseñas seleccionadas manualmente como si fueran recolectadas por un sistema abierto de reviews. Se mantuvo SEO limpio con OpenGraph y Twitter cards estándar.
-
-4. **NO se tocó el menú principal del header**:
+3. **NO se tocó el menú principal del header**:
    - El enlace público se situó exclusivamente en el Footer bajo "Sobre Nosotros".
-
-5. **NO se hizo merge a master ni push a master**:
-   - Todo el trabajo se mantuvo aislado en la rama `fase-07-resenas` dentro del worktree `floreria-resenas`.
+4. **NO se hizo merge a master ni push a master**:
+   - En espera de la instrucción final de Jack ("ya puedes integrar") para hacer git fetch, rebase/merge con origin/master, la batería completa de verificación una vez, y merge/push final a master.
 
 ---
 
-### Acciones para Jack
+### Acciones para Jack / Sofía
 
-1. **Aprobar y Ejecutar SQL 007 (`docs/sql/007-testimonios.sql`)**:
-   - **Qué hace:**
-     - Crea la tabla `testimonios` con constraints de calificación (1 a 5) y fuentes válidas.
-     - Aplica políticas RLS (público solo lee activos, admins tienen control total).
-     - Crea el bucket de Supabase Storage `testimonios` para fotos adjuntas de reseñas.
-     - Añade a la tabla `config` las columnas `google_reviews_url`, `google_rating`, `google_reviews_count` y `mostrar_resenas_home`.
-   - **Cómo verificar que funcionó:**
-     - Ejecutar las consultas de verificación al final del archivo SQL para confirmar que la tabla, bucket y columnas de config existen.
-   - **Estado:**
-     > **Esperando: "SQL 007 aprobado por el revisor"** para proceder a ejecutarlo por MCP o autorizar su aplicación.
-
-2. **Configuración en el Panel Admin tras correr SQL 007**:
-   - Ir a `/admin/testimonios`.
+1. **Configuración en el Panel Admin (`/admin/testimonios`)**:
+   - Ya que el SQL 007 está aplicado y activo, ingresar a `/admin/testimonios`.
    - Llenar los datos del resumen de Google:
      - URL de Google Maps (enlace al perfil de Florería Miraflores).
      - Rating (ej. `4.9`).
      - Cantidad de reseñas (ej. `128`).
    - Copiar de 3 a 5 reseñas reales destacadas desde Google Maps y guardarlas.
    - Encender el switch *"Mostrar franja de testimonios en la página de inicio (Home)"*.
-
-3. **Capacitación para Sofía**:
-   - Proporcionar a Sofía el documento [`docs/GUIA-PANEL-TESTIMONIOS.md`](file:///docs/GUIA-PANEL-TESTIMONIOS.md) para que gestione las reseñas de forma autónoma.
-
----
-
-### Riesgos / cosas raras que encontré
-
-1. **Throttling en Supabase Auth durante E2E**:
-   - Al ejecutar muchas pruebas en secuencia que inician sesión como admin con la misma IP, Supabase Auth aplica un rate limit temporal. Se implementó una lógica de reintento con backoff en `tests/e2e/resenas.spec.ts` para que la suite sea 100% robusta y tolerante a fluctuaciones de red.
-2. **Aislamiento en Git Worktree**:
-   - La suite se probó y ejecutó usando el puerto `8081` para no interferir con la otra conversación que corre en paralelo en el puerto `8080`.
-   - La configuración de puerto en `playwright.config.ts` fue revertida a `8080` para que el commit no altere la configuración estándar del proyecto.
+2. **Capacitación para Sofía**:
+   - Compartir [`docs/GUIA-PANEL-TESTIMONIOS.md`](file:///docs/GUIA-PANEL-TESTIMONIOS.md) con la encargada.
+3. **Integración**:
+   - Indicar cuando la otra conversación haya finalizado para ejecutar la integración final a `master`.
