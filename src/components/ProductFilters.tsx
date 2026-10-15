@@ -112,7 +112,7 @@ export function ProductFiltersBar({
     <div className="mb-6 md:mb-8 border-b border-[#E8DDD0]/70 pb-4 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
       <div className="min-w-0">
         {titulo && (
-          <h1 className="font-display text-2xl sm:text-[26px] md:text-[32px] lg:text-[34px] text-[#2C2420] leading-tight">
+          <h1 className="font-display text-[24px] sm:text-[26px] md:text-[32px] lg:text-[34px] text-[#2C2420] leading-tight">
             {titulo}
           </h1>
         )}
