@@ -18,6 +18,7 @@ import {
   Menu,
   X,
   Star,
+  Camera,
   BookOpen,
   Users,
 } from "lucide-react";
@@ -43,7 +44,7 @@ const NAV_ITEMS = [
   { to: "/admin/categorias", label: "Categorias", icon: FolderTree },
   { to: "/admin/banners", label: "Banners", icon: Image },
   { to: "/admin/testimonios", label: "Testimonios", icon: Star },
-  { to: "/admin/blog", label: "Blog", icon: BookOpen },
+  { to: "/admin/recuerdos", label: "Recuerdos", icon: Camera },
   { to: "/admin/popup", label: "Popup", icon: Megaphone },
   { to: "/admin/suscriptores", label: "Suscriptores", icon: Users },
   { to: "/admin/colecciones-home", label: "Colecciones Home", icon: LayoutGrid },

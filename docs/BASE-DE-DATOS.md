@@ -272,26 +272,26 @@ Creada mediante [`docs/sql/007-testimonios.sql`](./sql/007-testimonios.sql) para
 
 Evolución arquitectónica para reemplazar los artículos teóricos de blog por recuerdos visuales de entregas reales en Lima, conectando cada historia emotiva directamente con un distrito (`distritos.id`), una ocasión (`categorias.id`) y el arreglo floral entregado (`productos.id`) para compra inmediata.
 
-| Columna                    | Tipo          | Nulo | Default / Constraint                           | Descripción                                                               |
-| :------------------------- | :------------ | :--: | :--------------------------------------------- | :------------------------------------------------------------------------ |
-| `id`                       | `uuid`        |  NO  | `gen_random_uuid()` PK                         | Identificador único del recuerdo                                          |
-| `titulo`                   | `text`        |  NO  | —                                              | Título del recuerdo (ej. "Entrega de Aniversario en Miraflores")          |
-| `slug`                     | `text`        |  NO  | `UNIQUE`                                       | Identificador de URL amigable en minúsculas y sin acentos                 |
-| `resumen`                  | `text`        |  SÍ  | `null`                                         | Frase o dedicatoria corta destacada del momento                           |
-| `contenido`                | `text`        |  NO  | —                                              | Reseña breve o historia verídica de la entrega en Markdown seguro         |
-| `imagen_portada_url`       | `text`        |  SÍ  | `null`                                         | URL de la fotografía real de entrega optimizada en WebP                   |
-| `fotos_galeria`            | `text[]`      |  SÍ  | `'{}'::text[]`                                 | Galería opcional de fotos adicionales de la misma entrega                 |
-| `categoria_relacionada_id` | `uuid`        |  SÍ  | `REFERENCES categorias(id) ON DELETE SET NULL` | Ocasión asociada (Cumpleaños, Amor / Aniversario, Graduación, etc.)       |
-| `distrito_id`              | `uuid`        |  SÍ  | `REFERENCES distritos(id) ON DELETE SET NULL`  | Distrito de Lima donde se entregó (Miraflores, San Isidro, Surco, etc.)   |
-| `producto_id`              | `uuid`        |  SÍ  | `REFERENCES productos(id) ON DELETE SET NULL`  | Arreglo floral exacto entregado para compra cruzada o pedido WhatsApp     |
-| `publicado`                | `boolean`     |  NO  | `false`                                        | Conmutador de visibilidad pública (true = visible según fecha)            |
-| `fecha_publicacion`        | `timestamptz` |  SÍ  | `now()`                                        | Fecha del momento o publicación                                           |
-| `destacado`                | `boolean`     |  NO  | `false`                                        | Indicador para destacar el recuerdo en portada o carrusel                 |
-| `orden`                    | `integer`     |  NO  | `0`                                            | Posición ordinal para ordenamiento manual en el mural                     |
-| `meta_title`               | `text`        |  SÍ  | `null`                                         | Título SEO hiperlocal opcional para Google (`<title>`)                    |
-| `meta_description`         | `text`        |  SÍ  | `null`                                         | Meta descripción SEO opcional orientada a la ocasión y distrito           |
-| `created_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de creación del registro                                            |
-| `updated_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de última actualización (actualizada por trigger)                   |
+| Columna                    | Tipo          | Nulo | Default / Constraint                           | Descripción                                                             |
+| :------------------------- | :------------ | :--: | :--------------------------------------------- | :---------------------------------------------------------------------- |
+| `id`                       | `uuid`        |  NO  | `gen_random_uuid()` PK                         | Identificador único del recuerdo                                        |
+| `titulo`                   | `text`        |  NO  | —                                              | Título del recuerdo (ej. "Entrega de Aniversario en Miraflores")        |
+| `slug`                     | `text`        |  NO  | `UNIQUE`                                       | Identificador de URL amigable en minúsculas y sin acentos               |
+| `resumen`                  | `text`        |  SÍ  | `null`                                         | Frase o dedicatoria corta destacada del momento                         |
+| `contenido`                | `text`        |  NO  | —                                              | Reseña breve o historia verídica de la entrega en Markdown seguro       |
+| `imagen_portada_url`       | `text`        |  SÍ  | `null`                                         | URL de la fotografía real de entrega optimizada en WebP                 |
+| `fotos_galeria`            | `text[]`      |  SÍ  | `'{}'::text[]`                                 | Galería opcional de fotos adicionales de la misma entrega               |
+| `categoria_relacionada_id` | `uuid`        |  SÍ  | `REFERENCES categorias(id) ON DELETE SET NULL` | Ocasión asociada (Cumpleaños, Amor / Aniversario, Graduación, etc.)     |
+| `distrito_id`              | `uuid`        |  SÍ  | `REFERENCES distritos(id) ON DELETE SET NULL`  | Distrito de Lima donde se entregó (Miraflores, San Isidro, Surco, etc.) |
+| `producto_id`              | `uuid`        |  SÍ  | `REFERENCES productos(id) ON DELETE SET NULL`  | Arreglo floral exacto entregado para compra cruzada o pedido WhatsApp   |
+| `publicado`                | `boolean`     |  NO  | `false`                                        | Conmutador de visibilidad pública (true = visible según fecha)          |
+| `fecha_publicacion`        | `timestamptz` |  SÍ  | `now()`                                        | Fecha del momento o publicación                                         |
+| `destacado`                | `boolean`     |  NO  | `false`                                        | Indicador para destacar el recuerdo en portada o carrusel               |
+| `orden`                    | `integer`     |  NO  | `0`                                            | Posición ordinal para ordenamiento manual en el mural                   |
+| `meta_title`               | `text`        |  SÍ  | `null`                                         | Título SEO hiperlocal opcional para Google (`<title>`)                  |
+| `meta_description`         | `text`        |  SÍ  | `null`                                         | Meta descripción SEO opcional orientada a la ocasión y distrito         |
+| `created_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de creación del registro                                          |
+| `updated_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de última actualización (actualizada por trigger)                 |
 
 ### 11.2. Políticas RLS en la tabla de Recuerdos
 

@@ -20,6 +20,7 @@ import { Route as ConfirmacionRouteImport } from './routes/confirmacion'
 import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-reclamaciones'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
+import { Route as RecuerdosRouteImport } from './routes/recuerdos'
 import { Route as ResenasRouteImport } from './routes/resenas'
 import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as AdminBannersRouteImport } from './routes/admin/banners'
@@ -34,12 +35,14 @@ import { Route as AdminPedidosRouteImport } from './routes/admin/pedidos'
 import { Route as AdminPopupRouteImport } from './routes/admin/popup'
 import { Route as AdminProductosRouteImport } from './routes/admin/productos'
 import { Route as AdminReclamacionesRouteImport } from './routes/admin/reclamaciones'
+import { Route as AdminRecuerdosRouteImport } from './routes/admin/recuerdos'
 import { Route as AdminSuscriptoresRouteImport } from './routes/admin/suscriptores'
 import { Route as AdminTagsRouteImport } from './routes/admin/tags'
 import { Route as AdminTestimoniosRouteImport } from './routes/admin/testimonios'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
+import { Route as RecuerdosSlugRouteImport } from './routes/recuerdos.$slug'
 import { Route as TagKeyRouteImport } from './routes/tag.$key'
 import { Route as CategoriaSlugSubRouteImport } from './routes/categoria.$slug.$sub'
 
@@ -96,6 +99,11 @@ const NosotrosRoute = NosotrosRouteImport.update({
 const PrivacidadRoute = PrivacidadRouteImport.update({
   id: '/privacidad',
   path: '/privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecuerdosRoute = RecuerdosRouteImport.update({
+  id: '/recuerdos',
+  path: '/recuerdos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResenasRoute = ResenasRouteImport.update({
@@ -168,6 +176,11 @@ const AdminReclamacionesRoute = AdminReclamacionesRouteImport.update({
   path: '/reclamaciones',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminRecuerdosRoute = AdminRecuerdosRouteImport.update({
+  id: '/recuerdos',
+  path: '/recuerdos',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSuscriptoresRoute = AdminSuscriptoresRouteImport.update({
   id: '/suscriptores',
   path: '/suscriptores',
@@ -198,6 +211,11 @@ const ProductoIdRoute = ProductoIdRouteImport.update({
   path: '/producto/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecuerdosSlugRoute = RecuerdosSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => RecuerdosRoute,
+} as any)
 const TagKeyRoute = TagKeyRouteImport.update({
   id: '/tag/$key',
   path: '/tag/$key',
@@ -221,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
   '/nosotros': typeof NosotrosRoute
   '/privacidad': typeof PrivacidadRoute
+  '/recuerdos': typeof RecuerdosRouteWithChildren
   '/resenas': typeof ResenasRoute
   '/terminos': typeof TerminosRoute
   '/admin/banners': typeof AdminBannersRoute
@@ -235,12 +254,14 @@ export interface FileRoutesByFullPath {
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
+  '/admin/recuerdos': typeof AdminRecuerdosRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/admin/tags': typeof AdminTagsRoute
   '/admin/testimonios': typeof AdminTestimoniosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
+  '/recuerdos/$slug': typeof RecuerdosSlugRoute
   '/tag/$key': typeof TagKeyRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
 }
@@ -256,6 +277,7 @@ export interface FileRoutesByTo {
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
   '/nosotros': typeof NosotrosRoute
   '/privacidad': typeof PrivacidadRoute
+  '/recuerdos': typeof RecuerdosRouteWithChildren
   '/resenas': typeof ResenasRoute
   '/terminos': typeof TerminosRoute
   '/admin/banners': typeof AdminBannersRoute
@@ -270,12 +292,14 @@ export interface FileRoutesByTo {
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
+  '/admin/recuerdos': typeof AdminRecuerdosRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/admin/tags': typeof AdminTagsRoute
   '/admin/testimonios': typeof AdminTestimoniosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
+  '/recuerdos/$slug': typeof RecuerdosSlugRoute
   '/tag/$key': typeof TagKeyRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
 }
@@ -292,6 +316,7 @@ export interface FileRoutesById {
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
   '/nosotros': typeof NosotrosRoute
   '/privacidad': typeof PrivacidadRoute
+  '/recuerdos': typeof RecuerdosRouteWithChildren
   '/resenas': typeof ResenasRoute
   '/terminos': typeof TerminosRoute
   '/admin/banners': typeof AdminBannersRoute
@@ -306,12 +331,14 @@ export interface FileRoutesById {
   '/admin/popup': typeof AdminPopupRoute
   '/admin/productos': typeof AdminProductosRoute
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
+  '/admin/recuerdos': typeof AdminRecuerdosRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/admin/tags': typeof AdminTagsRoute
   '/admin/testimonios': typeof AdminTestimoniosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
+  '/recuerdos/$slug': typeof RecuerdosSlugRoute
   '/tag/$key': typeof TagKeyRoute
   '/categoria/$slug/$sub': typeof CategoriaSlugSubRoute
 }
@@ -329,6 +356,7 @@ export interface FileRouteTypes {
     | '/libro-de-reclamaciones'
     | '/nosotros'
     | '/privacidad'
+    | '/recuerdos'
     | '/resenas'
     | '/terminos'
     | '/admin/banners'
@@ -343,12 +371,14 @@ export interface FileRouteTypes {
     | '/admin/popup'
     | '/admin/productos'
     | '/admin/reclamaciones'
+    | '/admin/recuerdos'
     | '/admin/suscriptores'
     | '/admin/tags'
     | '/admin/testimonios'
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/producto/$id'
+    | '/recuerdos/$slug'
     | '/tag/$key'
     | '/categoria/$slug/$sub'
   fileRoutesByTo: FileRoutesByTo
@@ -364,6 +394,7 @@ export interface FileRouteTypes {
     | '/libro-de-reclamaciones'
     | '/nosotros'
     | '/privacidad'
+    | '/recuerdos'
     | '/resenas'
     | '/terminos'
     | '/admin/banners'
@@ -378,12 +409,14 @@ export interface FileRouteTypes {
     | '/admin/popup'
     | '/admin/productos'
     | '/admin/reclamaciones'
+    | '/admin/recuerdos'
     | '/admin/suscriptores'
     | '/admin/tags'
     | '/admin/testimonios'
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/producto/$id'
+    | '/recuerdos/$slug'
     | '/tag/$key'
     | '/categoria/$slug/$sub'
   id:
@@ -399,6 +432,7 @@ export interface FileRouteTypes {
     | '/libro-de-reclamaciones'
     | '/nosotros'
     | '/privacidad'
+    | '/recuerdos'
     | '/resenas'
     | '/terminos'
     | '/admin/banners'
@@ -413,12 +447,14 @@ export interface FileRouteTypes {
     | '/admin/popup'
     | '/admin/productos'
     | '/admin/reclamaciones'
+    | '/admin/recuerdos'
     | '/admin/suscriptores'
     | '/admin/tags'
     | '/admin/testimonios'
     | '/blog/$slug'
     | '/categoria/$slug'
     | '/producto/$id'
+    | '/recuerdos/$slug'
     | '/tag/$key'
     | '/categoria/$slug/$sub'
   fileRoutesById: FileRoutesById
@@ -435,6 +471,7 @@ export interface RootRouteChildren {
   LibroDeReclamacionesRoute: typeof LibroDeReclamacionesRoute
   NosotrosRoute: typeof NosotrosRoute
   PrivacidadRoute: typeof PrivacidadRoute
+  RecuerdosRoute: typeof RecuerdosRouteWithChildren
   ResenasRoute: typeof ResenasRoute
   TerminosRoute: typeof TerminosRoute
   CategoriaSlugRoute: typeof CategoriaSlugRouteWithChildren
@@ -519,6 +556,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidad'
       fullPath: '/privacidad'
       preLoaderRoute: typeof PrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recuerdos': {
+      id: '/recuerdos'
+      path: '/recuerdos'
+      fullPath: '/recuerdos'
+      preLoaderRoute: typeof RecuerdosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resenas': {
@@ -619,6 +663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminReclamacionesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/recuerdos': {
+      id: '/admin/recuerdos'
+      path: '/recuerdos'
+      fullPath: '/admin/recuerdos'
+      preLoaderRoute: typeof AdminRecuerdosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/suscriptores': {
       id: '/admin/suscriptores'
       path: '/suscriptores'
@@ -661,6 +712,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/recuerdos/$slug': {
+      id: '/recuerdos/$slug'
+      path: '/$slug'
+      fullPath: '/recuerdos/$slug'
+      preLoaderRoute: typeof RecuerdosSlugRouteImport
+      parentRoute: typeof RecuerdosRoute
+    }
     '/tag/$key': {
       id: '/tag/$key'
       path: '/tag/$key'
@@ -691,6 +749,7 @@ interface AdminRouteChildren {
   AdminPopupRoute: typeof AdminPopupRoute
   AdminProductosRoute: typeof AdminProductosRoute
   AdminReclamacionesRoute: typeof AdminReclamacionesRoute
+  AdminRecuerdosRoute: typeof AdminRecuerdosRoute
   AdminSuscriptoresRoute: typeof AdminSuscriptoresRoute
   AdminTagsRoute: typeof AdminTagsRoute
   AdminTestimoniosRoute: typeof AdminTestimoniosRoute
@@ -709,6 +768,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPopupRoute: AdminPopupRoute,
   AdminProductosRoute: AdminProductosRoute,
   AdminReclamacionesRoute: AdminReclamacionesRoute,
+  AdminRecuerdosRoute: AdminRecuerdosRoute,
   AdminSuscriptoresRoute: AdminSuscriptoresRoute,
   AdminTagsRoute: AdminTagsRoute,
   AdminTestimoniosRoute: AdminTestimoniosRoute,
@@ -725,6 +785,18 @@ const BlogRouteChildren: BlogRouteChildren = {
 }
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
+interface RecuerdosRouteChildren {
+  RecuerdosSlugRoute: typeof RecuerdosSlugRoute
+}
+
+const RecuerdosRouteChildren: RecuerdosRouteChildren = {
+  RecuerdosSlugRoute: RecuerdosSlugRoute,
+}
+
+const RecuerdosRouteWithChildren = RecuerdosRoute._addFileChildren(
+  RecuerdosRouteChildren,
+)
 
 interface CategoriaSlugRouteChildren {
   CategoriaSlugSubRoute: typeof CategoriaSlugSubRoute
@@ -750,6 +822,7 @@ const rootRouteChildren: RootRouteChildren = {
   LibroDeReclamacionesRoute: LibroDeReclamacionesRoute,
   NosotrosRoute: NosotrosRoute,
   PrivacidadRoute: PrivacidadRoute,
+  RecuerdosRoute: RecuerdosRouteWithChildren,
   ResenasRoute: ResenasRoute,
   TerminosRoute: TerminosRoute,
   CategoriaSlugRoute: CategoriaSlugRouteWithChildren,

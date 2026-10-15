@@ -248,9 +248,9 @@ export interface TestimonioRow {
 export type TestimonioInsert = Omit<TestimonioRow, "id" | "created_at">;
 export type TestimonioUpdate = Partial<TestimonioInsert>;
 
-// ─── blog_posts ──────────────────────────────────────────────────────────────
+// ─── recuerdos ───────────────────────────────────────────────────────────────
 
-export interface BlogPostRow {
+export interface RecuerdoRow {
   id: string;
   titulo: string;
   slug: string;
@@ -259,6 +259,11 @@ export interface BlogPostRow {
   imagen_portada_url: string | null;
   autor: string | null;
   categoria_relacionada_id: string | null;
+  distrito_id: string | null;
+  producto_id: string | null;
+  fotos_galeria: string[] | null;
+  destacado: boolean;
+  orden: number;
   publicado: boolean;
   fecha_publicacion: string | null; // timestamptz → ISO string
   meta_title: string | null;
@@ -267,8 +272,13 @@ export interface BlogPostRow {
   updated_at: string;
 }
 
-export type BlogPostInsert = Omit<BlogPostRow, "id" | "created_at" | "updated_at">;
-export type BlogPostUpdate = Partial<BlogPostInsert>;
+export type RecuerdoInsert = Omit<RecuerdoRow, "id" | "created_at" | "updated_at">;
+export type RecuerdoUpdate = Partial<RecuerdoInsert>;
+
+// Retrocompatibilidad con BlogPost
+export type BlogPostRow = RecuerdoRow;
+export type BlogPostInsert = RecuerdoInsert;
+export type BlogPostUpdate = RecuerdoUpdate;
 
 // ─── suscriptores ─────────────────────────────────────────────────────────────
 
@@ -365,6 +375,12 @@ export interface Database {
         Row: TestimonioRow;
         Insert: TestimonioInsert;
         Update: TestimonioUpdate;
+        Relationships: [];
+      };
+      recuerdos: {
+        Row: RecuerdoRow;
+        Insert: RecuerdoInsert;
+        Update: RecuerdoUpdate;
         Relationships: [];
       };
       blog_posts: {

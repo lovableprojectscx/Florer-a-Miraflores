@@ -24,6 +24,9 @@ import type {
   PedidoProducto,
   TagRow,
   TestimonioRow,
+  RecuerdoRow,
+  RecuerdoInsert,
+  RecuerdoUpdate,
   BlogPostRow,
   BlogPostInsert,
   BlogPostUpdate,
@@ -621,26 +624,46 @@ export async function getTestimoniosHome(): Promise<TestimonioRow[]> {
   }
 }
 
-// ─── Blog ─────────────────────────────────────────────────────────────────────
+// ─── Mural de Recuerdos ───────────────────────────────────────────────────────
 
-export interface BlogPostConDetalles {
-  post: BlogPostRow;
+export interface RecuerdoConDetalles {
+  recuerdo: RecuerdoRow;
   categoriaRelacionada: CategoriaRow | null;
+  distrito: DistritoRow | null;
+  productoRelacionado: ProductoRow | null;
   productosRelacionados: ProductoRow[];
 }
 
+export interface FiltrosRecuerdos {
+  ocasionId?: string;
+  distritoId?: string;
+}
+
 /**
- * Devuelve la lista de artículos públicos para `/blog`
- * (solo publicado = true y fecha_publicacion <= now()).
+ * Devuelve la lista de recuerdos públicos para `/recuerdos`
+ * (solo publicado = true y fecha_publicacion <= now()),
+ * con filtros opcionales por ocasión (categoría) o distrito.
  */
-export async function getBlogPostsPublicos(): Promise<BlogPostRow[]> {
+export async function getRecuerdosPublicos(filtros?: FiltrosRecuerdos): Promise<RecuerdoRow[]> {
   try {
     const nowIso = new Date().toISOString();
-    const { data, error } = await supabase
-      .from("blog_posts")
+    let query = supabase
+      .from("recuerdos")
       .select("*")
       .eq("publicado", true)
-      .lte("fecha_publicacion", nowIso)
+      .lte("fecha_publicacion", nowIso);
+
+    if (filtros?.ocasionId && filtros.ocasionId !== "todas") {
+      query = query.eq("categoria_relacionada_id", filtros.ocasionId);
+    }
+
+    if (filtros?.distritoId && filtros.distritoId !== "todos") {
+      query = query.eq("distrito_id", filtros.distritoId);
+    }
+
+    const { data, error } = await query
+      .order("destacado", { ascending: false })
+      .order("orden", { ascending: true })
       .order("fecha_publicacion", { ascending: false });
 
     if (error) {
@@ -663,13 +686,13 @@ export async function getBlogPostsPublicos(): Promise<BlogPostRow[]> {
 }
 
 /**
- * Obtiene un artículo público por su slug con productos relacionados (si tiene categoría).
+ * Obtiene un recuerdo público por su slug con distrito, categoría y producto entregado.
  * Si no está publicado o su fecha es futura, retorna null.
  */
-export async function getBlogPostPorSlug(slug: string): Promise<BlogPostConDetalles | null> {
+export async function getRecuerdoPorSlug(slug: string): Promise<RecuerdoConDetalles | null> {
   try {
-    const { data: post, error } = await supabase
-      .from("blog_posts")
+    const { data: recuerdo, error } = await supabase
+      .from("recuerdos")
       .select("*")
       .eq("slug", slug)
       .maybeSingle();
@@ -681,44 +704,60 @@ export async function getBlogPostPorSlug(slug: string): Promise<BlogPostConDetal
       throw new Error(`[Supabase] ${error.message}`);
     }
 
-    if (!post) return null;
+    if (!recuerdo) return null;
 
     // Verificar visibilidad pública: publicado y fecha <= now()
-    if (!post.publicado || !post.fecha_publicacion) {
+    if (!recuerdo.publicado || !recuerdo.fecha_publicacion) {
       return null;
     }
-    const fecha = new Date(post.fecha_publicacion);
+    const fecha = new Date(recuerdo.fecha_publicacion);
     if (isNaN(fecha.getTime()) || fecha.getTime() > Date.now()) {
       return null;
     }
 
-    // Cargar categoría y productos relacionados si aplica
-    let categoriaRelacionada: CategoriaRow | null = null;
-    let productosRelacionados: ProductoRow[] = [];
+    // Cargar relaciones en paralelo: distrito, categoría, producto exacto y productos relacionados
+    const promesas: [
+      Promise<{ data: DistritoRow | null }>,
+      Promise<{ data: CategoriaRow | null }>,
+      Promise<{ data: ProductoRow | null }>,
+      Promise<{ data: ProductoRow[] | null }>,
+    ] = [
+      recuerdo.distrito_id
+        ? supabase.from("distritos").select("*").eq("id", recuerdo.distrito_id).maybeSingle()
+        : Promise.resolve({ data: null }),
+      recuerdo.categoria_relacionada_id
+        ? supabase
+            .from("categorias")
+            .select("*")
+            .eq("id", recuerdo.categoria_relacionada_id)
+            .maybeSingle()
+        : Promise.resolve({ data: null }),
+      recuerdo.producto_id
+        ? supabase.from("productos").select("*").eq("id", recuerdo.producto_id).maybeSingle()
+        : Promise.resolve({ data: null }),
+      recuerdo.categoria_relacionada_id
+        ? supabase
+            .from("productos")
+            .select("*")
+            .eq("categoria_id", recuerdo.categoria_relacionada_id)
+            .eq("activo", true)
+            .limit(4)
+        : Promise.resolve({ data: [] }),
+    ];
 
-    if (post.categoria_relacionada_id) {
-      const [{ data: cat }, { data: prods }] = await Promise.all([
-        supabase
-          .from("categorias")
-          .select("*")
-          .eq("id", post.categoria_relacionada_id)
-          .maybeSingle(),
-        supabase
-          .from("productos")
-          .select("*")
-          .eq("categoria_id", post.categoria_relacionada_id)
-          .eq("activo", true)
-          .limit(4),
-      ]);
-
-      categoriaRelacionada = cat ?? null;
-      productosRelacionados = prods ?? [];
-    }
+    const [
+      { data: distrito },
+      { data: categoriaRelacionada },
+      { data: productoRelacionado },
+      { data: productosRelacionados },
+    ] = await Promise.all(promesas);
 
     return {
-      post,
-      categoriaRelacionada,
-      productosRelacionados,
+      recuerdo,
+      categoriaRelacionada: categoriaRelacionada ?? null,
+      distrito: distrito ?? null,
+      productoRelacionado: productoRelacionado ?? null,
+      productosRelacionados: productosRelacionados ?? [],
     };
   } catch (err) {
     if (
@@ -732,12 +771,14 @@ export async function getBlogPostPorSlug(slug: string): Promise<BlogPostConDetal
 }
 
 /**
- * Para panel administrativo: devuelve todos los artículos (borradores, programados y publicados).
+ * Para panel administrativo: devuelve todos los recuerdos (borradores, programados y publicados).
  */
-export async function getAdminBlogPosts(): Promise<BlogPostRow[]> {
+export async function getAdminRecuerdos(): Promise<RecuerdoRow[]> {
   const { data, error } = await supabase
-    .from("blog_posts")
+    .from("recuerdos")
     .select("*")
+    .order("destacado", { ascending: false })
+    .order("orden", { ascending: true })
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -745,6 +786,32 @@ export async function getAdminBlogPosts(): Promise<BlogPostRow[]> {
   }
 
   return data ?? [];
+}
+
+// ─── Compatibilidad Blog (Fase 09) ────────────────────────────────────────────
+
+export interface BlogPostConDetalles {
+  post: BlogPostRow;
+  categoriaRelacionada: CategoriaRow | null;
+  productosRelacionados: ProductoRow[];
+}
+
+export async function getBlogPostsPublicos(): Promise<BlogPostRow[]> {
+  return getRecuerdosPublicos();
+}
+
+export async function getBlogPostPorSlug(slug: string): Promise<BlogPostConDetalles | null> {
+  const res = await getRecuerdoPorSlug(slug);
+  if (!res) return null;
+  return {
+    post: res.recuerdo,
+    categoriaRelacionada: res.categoriaRelacionada,
+    productosRelacionados: res.productosRelacionados,
+  };
+}
+
+export async function getAdminBlogPosts(): Promise<BlogPostRow[]> {
+  return getAdminRecuerdos();
 }
 
 // ─── Suscriptores ─────────────────────────────────────────────────────────────

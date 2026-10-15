@@ -32,7 +32,7 @@ async function main() {
     { loc: `${BASE_URL}/`, priority: "1.0", changefreq: "daily" },
     { loc: `${BASE_URL}/catalogo`, priority: "0.9", changefreq: "daily" },
     { loc: `${BASE_URL}/resenas`, priority: "0.8", changefreq: "weekly" },
-    { loc: `${BASE_URL}/blog`, priority: "0.8", changefreq: "weekly" },
+    { loc: `${BASE_URL}/recuerdos`, priority: "0.8", changefreq: "weekly" },
     { loc: `${BASE_URL}/nosotros`, priority: "0.7", changefreq: "monthly" },
     { loc: `${BASE_URL}/terminos`, priority: "0.5", changefreq: "monthly" },
     { loc: `${BASE_URL}/privacidad`, priority: "0.5", changefreq: "monthly" },
@@ -79,29 +79,29 @@ async function main() {
         }
       }
 
-      // 3. Artículos de blog publicados
+      // 3. Recuerdos de entrega publicados
       try {
-        const { data: posts } = await supabase
-          .from("blog_posts")
+        const { data: recuerdos } = await supabase
+          .from("recuerdos")
           .select("slug, updated_at, fecha_publicacion")
           .eq("publicado", true)
           .lte("fecha_publicacion", new Date().toISOString());
 
-        if (posts) {
-          for (const post of posts) {
-            const postLastMod = post.updated_at
-              ? new Date(post.updated_at).toISOString().split("T")[0]
+        if (recuerdos) {
+          for (const item of recuerdos) {
+            const itemLastMod = item.updated_at
+              ? new Date(item.updated_at).toISOString().split("T")[0]
               : now;
             urls.push({
-              loc: `${BASE_URL}/blog/${post.slug}`,
-              lastmod: postLastMod,
+              loc: `${BASE_URL}/recuerdos/${item.slug}`,
+              lastmod: itemLastMod,
               priority: "0.7",
-              changefreq: "monthly",
+              changefreq: "weekly",
             });
           }
         }
       } catch {
-        // Fallback silencioso si blog_posts aún no existe
+        // Fallback silencioso si recuerdos aún no existe
       }
     } catch (err) {
       console.warn("No se pudieron cargar datos dinámicos de Supabase para sitemap:", err);

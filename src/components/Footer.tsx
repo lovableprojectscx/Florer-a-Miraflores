@@ -118,10 +118,10 @@ export function Footer({ config }: Props) {
               </li>
               <li>
                 <Link
-                  to="/blog"
+                  to="/recuerdos"
                   className="hover:text-[#2C2420] hover:translate-x-1 inline-block transition-all duration-200"
                 >
-                  Blog
+                  Mural de Recuerdos
                 </Link>
               </li>
               {[

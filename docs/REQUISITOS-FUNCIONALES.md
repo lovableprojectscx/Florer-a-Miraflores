@@ -200,16 +200,16 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 
 ## 10.2. Mural de Recuerdos y Momentos Reales (Pivote Estratégico Fase 09/Recuerdos)
 
-*Decisión estratégica del negocio: Se reemplaza el blog convencional de guías botánicas/teóricas por un **Mural de Recuerdos de Entrega** interactivo tipo collage/polaroid. Este mural exhibe fotografías reales de entregas y momentos especiales en Lima, asociadas a la ocasión (cumpleaños, aniversario, amor, graduación, etc.), distrito y arreglo floral entregado para maximizar la prueba social y la conversión directa hacia el catálogo y WhatsApp.*
+_Decisión estratégica del negocio: Se reemplaza el blog convencional de guías botánicas/teóricas por un **Mural de Recuerdos de Entrega** interactivo tipo collage/polaroid. Este mural exhibe fotografías reales de entregas y momentos especiales en Lima, asociadas a la ocasión (cumpleaños, aniversario, amor, graduación, etc.), distrito y arreglo floral entregado para maximizar la prueba social y la conversión directa hacia el catálogo y WhatsApp._
 
-| ID     | Requisito                                                                                                                                                 | Prioridad | Estado | Fuente                         |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ------------------------------ |
-| RF-110 | Página pública `/recuerdos` (Mural): galería tipo collage/polaroid con fotos reales, filtros por ocasión y distrito, paginación y redirección 301 de `/blog` | Alta      | ⏳     | Pivote Estratégico Jack        |
-| RF-111 | Detalle `/recuerdos/$slug`: foto real HD en WebP, ocasión, distrito, dedicatoria/frase breve auténtica y 404 limpio si no existe o es borrador            | Alta      | ⏳     | Pivote Estratégico Jack        |
-| RF-112 | Conversión directa «Flores de este recuerdo»: bloque con el producto entregado (precio, foto) y botón para pedirlo al carrito o WhatsApp prellenado      | Media     | ⏳     | Conversión Cruzada Jack        |
-| RF-113 | Panel `/admin/recuerdos`: CRUD completo, asociación a foto WebP, distrito, ocasión, producto entregado, fecha, publicado y diálogo propio de eliminación  | Alta      | ⏳     | Panel Admin Jack               |
-| RF-114 | Optimización multimedia: fotos de entrega en WebP en Storage con miniaturas responsivas vía `subirImagenConMiniaturas`                                    | Alta      | ⏳     | Rendimiento y Storage          |
-| RF-115 | SEO local y Social Proof: Open Graph con foto real, meta tags orientados a distritos de Lima y ocasiones, sitemap.xml dinámico y marcado Schema.org     | Alta      | ⏳     | SEO Técnico Jack               |
+| ID     | Requisito                                                                                                                                                    | Prioridad | Estado | Fuente                  |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------ | ----------------------- |
+| RF-110 | Página pública `/recuerdos` (Mural): galería tipo collage/polaroid con fotos reales, filtros por ocasión y distrito, paginación y redirección 301 de `/blog` | Alta      | ✅     | Pivote Estratégico Jack |
+| RF-111 | Detalle `/recuerdos/$slug`: foto real HD en WebP, ocasión, distrito, dedicatoria/frase breve auténtica y 404 limpio si no existe o es borrador               | Alta      | ✅     | Pivote Estratégico Jack |
+| RF-112 | Conversión directa «Flores de este recuerdo»: bloque con el producto entregado (precio, foto) y botón para pedirlo al carrito o WhatsApp prellenado          | Media     | ✅     | Conversión Cruzada Jack |
+| RF-113 | Panel `/admin/recuerdos`: CRUD completo, asociación a foto WebP, distrito, ocasión, producto entregado, fecha, publicado y diálogo propio de eliminación     | Alta      | ✅     | Panel Admin Jack        |
+| RF-114 | Optimización multimedia: fotos de entrega en WebP en Storage con miniaturas responsivas vía `subirImagenConMiniaturas`                                       | Alta      | ✅     | Rendimiento y Storage   |
+| RF-115 | SEO local y Social Proof: Open Graph con foto real, meta tags orientados a distritos de Lima y ocasiones, sitemap.xml dinámico y marcado Schema.org          | Alta      | ✅     | SEO Técnico Jack        |
 
 ## 11. Requisitos No Funcionales (RNF)
 
