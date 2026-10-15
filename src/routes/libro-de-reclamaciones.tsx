@@ -19,7 +19,7 @@ export const Route = createFileRoute("/libro-de-reclamaciones")({
   },
   head: () => ({
     meta: [
-      { title: "Libro de Reclamaciones · Miraflores Boutique Floral" },
+      { title: "Libro de Reclamaciones | Florería Miraflores" },
       {
         name: "description",
         content:
@@ -84,7 +84,7 @@ function LibroReclamaciones() {
         </table>
         
         <p style="font-size: 12px; margin-top: -15px; margin-bottom: 20px;">
-          <strong>Miraflores Boutique Floral S.A.C.</strong> &middot; RUC: 20600000000 &middot; Domicilio: Av. Larco 345, Miraflores, Lima — Perú
+          <strong>Grupo Flowerstore SAC</strong> &middot; RUC: 20613383159 &middot; Establecimiento Virtual &middot; Lima &mdash; Per&uacute;
         </p>
         
         <div class="section-title">1. Identificación del consumidor</div>
@@ -331,9 +331,9 @@ function LibroReclamaciones() {
 Hoja de Reclamación N° ${String(claimData.numero).padStart(6, "0")}
 Fecha de registro: ${claimData.fecha}
 
-RAZÓN SOCIAL: Miraflores Boutique Floral S.A.C.
-RUC: 20600000000
-DOMICILIO: Av. Larco 345, Miraflores, Lima - Perú
+RAZÓN SOCIAL: Grupo Flowerstore SAC
+RUC: 20613383159
+ESTABLECIMIENTO: Tienda Virtual - Lima, Perú
 --------------------------------------------------
 
 1. IDENTIFICACIÓN DEL CONSUMIDOR:
@@ -486,10 +486,9 @@ no mayor a quince (15) días hábiles improrrogables.
             </div>
 
             <p className="mt-6 font-body font-light text-sm text-foreground/80 leading-relaxed">
-              <strong className="font-medium">Razón social:</strong> Miraflores Boutique Floral
-              S.A.C. · <strong className="font-medium">RUC:</strong> 20600000000 ·{" "}
-              <strong className="font-medium">Domicilio:</strong> Av. Larco 345, Miraflores, Lima —
-              Perú.
+              <strong className="font-medium">Razón social:</strong> Grupo Flowerstore SAC ·{" "}
+              <strong className="font-medium">RUC:</strong> 20613383159 ·{" "}
+              <strong className="font-medium">Establecimiento:</strong> Tienda Virtual — Lima, Perú.
             </p>
 
             {error && (

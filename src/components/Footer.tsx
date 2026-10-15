@@ -149,10 +149,10 @@ export function Footer({ config }: Props) {
           {/* Columna 4: Horario & Redes Sociales */}
           <div>
             <h4 className="font-body text-xs tracking-[0.2em] uppercase font-medium text-[#2C2420] mb-5">
-              Visítanos & Horarios
+              Atención & Horarios
             </h4>
             <div className="space-y-3 font-body font-light text-xs sm:text-sm text-[#2C2420]/75">
-              <p>Miraflores, Lima, Perú</p>
+              <p>Tienda Virtual · Lima, Perú</p>
               <p className="text-xs text-[#8A7A6E]">
                 Horario de atención:
                 <br />

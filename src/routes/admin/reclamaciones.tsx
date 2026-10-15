@@ -116,7 +116,7 @@ function DetalleModal({ claim, onClose }: DetalleModalProps) {
         </table>
         
         <p style="font-size: 12px; margin-top: -15px; margin-bottom: 20px;">
-          <strong>Miraflores Boutique Floral S.A.C.</strong> &middot; RUC: 20600000000 &middot; Domicilio: Av. Larco 345, Miraflores, Lima — Perú
+          <strong>Grupo Flowerstore SAC</strong> &middot; RUC: 20613383159 &middot; Establecimiento Virtual &middot; Lima &mdash; Per&uacute;
         </p>
         
         <div class="section-title">1. Identificación del consumidor</div>
