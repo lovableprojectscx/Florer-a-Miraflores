@@ -172,7 +172,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
             url={imgSrc}
             fallbackUrl={imgSrc}
             anchoMiniatura={480}
-            sizes="(min-width: 1920px) 450px, (min-width: 1440px) 335px, (min-width: 1024px) 24vw, (min-width: 768px) 31vw, 45vw"
+            sizes="(min-width: 1920px) 565px, (min-width: 1440px) 500px, (min-width: 1024px) 500px, (min-width: 768px) 39vw, 56vw"
             alt={producto.nombre}
             loading="lazy"
             style={

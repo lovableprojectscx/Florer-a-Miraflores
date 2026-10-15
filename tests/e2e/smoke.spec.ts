@@ -89,4 +89,25 @@ test.describe("Smoke E2E — Rutas públicas", () => {
       page.getByRole("heading", { name: /not found|no encontrad[oa]|404/i }).first(),
     ).toBeVisible();
   });
+
+  test("Footer (Fase 06-H): no muestra redes con link 'pendiente' ni Términos del Servicio, y popup permanece inactivo", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const footer = page.locator("footer");
+    await expect(footer).toBeVisible();
+
+    // 1. No debe existir ningún enlace que apunte a /pendiente ni texto "pendiente"
+    const pendienteLinks = footer.locator('a[href*="pendiente"]');
+    expect(await pendienteLinks.count()).toBe(0);
+
+    // 2. No debe mostrarse el link de "Términos del Servicio"
+    const terminosLink = footer.getByRole("link", { name: /términos del servicio/i });
+    expect(await terminosLink.count()).toBe(0);
+
+    // 3. Verificar que el popup no abre automáticamente
+    await page.waitForTimeout(3500);
+    const popupModal = page.locator('div[role="dialog"][aria-label*="Promoción"]');
+    expect(await popupModal.count()).toBe(0);
+  });
 });

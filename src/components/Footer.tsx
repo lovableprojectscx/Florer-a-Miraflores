@@ -15,13 +15,26 @@ function TikTokIcon() {
   );
 }
 
+function esUrlValida(url?: string | null): boolean {
+  if (!url) return false;
+  const trimmed = url.trim();
+  if (!trimmed || trimmed.toLowerCase() === "pendiente" || trimmed === "/pendiente") {
+    return false;
+  }
+  return true;
+}
+
 export function Footer({ config }: Props) {
   const whatsapp = config?.whatsapp ?? "+51 999 600 482";
   const correo = config?.correo ?? "pedidos@floreriamiraflores.com";
   const horario = config?.horario ?? "Lunes a Domingo, 8:00 am a 8:00 pm";
-  const instagram = config?.instagram_url ?? "https://www.instagram.com/floreriamirafloreslima";
-  const tiktok = config?.tiktok_url ?? "https://www.tiktok.com/@floreriamirafloreslima";
-  const facebook = config?.facebook_url ?? null;
+  const instagram = esUrlValida(config?.instagram_url)
+    ? config!.instagram_url!
+    : "https://www.instagram.com/floreriamirafloreslima";
+  const tiktok = esUrlValida(config?.tiktok_url)
+    ? config!.tiktok_url!
+    : "https://www.tiktok.com/@floreriamirafloreslima";
+  const facebook = esUrlValida(config?.facebook_url) ? config!.facebook_url! : null;
 
   return (
     <footer className="bg-[#FFFFFF] border-t border-[#E8DDD0]/80">
@@ -114,7 +127,6 @@ export function Footer({ config }: Props) {
               {[
                 { label: "Zonas de Delivery y Cobertura", href: "/#delivery" },
                 { label: "Preguntas Frecuentes", href: "/#faq" },
-                { label: "Términos del Servicio", href: "/#faq" },
               ].map((l) => (
                 <li key={l.label}>
                   <a
@@ -154,15 +166,17 @@ export function Footer({ config }: Props) {
                 Síguenos
               </p>
               <div className="flex gap-3">
-                <a
-                  href={instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="w-9 h-9 rounded-full bg-[#FAF8F5] border border-[#E8DDD0] flex items-center justify-center text-[#2C2420] hover:bg-[#2C2420] hover:text-white transition-all duration-300 shadow-xs"
-                >
-                  <Instagram className="h-4 w-4" strokeWidth={1.5} />
-                </a>
+                {instagram && (
+                  <a
+                    href={instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="w-9 h-9 rounded-full bg-[#FAF8F5] border border-[#E8DDD0] flex items-center justify-center text-[#2C2420] hover:bg-[#2C2420] hover:text-white transition-all duration-300 shadow-xs"
+                  >
+                    <Instagram className="h-4 w-4" strokeWidth={1.5} />
+                  </a>
+                )}
                 {tiktok && (
                   <a
                     href={tiktok}

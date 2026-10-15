@@ -199,4 +199,47 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
       expect(naturalWidth).toBeGreaterThan(0);
     }
   });
+
+  test("Fase 06-H: En desktop 1920 y 1440 las fotos con zoom de Novedades cargan /960/ o original, nunca /480/", async ({
+    page,
+  }, testInfo) => {
+    if (testInfo.project.name !== "desktop") {
+      test.skip(true, "Prueba exclusiva para escritorio");
+      return;
+    }
+
+    // 1. En 1440x900 (viewport por defecto de proyecto desktop)
+    await page.goto("/");
+    await waitForHydration(page, "main");
+
+    const imgSelector = "#novedades img, section[id^='tag-'] img";
+    const firstImg = page.locator(imgSelector).first();
+    await expect(firstImg).toBeVisible();
+
+    await expect
+      .poll(async () => {
+        return await firstImg.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        );
+      })
+      .toBe(true);
+
+    const currentSrc1440 = await firstImg.evaluate((img: HTMLImageElement) => img.currentSrc);
+    console.log(`[Fase 06-H 1440] currentSrc: ${currentSrc1440}`);
+    expect(currentSrc1440).not.toContain("/thumbs/480/");
+    if (currentSrc1440.includes("supabase.co/storage")) {
+      expect(currentSrc1440).toMatch(/(thumbs\/960\/|[^/]+\.webp)/);
+    }
+
+    // 2. En 1920x1080
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.waitForTimeout(400);
+
+    const currentSrc1920 = await firstImg.evaluate((img: HTMLImageElement) => img.currentSrc);
+    console.log(`[Fase 06-H 1920] currentSrc: ${currentSrc1920}`);
+    expect(currentSrc1920).not.toContain("/thumbs/480/");
+    if (currentSrc1920.includes("supabase.co/storage")) {
+      expect(currentSrc1920).toMatch(/(thumbs\/960\/|[^/]+\.webp)/);
+    }
+  });
 });
