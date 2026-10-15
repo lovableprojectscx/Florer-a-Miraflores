@@ -266,42 +266,46 @@ Creada mediante [`docs/sql/007-testimonios.sql`](./sql/007-testimonios.sql) para
 
 ---
 
-## 11. Blog Administrable y Artículos SEO (Fase 09)
+## 11. Mural de Recuerdos y Momentos Reales (Pivote Estratégico Fase 09/Recuerdos)
 
-### 11.1. Tabla `public.blog_posts`
+### 11.1. Tabla `public.recuerdos` (anteriormente `public.blog_posts`)
 
-Creada mediante [`docs/sql/008-blog.sql`](./sql/008-blog.sql) para la publicación editorial de guías, consejos de cuidado floral y contenidos SEO orientados a captar tráfico orgánico y convertir lectores en compradores mediante recomendaciones cruzadas.
+Evolución arquitectónica para reemplazar los artículos teóricos de blog por recuerdos visuales de entregas reales en Lima, conectando cada historia emotiva directamente con un distrito (`distritos.id`), una ocasión (`categorias.id`) y el arreglo floral entregado (`productos.id`) para compra inmediata.
 
 | Columna                    | Tipo          | Nulo | Default / Constraint                           | Descripción                                                               |
 | :------------------------- | :------------ | :--: | :--------------------------------------------- | :------------------------------------------------------------------------ |
-| `id`                       | `uuid`        |  NO  | `gen_random_uuid()` PK                         | Identificador único del artículo                                          |
-| `titulo`                   | `text`        |  NO  | —                                              | Título del artículo (ej. "Significado de los colores de las rosas")       |
+| `id`                       | `uuid`        |  NO  | `gen_random_uuid()` PK                         | Identificador único del recuerdo                                          |
+| `titulo`                   | `text`        |  NO  | —                                              | Título del recuerdo (ej. "Entrega de Aniversario en Miraflores")          |
 | `slug`                     | `text`        |  NO  | `UNIQUE`                                       | Identificador de URL amigable en minúsculas y sin acentos                 |
-| `resumen`                  | `text`        |  SÍ  | `null`                                         | Bajada o resumen corto (máx ~160 caracteres, usado como meta description) |
-| `contenido`                | `text`        |  NO  | —                                              | Cuerpo del artículo en formato Markdown seguro (sin HTML crudo)           |
-| `imagen_portada_url`       | `text`        |  SÍ  | `null`                                         | URL de la imagen principal destacada (aspecto 16:9)                       |
-| `autor`                    | `text`        |  NO  | `'Florería Miraflores'`                        | Firma del autor del contenido                                             |
-| `categoria_relacionada_id` | `uuid`        |  SÍ  | `REFERENCES categorias(id) ON DELETE SET NULL` | Categoría opcional vinculada para recomendar productos                    |
-| `publicado`                | `boolean`     |  NO  | `false`                                        | Conmutador de publicación (true = visible según fecha)                    |
-| `fecha_publicacion`        | `timestamptz` |  SÍ  | `now()`                                        | Fecha programada o de publicación efectiva                                |
-| `meta_title`               | `text`        |  SÍ  | `null`                                         | Título SEO opcional para Google (`<title>` y `og:title`)                  |
-| `meta_description`         | `text`        |  SÍ  | `null`                                         | Descripción SEO opcional (`<meta name="description">`)                    |
+| `resumen`                  | `text`        |  SÍ  | `null`                                         | Frase o dedicatoria corta destacada del momento                           |
+| `contenido`                | `text`        |  NO  | —                                              | Reseña breve o historia verídica de la entrega en Markdown seguro         |
+| `imagen_portada_url`       | `text`        |  SÍ  | `null`                                         | URL de la fotografía real de entrega optimizada en WebP                   |
+| `fotos_galeria`            | `text[]`      |  SÍ  | `'{}'::text[]`                                 | Galería opcional de fotos adicionales de la misma entrega                 |
+| `categoria_relacionada_id` | `uuid`        |  SÍ  | `REFERENCES categorias(id) ON DELETE SET NULL` | Ocasión asociada (Cumpleaños, Amor / Aniversario, Graduación, etc.)       |
+| `distrito_id`              | `uuid`        |  SÍ  | `REFERENCES distritos(id) ON DELETE SET NULL`  | Distrito de Lima donde se entregó (Miraflores, San Isidro, Surco, etc.)   |
+| `producto_id`              | `uuid`        |  SÍ  | `REFERENCES productos(id) ON DELETE SET NULL`  | Arreglo floral exacto entregado para compra cruzada o pedido WhatsApp     |
+| `publicado`                | `boolean`     |  NO  | `false`                                        | Conmutador de visibilidad pública (true = visible según fecha)            |
+| `fecha_publicacion`        | `timestamptz` |  SÍ  | `now()`                                        | Fecha del momento o publicación                                           |
+| `destacado`                | `boolean`     |  NO  | `false`                                        | Indicador para destacar el recuerdo en portada o carrusel                 |
+| `orden`                    | `integer`     |  NO  | `0`                                            | Posición ordinal para ordenamiento manual en el mural                     |
+| `meta_title`               | `text`        |  SÍ  | `null`                                         | Título SEO hiperlocal opcional para Google (`<title>`)                    |
+| `meta_description`         | `text`        |  SÍ  | `null`                                         | Meta descripción SEO opcional orientada a la ocasión y distrito           |
 | `created_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de creación del registro                                            |
-| `updated_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de última modificación (actualizada por trigger)                    |
+| `updated_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de última actualización (actualizada por trigger)                   |
 
-### 11.2. Políticas RLS en `public.blog_posts`
+### 11.2. Políticas RLS en la tabla de Recuerdos
 
-- `Public Read Published Blog Posts`: `FOR SELECT TO public USING ((publicado = true AND fecha_publicacion <= now()) OR is_admin())`.
-  - El público anónimo **solo** puede ver artículos que estén explícitamente marcados como publicados y cuya fecha de publicación sea menor o igual al momento actual.
-  - Los administradores autenticados (`is_admin()`) pueden ver todos los artículos (borradores, programados y publicados).
-- `Admin All Blog Posts`: `FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin())`.
-  - Únicamente usuarios administradores registrados en `public.admins` pueden crear, editar o eliminar artículos.
+- `Public Read Published Recuerdos`: `FOR SELECT TO public USING ((publicado = true AND fecha_publicacion <= now()) OR is_admin())`.
+  - El público anónimo **solo** puede ver recuerdos publicados cuya fecha sea menor o igual al momento actual.
+  - Los administradores autenticados (`is_admin()`) visualizan borradores, programados y publicados.
+- `Admin All Recuerdos`: `FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin())`.
+  - Exclusivo para administradores de `public.admins` para crear, actualizar o eliminar recuerdos.
 
 ### 11.3. Trigger de Actualización Automática
 
-- Trigger `set_blog_posts_updated_at` que ejecuta la función `update_updated_at_column()` antes de cada actualización (`BEFORE UPDATE ON public.blog_posts`).
+- Trigger `set_recuerdos_updated_at` que ejecuta `update_updated_at_column()` en `BEFORE UPDATE`.
 
-### 11.4. Bucket de Supabase Storage `blog`
+### 11.4. Buckets de Almacenamiento en Supabase Storage
 
-- Bucket con acceso público de lectura (`SELECT`) y restricciones estrictas de subida (`INSERT`), actualización (`UPDATE`) y borrado (`DELETE`) exclusivas para `is_admin()`.
-- Optimización automática con miniaturas en WebP para portadas e imágenes dentro del cuerpo del artículo mediante `subirImagenConMiniaturas`.
+- Se aprovechan los buckets públicos `testimonios` y `blog` (o nuevo alias `recuerdos`) con lectura pública libre y escritura/borrado restringidos a `is_admin()`.
+- Optimización estricta: imágenes en WebP de alta fidelidad con miniaturas responsivas para carga ultrarrápida mediante `subirImagenConMiniaturas`.
