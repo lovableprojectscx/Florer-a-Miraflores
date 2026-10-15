@@ -1,7 +1,8 @@
 # Reporte — Fase 07: Reseñas y Testimonios (Opción D: Reseñas reales de Google elegidas a mano)
+
 **Rama:** `fase-07-resenas`  
 **Fecha:** 14 de Octubre de 2026  
-**Estado:** ✅ APROBADO por el revisor — SQL 007 Ejecutado y Verificado  
+**Estado:** ✅ APROBADO por el revisor — SQL 007 Ejecutado y Verificado
 
 ---
 
@@ -42,7 +43,7 @@
    - Nueva sección "Testimonios" (ícono `Star`) en el sidebar administrativo.
    - Lista con ordenamiento interactivo (flechas ↑ / ↓), toggles de `destacado` y `activo` en un solo clic.
    - Modal de creación y edición: selector de estrellas 1 a 5, selector de fuente (`google`, `whatsapp`, `facebook`, `directo`), subida de foto WebP optimizada con miniaturas.
-   - **Advertencia obligatoria de autenticidad**: *"Copia la reseña tal cual aparece en Google. No la edites ni inventes reseñas."*
+   - **Advertencia obligatoria de autenticidad**: _"Copia la reseña tal cual aparece en Google. No la edites ni inventes reseñas."_
    - Bloque de configuración del resumen de Google con preview en tiempo real.
    - Modal de confirmación propio para eliminación (sin `window.confirm`).
 
@@ -66,62 +67,74 @@
 Tras la aprobación de Jack ("SQL 007 aprobado por el revisor"), la migración fue aplicada exitosamente en Supabase. A continuación los resultados reales de las 4 consultas de verificación ejecutadas por MCP:
 
 #### 1. Columnas de `public.testimonios`:
+
 ```sql
 SELECT column_name, data_type, is_nullable, column_default
 FROM information_schema.columns
 WHERE table_name = 'testimonios'
 ORDER BY ordinal_position;
 ```
+
 **Resultado real devuelto:**
-| column_name | data_type | is_nullable | column_default |
-| :--- | :--- | :--- | :--- |
-| `id` | uuid | NO | `gen_random_uuid()` |
-| `nombre` | text | NO | _null_ |
-| `texto` | text | NO | _null_ |
-| `estrellas` | integer | NO | _null_ |
-| `fecha` | date | YES | _null_ |
-| `fuente` | text | NO | `'google'::text` |
-| `enlace_original`| text | YES | _null_ |
-| `imagen_url` | text | YES | _null_ |
-| `destacado` | boolean | NO | `false` |
-| `orden` | integer | NO | `0` |
-| `activo` | boolean | NO | `true` |
-| `created_at` | timestamp with time zone | NO | `now()` |
+
+| column_name       | data_type                | is_nullable | column_default      |
+| :---------------- | :----------------------- | :---------- | :------------------ |
+| `id`              | uuid                     | NO          | `gen_random_uuid()` |
+| `nombre`          | text                     | NO          | _null_              |
+| `texto`           | text                     | NO          | _null_              |
+| `estrellas`       | integer                  | NO          | _null_              |
+| `fecha`           | date                     | YES         | _null_              |
+| `fuente`          | text                     | NO          | `'google'::text`    |
+| `enlace_original` | text                     | YES         | _null_              |
+| `imagen_url`      | text                     | YES         | _null_              |
+| `destacado`       | boolean                  | NO          | `false`             |
+| `orden`           | integer                  | NO          | `0`                 |
+| `activo`          | boolean                  | NO          | `true`              |
+| `created_at`      | timestamp with time zone | NO          | `now()`             |
 
 #### 2. Columnas añadidas en `public.config`:
+
 ```sql
 SELECT column_name, data_type
 FROM information_schema.columns
 WHERE table_name = 'config' AND column_name IN ('google_reviews_url', 'google_rating', 'google_reviews_count', 'mostrar_resenas_home')
 ORDER BY ordinal_position;
 ```
+
 **Resultado real devuelto:**
-| column_name | data_type |
-| :--- | :--- |
-| `google_reviews_url` | text |
-| `google_rating` | numeric |
-| `google_reviews_count` | integer |
-| `mostrar_resenas_home` | boolean |
+
+| column_name            | data_type |
+| :--------------------- | :-------- |
+| `google_reviews_url`   | text      |
+| `google_rating`        | numeric   |
+| `google_reviews_count` | integer   |
+| `mostrar_resenas_home` | boolean   |
 
 #### 3. Políticas RLS en `public.testimonios`:
+
 ```sql
 SELECT policyname, cmd, roles, qual, with_check
 FROM pg_policies
 WHERE tablename = 'testimonios'
 ORDER BY policyname;
 ```
+
 **Resultado real devuelto:**
-| policyname | cmd | roles | qual | with_check |
-| :--- | :--- | :--- | :--- | :--- |
-| `Admin Write testimonios` | ALL | `{authenticated}` | `is_admin()` | `is_admin()` |
-| `Public Read testimonios` | SELECT | `{public}` | `((activo = true) OR is_admin())` | _null_ |
+
+| policyname                | cmd    | roles             | qual                              | with_check   |
+| :------------------------ | :----- | :---------------- | :-------------------------------- | :----------- |
+| `Admin Write testimonios` | ALL    | `{authenticated}` | `is_admin()`                      | `is_admin()` |
+| `Public Read testimonios` | SELECT | `{public}`        | `((activo = true) OR is_admin())` | _null_       |
 
 #### 4. Bucket y Políticas en Supabase Storage:
+
 ```sql
 SELECT id, name, public FROM storage.buckets WHERE id = 'testimonios';
 SELECT policyname, cmd FROM pg_policies WHERE schemaname = 'storage' AND tablename = 'objects' AND policyname LIKE '%testimonios%' ORDER BY policyname;
 ```
+
 **Resultado real devuelto:**
+
 - **Bucket:** `[{"id":"testimonios","name":"testimonios","public":true}]`
 - **Políticas de objetos:**
   - `admin puede actualizar testimonios` (UPDATE)
@@ -140,14 +153,16 @@ Durante el ciclo de desarrollo y pruebas en el worktree `floreria-resenas`, se d
 2. `docs/evidencias/fase-01/` y `docs/evidencias/fase-06b/`:
    - **Motivo del restore:** Se regeneraron capturas temporales durante pruebas de regresión visual de fases anteriores. Se descartaron para conservar las evidencias históricas auditadas oficiales.
 3. `playwright.config.ts`:
-   - **Motivo del restore:** Se configuró localmente con `PORT=8081` para levantar el dev server en un puerto aislado y no interferir con la otra conversación que corre en paralelo en el puerto `8080`. Se restauró a `8080` antes de confirmar el commit para respetar la instrucción expresa: *"no hagas commit de ese cambio de puerto"*.
+   - **Motivo del restore:** Se configuró localmente con `PORT=8081` para levantar el dev server en un puerto aislado y no interferir con la otra conversación que corre en paralelo en el puerto `8080`. Se restauró a `8080` antes de confirmar el commit para respetar la instrucción expresa: _"no hagas commit de ese cambio de puerto"_.
 
 ---
 
 ### Evidencia Técnica
 
 #### 1. Pipeline de Verificación (`npm run verify`)
+
 Archivo guardado en: [`docs/evidencias/fase-07/verify.txt`](file:///docs/evidencias/fase-07/verify.txt)
+
 ```text
 > verify
 > npm run lint && npm run typecheck && npm run test && npm run build
@@ -180,7 +195,9 @@ Postbuild: Created dist/server/server.js for preview compatibility
 ```
 
 #### 2. Suite Completa E2E Playwright (`npm run test:e2e`)
+
 Archivo guardado en: [`docs/evidencias/fase-07/e2e.txt`](file:///docs/evidencias/fase-07/e2e.txt)
+
 ```text
 Running 86 tests using 1 worker
 
@@ -198,6 +215,7 @@ Running 86 tests using 1 worker
 ```
 
 #### 3. Capturas de Pantalla Generadas
+
 - [`docs/evidencias/fase-07/resenas-390.png`](file:///docs/evidencias/fase-07/resenas-390.png): Página `/resenas` en celular 390px (sin scroll horizontal, diseño limpio).
 - [`docs/evidencias/fase-07/resenas-1440.png`](file:///docs/evidencias/fase-07/resenas-1440.png): Página `/resenas` en escritorio 1440px (grilla editorial de 3 columnas).
 - [`docs/evidencias/fase-07/admin-testimonios-desktop.png`](file:///docs/evidencias/fase-07/admin-testimonios-desktop.png): Panel administrativo `/admin/testimonios` con resumen de Google y formulario.
@@ -226,7 +244,7 @@ Running 86 tests using 1 worker
      - Rating (ej. `4.9`).
      - Cantidad de reseñas (ej. `128`).
    - Copiar de 3 a 5 reseñas reales destacadas desde Google Maps y guardarlas.
-   - Encender el switch *"Mostrar franja de testimonios en la página de inicio (Home)"*.
+   - Encender el switch _"Mostrar franja de testimonios en la página de inicio (Home)"_.
 2. **Capacitación para Sofía**:
    - Compartir [`docs/GUIA-PANEL-TESTIMONIOS.md`](file:///docs/GUIA-PANEL-TESTIMONIOS.md) con la encargada.
 3. **Integración**:

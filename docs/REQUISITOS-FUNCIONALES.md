@@ -190,13 +190,24 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 
 ## 10.1. Reseñas y Testimonios Reales (Fase 07)
 
-| ID      | Requisito                                                                                                  | Prioridad | Estado | Fuente                          |
-| ------- | ---------------------------------------------------------------------------------------------------------- | --------- | ------ | ------------------------------- |
-| RF-100  | Página pública `/resenas` con grilla de tarjetas, estrellas, texto expandible, nombre, fecha y foto opcional | Alta      | ✅     | Prompt 07 (Decisión Jack)       |
-| RF-101  | Resumen de Google («★ 4,9 · 120 reseñas») y botón "Ver todas en Google" basado en datos reales de `config`   | Alta      | ✅     | Prompt 07 (Decisión Jack)       |
-| RF-102  | Franja carrusel horizontal en Home debajo de Colecciones, con regla: `mostrar_resenas_home = true` y >= 3 activas | Media     | ✅     | Prompt 07 (Decisión Jack)       |
-| RF-103  | Enlace a `/resenas` en Footer y en sitemap.xml (sin JSON-LD artificial según directrices de Google)       | Media     | ✅     | Prompt 07 (SEO)                 |
-| RF-104  | Módulo admin `/admin/testimonios`: CRUD, selector visual 1-5 estrellas, fotos WebP, aviso de no inventar y fallback SQL 007 | Alta      | ✅     | Prompt 07 (Panel Administrativo)|
+| ID     | Requisito                                                                                                                   | Prioridad | Estado | Fuente                           |
+| ------ | --------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | -------------------------------- |
+| RF-100 | Página pública `/resenas` con grilla de tarjetas, estrellas, texto expandible, nombre, fecha y foto opcional                | Alta      | ✅     | Prompt 07 (Decisión Jack)        |
+| RF-101 | Resumen de Google («★ 4,9 · 120 reseñas») y botón "Ver todas en Google" basado en datos reales de `config`                  | Alta      | ✅     | Prompt 07 (Decisión Jack)        |
+| RF-102 | Franja carrusel horizontal en Home debajo de Colecciones, con regla: `mostrar_resenas_home = true` y >= 3 activas           | Media     | ✅     | Prompt 07 (Decisión Jack)        |
+| RF-103 | Enlace a `/resenas` en Footer y en sitemap.xml (sin JSON-LD artificial según directrices de Google)                         | Media     | ✅     | Prompt 07 (SEO)                  |
+| RF-104 | Módulo admin `/admin/testimonios`: CRUD, selector visual 1-5 estrellas, fotos WebP, aviso de no inventar y fallback SQL 007 | Alta      | ✅     | Prompt 07 (Panel Administrativo) |
+
+## 10.2. Blog Administrable y Artículos SEO (Fase 09)
+
+| ID     | Requisito                                                                                                                     | Prioridad | Estado | Fuente                         |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ------------------------------ |
+| RF-110 | Página `/blog` con listado de artículos publicados, tarjetas 16:9, fecha, tiempo de lectura y paginación en lotes de 12       | Alta      | ✅     | Prompt 09 (SEO y Contenidos)   |
+| RF-111 | Detalle `/blog/$slug`: portada, autor, fecha, Markdown seguro sin HTML crudo y 404 limpio si no existe o es borrador          | Alta      | ✅     | Prompt 09 (SEO y Contenidos)   |
+| RF-112 | Bloque "Te puede gustar" al pie del artículo con hasta 4 productos activos de la categoría relacionada y botón a la categoría | Media     | ✅     | Prompt 09 (Conversión cruzada) |
+| RF-113 | Panel `/admin/blog` con CRUD, filtros por estado (Borrador/Publicado/Programado), buscador y diálogo de eliminación propio    | Alta      | ✅     | Prompt 09 (Panel Admin)        |
+| RF-114 | Editor Markdown con pestañas Escribir / Vista previa, botón de insertar imagen optimizada a Storage y auto-slug               | Alta      | ✅     | Prompt 09 (Panel Admin)        |
+| RF-115 | SEO técnico: Open Graph, `<title>`, meta description, JSON-LD estructurado `BlogPosting` e inclusión en sitemap.xml           | Alta      | ✅     | Prompt 09 (SEO Técnico)        |
 
 ## 11. Requisitos No Funcionales (RNF)
 

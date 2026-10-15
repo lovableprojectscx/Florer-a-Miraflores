@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdminLoginRouteImport } from './routes/admin-login'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ConfirmacionRouteImport } from './routes/confirmacion'
@@ -19,6 +20,7 @@ import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-recl
 import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as ResenasRouteImport } from './routes/resenas'
 import { Route as AdminBannersRouteImport } from './routes/admin/banners'
+import { Route as AdminBlogRouteImport } from './routes/admin/blog'
 import { Route as AdminCategoriasRouteImport } from './routes/admin/categorias'
 import { Route as AdminColeccionesHomeRouteImport } from './routes/admin/colecciones-home'
 import { Route as AdminConfigRouteImport } from './routes/admin/config'
@@ -31,6 +33,7 @@ import { Route as AdminProductosRouteImport } from './routes/admin/productos'
 import { Route as AdminReclamacionesRouteImport } from './routes/admin/reclamaciones'
 import { Route as AdminTagsRouteImport } from './routes/admin/tags'
 import { Route as AdminTestimoniosRouteImport } from './routes/admin/testimonios'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as ProductoIdRouteImport } from './routes/producto.$id'
 import { Route as TagKeyRouteImport } from './routes/tag.$key'
@@ -49,6 +52,11 @@ const AdminRoute = AdminRouteImport.update({
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin-login',
   path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogoRoute = CatalogoRouteImport.update({
@@ -84,6 +92,11 @@ const ResenasRoute = ResenasRouteImport.update({
 const AdminBannersRoute = AdminBannersRouteImport.update({
   id: '/banners',
   path: '/banners',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminCategoriasRoute = AdminCategoriasRouteImport.update({
@@ -146,6 +159,11 @@ const AdminTestimoniosRoute = AdminTestimoniosRouteImport.update({
   path: '/testimonios',
   getParentRoute: () => AdminRoute,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
   id: '/categoria/$slug',
   path: '/categoria/$slug',
@@ -171,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin-login': typeof AdminLoginRoute
+  '/blog': typeof BlogRouteWithChildren
   '/catalogo': typeof CatalogoRoute
   '/checkout': typeof CheckoutRoute
   '/confirmacion': typeof ConfirmacionRoute
@@ -178,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/nosotros': typeof NosotrosRoute
   '/resenas': typeof ResenasRoute
   '/admin/banners': typeof AdminBannersRoute
+  '/admin/blog': typeof AdminBlogRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/colecciones-home': typeof AdminColeccionesHomeRoute
   '/admin/config': typeof AdminConfigRoute
@@ -190,6 +210,7 @@ export interface FileRoutesByFullPath {
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
   '/admin/tags': typeof AdminTagsRoute
   '/admin/testimonios': typeof AdminTestimoniosRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/tag/$key': typeof TagKeyRoute
@@ -199,6 +220,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin-login': typeof AdminLoginRoute
+  '/blog': typeof BlogRouteWithChildren
   '/catalogo': typeof CatalogoRoute
   '/checkout': typeof CheckoutRoute
   '/confirmacion': typeof ConfirmacionRoute
@@ -206,6 +228,7 @@ export interface FileRoutesByTo {
   '/nosotros': typeof NosotrosRoute
   '/resenas': typeof ResenasRoute
   '/admin/banners': typeof AdminBannersRoute
+  '/admin/blog': typeof AdminBlogRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/colecciones-home': typeof AdminColeccionesHomeRoute
   '/admin/config': typeof AdminConfigRoute
@@ -218,6 +241,7 @@ export interface FileRoutesByTo {
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
   '/admin/tags': typeof AdminTagsRoute
   '/admin/testimonios': typeof AdminTestimoniosRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/tag/$key': typeof TagKeyRoute
@@ -228,6 +252,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin-login': typeof AdminLoginRoute
+  '/blog': typeof BlogRouteWithChildren
   '/catalogo': typeof CatalogoRoute
   '/checkout': typeof CheckoutRoute
   '/confirmacion': typeof ConfirmacionRoute
@@ -235,6 +260,7 @@ export interface FileRoutesById {
   '/nosotros': typeof NosotrosRoute
   '/resenas': typeof ResenasRoute
   '/admin/banners': typeof AdminBannersRoute
+  '/admin/blog': typeof AdminBlogRoute
   '/admin/categorias': typeof AdminCategoriasRoute
   '/admin/colecciones-home': typeof AdminColeccionesHomeRoute
   '/admin/config': typeof AdminConfigRoute
@@ -247,6 +273,7 @@ export interface FileRoutesById {
   '/admin/reclamaciones': typeof AdminReclamacionesRoute
   '/admin/tags': typeof AdminTagsRoute
   '/admin/testimonios': typeof AdminTestimoniosRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/categoria/$slug': typeof CategoriaSlugRouteWithChildren
   '/producto/$id': typeof ProductoIdRoute
   '/tag/$key': typeof TagKeyRoute
@@ -258,6 +285,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/admin-login'
+    | '/blog'
     | '/catalogo'
     | '/checkout'
     | '/confirmacion'
@@ -265,6 +293,7 @@ export interface FileRouteTypes {
     | '/nosotros'
     | '/resenas'
     | '/admin/banners'
+    | '/admin/blog'
     | '/admin/categorias'
     | '/admin/colecciones-home'
     | '/admin/config'
@@ -277,6 +306,7 @@ export interface FileRouteTypes {
     | '/admin/reclamaciones'
     | '/admin/tags'
     | '/admin/testimonios'
+    | '/blog/$slug'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/tag/$key'
@@ -286,6 +316,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/admin-login'
+    | '/blog'
     | '/catalogo'
     | '/checkout'
     | '/confirmacion'
@@ -293,6 +324,7 @@ export interface FileRouteTypes {
     | '/nosotros'
     | '/resenas'
     | '/admin/banners'
+    | '/admin/blog'
     | '/admin/categorias'
     | '/admin/colecciones-home'
     | '/admin/config'
@@ -305,6 +337,7 @@ export interface FileRouteTypes {
     | '/admin/reclamaciones'
     | '/admin/tags'
     | '/admin/testimonios'
+    | '/blog/$slug'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/tag/$key'
@@ -314,6 +347,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/admin-login'
+    | '/blog'
     | '/catalogo'
     | '/checkout'
     | '/confirmacion'
@@ -321,6 +355,7 @@ export interface FileRouteTypes {
     | '/nosotros'
     | '/resenas'
     | '/admin/banners'
+    | '/admin/blog'
     | '/admin/categorias'
     | '/admin/colecciones-home'
     | '/admin/config'
@@ -333,6 +368,7 @@ export interface FileRouteTypes {
     | '/admin/reclamaciones'
     | '/admin/tags'
     | '/admin/testimonios'
+    | '/blog/$slug'
     | '/categoria/$slug'
     | '/producto/$id'
     | '/tag/$key'
@@ -343,6 +379,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CatalogoRoute: typeof CatalogoRoute
   CheckoutRoute: typeof CheckoutRoute
   ConfirmacionRoute: typeof ConfirmacionRoute
@@ -375,6 +412,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-login'
       fullPath: '/admin-login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogo': {
@@ -424,6 +468,13 @@ declare module '@tanstack/react-router' {
       path: '/banners'
       fullPath: '/admin/banners'
       preLoaderRoute: typeof AdminBannersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/categorias': {
@@ -510,6 +561,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTestimoniosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/categoria/$slug': {
       id: '/categoria/$slug'
       path: '/categoria/$slug'
@@ -543,6 +601,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminBannersRoute: typeof AdminBannersRoute
+  AdminBlogRoute: typeof AdminBlogRoute
   AdminCategoriasRoute: typeof AdminCategoriasRoute
   AdminColeccionesHomeRoute: typeof AdminColeccionesHomeRoute
   AdminConfigRoute: typeof AdminConfigRoute
@@ -559,6 +618,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminBannersRoute: AdminBannersRoute,
+  AdminBlogRoute: AdminBlogRoute,
   AdminCategoriasRoute: AdminCategoriasRoute,
   AdminColeccionesHomeRoute: AdminColeccionesHomeRoute,
   AdminConfigRoute: AdminConfigRoute,
@@ -574,6 +634,16 @@ const AdminRouteChildren: AdminRouteChildren = {
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 interface CategoriaSlugRouteChildren {
   CategoriaSlugSubRoute: typeof CategoriaSlugSubRoute
@@ -591,6 +661,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
+  BlogRoute: BlogRouteWithChildren,
   CatalogoRoute: CatalogoRoute,
   CheckoutRoute: CheckoutRoute,
   ConfirmacionRoute: ConfirmacionRoute,

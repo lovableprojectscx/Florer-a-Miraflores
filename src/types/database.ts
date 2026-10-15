@@ -244,6 +244,28 @@ export interface TestimonioRow {
 export type TestimonioInsert = Omit<TestimonioRow, "id" | "created_at">;
 export type TestimonioUpdate = Partial<TestimonioInsert>;
 
+// ─── blog_posts ──────────────────────────────────────────────────────────────
+
+export interface BlogPostRow {
+  id: string;
+  titulo: string;
+  slug: string;
+  resumen: string | null;
+  contenido: string;
+  imagen_portada_url: string | null;
+  autor: string | null;
+  categoria_relacionada_id: string | null;
+  publicado: boolean;
+  fecha_publicacion: string | null; // timestamptz → ISO string
+  meta_title: string | null;
+  meta_description: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type BlogPostInsert = Omit<BlogPostRow, "id" | "created_at" | "updated_at">;
+export type BlogPostUpdate = Partial<BlogPostInsert>;
+
 // --- Database (interfaz para el cliente tipado de Supabase) ---
 
 export interface Database {
@@ -319,6 +341,12 @@ export interface Database {
         Row: TestimonioRow;
         Insert: TestimonioInsert;
         Update: TestimonioUpdate;
+        Relationships: [];
+      };
+      blog_posts: {
+        Row: BlogPostRow;
+        Insert: BlogPostInsert;
+        Update: BlogPostUpdate;
         Relationships: [];
       };
     };

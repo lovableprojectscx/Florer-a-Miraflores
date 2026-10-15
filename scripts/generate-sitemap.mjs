@@ -32,6 +32,7 @@ async function main() {
     { loc: `${BASE_URL}/`, priority: "1.0", changefreq: "daily" },
     { loc: `${BASE_URL}/catalogo`, priority: "0.9", changefreq: "daily" },
     { loc: `${BASE_URL}/resenas`, priority: "0.8", changefreq: "weekly" },
+    { loc: `${BASE_URL}/blog`, priority: "0.8", changefreq: "weekly" },
     { loc: `${BASE_URL}/nosotros`, priority: "0.7", changefreq: "monthly" },
     { loc: `${BASE_URL}/libro-de-reclamaciones`, priority: "0.3", changefreq: "yearly" },
   ];
@@ -74,6 +75,31 @@ async function main() {
           });
         }
       }
+
+      // 3. Artículos de blog publicados
+      try {
+        const { data: posts } = await supabase
+          .from("blog_posts")
+          .select("slug, updated_at, fecha_publicacion")
+          .eq("publicado", true)
+          .lte("fecha_publicacion", new Date().toISOString());
+
+        if (posts) {
+          for (const post of posts) {
+            const postLastMod = post.updated_at
+              ? new Date(post.updated_at).toISOString().split("T")[0]
+              : now;
+            urls.push({
+              loc: `${BASE_URL}/blog/${post.slug}`,
+              lastmod: postLastMod,
+              priority: "0.7",
+              changefreq: "monthly",
+            });
+          }
+        }
+      } catch {
+        // Fallback silencioso si blog_posts aún no existe
+      }
     } catch (err) {
       console.warn("No se pudieron cargar datos dinámicos de Supabase para sitemap:", err);
     }
@@ -85,7 +111,7 @@ ${urls
   .map(
     (u) => `  <url>
     <loc>${u.loc}</loc>
-    <lastmod>${now}</lastmod>
+    <lastmod>${u.lastmod || now}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`,

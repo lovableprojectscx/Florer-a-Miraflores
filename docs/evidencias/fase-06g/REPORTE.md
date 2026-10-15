@@ -1,12 +1,14 @@
 # Reporte — Fase 06-G: Cabecera Compacta en Páginas de Listado
+
 **Rama:** `fase-06g-cabecera`  
 **Fecha:** 14 de Octubre de 2026  
-**Estado:** ✅ COMPLETADO Y VERIFICADO  
+**Estado:** ✅ COMPLETADO Y VERIFICADO
 
 ---
 
 ### 1. Resumen Ejecutivo
-Se rediseñó la cabecera de todas las páginas de listado de productos (`/catalogo`, `/categoria/$slug`, `/categoria/$slug/$sub`, `/tag/$key`) para optimizar el espacio vertical inicial (*above the fold*), logrando que la **primera fila de productos sea visible sin scroll en resoluciones de escritorio 1366×768 y 1440×900**, así como una presentación compacta y legible en celulares (390px).
+
+Se rediseñó la cabecera de todas las páginas de listado de productos (`/catalogo`, `/categoria/$slug`, `/categoria/$slug/$sub`, `/tag/$key`) para optimizar el espacio vertical inicial (_above the fold_), logrando que la **primera fila de productos sea visible sin scroll en resoluciones de escritorio 1366×768 y 1440×900**, así como una presentación compacta y legible en celulares (390px).
 
 ---
 
@@ -42,7 +44,7 @@ Se rediseñó la cabecera de todas las páginas de listado de productos (`/catal
 ### 3. Evidencias de Pruebas
 
 1. **Test E2E Automatizado (`tests/e2e/cabecera-compacta.spec.ts`):**
-   - Mide directamente la coordenada `y` del *bounding box* de la primera tarjeta de producto en resoluciones 1366×768 y 1440×900 sin scroll.
+   - Mide directamente la coordenada `y` del _bounding box_ de la primera tarjeta de producto en resoluciones 1366×768 y 1440×900 sin scroll.
    - Verifica que el título `<h1>` tenga `fontSize` entre 30px y 38px en escritorio, y entre 22px y 28px en móvil.
    - Verifica que `nav[aria-label="Ruta de navegación"]` contenga tanto la ruta como el eyebrow (`—`).
    - **Resultado:** 18 tests ejecutados en móvil y escritorio, **18 passed (100% éxito)**.

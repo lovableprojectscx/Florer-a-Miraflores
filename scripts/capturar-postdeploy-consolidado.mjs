@@ -19,7 +19,10 @@ async function run() {
   for (let intento = 1; intento <= 24; intento++) {
     try {
       console.log(`Intento ${intento}: verificando si Vercel tiene el nuevo deploy...`);
-      await checkPage.goto(`${BASE_URL}/catalogo`, { waitUntil: "domcontentloaded", timeout: 15000 });
+      await checkPage.goto(`${BASE_URL}/catalogo`, {
+        waitUntil: "domcontentloaded",
+        timeout: 15000,
+      });
       // Verificar si ya tiene el nav compacto con aria-label="Ruta de navegación"
       const navCompacto = await checkPage.locator('nav[aria-label="Ruta de navegación"]').count();
       if (navCompacto > 0) {
@@ -41,8 +44,20 @@ async function run() {
 
   const tasks = [
     // Paso 1: Colecciones Zoom + Marco en Home
-    { url: `${BASE_URL}/`, name: "paso1-home-colecciones-1440.png", width: 1440, height: 900, selector: "#colecciones" },
-    { url: `${BASE_URL}/`, name: "paso1-home-colecciones-390.png", width: 390, height: 844, selector: "#colecciones" },
+    {
+      url: `${BASE_URL}/`,
+      name: "paso1-home-colecciones-1440.png",
+      width: 1440,
+      height: 900,
+      selector: "#colecciones",
+    },
+    {
+      url: `${BASE_URL}/`,
+      name: "paso1-home-colecciones-390.png",
+      width: 390,
+      height: 844,
+      selector: "#colecciones",
+    },
     // Paso 2: Reseñas
     { url: `${BASE_URL}/resenas`, name: "paso2-resenas-1440.png", width: 1440, height: 900 },
     { url: `${BASE_URL}/resenas`, name: "paso2-resenas-390.png", width: 390, height: 844 },
@@ -50,7 +65,12 @@ async function run() {
     { url: `${BASE_URL}/catalogo`, name: "paso3-catalogo-1366.png", width: 1366, height: 768 },
     { url: `${BASE_URL}/catalogo`, name: "paso3-catalogo-1440.png", width: 1440, height: 900 },
     { url: `${BASE_URL}/catalogo`, name: "paso3-catalogo-390.png", width: 390, height: 844 },
-    { url: `${BASE_URL}/categoria/tulipanes`, name: "paso3-tulipanes-1366.png", width: 1366, height: 768 },
+    {
+      url: `${BASE_URL}/categoria/tulipanes`,
+      name: "paso3-tulipanes-1366.png",
+      width: 1366,
+      height: 768,
+    },
   ];
 
   for (const t of tasks) {

@@ -233,20 +233,20 @@ Mediante consulta MCP a `pg_constraint`:
 
 Creada mediante [`docs/sql/007-testimonios.sql`](./sql/007-testimonios.sql) para almacenar reseñas reales elegidas y copiadas a mano desde Google, WhatsApp, Facebook o Directo.
 
-| Columna | Tipo | Nulo | Default / Constraint | Descripción |
-| :--- | :--- | :---: | :--- | :--- |
-| `id` | `uuid` | NO | `gen_random_uuid()` PK | Identificador único |
-| `nombre` | `text` | NO | — | Nombre como figura en la reseña original (ej. "María P.") |
-| `texto` | `text` | NO | — | Texto íntegro de la reseña, copiado tal cual |
-| `estrellas` | `integer` | NO | `CHECK (estrellas BETWEEN 1 AND 5)` | Calificación de 1 a 5 estrellas |
-| `fecha` | `date` | SÍ | `null` | Fecha original de publicación de la reseña |
-| `fuente` | `text` | NO | `'google'`, `CHECK in ('google','whatsapp','facebook','directo')` | Plataforma de procedencia |
-| `enlace_original` | `text` | SÍ | `null` | Enlace opcional directo a la reseña |
-| `imagen_url` | `text` | SÍ | `null` | Foto opcional del arreglo entregado en Storage |
-| `destacado` | `boolean` | NO | `false` | Bandera para priorizar en listados y carrusel Home |
-| `orden` | `integer` | NO | `0` | Posición ordinal para ordenamiento manual |
-| `activo` | `boolean` | NO | `true` | Visibilidad en catálogo público |
-| `created_at` | `timestamptz` | NO | `now()` | Fecha y hora de creación del registro |
+| Columna           | Tipo          | Nulo | Default / Constraint                                              | Descripción                                               |
+| :---------------- | :------------ | :--: | :---------------------------------------------------------------- | :-------------------------------------------------------- |
+| `id`              | `uuid`        |  NO  | `gen_random_uuid()` PK                                            | Identificador único                                       |
+| `nombre`          | `text`        |  NO  | —                                                                 | Nombre como figura en la reseña original (ej. "María P.") |
+| `texto`           | `text`        |  NO  | —                                                                 | Texto íntegro de la reseña, copiado tal cual              |
+| `estrellas`       | `integer`     |  NO  | `CHECK (estrellas BETWEEN 1 AND 5)`                               | Calificación de 1 a 5 estrellas                           |
+| `fecha`           | `date`        |  SÍ  | `null`                                                            | Fecha original de publicación de la reseña                |
+| `fuente`          | `text`        |  NO  | `'google'`, `CHECK in ('google','whatsapp','facebook','directo')` | Plataforma de procedencia                                 |
+| `enlace_original` | `text`        |  SÍ  | `null`                                                            | Enlace opcional directo a la reseña                       |
+| `imagen_url`      | `text`        |  SÍ  | `null`                                                            | Foto opcional del arreglo entregado en Storage            |
+| `destacado`       | `boolean`     |  NO  | `false`                                                           | Bandera para priorizar en listados y carrusel Home        |
+| `orden`           | `integer`     |  NO  | `0`                                                               | Posición ordinal para ordenamiento manual                 |
+| `activo`          | `boolean`     |  NO  | `true`                                                            | Visibilidad en catálogo público                           |
+| `created_at`      | `timestamptz` |  NO  | `now()`                                                           | Fecha y hora de creación del registro                     |
 
 ### 10.2. Políticas RLS en `public.testimonios`
 
@@ -264,3 +264,44 @@ Creada mediante [`docs/sql/007-testimonios.sql`](./sql/007-testimonios.sql) para
 
 - Bucket público con políticas de subida, actualización y eliminación restringidas a `is_admin()`. Las miniaturas optimizadas se gestionan con `subirImagenConMiniaturas`.
 
+---
+
+## 11. Blog Administrable y Artículos SEO (Fase 09)
+
+### 11.1. Tabla `public.blog_posts`
+
+Creada mediante [`docs/sql/008-blog.sql`](./sql/008-blog.sql) para la publicación editorial de guías, consejos de cuidado floral y contenidos SEO orientados a captar tráfico orgánico y convertir lectores en compradores mediante recomendaciones cruzadas.
+
+| Columna                    | Tipo          | Nulo | Default / Constraint                           | Descripción                                                               |
+| :------------------------- | :------------ | :--: | :--------------------------------------------- | :------------------------------------------------------------------------ |
+| `id`                       | `uuid`        |  NO  | `gen_random_uuid()` PK                         | Identificador único del artículo                                          |
+| `titulo`                   | `text`        |  NO  | —                                              | Título del artículo (ej. "Significado de los colores de las rosas")       |
+| `slug`                     | `text`        |  NO  | `UNIQUE`                                       | Identificador de URL amigable en minúsculas y sin acentos                 |
+| `resumen`                  | `text`        |  SÍ  | `null`                                         | Bajada o resumen corto (máx ~160 caracteres, usado como meta description) |
+| `contenido`                | `text`        |  NO  | —                                              | Cuerpo del artículo en formato Markdown seguro (sin HTML crudo)           |
+| `imagen_portada_url`       | `text`        |  SÍ  | `null`                                         | URL de la imagen principal destacada (aspecto 16:9)                       |
+| `autor`                    | `text`        |  NO  | `'Florería Miraflores'`                        | Firma del autor del contenido                                             |
+| `categoria_relacionada_id` | `uuid`        |  SÍ  | `REFERENCES categorias(id) ON DELETE SET NULL` | Categoría opcional vinculada para recomendar productos                    |
+| `publicado`                | `boolean`     |  NO  | `false`                                        | Conmutador de publicación (true = visible según fecha)                    |
+| `fecha_publicacion`        | `timestamptz` |  SÍ  | `now()`                                        | Fecha programada o de publicación efectiva                                |
+| `meta_title`               | `text`        |  SÍ  | `null`                                         | Título SEO opcional para Google (`<title>` y `og:title`)                  |
+| `meta_description`         | `text`        |  SÍ  | `null`                                         | Descripción SEO opcional (`<meta name="description">`)                    |
+| `created_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de creación del registro                                            |
+| `updated_at`               | `timestamptz` |  NO  | `now()`                                        | Fecha de última modificación (actualizada por trigger)                    |
+
+### 11.2. Políticas RLS en `public.blog_posts`
+
+- `Public Read Published Blog Posts`: `FOR SELECT TO public USING ((publicado = true AND fecha_publicacion <= now()) OR is_admin())`.
+  - El público anónimo **solo** puede ver artículos que estén explícitamente marcados como publicados y cuya fecha de publicación sea menor o igual al momento actual.
+  - Los administradores autenticados (`is_admin()`) pueden ver todos los artículos (borradores, programados y publicados).
+- `Admin All Blog Posts`: `FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin())`.
+  - Únicamente usuarios administradores registrados en `public.admins` pueden crear, editar o eliminar artículos.
+
+### 11.3. Trigger de Actualización Automática
+
+- Trigger `set_blog_posts_updated_at` que ejecuta la función `update_updated_at_column()` antes de cada actualización (`BEFORE UPDATE ON public.blog_posts`).
+
+### 11.4. Bucket de Supabase Storage `blog`
+
+- Bucket con acceso público de lectura (`SELECT`) y restricciones estrictas de subida (`INSERT`), actualización (`UPDATE`) y borrado (`DELETE`) exclusivas para `is_admin()`.
+- Optimización automática con miniaturas en WebP para portadas e imágenes dentro del cuerpo del artículo mediante `subirImagenConMiniaturas`.

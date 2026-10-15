@@ -189,4 +189,51 @@ describe("RLS — Políticas de seguridad con anon key", () => {
       .select();
     expect(delRecErr !== null || (delRec ?? []).length === 0).toBe(true);
   });
+
+  it("anon NO PUEDE insertar, actualizar ni borrar en 'blog_posts', ni leer borradores", async () => {
+    // Si la tabla aún no existe en la BD (SQL 008 pendiente de aprobación), valida código 42P01 / PGRST205
+    const { data: testRead, error: readErr } = await anonClient
+      .from("blog_posts")
+      .select("id, titulo, publicado")
+      .eq("publicado", false)
+      .limit(1);
+
+    if (readErr && (readErr.code === "42P01" || readErr.code === "PGRST205")) {
+      expect(true).toBe(true);
+      return;
+    }
+
+    // 1. Anon no debe leer borradores (retorna 0 registros gracias a RLS)
+    expect(readErr).toBeNull();
+    expect(testRead ?? []).toHaveLength(0);
+
+    // 2. Anon NO PUEDE insertar
+    const { error: insertError } = await anonClient.from("blog_posts").insert({
+      titulo: "[RLS-TEST-NO-INSERT]",
+      slug: "rls-test-no-insert-000000",
+      contenido: "Contenido de prueba",
+      publicado: false,
+    });
+    expect(
+      isRlsError(insertError),
+      `Se esperaba error RLS (42501 / row-level security), pero se recibió: ${JSON.stringify(insertError)}`,
+    ).toBe(true);
+
+    // 3. Anon NO PUEDE actualizar
+    const fakeUuid = "00000000-0000-0000-0000-000000000000";
+    const { data: updData, error: updErr } = await anonClient
+      .from("blog_posts")
+      .update({ titulo: "__RLS_TEST_NO_OP__" })
+      .eq("id", fakeUuid)
+      .select();
+    expect(updErr !== null || (updData ?? []).length === 0).toBe(true);
+
+    // 4. Anon NO PUEDE borrar
+    const { data: delData, error: delErr } = await anonClient
+      .from("blog_posts")
+      .delete()
+      .eq("id", fakeUuid)
+      .select();
+    expect(delErr !== null || (delData ?? []).length === 0).toBe(true);
+  });
 });

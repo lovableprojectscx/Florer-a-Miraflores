@@ -18,6 +18,7 @@ import {
   Menu,
   X,
   Star,
+  BookOpen,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import logoImg from "@/assets/logo-miraflores.webp";
@@ -41,6 +42,7 @@ const NAV_ITEMS = [
   { to: "/admin/categorias", label: "Categorias", icon: FolderTree },
   { to: "/admin/banners", label: "Banners", icon: Image },
   { to: "/admin/testimonios", label: "Testimonios", icon: Star },
+  { to: "/admin/blog", label: "Blog", icon: BookOpen },
   { to: "/admin/popup", label: "Popup", icon: Megaphone },
   { to: "/admin/colecciones-home", label: "Colecciones Home", icon: LayoutGrid },
   { to: "/admin/ocasiones", label: "Ocasiones Home", icon: Heart },

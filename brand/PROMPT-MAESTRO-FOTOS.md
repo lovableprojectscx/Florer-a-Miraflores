@@ -75,7 +75,7 @@ Formato de salida: imagen cuadrada 1:1, arreglo centrado con aire alrededor.
 
 El secreto para que se vea caro (como Lima Floral) NO es un fondo liso: es una **escena de boutique con el fondo desenfocado** (bokeh) y el arreglo nítido adelante. Por eso casi todos estos llevan **poca profundidad de campo**.
 
-> 💡 Para cualquier fondo con escena, agrega siempre al prompt: *"profundidad de campo baja: arreglo totalmente nítido en primer plano, fondo suavemente desenfocado (bokeh). El fondo NO debe tener flores sueltas reconocibles que se confundan con el producto."*
+> 💡 Para cualquier fondo con escena, agrega siempre al prompt: _"profundidad de campo baja: arreglo totalmente nítido en primer plano, fondo suavemente desenfocado (bokeh). El fondo NO debe tener flores sueltas reconocibles que se confundan con el producto."_
 
 ### Fondos tipo AMBIENTE (con bokeh — los que se ven premium) ⭐
 

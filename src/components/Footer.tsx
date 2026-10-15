@@ -103,6 +103,14 @@ export function Footer({ config }: Props) {
                   Reseñas
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/blog"
+                  className="hover:text-[#2C2420] hover:translate-x-1 inline-block transition-all duration-200"
+                >
+                  Blog
+                </Link>
+              </li>
               {[
                 { label: "Zonas de Delivery y Cobertura", href: "/#delivery" },
                 { label: "Preguntas Frecuentes", href: "/#faq" },

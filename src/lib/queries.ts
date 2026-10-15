@@ -24,6 +24,9 @@ import type {
   PedidoProducto,
   TagRow,
   TestimonioRow,
+  BlogPostRow,
+  BlogPostInsert,
+  BlogPostUpdate,
 } from "@/types/database";
 import { resolverClavesTag } from "@/lib/tag-utils";
 import { filtrarCategoriasVisibles } from "@/lib/categorias-utils";
@@ -613,4 +616,156 @@ export async function getTestimoniosHome(): Promise<TestimonioRow[]> {
     }
     throw err;
   }
+}
+
+// ─── Blog ─────────────────────────────────────────────────────────────────────
+
+export interface BlogPostConDetalles {
+  post: BlogPostRow;
+  categoriaRelacionada: CategoriaRow | null;
+  productosRelacionados: ProductoRow[];
+}
+
+/**
+ * Devuelve la lista de artículos públicos para `/blog`
+ * (solo publicado = true y fecha_publicacion <= now()).
+ */
+export async function getBlogPostsPublicos(): Promise<BlogPostRow[]> {
+  try {
+    const nowIso = new Date().toISOString();
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("publicado", true)
+      .lte("fecha_publicacion", nowIso)
+      .order("fecha_publicacion", { ascending: false });
+
+    if (error) {
+      if (error.code === "42P01" || error.code === "PGRST205") {
+        return [];
+      }
+      throw new Error(`[Supabase] ${error.message}`);
+    }
+
+    return data ?? [];
+  } catch (err) {
+    if (
+      err instanceof Error &&
+      (err.message.includes("42P01") || err.message.includes("PGRST205"))
+    ) {
+      return [];
+    }
+    throw err;
+  }
+}
+
+/**
+ * Obtiene un artículo público por su slug con productos relacionados (si tiene categoría).
+ * Si no está publicado o su fecha es futura, retorna null.
+ */
+export async function getBlogPostPorSlug(slug: string): Promise<BlogPostConDetalles | null> {
+  // Mock para pruebas automatizadas E2E de seguridad XSS en ambiente dev
+  if (slug === "articulo-seguridad-xss" && import.meta.env.DEV) {
+    return {
+      post: {
+        id: "00000000-0000-0000-0000-000000000001",
+        titulo: "Cómo cuidar tus tulipanes en casa",
+        slug: "articulo-seguridad-xss",
+        resumen: "Aprende los mejores consejos para mantener tus tulipanes frescos por más días.",
+        contenido:
+          "## Cuidados Esenciales\n\nLos tulipanes son flores sensibles a la temperatura y a la luz.\n\n<script id='malicioso'>window.__xss_executed = true;</script>\n\n- Cambia el agua todos los días con agua fresca.\n- Corta los tallos en diagonal 1 cm.\n- Mantenlos alejados del sol directo y corrientes de aire.\n\n> Disfruta de su belleza natural en cada rincón.",
+        imagen_portada_url:
+          "https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=1200&q=80",
+        autor: "Florería Miraflores",
+        categoria_relacionada_id: null,
+        publicado: true,
+        fecha_publicacion: "2026-01-01T10:00:00Z",
+        meta_title: "Cómo cuidar tus tulipanes en casa | Blog Florería Miraflores",
+        meta_description: "Aprende los mejores consejos para mantener tus tulipanes frescos.",
+        created_at: "2026-01-01T10:00:00Z",
+        updated_at: "2026-01-01T10:00:00Z",
+      },
+      categoriaRelacionada: null,
+      productosRelacionados: [],
+    };
+  }
+
+  try {
+    const { data: post, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (error) {
+      if (error.code === "42P01" || error.code === "PGRST205") {
+        return null;
+      }
+      throw new Error(`[Supabase] ${error.message}`);
+    }
+
+    if (!post) return null;
+
+    // Verificar visibilidad pública: publicado y fecha <= now()
+    if (!post.publicado || !post.fecha_publicacion) {
+      return null;
+    }
+    const fecha = new Date(post.fecha_publicacion);
+    if (isNaN(fecha.getTime()) || fecha.getTime() > Date.now()) {
+      return null;
+    }
+
+    // Cargar categoría y productos relacionados si aplica
+    let categoriaRelacionada: CategoriaRow | null = null;
+    let productosRelacionados: ProductoRow[] = [];
+
+    if (post.categoria_relacionada_id) {
+      const [{ data: cat }, { data: prods }] = await Promise.all([
+        supabase
+          .from("categorias")
+          .select("*")
+          .eq("id", post.categoria_relacionada_id)
+          .maybeSingle(),
+        supabase
+          .from("productos")
+          .select("*")
+          .eq("categoria_id", post.categoria_relacionada_id)
+          .eq("activo", true)
+          .limit(4),
+      ]);
+
+      categoriaRelacionada = cat ?? null;
+      productosRelacionados = prods ?? [];
+    }
+
+    return {
+      post,
+      categoriaRelacionada,
+      productosRelacionados,
+    };
+  } catch (err) {
+    if (
+      err instanceof Error &&
+      (err.message.includes("42P01") || err.message.includes("PGRST205"))
+    ) {
+      return null;
+    }
+    throw err;
+  }
+}
+
+/**
+ * Para panel administrativo: devuelve todos los artículos (borradores, programados y publicados).
+ */
+export async function getAdminBlogPosts(): Promise<BlogPostRow[]> {
+  const { data, error } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
 }

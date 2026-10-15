@@ -5,7 +5,7 @@ let tableResults: Record<string, { data: unknown; error: unknown }> = {};
 
 const insertMock = vi.fn();
 const chainMock: Record<string, ReturnType<typeof vi.fn>> = {};
-const methods = ["select", "eq", "in", "or", "overlaps", "order", "limit", "maybeSingle"];
+const methods = ["select", "eq", "lte", "in", "or", "overlaps", "order", "limit", "maybeSingle"];
 methods.forEach((m) => {
   chainMock[m] = vi.fn(() => chainMock);
 });
@@ -67,6 +67,8 @@ import {
   getTodosProductosPorTag,
   getColecciones,
   getPedidos,
+  getBlogPostsPublicos,
+  getBlogPostPorSlug,
   type CrearPedidoInput,
 } from "@/lib/queries";
 
@@ -446,5 +448,60 @@ describe("Consultas de lectura en queries.ts", () => {
 
     queryResult = { data: null, error: null };
     await expect(getBanners()).rejects.toThrow("[Supabase] La consulta no devolvió datos");
+  });
+
+  describe("Blog Queries — fallback y consultas", () => {
+    it("getBlogPostsPublicos devuelve lista vacía si la tabla no existe (42P01 o PGRST205)", async () => {
+      queryResult = { data: null, error: { code: "42P01", message: "relation does not exist" } };
+      const posts = await getBlogPostsPublicos();
+      expect(posts).toEqual([]);
+
+      queryResult = {
+        data: null,
+        error: { code: "PGRST205", message: "table not found in schema cache" },
+      };
+      const postsCache = await getBlogPostsPublicos();
+      expect(postsCache).toEqual([]);
+    });
+
+    it("getBlogPostsPublicos devuelve posts cuando la tabla existe", async () => {
+      const samplePosts = [
+        {
+          id: "post-1",
+          titulo: "Guía de Tulipanes",
+          slug: "guia-de-tulipanes",
+          publicado: true,
+          fecha_publicacion: "2026-10-14T10:00:00Z",
+        },
+      ];
+      queryResult = { data: samplePosts, error: null };
+      const posts = await getBlogPostsPublicos();
+      expect(posts).toEqual(samplePosts);
+    });
+
+    it("getBlogPostPorSlug devuelve null si la tabla no existe o el slug no coincide", async () => {
+      queryResult = { data: null, error: { code: "42P01", message: "relation does not exist" } };
+      const post = await getBlogPostPorSlug("slug-inexistente");
+      expect(post).toBeNull();
+
+      queryResult = { data: null, error: null };
+      const postNull = await getBlogPostPorSlug("no-existe");
+      expect(postNull).toBeNull();
+    });
+
+    it("getBlogPostPorSlug devuelve null si el post no está publicado o su fecha es futura", async () => {
+      queryResult = {
+        data: {
+          id: "post-futuro",
+          titulo: "Post Futuro",
+          slug: "post-futuro",
+          publicado: true,
+          fecha_publicacion: "2099-01-01T00:00:00Z",
+        },
+        error: null,
+      };
+      const postFuturo = await getBlogPostPorSlug("post-futuro");
+      expect(postFuturo).toBeNull();
+    });
   });
 });
