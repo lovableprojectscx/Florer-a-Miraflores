@@ -196,11 +196,17 @@ SELECT id, name, public FROM storage.buckets WHERE id = 'blog';
    - Verificaciones automáticas de `/blog`, navegación de footer, 404 de artículos inexistentes, detalle de artículo publicado real y navegación administrativa a `/admin/blog` con apertura del editor.
 
 3. **Capturas de Pantalla Generadas en `docs/evidencias/fase-09/`**:
-   - [`docs/evidencias/fase-09/blog-listado-1440.png`](file:///docs/evidencias/fase-09/blog-listado-1440.png): Listado editorial `/blog` en escritorio (1440px).
-   - [`docs/evidencias/fase-09/blog-listado-390.png`](file:///docs/evidencias/fase-09/blog-listado-390.png): Listado editorial `/blog` en móvil (390px).
-   - [`docs/evidencias/fase-09/blog-articulo-1440.png`](file:///docs/evidencias/fase-09/blog-articulo-1440.png): Detalle de artículo en escritorio (1440px).
-   - [`docs/evidencias/fase-09/blog-articulo-390.png`](file:///docs/evidencias/fase-09/blog-articulo-390.png): Detalle de artículo en móvil (390px).
+   - [`docs/evidencias/fase-09/blog-listado-1440.png`](file:///docs/evidencias/fase-09/blog-listado-1440.png): Listado editorial `/blog` en escritorio local (1440px).
+   - [`docs/evidencias/fase-09/blog-listado-390.png`](file:///docs/evidencias/fase-09/blog-listado-390.png): Listado editorial `/blog` en móvil local (390px).
+   - [`docs/evidencias/fase-09/blog-articulo-1440.png`](file:///docs/evidencias/fase-09/blog-articulo-1440.png): Detalle de artículo en escritorio local (1440px).
+   - [`docs/evidencias/fase-09/blog-articulo-390.png`](file:///docs/evidencias/fase-09/blog-articulo-390.png): Detalle de artículo en móvil local (390px).
    - [`docs/evidencias/fase-09/admin-blog-desktop-1440.png`](file:///docs/evidencias/fase-09/admin-blog-desktop-1440.png): Panel de administración de artículos en escritorio (1440px).
    - [`docs/evidencias/fase-09/admin-blog-mobile-390.png`](file:///docs/evidencias/fase-09/admin-blog-mobile-390.png): Panel de administración de artículos en móvil (390px).
    - [`docs/evidencias/fase-09/admin-blog-editor-1440.png`](file:///docs/evidencias/fase-09/admin-blog-editor-1440.png): Editor con pestañas Escribir / Vista previa (1440px).
    - [`docs/evidencias/fase-09/admin-blog-editor-390.png`](file:///docs/evidencias/fase-09/admin-blog-editor-390.png): Editor en móvil (390px).
+
+4. **Capturas de la Web Real Post-Deploy en Vercel (`https://florer-a-miraflores.vercel.app`)**:
+   - [`docs/evidencias/fase-09/postdeploy-blog-1440.png`](file:///docs/evidencias/fase-09/postdeploy-blog-1440.png): Listado `/blog` en producción Vercel (1440px).
+   - [`docs/evidencias/fase-09/postdeploy-blog-390.png`](file:///docs/evidencias/fase-09/postdeploy-blog-390.png): Listado `/blog` en producción Vercel (390px).
+   - [`docs/evidencias/fase-09/postdeploy-blog-articulo-1440.png`](file:///docs/evidencias/fase-09/postdeploy-blog-articulo-1440.png): Detalle del artículo `/blog/guia-cuidado-flores-frescas` en producción Vercel (1440px).
+   - [`docs/evidencias/fase-09/postdeploy-admin-blog-1440.png`](file:///docs/evidencias/fase-09/postdeploy-admin-blog-1440.png): Panel `/admin/blog` en producción Vercel autenticado con artículo publicado visible y botón para crear nuevo artículo (1440px).
