@@ -23,6 +23,30 @@ function makeCat(
 }
 
 describe("filtrarCategoriasVisibles", () => {
+  it("una categoría con 0 productos activos NO aparece", () => {
+    const vacia = makeCat({ id: "cat-vacia", nombre: "Categoría Vacía", slug: "vacia" });
+    const res = filtrarCategoriasVisibles([vacia], []);
+    expect(res).toEqual([]);
+  });
+
+  it("una categoría con >= 1 productos activos SÍ aparece", () => {
+    const conProd = makeCat({ id: "cat-activa", nombre: "Con Productos", slug: "activa" });
+    const res = filtrarCategoriasVisibles([conProd], ["cat-activa"]);
+    expect(res.map((c) => c.id)).toEqual(["cat-activa"]);
+  });
+
+  it("categoría padre es visible si algún hijo tiene productos activos", () => {
+    const padre = makeCat({ id: "cat-padre", nombre: "Padre", slug: "padre" });
+    const hijoConProd = makeCat({
+      id: "cat-hijo",
+      nombre: "Hijo",
+      slug: "hijo",
+      parent_id: "cat-padre",
+    });
+    const res = filtrarCategoriasVisibles([padre, hijoConProd], ["cat-hijo"]);
+    expect(res.map((c) => c.id)).toEqual(["cat-padre", "cat-hijo"]);
+  });
+
   it("1. padre con productos directos -> visible", () => {
     const ofertas = makeCat({ id: "cat-ofertas", nombre: "Ofertas", slug: "ofertas" });
     const res = filtrarCategoriasVisibles([ofertas], ["cat-ofertas"]);

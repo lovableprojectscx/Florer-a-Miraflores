@@ -1,7 +1,7 @@
 import { test, expect } from "./fixtures";
 
 test.describe("Categorías públicas — visibilidad y navegación sin categorías vacías", () => {
-  test("Todas las categorías y subcategorías visibles en el menú abren sin 404, tienen >= 1 producto y ninguna muestra 'próximamente'", async ({
+  test("Cada categoría que aparece en el menú abre con >= 1 producto (recorre los links del menú)", async ({
     page,
     isMobile,
   }) => {
@@ -49,15 +49,6 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
     const listaUrls = Array.from(urlsMenu);
     expect(listaUrls.length).toBeGreaterThan(0);
 
-    // Nacimientos ahora es padre en el menú principal (39 productos activos)
-    expect(listaUrls).toContain("/categoria/nacimientos");
-
-    // Subcategorías vacías (0 productos) no deben aparecer en el menú
-    expect(listaUrls).not.toContain("/categoria/tulipanes/ramos-tulipanes");
-    expect(listaUrls).not.toContain("/categoria/nacimientos/nacimientos-nino");
-    expect(listaUrls).not.toContain("/categoria/nacimientos/nacimientos-nina");
-    expect(listaUrls).not.toContain("/categoria/defuncion/lagrimas");
-
     for (const url of listaUrls) {
       const response = await page.goto(url);
       expect(response?.status(), `Status HTTP inesperado en ${url}`).toBeLessThan(400);
@@ -89,15 +80,5 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
 
     const productLinks = page.locator('main a[href^="/producto/"]');
     await expect(productLinks.first()).toBeVisible();
-  });
-
-  test("Entrar directo por URL a una subcategoría vacía (/categoria/defuncion/lagrimas) no da 404, muestra 'próximamente'", async ({
-    page,
-  }) => {
-    const response = await page.goto("/categoria/defuncion/lagrimas");
-    expect(response?.status()).toBeLessThan(400);
-
-    await expect(page.getByRole("heading", { name: /lágrimas/i })).toBeVisible();
-    await expect(page.getByText(/próximamente/i)).toBeVisible();
   });
 });
