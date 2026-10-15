@@ -1,0 +1,42 @@
+﻿
+Running 34 tests using 1 worker
+
+  ok  1 [mobile] ÔÇ║ tests\e2e\admin.spec.ts:24:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ /admin sin sesi├│n redirige autom├íticamente al login (/admin-login) (3.5s)
+  ok  2 [mobile] ÔÇ║ tests\e2e\admin.spec.ts:30:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ con credenciales: login exitoso y el sidebar navega a cada secci├│n sin errores (solo lectura) (11.8s)
+  ok  3 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:15:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ P├ígina p├║blica /resenas carga sin errores, con t├¡tulo correcto y sin scroll horizontal (2.3s)
+  ok  4 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:54:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Footer contiene enlace a /resenas y navega correctamente (2.3s)
+  ok  5 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:62:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Home: la franja de testimonios respeta la regla de visibilidad (2.3s)
+  ok  6 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:79:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin /admin/testimonios: carga panel de gesti├│n y formulario (3.1s)
+  -   7 [mobile] ÔÇ║ tests\e2e\resenas.spec.ts:152:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin CRUD: solo con E2E_ALLOW_WRITES=1 crea y elimina '[E2E] testimonio'
+  ok  8 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:8:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Home (/) carga sin errores y tiene <title> correcto (4.3s)
+  ok  9 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:18:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Cat├ílogo (/catalogo) carga sin errores y tiene <title> correcto (1.8s)
+  ok 10 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:30:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Nosotros (/nosotros) carga sin errores y tiene <title> correcto (1.4s)
+  ok 11 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:36:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Libro de Reclamaciones (/libro-de-reclamaciones) carga sin errores y tiene <title> correcto (1.1s)
+  ok 12 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:46:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Categor├¡a real (/categoria/:slug) y Producto real (/producto/:id) extra├¡dos del cat├ílogo cargan con <title> correcto (2.7s)
+  ok 13 [mobile] ÔÇ║ tests\e2e\smoke.spec.ts:75:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Ruta inexistente muestra mensaje de no encontrado (1.1s)
+  ok 14 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:5:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Home: Novedades y Categor├¡as configuran URLs de miniaturas y srcSet con thumbs/ (2.4s)
+  ok 15 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:44:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Cat├ílogo: productos cargan miniaturas 480w y srcSet responsive (1.4s)
+  ok 16 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:65:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Demostraci├│n de Fallback (Punto 2): bloqueo 404 en /thumbs/ en Home y Cat├ílogo recupera todas las im├ígenes originales con naturalWidth > 0 (6.7s)
+  ok 17 [mobile] ÔÇ║ tests\e2e\thumbnails.spec.ts:155:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Banner Hero: en desktop 1440 carga original sin /thumbs/, en mobile 390 carga sin errores (Fase 06-C) (2.5s)
+  ok 18 [desktop] ÔÇ║ tests\e2e\admin.spec.ts:24:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ /admin sin sesi├│n redirige autom├íticamente al login (/admin-login) (921ms)
+  ok 19 [desktop] ÔÇ║ tests\e2e\admin.spec.ts:30:3 ÔÇ║ Admin E2E ÔÇö Protecci├│n de ruta y navegaci├│n ÔÇ║ con credenciales: login exitoso y el sidebar navega a cada secci├│n sin errores (solo lectura) (3.0s)
+  ok 20 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:15:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ P├ígina p├║blica /resenas carga sin errores, con t├¡tulo correcto y sin scroll horizontal (1.4s)
+  ok 21 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:54:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Footer contiene enlace a /resenas y navega correctamente (2.2s)
+  ok 22 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:62:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Home: la franja de testimonios respeta la regla de visibilidad (2.0s)
+  ok 23 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:79:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin /admin/testimonios: carga panel de gesti├│n y formulario (3.0s)
+  -  24 [desktop] ÔÇ║ tests\e2e\resenas.spec.ts:152:3 ÔÇ║ Fase 07 ÔÇö Rese├▒as y Testimonios E2E ÔÇ║ Admin CRUD: solo con E2E_ALLOW_WRITES=1 crea y elimina '[E2E] testimonio'
+  ok 25 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:8:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Home (/) carga sin errores y tiene <title> correcto (4.5s)
+  ok 26 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:18:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Cat├ílogo (/catalogo) carga sin errores y tiene <title> correcto (1.5s)
+  ok 27 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:30:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Nosotros (/nosotros) carga sin errores y tiene <title> correcto (1.2s)
+  ok 28 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:36:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Libro de Reclamaciones (/libro-de-reclamaciones) carga sin errores y tiene <title> correcto (1.1s)
+  ok 29 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:46:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Categor├¡a real (/categoria/:slug) y Producto real (/producto/:id) extra├¡dos del cat├ílogo cargan con <title> correcto (2.8s)
+  ok 30 [desktop] ÔÇ║ tests\e2e\smoke.spec.ts:75:3 ÔÇ║ Smoke E2E ÔÇö Rutas p├║blicas ÔÇ║ Ruta inexistente muestra mensaje de no encontrado (1.0s)
+  ok 31 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:5:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Home: Novedades y Categor├¡as configuran URLs de miniaturas y srcSet con thumbs/ (2.2s)
+  ok 32 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:44:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Cat├ílogo: productos cargan miniaturas 480w y srcSet responsive (1.4s)
+  ok 33 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:65:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Demostraci├│n de Fallback (Punto 2): bloqueo 404 en /thumbs/ en Home y Cat├ílogo recupera todas las im├ígenes originales con naturalWidth > 0 (17.9s)
+[E2E desktop 1440] Banner activo domNaturalWidth (density-corrected): 1440
+[E2E desktop 1440] Banner activo naturalWidth (original cargado): 2560
+  ok 34 [desktop] ÔÇ║ tests\e2e\thumbnails.spec.ts:155:3 ÔÇ║ Miniaturas y Responsive Images E2E (Fase 06-B) ÔÇ║ Banner Hero: en desktop 1440 carga original sin /thumbs/, en mobile 390 carga sin errores (Fase 06-C) (2.5s)
+
+  2 skipped
+  32 passed (1.8m)
