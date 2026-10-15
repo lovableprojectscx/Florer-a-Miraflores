@@ -1,0 +1,215 @@
+﻿
+> verify
+> npm run lint && npm run typecheck && npm run test && npm run build
+
+
+> lint
+> eslint .
+
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ProductFilters.tsx
+  15:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+  32:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\badge.tsx
+  32:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\button.tsx
+  49:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\form.tsx
+  163:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\navigation-menu.tsx
+  111:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\sidebar.tsx
+  743:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\JACK FRANKLIN\Desktop\Proyectos Idenza\Trabajos-Mayo\Floreria miraflores\floreria-miraflo-main\src\components\ui\toggle.tsx
+  42:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+Ô£û 8 problems (0 errors, 8 warnings)
+
+
+> typecheck
+> tsc --noEmit
+
+
+> test
+> vitest run
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.4 [39m[90mC:/Users/JACK FRANKLIN/Desktop/Proyectos Idenza/Trabajos-Mayo/Floreria miraflores/floreria-miraflo-main[39m
+
+ [32mÔ£ô[39m tests/unit/tag-utils.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/image-utils.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/utils.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/categorias-utils.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/cart.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/checkout-schema.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 48[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/resenas-utils.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/use-ver-mas.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 43[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/queries.test.ts [2m([22m[2m16 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/product-filters.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32mÔ£ô[39m tests/unit/ProductGrid.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 467[2mms[22m[39m
+   [32mÔ£ô[39m ProductGrid ÔÇö paginaci├│n 'Ver m├ís' y placeholder de imagen [2m(3)[22m
+     [33m[2mÔ£ô[22m[39m con 30 productos y tamanoLote=24 muestra 24 tarjetas y el bot├│n 'Ver m├ís'; tras clic muestra 30 y el bot├│n desaparece[33m 384[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+[2m      Tests [22m [1m[32m104 passed[39m[22m[90m (104)[39m
+[2m   Start at [22m 20:40:45
+[2m   Duration [22m 7.25s[2m (environment 82%, setup 13%, transform 2%, tests 1%, import 1%, worker 1%)[22m
+
+
+> build
+> vite build
+
+[36mvite v7.3.3 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 2145 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/client/[22m[32m.assetsignore                                  [39m[1m[2m  0.02 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-tulipanes-BC0rNiOg.webp         [39m[1m[2m 31.36 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-box-romantico-BTuwwvPY.webp     [39m[1m[2m 34.62 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-novedad-velvet-MCV19rEe.webp    [39m[1m[2m 41.44 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-ramo-primavera-CiRCRxpz.webp    [39m[1m[2m 47.53 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-arreglo-especial-CRvYK_-E.webp  [39m[1m[2m 48.62 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-novedad-pampas-CgdssaDB.webp    [39m[1m[2m 53.48 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-novedad-aurora-BXLA2eR-.webp    [39m[1m[2m 54.77 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-corona-CuhhlEMa.webp            [39m[1m[2m 67.90 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/product-box-sorpresa-DDn5XeVm.webp      [39m[1m[2m 74.58 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/hero-flowers-BvA6XZaO.webp              [39m[1m[2m 89.62 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/logo-miraflores-DDxBf7Kq.webp           [39m[1m[2m101.38 kB[22m[1m[22m
+[2mdist/client/[22m[32massets/about-boutique-DCIO9u4d.webp            [39m[1m[2m108.02 kB[22m[1m[22m
+[2mdist/client/[22m[35massets/styles-C9hmjmsQ.css                     [39m[1m[2m133.25 kB[22m[1m[22m[2m Ôöé gzip:  21.71 kB[22m
+[2mdist/client/[22m[36massets/logo-miraflores-CgMYqKoi.js             [39m[1m[2m  0.06 kB[22m[1m[22m[2m Ôöé gzip:   0.08 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug._sub-CNQgXlQ0.js        [39m[1m[2m  0.45 kB[22m[1m[22m[2m Ôöé gzip:   0.32 kB[22m
+[2mdist/client/[22m[36massets/catalogo-CV9WVMfY.js                    [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug-CebEe2Vg.js             [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/producto._id-DvUqC7Ub.js                [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug._sub-B2ke3sZJ.js        [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/producto._id-Cib5-ALq.js                [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.32 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug-BuI5htF-.js             [39m[1m[2m  0.46 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/tag._key-BOjcExRI.js                    [39m[1m[2m  0.47 kB[22m[1m[22m[2m Ôöé gzip:   0.33 kB[22m
+[2mdist/client/[22m[36massets/tag._key-g1O1uAmK.js                    [39m[1m[2m  0.48 kB[22m[1m[22m[2m Ôöé gzip:   0.34 kB[22m
+[2mdist/client/[22m[36massets/resenas-utils-BuVVuBdh.js               [39m[1m[2m  1.01 kB[22m[1m[22m[2m Ôöé gzip:   0.58 kB[22m
+[2mdist/client/[22m[36massets/ResponsiveImage--CDzt9v7.js             [39m[1m[2m  1.57 kB[22m[1m[22m[2m Ôöé gzip:   0.87 kB[22m
+[2mdist/client/[22m[36massets/image-optimizer-BHJAlbim.js             [39m[1m[2m  2.27 kB[22m[1m[22m[2m Ôöé gzip:   1.12 kB[22m
+[2mdist/client/[22m[36massets/tag._key-ByIARUAy.js                    [39m[1m[2m  2.54 kB[22m[1m[22m[2m Ôöé gzip:   1.23 kB[22m
+[2mdist/client/[22m[36massets/ProductFilters-DuLLU0TE.js              [39m[1m[2m  2.82 kB[22m[1m[22m[2m Ôöé gzip:   1.28 kB[22m
+[2mdist/client/[22m[36massets/admin-login-ByMnAbeS.js                 [39m[1m[2m  3.22 kB[22m[1m[22m[2m Ôöé gzip:   1.29 kB[22m
+[2mdist/client/[22m[36massets/catalogo-C7nCkjuT.js                    [39m[1m[2m  3.35 kB[22m[1m[22m[2m Ôöé gzip:   1.56 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug._sub-E502K2us.js        [39m[1m[2m  3.42 kB[22m[1m[22m[2m Ôöé gzip:   1.47 kB[22m
+[2mdist/client/[22m[36massets/DeliveryZones-6dDswo7D.js               [39m[1m[2m  3.57 kB[22m[1m[22m[2m Ôöé gzip:   1.12 kB[22m
+[2mdist/client/[22m[36massets/confirmacion-UXTDtpFZ.js                [39m[1m[2m  3.59 kB[22m[1m[22m[2m Ôöé gzip:   1.72 kB[22m
+[2mdist/client/[22m[36massets/resenas-Bqz45Tot.js                     [39m[1m[2m  4.12 kB[22m[1m[22m[2m Ôöé gzip:   1.54 kB[22m
+[2mdist/client/[22m[36massets/admin-DaPaI3No.js                       [39m[1m[2m  4.38 kB[22m[1m[22m[2m Ôöé gzip:   1.55 kB[22m
+[2mdist/client/[22m[36massets/ResenaCard-BfWsT1hp.js                  [39m[1m[2m  4.89 kB[22m[1m[22m[2m Ôöé gzip:   1.98 kB[22m
+[2mdist/client/[22m[36massets/dashboard-oTRZ5IR_.js                   [39m[1m[2m  5.92 kB[22m[1m[22m[2m Ôöé gzip:   1.85 kB[22m
+[2mdist/client/[22m[36massets/config-BJYsB8-a.js                      [39m[1m[2m  6.15 kB[22m[1m[22m[2m Ôöé gzip:   2.06 kB[22m
+[2mdist/client/[22m[36massets/categoria._slug-NdDLdNk8.js             [39m[1m[2m  6.20 kB[22m[1m[22m[2m Ôöé gzip:   1.91 kB[22m
+[2mdist/client/[22m[36massets/ProductGrid-D2mtAYDa.js                 [39m[1m[2m  6.68 kB[22m[1m[22m[2m Ôöé gzip:   2.55 kB[22m
+[2mdist/client/[22m[36massets/producto._id-CflrOMkX.js                [39m[1m[2m  6.90 kB[22m[1m[22m[2m Ôöé gzip:   2.34 kB[22m
+[2mdist/client/[22m[36massets/nosotros-Bf_lubIQ.js                    [39m[1m[2m  8.27 kB[22m[1m[22m[2m Ôöé gzip:   2.60 kB[22m
+[2mdist/client/[22m[36massets/popup-DHxreAuN.js                       [39m[1m[2m  9.54 kB[22m[1m[22m[2m Ôöé gzip:   3.25 kB[22m
+[2mdist/client/[22m[36massets/tags-M6wbovtu.js                        [39m[1m[2m 11.69 kB[22m[1m[22m[2m Ôöé gzip:   3.24 kB[22m
+[2mdist/client/[22m[36massets/distritos-DU_69u9z.js                   [39m[1m[2m 12.81 kB[22m[1m[22m[2m Ôöé gzip:   3.21 kB[22m
+[2mdist/client/[22m[36massets/ocasiones-CsU8S9Oy.js                   [39m[1m[2m 13.27 kB[22m[1m[22m[2m Ôöé gzip:   3.42 kB[22m
+[2mdist/client/[22m[36massets/colecciones-home-DUMb7dQe.js            [39m[1m[2m 14.63 kB[22m[1m[22m[2m Ôöé gzip:   3.80 kB[22m
+[2mdist/client/[22m[36massets/pedidos-BS3xB6Ag.js                     [39m[1m[2m 15.95 kB[22m[1m[22m[2m Ôöé gzip:   3.70 kB[22m
+[2mdist/client/[22m[36massets/libro-de-reclamaciones-DiaC5U2p.js      [39m[1m[2m 18.76 kB[22m[1m[22m[2m Ôöé gzip:   5.42 kB[22m
+[2mdist/client/[22m[36massets/WhatsappFab-SPo74_Gr.js                 [39m[1m[2m 19.61 kB[22m[1m[22m[2m Ôöé gzip:   5.33 kB[22m
+[2mdist/client/[22m[36massets/reclamaciones-DoA2lF5L.js               [39m[1m[2m 22.49 kB[22m[1m[22m[2m Ôöé gzip:   5.00 kB[22m
+[2mdist/client/[22m[36massets/categorias-8j0jl_Qf.js                  [39m[1m[2m 22.62 kB[22m[1m[22m[2m Ôöé gzip:   5.38 kB[22m
+[2mdist/client/[22m[36massets/banners-Dccg5vWN.js                     [39m[1m[2m 23.87 kB[22m[1m[22m[2m Ôöé gzip:   5.14 kB[22m
+[2mdist/client/[22m[36massets/testimonios-DMMbsdml.js                 [39m[1m[2m 24.41 kB[22m[1m[22m[2m Ôöé gzip:   6.25 kB[22m
+[2mdist/client/[22m[36massets/vendor-lucide-C-nZAiQ9.js               [39m[1m[2m 25.46 kB[22m[1m[22m[2m Ôöé gzip:   9.52 kB[22m
+[2mdist/client/[22m[36massets/productos-DZv0nUMd.js                   [39m[1m[2m 37.83 kB[22m[1m[22m[2m Ôöé gzip:   8.89 kB[22m
+[2mdist/client/[22m[36massets/checkout-Cz4KnRP5.js                    [39m[1m[2m 44.99 kB[22m[1m[22m[2m Ôöé gzip:  15.08 kB[22m
+[2mdist/client/[22m[36massets/index-kKE23SS0.js                       [39m[1m[2m 52.33 kB[22m[1m[22m[2m Ôöé gzip:  16.70 kB[22m
+[2mdist/client/[22m[36massets/vendor-supabase-Dh6eHXVI.js             [39m[1m[2m207.32 kB[22m[1m[22m[2m Ôöé gzip:  54.19 kB[22m
+[2mdist/client/[22m[36massets/index-B8JQt2aT.js                       [39m[1m[2m487.66 kB[22m[1m[22m[2m Ôöé gzip: 149.97 kB[22m
+[32mÔ£ô built in 9.62s[39m
+[36mvite v7.3.3 [32mbuilding ssr environment for production...[36m[39m
+transforming...
+[32mÔ£ô[39m 2207 modules transformed.
+rendering chunks...
+Using secrets defined in .env.local
+[2mdist/server/[22m[32m.dev.vars                                      [39m[1m[2m  0.30 kB[22m[1m[22m
+[2mdist/server/[22m[32mwrangler.json                                  [39m[1m[2m  1.41 kB[22m[1m[22m
+[2mdist/server/[22m[32m.vite/manifest.json                            [39m[1m[2m 23.68 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-tulipanes-BC0rNiOg.webp         [39m[1m[2m 31.36 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-box-romantico-BTuwwvPY.webp     [39m[1m[2m 34.62 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-novedad-velvet-MCV19rEe.webp    [39m[1m[2m 41.44 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-ramo-primavera-CiRCRxpz.webp    [39m[1m[2m 47.53 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-arreglo-especial-CRvYK_-E.webp  [39m[1m[2m 48.62 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-novedad-pampas-CgdssaDB.webp    [39m[1m[2m 53.48 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-novedad-aurora-BXLA2eR-.webp    [39m[1m[2m 54.77 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-corona-CuhhlEMa.webp            [39m[1m[2m 67.90 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/product-box-sorpresa-DDn5XeVm.webp      [39m[1m[2m 74.58 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/hero-flowers-BvA6XZaO.webp              [39m[1m[2m 89.62 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/logo-miraflores-DDxBf7Kq.webp           [39m[1m[2m101.38 kB[22m[1m[22m
+[2mdist/server/[22m[32massets/about-boutique-DCIO9u4d.webp            [39m[1m[2m108.02 kB[22m[1m[22m
+[2mdist/server/[22m[35massets/styles-C9hmjmsQ.css                     [39m[1m[2m133.25 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/logo-miraflores-uWsZPdFg.js             [39m[1m[2m  0.08 kB[22m[1m[22m
+[2mdist/server/[22m[36mindex.js                                       [39m[1m[2m  0.10 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/empty-plugin-adapters-BFgPZ6_d.js       [39m[1m[2m  0.13 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/catalogo-BDll00fP.js                    [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug-D6ARzliF.js             [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/producto._id-Cj5R6Te4.js                [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug._sub-D_ERM7XX.js        [39m[1m[2m  0.68 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tag._key-XWd8UIjR.js                    [39m[1m[2m  0.69 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug._sub-DYcn4TGH.js        [39m[1m[2m  0.75 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/producto._id-D8HBKXU_.js                [39m[1m[2m  0.76 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug-BCVI082X.js             [39m[1m[2m  0.76 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tag._key-CpRSixww.js                    [39m[1m[2m  0.77 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/start-BLK7t5bi.js                       [39m[1m[2m  1.51 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/resenas-utils-Bh96wj38.js               [39m[1m[2m  1.86 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ResponsiveImage-CQb9GA-i.js             [39m[1m[2m  3.33 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tag._key-szVUWZvp.js                    [39m[1m[2m  4.00 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/image-optimizer-DydvTnFZ.js             [39m[1m[2m  4.46 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ProductFilters-Ch6iQYn2.js              [39m[1m[2m  4.56 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/admin-login-DkTpS9Ms.js                 [39m[1m[2m  5.10 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/confirmacion-qldSF356.js                [39m[1m[2m  5.13 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/DeliveryZones-C6_2im-Z.js               [39m[1m[2m  5.31 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug._sub-BmElM750.js        [39m[1m[2m  5.41 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/catalogo-DKvHk4j4.js                    [39m[1m[2m  6.00 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/resenas-WP7mW-fd.js                     [39m[1m[2m  6.38 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/admin-XkeiVSm-.js                       [39m[1m[2m  6.99 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ResenaCard-CYoSB84p.js                  [39m[1m[2m  8.79 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/_tanstack-start-manifest_v-B69bIqqJ.js  [39m[1m[2m  8.96 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/dashboard-_BimQoC0.js                   [39m[1m[2m  9.40 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categoria._slug-CYqHWnrt.js             [39m[1m[2m  9.59 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/config-zly1LsUw.js                      [39m[1m[2m  9.70 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/producto._id-CxeBjqT0.js                [39m[1m[2m 11.46 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/nosotros-DvQyxHtb.js                    [39m[1m[2m 11.91 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ProductGrid-D_-HGkfS.js                 [39m[1m[2m 12.60 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/popup-BD8S4LgP.js                       [39m[1m[2m 15.33 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/tags-C1RXTpnY.js                        [39m[1m[2m 18.98 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/distritos-vxfv3lb8.js                   [39m[1m[2m 21.15 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/worker-entry-B4aKDNlR.js                [39m[1m[2m 21.31 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/ocasiones-CfRh7n16.js                   [39m[1m[2m 21.93 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/colecciones-home-BfFOFWZU.js            [39m[1m[2m 24.56 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/libro-de-reclamaciones-CdC2iHcY.js      [39m[1m[2m 24.97 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/pedidos-jNkvRPH4.js                     [39m[1m[2m 26.75 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/reclamaciones-CUr4pAuV.js               [39m[1m[2m 31.25 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/WhatsappFab-DhoA8fqy.js                 [39m[1m[2m 32.17 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/categorias-CB0uIALl.js                  [39m[1m[2m 38.67 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/banners-B5uQ39tE.js                     [39m[1m[2m 38.86 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/testimonios-COoT9mEt.js                 [39m[1m[2m 40.99 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/vendor-lucide-BfVVKwqM.js               [39m[1m[2m 43.90 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/productos-D63TDFsN.js                   [39m[1m[2m 65.34 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/checkout-D6n2Q0Fu.js                    [39m[1m[2m 99.42 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/index-Ct8gHoAl.js                       [39m[1m[2m100.88 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/router-CoEVi_Fc.js                      [39m[1m[2m477.87 kB[22m[1m[22m
+[2mdist/server/[22m[36massets/vendor-supabase-BBa_TrIY.js             [39m[1m[33m713.23 kB[39m[22m
+[2mdist/server/[22m[36massets/server-C_n8q08G.js                      [39m[1m[33m802.45 kB[39m[22m
+[32mÔ£ô built in 8.69s[39m
+
+> postbuild
+> node scripts/postbuild.js
+
+Postbuild: Copied dist/client files to dist/
+Postbuild: Created dist/server/server.js for preview compatibility

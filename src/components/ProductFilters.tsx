@@ -57,7 +57,7 @@ export function FilterSelect({
   options: { value: string; label: string }[];
 }) {
   return (
-    <label className="flex flex-col gap-1.5 min-w-0">
+    <label className="flex flex-col gap-1 min-w-0">
       <span className="text-[10px] tracking-widest uppercase font-body font-light text-[#8A7A6E]">
         {label}
       </span>
@@ -65,7 +65,7 @@ export function FilterSelect({
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full sm:w-auto h-10 pl-3.5 pr-9 bg-white border border-[#E8DDD0] font-body text-xs text-[#2C2420] outline-none focus:border-[#2C2420] transition-colors duration-200 appearance-none cursor-pointer rounded-md shadow-xs hover:border-[#2C2420]/50"
+          className="w-full sm:w-auto h-9 pl-3 pr-8 bg-white border border-[#E8DDD0] font-body text-xs text-[#2C2420] outline-none focus:border-[#2C2420] transition-colors duration-200 appearance-none cursor-pointer rounded-md shadow-xs hover:border-[#2C2420]/50"
         >
           {options.map((o) => (
             <option key={o.value} value={o.value}>
@@ -83,6 +83,10 @@ export function FilterSelect({
 }
 
 interface ProductFiltersBarProps {
+  /** Título de la página o categoría */
+  titulo?: React.ReactNode;
+  /** Descripción opcional (ej. en tags) */
+  descripcion?: React.ReactNode;
   /** Cantidad de productos visibles tras aplicar filtros */
   total: number;
   orden: OrdenProductos;
@@ -93,8 +97,10 @@ interface ProductFiltersBarProps {
   children?: React.ReactNode;
 }
 
-/** Barra de filtros: contador de resultados + selects. */
+/** Barra de filtros: título compacto + contador + selects en la misma franja en desktop. */
 export function ProductFiltersBar({
+  titulo,
+  descripcion,
   total,
   orden,
   onOrdenChange,
@@ -103,12 +109,24 @@ export function ProductFiltersBar({
   children,
 }: ProductFiltersBarProps) {
   return (
-    <div className="mb-8 md:mb-12 border-y border-[#E8DDD0]/70 py-4 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-      <p className="font-body font-light text-xs md:text-sm text-[#8A7A6E] sm:pb-2.5 tracking-wide">
-        Mostrando <span className="font-medium text-[#2C2420]">{total}</span> producto
-        {total !== 1 ? "s" : ""}
-      </p>
-      <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-end gap-3 sm:gap-4">
+    <div className="mb-6 md:mb-8 border-b border-[#E8DDD0]/70 pb-4 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+      <div className="min-w-0">
+        {titulo && (
+          <h1 className="font-display text-2xl sm:text-[26px] md:text-[32px] lg:text-[34px] text-[#2C2420] leading-tight">
+            {titulo}
+          </h1>
+        )}
+        {descripcion && (
+          <p className="mt-1 font-body font-light text-xs md:text-sm text-[#8A7A6E] max-w-xl">
+            {descripcion}
+          </p>
+        )}
+        <p className="font-body font-light text-xs text-[#8A7A6E] mt-1 tracking-wide">
+          Mostrando <span className="font-medium text-[#2C2420]">{total}</span> producto
+          {total !== 1 ? "s" : ""}
+        </p>
+      </div>
+      <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-end gap-2.5 sm:gap-3 flex-shrink-0">
         {children}
         <FilterSelect
           label="Precio"

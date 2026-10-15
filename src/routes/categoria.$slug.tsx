@@ -75,72 +75,54 @@ function CategoriaPage() {
       {config && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
 
-      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-16">
-        {/* Breadcrumb */}
-        <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-6 flex items-center gap-1.5">
+      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 pt-4 md:pt-6 pb-12 md:pb-16">
+        {/* Ruta + Eyebrow en una línea */}
+        <nav
+          aria-label="Ruta de navegación"
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-2 md:mb-3"
+        >
           <Link to="/" className="hover:text-[#2C2420] transition-colors">
             Inicio
           </Link>
-          <span>/</span>
+          <span aria-hidden className="text-[#8A7A6E]/60">
+            /
+          </span>
           <span className="text-[#2C2420]">{cat.nombre}</span>
-        </nav>
-
-        {/* Encabezado */}
-        <header className="max-w-2xl mb-10 md:mb-16">
-          <p className="font-italic-serif text-rose-accent text-base md:text-lg mb-2">
+          <span className="text-rose-accent font-italic-serif lowercase tracking-normal text-xs md:text-sm">
             — colección
-          </p>
-          <h1 className="font-display text-4xl md:text-6xl text-[#2C2420] leading-tight">
-            {cat.nombre}
-          </h1>
-        </header>
-
-        {hijasVisibles.length > 0 && (
-          // Subcategorías con productos activos como tarjetas visuales
-          <section className="mb-12">
-            <h2 className="font-display text-xl sm:text-2xl text-[#2C2420] mb-5">
-              Variedades y Subcategorías
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {hijasVisibles.map((sub: CategoriaRow) => (
-                <Link
-                  key={sub.id}
-                  to="/categoria/$slug/$sub"
-                  params={{ slug: cat.slug, sub: sub.slug }}
-                  className="group relative overflow-hidden bg-ivory-soft rounded-xl aspect-[16/10] flex items-end p-4 md:p-5 border border-[#E8DDD0] hover:border-[#C4956A] transition-all hover:shadow-md"
-                >
-                  {sub.imagen_url && (
-                    <img
-                      src={sub.imagen_url}
-                      alt={sub.nombre}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-500"
-                    />
-                  )}
-                  <div className="relative z-10">
-                    <h3 className="font-display text-base md:text-xl text-[#2C2420] leading-tight drop-shadow-xs">
-                      {sub.nombre}
-                    </h3>
-                    <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-widest uppercase font-body font-light text-[#8A7A6E] group-hover:text-[#2C2420] transition-colors">
-                      Ver colección <span aria-hidden>→</span>
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
+          </span>
+        </nav>
 
         {/* Grilla de productos con filtros siempre disponible */}
         {productos && productos.length > 0 ? (
           <section>
             <ProductFiltersBar
+              titulo={cat.nombre}
               total={filtrados.length}
               orden={orden}
               onOrdenChange={setOrden}
               rango={rango}
               onRangoChange={setRango}
             />
+
+            {hijasVisibles.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2 mb-6 -mt-2">
+                <span className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mr-1">
+                  Subcategorías:
+                </span>
+                {hijasVisibles.map((sub: CategoriaRow) => (
+                  <Link
+                    key={sub.id}
+                    to="/categoria/$slug/$sub"
+                    params={{ slug: cat.slug, sub: sub.slug }}
+                    className="px-3 py-1 rounded-full border border-[#E8DDD0] bg-white text-xs text-[#2C2420] hover:border-[#2C2420] hover:bg-[#F5EFE6]/50 transition-colors"
+                  >
+                    {sub.nombre}
+                  </Link>
+                ))}
+              </div>
+            )}
+
             {filtrados.length > 0 ? (
               <ProductGrid products={filtrados} tamanoLote={24} />
             ) : (
@@ -148,24 +130,99 @@ function CategoriaPage() {
                 No hay productos en ese rango de precio.
               </p>
             )}
+
+            {/* Subcategorías como tarjetas visuales al final */}
+            {hijasVisibles.length > 0 && (
+              <section className="mt-16 border-t border-[#E8DDD0] pt-10">
+                <h2 className="font-display text-xl sm:text-2xl text-[#2C2420] mb-5">
+                  Variedades y Subcategorías
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                  {hijasVisibles.map((sub: CategoriaRow) => (
+                    <Link
+                      key={sub.id}
+                      to="/categoria/$slug/$sub"
+                      params={{ slug: cat.slug, sub: sub.slug }}
+                      className="group relative overflow-hidden bg-ivory-soft rounded-xl aspect-[16/10] flex items-end p-4 md:p-5 border border-[#E8DDD0] hover:border-[#C4956A] transition-all hover:shadow-md"
+                    >
+                      {sub.imagen_url && (
+                        <img
+                          src={sub.imagen_url}
+                          alt={sub.nombre}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-500"
+                        />
+                      )}
+                      <div className="relative z-10">
+                        <h3 className="font-display text-base md:text-xl text-[#2C2420] leading-tight drop-shadow-xs">
+                          {sub.nombre}
+                        </h3>
+                        <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-widest uppercase font-body font-light text-[#8A7A6E] group-hover:text-[#2C2420] transition-colors">
+                          Ver colección <span aria-hidden>→</span>
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
           </section>
-        ) : hijasVisibles.length === 0 ? (
-          // Sin subcategorías visibles ni productos -> Mostramos próximamente
-          <section className="border border-[#E8DDD0] p-8 md:p-12 bg-[#F5EFE6]/40 text-center">
-            <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>
-            <p className="font-body font-light text-[#2C2420]/75">
-              Estamos preparando la colección. Mientras tanto, consulta por WhatsApp.
-            </p>
-            <a
-              href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-block h-12 px-8 bg-[#2C2420] text-white text-[11px] tracking-widest uppercase font-body font-light leading-[3rem]"
-            >
-              Consultar
-            </a>
-          </section>
-        ) : null}
+        ) : (
+          <div>
+            <h1 className="font-display text-2xl sm:text-[26px] md:text-[32px] lg:text-[34px] text-[#2C2420] leading-tight mb-6">
+              {cat.nombre}
+            </h1>
+            {hijasVisibles.length > 0 ? (
+              <section className="mb-12">
+                <h2 className="font-display text-xl sm:text-2xl text-[#2C2420] mb-5">
+                  Variedades y Subcategorías
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                  {hijasVisibles.map((sub: CategoriaRow) => (
+                    <Link
+                      key={sub.id}
+                      to="/categoria/$slug/$sub"
+                      params={{ slug: cat.slug, sub: sub.slug }}
+                      className="group relative overflow-hidden bg-ivory-soft rounded-xl aspect-[16/10] flex items-end p-4 md:p-5 border border-[#E8DDD0] hover:border-[#C4956A] transition-all hover:shadow-md"
+                    >
+                      {sub.imagen_url && (
+                        <img
+                          src={sub.imagen_url}
+                          alt={sub.nombre}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-500"
+                        />
+                      )}
+                      <div className="relative z-10">
+                        <h3 className="font-display text-base md:text-xl text-[#2C2420] leading-tight drop-shadow-xs">
+                          {sub.nombre}
+                        </h3>
+                        <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-widest uppercase font-body font-light text-[#8A7A6E] group-hover:text-[#2C2420] transition-colors">
+                          Ver colección <span aria-hidden>→</span>
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            ) : (
+              <section className="border border-[#E8DDD0] p-8 md:p-12 bg-[#F5EFE6]/40 text-center">
+                <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>
+                <p className="font-body font-light text-[#2C2420]/75">
+                  Estamos preparando la colección. Mientras tanto, consulta por WhatsApp.
+                </p>
+                <a
+                  href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-block h-12 px-8 bg-[#2C2420] text-white text-[11px] tracking-widest uppercase font-body font-light leading-[3rem]"
+                >
+                  Consultar
+                </a>
+              </section>
+            )}
+          </div>
+        )}
 
         {hermanas.length > 0 && (
           <section className="mt-16 md:mt-24 border-t border-[#E8DDD0] pt-10">

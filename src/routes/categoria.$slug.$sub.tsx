@@ -87,13 +87,18 @@ function SubPage() {
       <AnnouncementBar config={config} />
       <Header categorias={categorias} config={config} />
 
-      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-16">
-        {/* Breadcrumb */}
-        <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-6 flex flex-wrap items-center gap-1.5">
+      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 pt-4 md:pt-6 pb-12 md:pb-16">
+        {/* Ruta + Eyebrow en una línea */}
+        <nav
+          aria-label="Ruta de navegación"
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-2 md:mb-3"
+        >
           <Link to="/" className="hover:text-[#2C2420] transition-colors">
             Inicio
           </Link>
-          <span>/</span>
+          <span aria-hidden className="text-[#8A7A6E]/60">
+            /
+          </span>
           <Link
             to="/categoria/$slug"
             params={{ slug: cat.slug }}
@@ -101,23 +106,20 @@ function SubPage() {
           >
             {cat.nombre}
           </Link>
-          <span>/</span>
+          <span aria-hidden className="text-[#8A7A6E]/60">
+            /
+          </span>
           <span className="text-[#2C2420]">{subcat.nombre}</span>
-        </nav>
-
-        <header className="max-w-2xl mb-10 md:mb-16">
-          <p className="font-italic-serif text-rose-accent text-base md:text-lg mb-2">
+          <span className="text-rose-accent font-italic-serif lowercase tracking-normal text-xs md:text-sm">
             — {cat.nombre.toLowerCase()}
-          </p>
-          <h1 className="font-display text-4xl md:text-6xl text-[#2C2420] leading-tight">
-            {subcat.nombre}
-          </h1>
-        </header>
+          </span>
+        </nav>
 
         {/* Filtros + grid de productos */}
         {productos.length > 0 ? (
           <>
             <ProductFiltersBar
+              titulo={subcat.nombre}
               total={filtrados.length}
               orden={orden}
               onOrdenChange={setOrden}
@@ -133,21 +135,26 @@ function SubPage() {
             )}
           </>
         ) : (
-          <section className="border border-[#E8DDD0] p-8 md:p-16 bg-[#F5EFE6]/40 text-center">
-            <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>
-            <p className="font-body font-light text-[#2C2420]/75 max-w-md mx-auto">
-              Pronto cargaremos los arreglos de esta subcategoría. Si deseas una pieza
-              personalizada, escríbenos.
-            </p>
-            <a
-              href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-block h-12 px-8 bg-[#2C2420] text-white text-[11px] tracking-widest uppercase font-body font-light leading-[3rem]"
-            >
-              Consultar por WhatsApp
-            </a>
-          </section>
+          <div>
+            <h1 className="font-display text-2xl sm:text-[26px] md:text-[32px] lg:text-[34px] text-[#2C2420] leading-tight mb-6">
+              {subcat.nombre}
+            </h1>
+            <section className="border border-[#E8DDD0] p-8 md:p-16 bg-[#F5EFE6]/40 text-center">
+              <p className="font-italic-serif text-rose-accent mb-2">— próximamente</p>
+              <p className="font-body font-light text-[#2C2420]/75 max-w-md mx-auto">
+                Pronto cargaremos los arreglos de esta subcategoría. Si deseas una pieza
+                personalizada, escríbenos.
+              </p>
+              <a
+                href={`https://wa.me/${(config?.whatsapp ?? "+51 999 600 482").replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-block h-12 px-8 bg-[#2C2420] text-white text-[11px] tracking-widest uppercase font-body font-light leading-[3rem]"
+              >
+                Consultar por WhatsApp
+              </a>
+            </section>
+          </div>
         )}
 
         {/* Otras subcategorías */}

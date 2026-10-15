@@ -87,28 +87,27 @@ function CatalogoPage() {
       {config && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
 
-      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 py-10 md:py-16">
-        {/* Breadcrumb */}
-        <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-6 flex items-center gap-1.5">
+      <main className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-12 pt-4 md:pt-6 pb-12 md:pb-16">
+        {/* Ruta + Eyebrow en una línea */}
+        <nav
+          aria-label="Ruta de navegación"
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-2 md:mb-3"
+        >
           <Link to="/" className="hover:text-[#2C2420] transition-colors">
             Inicio
           </Link>
-          <span>/</span>
+          <span aria-hidden className="text-[#8A7A6E]/60">
+            /
+          </span>
           <span className="text-[#2C2420]">Catálogo</span>
+          <span className="text-rose-accent font-italic-serif lowercase tracking-normal text-xs md:text-sm">
+            — toda la colección
+          </span>
         </nav>
 
-        {/* Encabezado */}
-        <header className="max-w-2xl mb-10 md:mb-14">
-          <p className="font-italic-serif text-rose-accent text-base md:text-lg mb-2">
-            — toda la colección
-          </p>
-          <h1 className="font-display text-4xl md:text-6xl text-[#2C2420] leading-tight">
-            Catálogo
-          </h1>
-        </header>
-
-        {/* Filtros: categoría, subcategoría/ocasión y precio */}
+        {/* Franja compacta: Título + Filtros */}
         <ProductFiltersBar
+          titulo="Catálogo"
           total={filtrados.length}
           orden={orden}
           onOrdenChange={setOrden}
