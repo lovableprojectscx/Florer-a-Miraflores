@@ -136,118 +136,136 @@ function RecuerdosIndexPage() {
           </div>
         </header>
 
-        {/* Barra de Filtros Interactivos */}
-        <div className="mb-8 p-4 rounded-xl bg-[#FFFFFF] border border-[#E8DDD0] shadow-xs space-y-4">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            {/* Filtro por Ocasión (Pills) */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
-              <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1 shrink-0 mr-1">
-                <Filter className="w-3 h-3 text-[#C4956A]" /> Ocasión:
-              </span>
-              <button
-                type="button"
-                onClick={() => setSelectedOcasion("todas")}
-                className={`px-3 py-1.5 rounded-full text-xs font-body tracking-wide transition-all shrink-0 ${
-                  selectedOcasion === "todas"
-                    ? "bg-[#2C2420] text-white shadow-xs"
-                    : "bg-[#FAF8F5] text-[#5C5046] hover:bg-[#E8DDD0]/50"
-                }`}
-              >
-                Todas
-              </button>
-              {ocasiones.map((oc: CategoriaRow) => (
-                <button
-                  key={oc.id}
-                  type="button"
-                  onClick={() => setSelectedOcasion(oc.id)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-body tracking-wide transition-all shrink-0 ${
-                    selectedOcasion === oc.id
-                      ? "bg-rose-accent text-white shadow-xs"
-                      : "bg-[#FAF8F5] text-[#5C5046] hover:bg-[#E8DDD0]/50"
-                  }`}
-                >
-                  {oc.nombre}
-                </button>
-              ))}
-            </div>
-
-            {/* Filtro por Distrito */}
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1">
-                <MapPin className="w-3 h-3 text-[#C4956A]" /> Distrito:
-              </span>
-              <select
-                aria-label="Filtrar por distrito"
-                value={selectedDistrito}
-                onChange={(e) => setSelectedDistrito(e.target.value)}
-                className="px-3 py-1.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-xs font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
-              >
-                <option value="todos">Todos los distritos</option>
-                {distritos.map((d: DistritoRow) => (
-                  <option key={d.id} value={d.id}>
-                    {d.nombre}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Grilla Tipo Collage / Polaroid de Recuerdos */}
-        {recuerdosFiltrados.length > 0 ? (
-          <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-7">
-              {visibles.map((recuerdo: RecuerdoRow) => (
-                <RecuerdoCard
-                  key={recuerdo.id}
-                  recuerdo={recuerdo}
-                  categorias={categorias}
-                  distritos={distritos}
-                />
-              ))}
-            </div>
-
-            {/* Paginación progresiva */}
-            {total > 12 && (
-              <div className="mt-12 text-center space-y-3">
-                <p className="text-xs font-body font-light text-[#8A7A6E]">
-                  Mostrando {mostrando} de {total} recuerdos
-                </p>
-                {hayMas && (
-                  <button
-                    type="button"
-                    onClick={verMas}
-                    className="inline-flex items-center justify-center px-8 py-3.5 bg-[#2C2420] hover:bg-[#1A1A1A] text-white text-xs font-body uppercase tracking-widest rounded-md transition-colors shadow-sm"
-                  >
-                    Ver más recuerdos
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-        ) : (
+        {/* Si no hay ningún recuerdo publicado */}
+        {recuerdos.length === 0 ? (
           <div className="text-center py-20 bg-[#FFFFFF] rounded-2xl border border-[#E8DDD0] p-8 max-w-xl mx-auto shadow-xs">
             <div className="w-16 h-16 rounded-full bg-[#FAF8F5] border border-[#E8DDD0] flex items-center justify-center text-[#C4956A] mx-auto mb-4">
               <Camera className="w-8 h-8 stroke-[1.2]" />
             </div>
             <h2 className="font-display text-xl sm:text-2xl text-[#2C2420] mb-2">
-              No hay recuerdos con estos filtros
+              Pronto compartiremos nuestras entregas
             </h2>
-            <p className="font-body font-light text-xs sm:text-sm text-[#8A7A6E] mb-6 max-w-md mx-auto">
-              Prueba cambiando la ocasión o el distrito seleccionado para descubrir más momentos de
-              entrega.
+            <p className="font-body font-light text-xs sm:text-sm text-[#8A7A6E] max-w-md mx-auto">
+              Estamos preparando fotografías de nuestras entregas y arreglos florales especiales en
+              Lima.
             </p>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedOcasion("todas");
-                setSelectedDistrito("todos");
-              }}
-              className="inline-flex items-center justify-center px-6 py-2.5 bg-[#2C2420] text-white text-xs font-body uppercase tracking-widest rounded hover:bg-[#1A1A1A] transition-colors"
-            >
-              Restablecer filtros
-            </button>
           </div>
+        ) : (
+          <>
+            {/* Barra de Filtros Interactivos */}
+            <div className="mb-8 p-4 rounded-xl bg-[#FFFFFF] border border-[#E8DDD0] shadow-xs space-y-4">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                {/* Filtro por Ocasión (Pills) */}
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
+                  <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1 shrink-0 mr-1">
+                    <Filter className="w-3 h-3 text-[#C4956A]" /> Ocasión:
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedOcasion("todas")}
+                    className={`px-3 py-1.5 rounded-full text-xs font-body tracking-wide transition-all shrink-0 ${
+                      selectedOcasion === "todas"
+                        ? "bg-[#2C2420] text-white shadow-xs"
+                        : "bg-[#FAF8F5] text-[#5C5046] hover:bg-[#E8DDD0]/50"
+                    }`}
+                  >
+                    Todas
+                  </button>
+                  {ocasiones.map((oc: CategoriaRow) => (
+                    <button
+                      key={oc.id}
+                      type="button"
+                      onClick={() => setSelectedOcasion(oc.id)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-body tracking-wide transition-all shrink-0 ${
+                        selectedOcasion === oc.id
+                          ? "bg-rose-accent text-white shadow-xs"
+                          : "bg-[#FAF8F5] text-[#5C5046] hover:bg-[#E8DDD0]/50"
+                      }`}
+                    >
+                      {oc.nombre}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Filtro por Distrito */}
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-[#C4956A]" /> Distrito:
+                  </span>
+                  <select
+                    aria-label="Filtrar por distrito"
+                    value={selectedDistrito}
+                    onChange={(e) => setSelectedDistrito(e.target.value)}
+                    className="px-3 py-1.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-xs font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
+                  >
+                    <option value="todos">Todos los distritos</option>
+                    {distritos.map((d: DistritoRow) => (
+                      <option key={d.id} value={d.id}>
+                        {d.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Grilla Tipo Collage / Polaroid de Recuerdos */}
+            {recuerdosFiltrados.length > 0 ? (
+              <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-7">
+                  {visibles.map((recuerdo: RecuerdoRow) => (
+                    <RecuerdoCard
+                      key={recuerdo.id}
+                      recuerdo={recuerdo}
+                      categorias={categorias}
+                      distritos={distritos}
+                    />
+                  ))}
+                </div>
+
+                {/* Paginación progresiva */}
+                {total > 12 && (
+                  <div className="mt-12 text-center space-y-3">
+                    <p className="text-xs font-body font-light text-[#8A7A6E]">
+                      Mostrando {mostrando} de {total} recuerdos
+                    </p>
+                    {hayMas && (
+                      <button
+                        type="button"
+                        onClick={verMas}
+                        className="inline-flex items-center justify-center px-8 py-3.5 bg-[#2C2420] hover:bg-[#1A1A1A] text-white text-xs font-body uppercase tracking-widest rounded-md transition-colors shadow-sm"
+                      >
+                        Ver más recuerdos
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-20 bg-[#FFFFFF] rounded-2xl border border-[#E8DDD0] p-8 max-w-xl mx-auto shadow-xs">
+                <div className="w-16 h-16 rounded-full bg-[#FAF8F5] border border-[#E8DDD0] flex items-center justify-center text-[#C4956A] mx-auto mb-4">
+                  <Camera className="w-8 h-8 stroke-[1.2]" />
+                </div>
+                <h2 className="font-display text-xl sm:text-2xl text-[#2C2420] mb-2">
+                  No hay recuerdos con estos filtros
+                </h2>
+                <p className="font-body font-light text-xs sm:text-sm text-[#8A7A6E] mb-6 max-w-md mx-auto">
+                  Prueba cambiando la ocasión o el distrito seleccionado para descubrir más momentos
+                  de entrega.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedOcasion("todas");
+                    setSelectedDistrito("todos");
+                  }}
+                  className="inline-flex items-center justify-center px-6 py-2.5 bg-[#2C2420] text-white text-xs font-body uppercase tracking-widest rounded hover:bg-[#1A1A1A] transition-colors"
+                >
+                  Restablecer filtros
+                </button>
+              </div>
+            )}
+          </>
         )}
       </main>
 

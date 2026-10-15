@@ -69,26 +69,49 @@ describe("recuerdos-utils: isRecuerdoVisible y getRecuerdoStatus", () => {
 });
 
 describe("recuerdos-utils: validarRecuerdoForm", () => {
-  it("valida recuerdo completo correctamente", () => {
+  it("valida recuerdo sin contenido opcional correctamente", () => {
     const res = validarRecuerdoForm({
       titulo: "Entrega de Aniversario en Miraflores",
       slug: "entrega-de-aniversario-en-miraflores",
       resumen: "5 años celebrando juntos con rosas rojas.",
-      contenido: "Realizamos la entrega en el departamento de Claudia...",
+      contenido: "",
+      publicado: false,
     });
     expect(res.isValid).toBe(true);
     expect(res.errors).toEqual({});
   });
 
-  it("rechaza si falta título o contenido", () => {
+  it("rechaza si falta título", () => {
     const res = validarRecuerdoForm({
       titulo: "",
       slug: "entrega",
-      contenido: "",
     });
     expect(res.isValid).toBe(false);
     expect(res.errors.titulo).toBeDefined();
-    expect(res.errors.contenido).toBeDefined();
+  });
+
+  it("rechaza publicación si no se confirma la autorización del cliente", () => {
+    const res = validarRecuerdoForm({
+      titulo: "Momento especial",
+      slug: "momento-especial",
+      publicado: true,
+      confirmacion_autorizacion: false,
+    });
+    expect(res.isValid).toBe(false);
+    expect(res.errors.confirmacion_autorizacion).toBe(
+      "Confirmo que el cliente autorizó publicar esta foto.",
+    );
+  });
+
+  it("permite publicación si se confirma la autorización del cliente", () => {
+    const res = validarRecuerdoForm({
+      titulo: "Momento especial",
+      slug: "momento-especial",
+      publicado: true,
+      confirmacion_autorizacion: true,
+    });
+    expect(res.isValid).toBe(true);
+    expect(res.errors).toEqual({});
   });
 });
 
@@ -100,15 +123,27 @@ describe("recuerdos-utils: formatRecuerdoDate", () => {
 });
 
 describe("recuerdos-utils: construirMensajeWhatsAppRecuerdo", () => {
-  it("arma el mensaje con título y enlace al recuerdo", () => {
+  it("arma el mensaje con producto enlazado", () => {
     const msg = construirMensajeWhatsAppRecuerdo({
       titulo: "Sorpresa de Aniversario",
       slug: "sorpresa-de-aniversario",
+      tieneProducto: true,
       siteUrl: "https://floreriamiraflores.com",
     });
     expect(msg).toContain('vi la entrega "Sorpresa de Aniversario"');
     expect(msg).toContain("https://floreriamiraflores.com/recuerdos/sorpresa-de-aniversario");
     expect(msg).toContain("quisiera encargar el mismo arreglo floral");
+  });
+
+  it("arma el mensaje 'Quiero un arreglo así' cuando no hay producto", () => {
+    const msg = construirMensajeWhatsAppRecuerdo({
+      titulo: "Momento de Cumpleaños",
+      slug: "momento-cumpleanos",
+      tieneProducto: false,
+      siteUrl: "https://floreriamiraflores.com",
+    });
+    expect(msg).toContain('vi la entrega "Momento de Cumpleaños"');
+    expect(msg).toContain("quiero un arreglo así");
   });
 });
 

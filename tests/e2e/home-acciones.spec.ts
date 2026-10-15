@@ -1,9 +1,17 @@
 import { test, expect, waitForHydration } from "./fixtures";
 
 test.describe("Home E2E — Acciones rápidas en tarjetas (RF-017 / RF-018)", () => {
-  test.beforeEach(async ({ context }) => {
+  test.beforeEach(async ({ context, page }) => {
     // Otorgar permisos de portapapeles para probar la acción de copiar enlace
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    // Evitar que el popup automático intercepte eventos de puntero durante la prueba
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("fm_popup_seen", "true");
+      } catch {
+        // no-op
+      }
+    });
   });
 
   test("RF-017: Botón 'Agregar al carrito' agrega producto y abre el drawer sin navegar", async ({

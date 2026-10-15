@@ -62,6 +62,7 @@ interface FormState {
   distrito_id: string;
   producto_id: string;
   publicado: boolean;
+  confirmacion_autorizacion: boolean;
   destacado: boolean;
   orden: number;
   fecha_publicacion: string; // YYYY-MM-DDTHH:mm
@@ -78,7 +79,8 @@ const EMPTY_FORM: FormState = {
   categoria_relacionada_id: "",
   distrito_id: "",
   producto_id: "",
-  publicado: true,
+  publicado: false,
+  confirmacion_autorizacion: false,
   destacado: false,
   orden: 0,
   fecha_publicacion: new Date().toISOString().slice(0, 16),
@@ -130,6 +132,7 @@ function RecuerdoEditorModal({
       distrito_id: recuerdo.distrito_id ?? "",
       producto_id: recuerdo.producto_id ?? "",
       publicado: Boolean(recuerdo.publicado),
+      confirmacion_autorizacion: Boolean(recuerdo.publicado),
       destacado: Boolean(recuerdo.destacado),
       orden: recuerdo.orden ?? 0,
       fecha_publicacion: fechaLocal,
@@ -338,11 +341,11 @@ function RecuerdoEditorModal({
             </div>
           </div>
 
-          {/* Relaciones: Ocasión, Distrito y Producto Vinculado */}
+          {/* Relaciones: Ocasión, Distrito y Producto Vinculado (Todos Opcionales) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-body font-medium uppercase tracking-wider text-[#2C2420] mb-1.5">
-                Ocasión (Categoría)
+                Ocasión (Opcional)
               </label>
               <select
                 value={form.categoria_relacionada_id}
@@ -351,7 +354,7 @@ function RecuerdoEditorModal({
                 }
                 className="w-full px-3 py-2.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-xs font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
               >
-                <option value="">(Ninguna)</option>
+                <option value="">(Sin especificar)</option>
                 {opcionesCategoria.map((grp) => (
                   <optgroup key={grp.groupLabel} label={grp.groupLabel}>
                     {grp.options.map((op) => (
@@ -366,7 +369,7 @@ function RecuerdoEditorModal({
 
             <div>
               <label className="block text-xs font-body font-medium uppercase tracking-wider text-[#2C2420] mb-1.5">
-                Distrito de Entrega
+                Distrito de Entrega (Opcional)
               </label>
               <select
                 value={form.distrito_id}
@@ -384,14 +387,14 @@ function RecuerdoEditorModal({
 
             <div>
               <label className="block text-xs font-body font-medium uppercase tracking-wider text-[#2C2420] mb-1.5">
-                Arreglo Floral Entregado
+                Arreglo Floral Entregado (Opcional)
               </label>
               <select
                 value={form.producto_id}
                 onChange={(e) => setForm((prev) => ({ ...prev, producto_id: e.target.value }))}
                 className="w-full px-3 py-2.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-xs font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
               >
-                <option value="">(Ninguno / Selección manual)</option>
+                <option value="">(Sin especificar)</option>
                 {productos.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.nombre} (S/. {Number(p.precio).toFixed(2)})
@@ -401,34 +404,70 @@ function RecuerdoEditorModal({
             </div>
           </div>
 
-          {/* Frase / Dedicatoria Corta */}
+          {/* Frase / Dedicatoria Corta (Opcional) */}
           <div>
             <label className="block text-xs font-body font-medium uppercase tracking-wider text-[#2C2420] mb-1.5">
-              Frase corta o dedicatoria auténtica
+              Frase corta o dedicatoria (Opcional)
             </label>
             <input
               type="text"
               value={form.resumen}
               onChange={(e) => setForm((prev) => ({ ...prev, resumen: e.target.value }))}
-              placeholder="Ej. ¡5 años celebrando juntos con rosas rojas inolvidables!"
+              placeholder="Opcional. Si está vacío no se mostrará ningún texto de relleno."
               className="w-full px-3.5 py-2.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-sm font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
             />
           </div>
 
-          {/* Reseña o Historia Breve */}
+          {/* Reseña o Historia Breve (Opcional) */}
           <div>
             <label className="block text-xs font-body font-medium uppercase tracking-wider text-[#2C2420] mb-1.5">
-              Reseña o Historia de la Entrega *
+              Texto o Reseña del Recuerdo (Opcional)
             </label>
             <textarea
-              rows={4}
+              rows={3}
               value={form.contenido}
               onChange={(e) => setForm((prev) => ({ ...prev, contenido: e.target.value }))}
-              placeholder="Breve narración de la entrega o contexto del momento especial..."
+              placeholder="Opcional. Si está vacío no se mostrará texto de relleno."
               className="w-full p-3 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-sm font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
             />
             {errores.contenido && (
               <p className="text-xs text-red-600 mt-1 font-body">{errores.contenido}</p>
+            )}
+          </div>
+
+          {/* Casilla obligatoria para publicar: Autorización del cliente */}
+          <div
+            className={`p-4 rounded-xl border transition-colors ${
+              form.publicado ? "bg-[#FAF8F5] border-[#C4956A]" : "bg-gray-50/70 border-gray-200"
+            }`}
+          >
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                id="check-autorizacion"
+                checked={form.confirmacion_autorizacion}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    confirmacion_autorizacion: e.target.checked,
+                  }))
+                }
+                className="mt-0.5 w-4 h-4 text-rose-accent rounded focus:ring-rose-accent cursor-pointer"
+              />
+              <div>
+                <span className="text-xs font-body font-medium text-[#2C2420] block">
+                  Confirmo que el cliente autorizó publicar esta foto{" "}
+                  {form.publicado && <span className="text-red-500">*</span>}
+                </span>
+                <span className="text-[11px] font-body text-[#8A7A6E] block mt-0.5">
+                  Obligatorio para publicar. Protege la privacidad de clientas y menores de edad.
+                </span>
+              </div>
+            </label>
+            {errores.confirmacion_autorizacion && (
+              <p className="text-xs text-red-600 mt-1 pl-7 font-body">
+                {errores.confirmacion_autorizacion}
+              </p>
             )}
           </div>
 
@@ -620,6 +659,12 @@ function RecuerdosAdminPage() {
   const handleTogglePublicado = async (rec: RecuerdoRow) => {
     try {
       const nuevoEstado = !rec.publicado;
+      if (nuevoEstado) {
+        const confirmado = window.confirm(
+          "¿Confirmas que el cliente autorizó publicar esta foto en la web?",
+        );
+        if (!confirmado) return;
+      }
       const { error } = await supabase
         .from("recuerdos")
         .update({ publicado: nuevoEstado })

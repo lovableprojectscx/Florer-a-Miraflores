@@ -67,12 +67,17 @@ export interface ValidacionRecuerdoResult {
   errors: Record<string, string>;
 }
 
+export interface ValidacionRecuerdoInput extends Partial<RecuerdoInsert> {
+  id?: string;
+  confirmacion_autorizacion?: boolean;
+}
+
 /**
  * Validación pura para el formulario de creación y edición de recuerdos de entrega.
+ * Ocasión, distrito, producto y texto son opcionales.
+ * Casilla obligatoria para publicar: confirmación de autorización del cliente.
  */
-export function validarRecuerdoForm(
-  data: Partial<RecuerdoInsert> & { id?: string },
-): ValidacionRecuerdoResult {
+export function validarRecuerdoForm(data: ValidacionRecuerdoInput): ValidacionRecuerdoResult {
   const errors: Record<string, string> = {};
 
   const titulo = data.titulo?.trim() ?? "";
@@ -90,11 +95,9 @@ export function validarRecuerdoForm(
       "El slug solo puede contener letras minúsculas, números y guiones (sin guiones al inicio o final).";
   }
 
-  const contenido = data.contenido?.trim() ?? "";
-  if (!contenido) {
-    errors.contenido = "La reseña o historia breve del recuerdo no puede estar vacía.";
-  } else if (contenido.length < 5) {
-    errors.contenido = "La historia debe tener al menos 5 caracteres.";
+  // Texto o contenido es opcional (sin texto de relleno)
+  if (data.contenido && data.contenido.length > 10000) {
+    errors.contenido = "El texto no debe superar los 10,000 caracteres.";
   }
 
   if (data.resumen && data.resumen.length > 300) {
@@ -109,6 +112,11 @@ export function validarRecuerdoForm(
     errors.meta_description = "La meta descripción SEO no debe superar los 200 caracteres.";
   }
 
+  // Casilla obligatoria para publicar: confirmación de autorización
+  if (data.publicado && !data.confirmacion_autorizacion) {
+    errors.confirmacion_autorizacion = "Confirmo que el cliente autorizó publicar esta foto.";
+  }
+
   return {
     isValid: Object.keys(errors).length === 0,
     errors,
@@ -116,19 +124,24 @@ export function validarRecuerdoForm(
 }
 
 /**
- * Genera el mensaje estructurado de WhatsApp para pedir el mismo arreglo de un recuerdo.
+ * Genera el mensaje estructurado de WhatsApp para pedir el arreglo de un recuerdo.
  */
 export function construirMensajeWhatsAppRecuerdo({
   titulo,
   slug,
+  tieneProducto = false,
   siteUrl = "https://floreriamiraflores.com",
 }: {
   titulo: string;
   slug: string;
+  tieneProducto?: boolean;
   siteUrl?: string;
 }): string {
   const url = `${siteUrl.replace(/\/$/, "")}/recuerdos/${slug}`;
-  return `Hola Florería Miraflores, vi la entrega "${titulo}" (${url}) y quisiera encargar el mismo arreglo floral.`;
+  if (tieneProducto) {
+    return `Hola Florería Miraflores, vi la entrega "${titulo}" (${url}) y quisiera encargar el mismo arreglo floral.`;
+  }
+  return `Hola Florería Miraflores, vi la entrega "${titulo}" (${url}) y quiero un arreglo así. ¿Podrían brindarme información y disponibilidad?`;
 }
 
 /**

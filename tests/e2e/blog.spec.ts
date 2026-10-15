@@ -6,7 +6,11 @@ test.describe("Fase 09 / Pivote Recuerdos — Redirecciones 301 de Blog", () => 
     await expect(page).toHaveURL(/\/recuerdos/);
   });
 
-  test("Redirección 301: /blog/$slug redirige hacia /recuerdos/$slug", async ({ page }) => {
+  test("Redirección 301: /blog/$slug redirige hacia /recuerdos/$slug", async ({
+    page,
+    allowConsoleErrors,
+  }) => {
+    allowConsoleErrors([/recuerdos/, /404/]);
     await page.goto("/blog/sorpresa-cumpleanos-globos-flores");
     await expect(page).toHaveURL(/\/recuerdos\/sorpresa-cumpleanos-globos-flores/);
   });

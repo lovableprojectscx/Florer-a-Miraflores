@@ -117,6 +117,7 @@ function RecuerdoDetailPage() {
   const whatsappMsg = construirMensajeWhatsAppRecuerdo({
     titulo: recuerdo.titulo,
     slug: recuerdo.slug,
+    tieneProducto: Boolean(recuerdo.producto_id && productoRelacionado),
     siteUrl: CANONICAL_SITE_URL,
   });
 
@@ -207,28 +208,28 @@ function RecuerdoDetailPage() {
                 {recuerdo.titulo}
               </h1>
 
-              {/* Frase destacada / dedicatoria del momento */}
-              {recuerdo.resumen && (
+              {/* Frase destacada / dedicatoria del momento (solo si no está vacía) */}
+              {recuerdo.resumen && recuerdo.resumen.trim() && (
                 <div className="p-4 rounded-xl bg-[#FAF8F5] border-l-4 border-rose-accent">
                   <p className="font-body italic text-sm text-[#5C5046] leading-relaxed">
-                    "{recuerdo.resumen}"
+                    "{recuerdo.resumen.trim()}"
                   </p>
                 </div>
               )}
 
-              {/* Historia de la entrega */}
-              <div className="font-body font-light text-sm text-[#2C2420]/85 leading-relaxed space-y-3 border-t border-[#E8DDD0]/60 pt-4">
-                <ReactMarkdown>{recuerdo.contenido}</ReactMarkdown>
-              </div>
+              {/* Historia de la entrega: solo si hay texto */}
+              {recuerdo.contenido && recuerdo.contenido.trim() && (
+                <div className="font-body font-light text-sm text-[#2C2420]/85 leading-relaxed space-y-3 border-t border-[#E8DDD0]/60 pt-4">
+                  <ReactMarkdown>{recuerdo.contenido.trim()}</ReactMarkdown>
+                </div>
+              )}
 
-              {/* ─── BLOQUE DE CONVERSIÓN DIRECTA: Arreglo de este recuerdo ─── */}
-              {productoRelacionado && (
+              {/* ─── BLOQUE DE CONVERSIÓN: Flores de este recuerdo (solo si hay producto_id y producto) ─── */}
+              {recuerdo.producto_id && productoRelacionado ? (
                 <div className="mt-6 pt-6 border-t border-[#E8DDD0] space-y-4">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-rose-accent" />
-                    <h2 className="font-display text-lg text-[#2C2420]">
-                      Arreglo floral de este recuerdo
-                    </h2>
+                    <h2 className="font-display text-lg text-[#2C2420]">Flores de este recuerdo</h2>
                   </div>
 
                   <div className="flex items-center gap-4 p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E8DDD0]">
@@ -280,22 +281,17 @@ function RecuerdoDetailPage() {
                     </a>
                   </div>
                 </div>
-              )}
-
-              {/* Botón WhatsApp directo si no hay producto específico enlazado */}
-              {!productoRelacionado && (
+              ) : (
+                /* Si no hay producto_id: solo botón WhatsApp "Quiero un arreglo así" */
                 <div className="mt-6 pt-6 border-t border-[#E8DDD0] space-y-3">
-                  <p className="text-xs font-body font-light text-[#8A7A6E]">
-                    ¿Te gustó este arreglo? Contáctanos y lo preparamos especialmente para ti:
-                  </p>
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 px-4 bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-body uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm text-center"
+                    className="w-full py-3.5 px-4 bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-body uppercase tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm text-center font-medium"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    Consultar este arreglo por WhatsApp
+                    Quiero un arreglo así
                   </a>
                 </div>
               )}
@@ -303,8 +299,8 @@ function RecuerdoDetailPage() {
           </div>
         </div>
 
-        {/* Arreglos recomendados si tiene categoría relacionada */}
-        {productosRelacionados.length > 0 && (
+        {/* Arreglos recomendados solo si tiene ocasión/categoría relacionada */}
+        {recuerdo.categoria_relacionada_id && productosRelacionados.length > 0 && (
           <section className="mt-16 pt-12 border-t border-[#E8DDD0]">
             <div className="mb-8">
               <h2 className="font-display text-xl sm:text-2xl text-[#2C2420]">

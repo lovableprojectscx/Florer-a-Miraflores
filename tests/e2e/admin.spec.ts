@@ -9,7 +9,7 @@ const SIDEBAR_SECTIONS = [
   { label: "Categorias", urlPart: "/admin/categorias" },
   { label: "Banners", urlPart: "/admin/banners" },
   { label: "Testimonios", urlPart: "/admin/testimonios" },
-  { label: "Blog", urlPart: "/admin/blog" },
+  { label: "Recuerdos", urlPart: "/admin/recuerdos" },
   { label: "Popup", urlPart: "/admin/popup" },
   { label: "Suscriptores", urlPart: "/admin/suscriptores" },
   { label: "Colecciones Home", urlPart: "/admin/colecciones-home" },
