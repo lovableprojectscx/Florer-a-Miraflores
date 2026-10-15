@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { test, expect } from "./fixtures";
 
-const EVIDENCIAS_DIR = path.resolve(process.cwd(), "docs/evidencias/fase-01");
+const EVIDENCIAS_DIR = path.resolve(process.cwd(), "test-results/smoke");
 
 test.describe("Smoke E2E — Rutas públicas", () => {
   test("Home (/) carga sin errores y tiene <title> correcto", async ({ page }, testInfo) => {

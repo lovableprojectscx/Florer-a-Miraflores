@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { test, expect, waitForHydration } from "./fixtures";
 
-const EVIDENCIAS_DIR = path.resolve(process.cwd(), "docs/evidencias/fase-07");
+const EVIDENCIAS_DIR = path.resolve(process.cwd(), "test-results/resenas");
 const ADMIN_EMAIL = process.env.E2E_ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.E2E_ADMIN_PASSWORD;
 const ALLOW_WRITES = process.env.E2E_ALLOW_WRITES === "1";

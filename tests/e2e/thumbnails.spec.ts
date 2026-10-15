@@ -1,5 +1,6 @@
-import { test, expect, waitForHydration } from "./fixtures";
+import fs from "node:fs";
 import { resolve } from "node:path";
+import { test, expect, waitForHydration } from "./fixtures";
 
 test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
   test("Home: Novedades y Categorías configuran URLs de miniaturas y srcSet con thumbs/", async ({
@@ -110,11 +111,13 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
       .toBe(true);
 
     // Capturar novedades con fallback activo y fotos completamente visibles
+    const outDir = resolve("test-results/thumbnails");
+    fs.mkdirSync(outDir, { recursive: true });
     if (testInfo.project.name === "mobile") {
-      const outPath390 = resolve("docs/evidencias/fase-06b/novedades-390-despues.png");
+      const outPath390 = resolve("test-results/thumbnails/novedades-390-despues.png");
       await novedades.screenshot({ path: outPath390 });
     } else if (testInfo.project.name === "desktop") {
-      const outPath1440 = resolve("docs/evidencias/fase-06b/novedades-1440-despues.png");
+      const outPath1440 = resolve("test-results/thumbnails/novedades-1440-despues.png");
       await novedades.screenshot({ path: outPath1440 });
     }
 
