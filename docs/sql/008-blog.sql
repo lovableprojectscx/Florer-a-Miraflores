@@ -30,7 +30,7 @@ BEGIN
   NEW.updated_at = now();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = public;
 
 -- ------------------------------------------------------------------------------
 -- 2. Tabla `public.blog_posts`
@@ -57,12 +57,17 @@ CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON public.blog_posts (slug);
 CREATE INDEX IF NOT EXISTS idx_blog_posts_publicado_fecha ON public.blog_posts (publicado, fecha_publicacion DESC);
 CREATE INDEX IF NOT EXISTS idx_blog_posts_categoria ON public.blog_posts (categoria_relacionada_id);
 
--- Trigger de updated_at
-DROP TRIGGER IF EXISTS trigger_blog_posts_updated_at ON public.blog_posts;
-CREATE TRIGGER trigger_blog_posts_updated_at
-  BEFORE UPDATE ON public.blog_posts
-  FOR EACH ROW
-  EXECUTE FUNCTION public.set_blog_posts_updated_at();
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_trigger WHERE tgname = 'trigger_blog_posts_updated_at'
+  ) THEN
+    CREATE TRIGGER trigger_blog_posts_updated_at
+      BEFORE UPDATE ON public.blog_posts
+      FOR EACH ROW
+      EXECUTE FUNCTION public.set_blog_posts_updated_at();
+  END IF;
+END $$;
 
 -- Habilitar RLS
 ALTER TABLE public.blog_posts ENABLE ROW LEVEL SECURITY;

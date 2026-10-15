@@ -664,32 +664,6 @@ export async function getBlogPostsPublicos(): Promise<BlogPostRow[]> {
  * Si no está publicado o su fecha es futura, retorna null.
  */
 export async function getBlogPostPorSlug(slug: string): Promise<BlogPostConDetalles | null> {
-  // Mock para pruebas automatizadas E2E de seguridad XSS en ambiente dev
-  if (slug === "articulo-seguridad-xss" && import.meta.env.DEV) {
-    return {
-      post: {
-        id: "00000000-0000-0000-0000-000000000001",
-        titulo: "Cómo cuidar tus tulipanes en casa",
-        slug: "articulo-seguridad-xss",
-        resumen: "Aprende los mejores consejos para mantener tus tulipanes frescos por más días.",
-        contenido:
-          "## Cuidados Esenciales\n\nLos tulipanes son flores sensibles a la temperatura y a la luz.\n\n<script id='malicioso'>window.__xss_executed = true;</script>\n\n- Cambia el agua todos los días con agua fresca.\n- Corta los tallos en diagonal 1 cm.\n- Mantenlos alejados del sol directo y corrientes de aire.\n\n> Disfruta de su belleza natural en cada rincón.",
-        imagen_portada_url:
-          "https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=1200&q=80",
-        autor: "Florería Miraflores",
-        categoria_relacionada_id: null,
-        publicado: true,
-        fecha_publicacion: "2026-01-01T10:00:00Z",
-        meta_title: "Cómo cuidar tus tulipanes en casa | Blog Florería Miraflores",
-        meta_description: "Aprende los mejores consejos para mantener tus tulipanes frescos.",
-        created_at: "2026-01-01T10:00:00Z",
-        updated_at: "2026-01-01T10:00:00Z",
-      },
-      categoriaRelacionada: null,
-      productosRelacionados: [],
-    };
-  }
-
   try {
     const { data: post, error } = await supabase
       .from("blog_posts")
