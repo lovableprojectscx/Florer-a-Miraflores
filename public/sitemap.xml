@@ -2,2623 +2,2701 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://floreriamiraflores.com/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/catalogo</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://floreriamiraflores.com/resenas</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/blog</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://floreriamiraflores.com/nosotros</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://floreriamiraflores.com/terminos</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/privacidad</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/cambios-y-devoluciones</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://floreriamiraflores.com/libro-de-reclamaciones</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/para-el</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/box-luxury</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/tulipanes-arreglos</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/tulipanes-ramos</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/tulipanes-floreros</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/girasoles</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/coronas-funebres</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/cruces</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/lagrima-pedestal</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/lagrimas</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/cumpleanos</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/novedades</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/mantos</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://floreriamiraflores.com/categoria/box-chocolates</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/graduacion</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/ramos</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://floreriamiraflores.com/categoria/orquideasparaprom</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/inauguracion</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/orquideas</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/amor-aniversario</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/arreglos-premium</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/tulipanes</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/primaverales</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/categoria/ofertas</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/defuncion</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/tulipanes</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/box-chocolates</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/primaverales</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/novedades</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/ofertas</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/corporativo</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://floreriamiraflores.com/categoria/arreglos-florales</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://floreriamiraflores.com/categoria/graduacion</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://floreriamiraflores.com/categoria/ocasion</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://floreriamiraflores.com/categoria/ramos</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://floreriamiraflores.com/categoria/nacimientos</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://floreriamiraflores.com/categoria/amor-aniversario</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/nacimientos-nino</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/nacimientos-nina</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/centros-de-mesa</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/floreros</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/chocolates</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/peluches</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/globos</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/toppers</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/licores</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/ocasion</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/nacimientos</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/arreglos-florales</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/categoria/complementos</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/categoria/mas-vendido</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-de-mesa-gala-carmesi-con-orquidea-97d949cd-7bb1-40bd-979e-3c095c85e0f8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-violeta-base-floral-e7ad8e1e-5e32-4035-8df8-b42512804a9b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-noir-de-girasoles-radiantes-e1094eae-add7-4d60-b87a-87495e260a52</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-f-6446fa60-2c87-4b8a-ba09-e16e2b844292</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-4-69acb87e-0f94-4f2a-bc4d-95e312575193</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-4-88c0d11f-fc13-47c7-bc2f-89c24b29b8b9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-lila-velo-de-novia-3f38ac07-9770-4667-a283-6eaed1a345d2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-cono-kraft-de-tulipanes-rosa-8ebfd79e-452b-4039-88bd-c3dd7db7adc1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-lavanda-dulzura-rosas-lila-03a23e5b-1c63-4148-a454-00d27f969e1f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-melodia-lila-rosas-pastel-8ed05463-b16d-4b8c-94e4-bd4d1a2aab20</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-dorado-amor-brillante-rosas-peluche-globos-5fcacc69-1912-4275-8994-e21ad1f3fd3f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-celebracion-corazones-deluxe-3b8c674f-7a56-4606-bfe5-5d83a2d8e120</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-rose-gold-chrome-blush-464044d1-fbb1-4ebf-a639-808d4b248ebc</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-majestad-de-blancos-fa13cad7-0da5-4bcb-8e15-9488f9fea97d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-2-cd68fb7e-5f73-4023-bc0a-5b16810a69b7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-787f8c86-463c-4a9a-b527-39fa83c47d55</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-1cafbbe3-5835-47c5-9cf0-55791a900bbf</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-d7d6dfcf-5379-4c2b-81fa-a90134be0b49</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/emperatriz-748ed42a-c704-4c1c-9d05-1cc086fc79d1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-2-0ef19d3e-6fc0-4987-b4f6-be29e7bb7208</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-c9227cec-1fef-4efa-b907-952439d3443d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-d7d6dfcf-5379-4c2b-81fa-a90134be0b49</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-4c501791-793c-43a8-915b-f87a6b9a27a6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campo-dorado-follaje-8385c1ec-4176-4c32-9636-ec8f38190ba1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-c9227cec-1fef-4efa-b907-952439d3443d</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-amarilla-sol-d5db122e-27fd-431c-bc11-b79c90fb217a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-magenta-deluxe-24d2f3a1-7eba-465a-ad9e-89c557f7133e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-durazno-royal-dffa0c1e-9601-4dc8-8ea1-98af76251e1d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-fucsia-imperial-8de78d9d-d33f-4fd8-8845-775677bf0889</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-violeta-armonia-edbe4960-4261-4f79-9d04-337f957d1df7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-carmesi-silvestre-fdc67c3b-f171-47b8-b24f-0af1a09b90e8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-love-lila-618f076a-c47b-4342-9b84-251cabce1100</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-3ebb3652-4cfd-4889-9dd3-f984cacb8f34</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-sol-naciente-de-girasoles-54858646-a672-40a3-8554-e2069bb02f5f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-6dd6d4ef-5296-4fab-97d4-30d9e7031980</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-n-2-260fa4a0-ac7d-41e5-8bf1-8a710d7a1d85</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-fiesta-primaveral-multicolor-ac770cea-0808-4a9a-9573-09056fcf10e4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-2-5f59d7a8-279d-428b-b01f-852496b4ede9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/hasta-el-infinito-fffcbe28-118e-4e47-9898-7e5618b0d4a0</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-jardin-de-ensueno-rosa-14b7df83-7864-4d5d-b520-89b13fdbf1c2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-3-128ee3e4-7b24-4462-8d25-28b73d905788</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-cumpleanos-estrella-magenta-66a875aa-1fdb-471d-8d63-38a9f8e4215b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-silvestre-canto-de-aves-f9dab31b-5379-43de-a89a-28a0084c5977</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-sol-naciente-de-girasoles-n-2-a61591d0-6e3b-4abf-92d3-d687681b4c5c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-2-bfb3f706-60a6-4889-9046-dcc3aa6d764e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-n-3-653d9f00-45ff-40ec-b4ab-7dbe509fc6a9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-serenata-de-girasoles-f871330b-0c89-4739-81b8-5c6137137a57</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/dolce-vita-2e7ae318-744b-4f34-be0e-92fdd0dbbe76</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-2-ce6408f8-4d86-4f56-a8f2-c9ea17ed4ccb</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-4-b3dc3b5f-655f-4894-9b0d-35b69b6681c1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-burbuja-rose-gold-birthday-05066935-ceb0-4932-8493-c4ab997c2c3f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-3-9d85763c-b109-4e81-8c99-55882558e294</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/yellow-18c0213d-3e55-4b2a-932c-a8e55a0807f6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-pureza-rosas-blancas-86f2e42e-be8a-4307-8949-0027632e3104</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-distincion-blanca-93c284d3-732e-4181-9aff-afa3a1938d4b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-2-ca4c1ac4-9d6b-41a8-bcda-c9686e7cef19</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-3-82d30799-0326-40cc-ab68-40697bab84f1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-bienvenida-bebe-con-jirafita-d3867fbf-5bfd-49f0-a4c3-86d79facf4bd</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-serenata-de-girasoles-n-2-993e85fd-d11b-4a9d-bdc3-c19d03c84419</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-black-white-elegance-birthday-5d744b2e-6845-4bfd-a433-d69c3db04059</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-atardecer-calido-cdb99345-a34c-42d4-b0a6-3cd29bca29b4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-dulce-encanto-rosa-7edbca5c-dc43-491e-b627-bda66a2e3790</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-girasoles-deluxe-868817e1-6196-40e7-bbda-fbdb77873e89</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramillete-de-corazones-pasion-metalicos-bd5673d9-860c-4871-a02b-77524a41283d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/abril-41a852c3-c3d8-4e60-9ec3-d5cb0bb28c87</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-blanca-pureza-22d0d79d-3d15-4962-9fd2-44f85feaf153</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-blanca-sublime-c4752e99-3a9a-40ba-aa16-bbd33f18abd7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-blanca-serena-1f77b440-e179-49cd-8a9b-450157c47474</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-persona-favorita-blanca-59064fb5-99aa-4e0d-bb03-6d74cfbcf673</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-jaspeada-love-elegance-b9e805cc-251a-49f7-ac89-703ab052fdcf</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-oso-love-deluxe-4238decb-113e-453d-ac00-79f9e4279f88</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-osito-nieve-3b19ab26-9fc1-4eec-b638-28009ad1a4bd</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-estrella-dorada-afff0416-0d70-40c8-b40f-84929f3990c6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-cerdito-travieso-7bea6876-3085-4ace-a415-c34756933e3f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-pasion-radiante-de-rosas-rojas-abc05110-a452-484b-93d1-5b25ac902f5f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-triunfo-estrella-dorada-lirios-3ac533c3-3f46-43a6-884e-e0fe21c9cc1d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-mi-persona-favorita-love-c91aff89-85e1-465b-a13e-2c79e4b63f8d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-abrazo-floral-con-peluche-cd2eb7fe-2947-448f-b582-33e566758769</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-osito-tierno-carino-c6d39ab2-11ad-4e2c-ab6c-b98c8767a7ed</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-azules-c6d8f864-84a7-4067-a990-1db58286231f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-exito-graduacion-de-rosas-e9b93468-db06-47e6-96ce-a91c77788e21</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-sol-de-girasoles-8aa78ce4-7ef9-4e2f-9a62-3f3a6d81ca22</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-sorpresa-corazon-metalico-peluche-5215f8c5-c842-4167-9c77-882058a6518a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-dulce-romance-con-osito-4c503239-115f-4a4e-941c-fafdabc432be</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-romance-en-rosa-rojo-34c7345f-2746-4851-9e82-e50d2d3c1fbc</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-pasion-en-salmon-rosas-bed25faf-cc1a-4a57-88bb-2bbe9d24729d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-ternura-oso-love-04ec8000-69c9-4e75-8e78-b6f52af3444c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-radiante-girasoles-rosas-rojas-b265d2f7-f71b-4493-ba1b-746e35aade7e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-ensueno-infantil-con-munequita-3d093cee-1309-402b-8983-70e8cfb47786</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-cono-you-i-love-rosas-rojas-a53015b2-42b8-4ea9-8e63-19fa6b1e65ef</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-festivo-alegria-multicolor-3400f647-26c9-4760-a2d7-11537a252d27</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-serenata-de-lirios-blancos-523c22eb-a384-49ee-8435-2ccd24f3891c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-menta-pastel-6ee8c9c9-40ed-4a81-a07a-7bdce5498987</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-vintage-gazette-5ce61669-53a7-4f85-b1de-a1ce4f896ceb</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-enamorados-rosas-rojas-rosa-bebe-adff6bb9-07f0-4210-ad3f-74fc5737d677</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-stargazer-pasion-lirios-750974f0-9752-473e-9e0e-1ac66aee30f7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-corazon-cumpleanos-girasoles-rosas-386b8cfb-dd55-43d4-b82e-0eb6246d93f6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-nube-romantica-de-gypsophila-00c17d17-3d4d-4658-ae8b-546e0d207110</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-pureza-de-rosas-blancas-45186814-8030-4a1c-a5cb-a9dc4c8ba931</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/miel-rosa-5a19e77f-37bd-4b4a-9b2b-c32f9d271361</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/orquidea-phalaenopsis-jardin-base-mixto-6be29dfa-a244-4817-8ad9-d0f73ff5eba6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-de-mesa-pastel-romance-5060b9fe-11b1-49a0-9345-8281edaa80c7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-2-db53c1fc-2c8f-4061-9ace-c26df60258e1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-jardin-de-ensueno-rosa-n-2-6ebf7689-789d-4e95-af10-d99e20267b14</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campo-dorado-follaje-n-3-6fced0b7-600e-41f5-b74c-67321a8a8bc0</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-3-7835c74b-3537-47aa-8567-dfc218162d1f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-2-e2f93418-bff3-44b9-ab67-74ff2deadc74</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-3-981cc2e7-2e5d-4585-92ae-9de6d2512353</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-4-51e84582-8101-4d18-9d54-9d91b54b6a3f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-5a0b19ce-73a5-4398-aca5-549273cf1113</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-56257050-7203-4aa8-86b1-148b1a08eb6b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campo-dorado-follaje-n-4-6adfd59c-b1f7-4cbd-83ed-26a0a79ddd2e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-rustico-girasol-gerberas-109d1016-c167-4600-919d-2274441d4f9b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-clasico-rosas-rojas-elegance-629ca674-e4db-442d-b490-3de4fd54d9ac</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-jardin-de-ensueno-floral-952ca031-5b84-4dd1-993b-3d1960e7c7b2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campo-dorado-follaje-n-2-ff9ed695-95d0-4871-a0ff-995b24a1c136</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-girasoles-chocolates-hershey-s-deluxe-bfe64ea0-726f-4d1d-a621-539a960f85df</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-3-35d641c8-e961-4be7-8926-6146dea089cc</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-sol-naciente-de-girasoles-n-5-0f38bf85-70de-45d8-95c4-2bc9ae035d99</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-sol-naciente-de-girasoles-n-4-83574a11-d69b-4424-b36a-6ba3d897d5cb</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-sol-naciente-de-girasoles-n-3-cd4fcfe5-532b-4d93-867a-13b81770d0ea</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-majestad-de-blancos-n-2-c3c2a76a-d4bb-452c-a3a4-fdbd05765161</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-5-267d5e5a-cf35-4bf5-ad1a-00057091e277</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-n-4-657547fe-1a32-4dd7-9f54-40752dbbbf25</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-4-1a462007-5b9e-4f74-a99f-a44ed76c156e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-0be88b54-7a51-47ed-afe7-4a8fac9646a2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-jardin-secreto-multicolor-44303bcb-9b4c-4e45-8670-f6a991864673</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-640fa07b-bd9b-448f-9381-43232348a3fa</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-serenata-de-girasoles-n-3-15a58280-f34d-43ae-b74c-66d29d690aea</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-2-f3942043-f0a8-4b50-aee8-c2d535385440</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-3-c18ddef4-8fd1-47b2-9141-0bcdef73030f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-ebadbe3b-aec4-46fd-9251-01729fa91767</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-n-2-8980c737-abbe-4304-b50e-e3bc69bf84dd</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-n-3-20b3f66b-3124-4bb8-9c10-36bb812bdc63</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-n-4-eedb0199-fe58-425b-a7ff-26c733c40396</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/lia-3f091521-9612-4b2e-ac79-8aa93f367880</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-4-1a462007-5b9e-4f74-a99f-a44ed76c156e</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-primavera-rosa-eucalipto-bf938150-1a05-4dff-8e42-219e484dfe56</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/kokil-631bb265-2759-4bc1-9c38-3e9da74921ac</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-5-bce70ea4-a39a-4763-b398-caa5c7b40ffa</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-4-77ba5fae-f28d-4aec-844d-945dc6f5989e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-n-5-1769abda-b215-4a0f-a0d1-f3f2dc23dc6d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-6-a87c462c-d9d7-438e-a578-2dcb3146dbee</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-2-c42008ea-23f3-4dba-9d4c-565a5718100c</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-2-773123d9-29c5-4b6e-bdb1-3a488607e61a</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-catedral-de-lirios-rosas-dd0853dd-1ff2-453a-b23a-afe1f66f9c71</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-3-6d10b7f9-4b76-4ff5-b320-0a61d9bda15e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-2-c42008ea-23f3-4dba-9d4c-565a5718100c</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-2-773123d9-29c5-4b6e-bdb1-3a488607e61a</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-catedral-de-lirios-rosas-dd0853dd-1ff2-453a-b23a-afe1f66f9c71</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-2-906ec3b5-2b8b-4a05-ac3e-1f8764ff5cc3</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-ea5ae747-cafc-4d7b-a77c-769ff44093a8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-3-4c8a883c-0b0e-4e6a-aa0c-10322d39e1c1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/aurora-bloom-a3a567d5-dbb5-4339-807f-9b145c27aa29</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-2-b17ce836-e145-4dd1-a26a-80c5b350c985</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campo-dorado-follaje-n-5-45ab7408-7910-4d44-a025-832fddfa3f89</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/olivia-f40f486b-f161-4c9f-9468-a1fe18606eb7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/dulce-encanto-d3c00102-4a0a-4445-8029-788309c96446</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/tentacion-a623672d-62e3-4a43-aa05-f38f2517eb91</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/petalos-de-amor-295b460c-9930-4442-a0a0-4fa1ed7a11e2</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-6-a4c1f6a3-8891-4a12-b7e1-a09a2cd126fb</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-6-ba955e04-4830-4201-a85a-68ffd657cc35</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-5-b0f8a923-b207-49a4-abbf-0929869b9587</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-paz-celestial-blancos-40fe7fd4-aff7-4424-8fbe-90be49be9f65</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-pasion-escarlata-rosas-rojas-87c02507-88c9-4d4b-bab4-18f72103e74d</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-4-4be73e61-35e1-46b7-a7a6-fbb6881f1593</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-4-c5f1ec92-3a9e-4ff1-b9cd-996bc547615a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campo-dorado-follaje-n-6-0718ac1a-116b-4819-bfa7-5cf9ac8de99e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-6-a4c1f6a3-8891-4a12-b7e1-a09a2cd126fb</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-6-ba955e04-4830-4201-a85a-68ffd657cc35</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-5-b0f8a923-b207-49a4-abbf-0929869b9587</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-paz-celestial-blancos-40fe7fd4-aff7-4424-8fbe-90be49be9f65</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-pasion-escarlata-rosas-rojas-87c02507-88c9-4d4b-bab4-18f72103e74d</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-4-4be73e61-35e1-46b7-a7a6-fbb6881f1593</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-4-c5f1ec92-3a9e-4ff1-b9cd-996bc547615a</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/mila-16469499-4ca1-4065-b051-de32cda83a63</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-3-53542f7e-2973-4fd3-92e5-e609524c5740</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-raysel-ofertas-fe63222b-95ad-4344-806f-712b1a0289c5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-5-0922e7a0-b83b-4c44-be34-0332150de7dd</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-caricia-floral-en-rosa-6ead895f-a8e5-4e20-a314-061375609ff3</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-esperanza-azul-blanco-c4a38263-b698-4eca-8cc2-decdc9fb2ad5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-girasoles-deluxe-n-2-7e7e1905-d03d-4e4c-a2f1-6ca8ef9a78a7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-frezia-e8519bdb-f2c3-478a-9cfd-34d9c2d97260</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-3-ea44becf-be8f-4533-b19d-64a4eea19d58</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-4-53f31e6d-a73a-4a34-92bc-408ae4cbbecc</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-girasoles-deluxe-n-3-31d9029b-34d0-4892-aec4-fcb7b8a48cc1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-5-8b1081d2-1eaa-4943-a03c-806c1536b9c8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/tatiana-22ee51a0-0e53-40af-8fb7-4941df481890</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-marmol-rosas-blancas-35811931-04f8-4c69-9dce-4ff8f6234887</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-silvestre-canto-de-aves-n-3-331ec446-a378-4528-bbc9-dcef62835b0e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-silvestre-canto-de-aves-n-2-9b70c568-1f9e-4abb-b304-5e22a0f60c3d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-7-75a27416-03de-4456-99d3-59dc5b6d0fd2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-6-bd4b919b-5077-45b2-aff0-7081df3855da</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-5-d35725cc-a835-4bba-9eab-ac8fc6f729fe</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-pureza-nival-rosas-claras-30a9572c-f72a-4af6-99bd-eb80bc35b1a8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-jardin-de-ensueno-rosa-n-3-fe201d54-1f1c-4315-98ea-adee3f9dbb98</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-serenata-de-girasoles-n-4-ac90b9a1-67d0-43ff-9346-b4b22b29546b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-6-2e5cf95b-f5d4-44c4-9d9d-cf8994091aee</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-6-ec72f2cf-2df0-437a-b5a3-49b032fa2041</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-5-0eb58bdc-5f36-4373-87b1-151cab8de231</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-sinfonia-silvestre-multicolor-bcede7d4-f06d-43ab-b4fe-04bb5dd80b33</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-6-ec72f2cf-2df0-437a-b5a3-49b032fa2041</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-silvestre-canto-de-aves-n-3-331ec446-a378-4528-bbc9-dcef62835b0e</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-5-0eb58bdc-5f36-4373-87b1-151cab8de231</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-7-bfc67a7a-d46a-43bd-b466-d4a7fbe44440</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-7-d7c4a433-c5aa-4f19-9088-e65cee18179b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-n-6-c2fa0560-0f67-4dae-9a3b-165f1bb8110f</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-7-53432d0c-1041-4b10-b068-2b8fbc029ef4</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-paz-celestial-blancos-n-2-f19f5387-5a16-4cb9-a3f7-9f8f341067b8</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/delfina-916d5de2-4508-452b-b000-5cfdb50d3206</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-9-b50afead-06fe-47c2-9b4a-08ba1e218747</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-7-8ecdd521-e758-4e37-a7fd-8061b7f6487b</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-5-05c9d03d-414f-4fc9-a66e-c2e54b9daebc</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/rosas-para-ti-d97e8fb4-297c-4db2-9f54-e42ff235deb8</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-8-a306cb50-e5f2-4244-8679-95b8020d980a</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-catedral-de-lirios-rosas-n-2-0e0f9b2a-a416-4704-a8a7-1963c1dbb593</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/box-luxury-jardin-de-ensueno-rosa-n-4-fec238cf-72a7-4442-88ac-cb05312b0795</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-8-22966cb2-c756-4c61-956a-733ddad078df</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/la-gran-senora-6e81fea0-8a21-4aa2-8cca-f567f6bdb6d1</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-7-88931a62-dcfc-47e8-ae7b-b5f5a942e9c3</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-blanca-ruscus-5dbe12f5-50ea-4a16-8320-beca1302f212</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-7-53432d0c-1041-4b10-b068-2b8fbc029ef4</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/delfina-916d5de2-4508-452b-b000-5cfdb50d3206</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-9-b50afead-06fe-47c2-9b4a-08ba1e218747</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/rosas-para-ti-d97e8fb4-297c-4db2-9f54-e42ff235deb8</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-7-88931a62-dcfc-47e8-ae7b-b5f5a942e9c3</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-5-05c9d03d-414f-4fc9-a66e-c2e54b9daebc</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-8-a306cb50-e5f2-4244-8679-95b8020d980a</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-catedral-de-lirios-rosas-n-2-0e0f9b2a-a416-4704-a8a7-1963c1dbb593</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/box-luxury-jardin-de-ensueno-rosa-n-4-fec238cf-72a7-4442-88ac-cb05312b0795</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-8-22966cb2-c756-4c61-956a-733ddad078df</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/la-gran-senora-6e81fea0-8a21-4aa2-8cca-f567f6bdb6d1</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-7-8ecdd521-e758-4e37-a7fd-8061b7f6487b</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-paz-celestial-blancos-n-2-f19f5387-5a16-4cb9-a3f7-9f8f341067b8</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/kiara-2ee9c59d-96e9-4229-9583-8c5f8867c9e5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/seduccion-052d32dc-3b08-4dfe-b339-4b59ac46823e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/majestuosa-c6e7b4cc-45b6-4f42-81ee-e3d77d3f5901</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/renata-c99daf93-c863-4ebf-8227-5e17ee8cbca6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-8-6c76d616-6415-41af-99de-394f9b88f66e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-6-fa3d3a23-10db-45d6-a0b9-639a502e9348</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-n-7-dad7bdc7-94d1-431b-8325-ce51c91c2b03</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-9-5360f970-8c55-48eb-8b30-72f83163e556</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-8-6e7aea9f-72d6-491d-be4a-766c98e3cba6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-4-1b4e8865-de5e-4d80-8a62-ef0d355d1ed5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-3-3bab9abb-a0c8-4a36-804f-cc1941b58865</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-5-bf0a1a5d-dce7-4236-860d-6c495fe5a6c9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-5-18a0c955-c3fc-403a-822f-580adb1fa8b5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-4-8317d3fb-c542-409e-a134-7ce23ed2959e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-8-f86421dd-9e30-4684-aa71-1db67e8f3fe6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/siena-571b40e7-c403-463f-a316-11cd5fc65d48</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-crisantemos-lirios-blancos-52314108-99e2-446b-b42b-a27db3de1ac8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bachata-rosa-36b6a86e-d311-4b3c-9cf6-7a18f5f29a69</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-9-d0fa8cb8-4cf3-4a19-8d97-262e3e9b03f9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-arcoiris-de-flores-frescas-f62c5341-381a-4ca0-a3b0-5aed5b27fed7</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-5-7dc0bb98-bdc0-4489-962a-581f5f6f2c94</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-paz-celestial-blancos-n-3-34a211ee-4559-4fe2-aa8d-e02a1bf5b8d7</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-nieve-sublime-de-lirios-n-2-7acdaea2-c36a-4827-b4e7-e0a33b65bb7b</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-armonia-blanca-ruscus-n-4-d62a89c8-01ff-4a90-9d1a-6f296e37b8d2</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/pink-dream-5ad1d9ce-5f2b-49bd-a096-8c09d216fbb7</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/petalo-chic-097ef312-690b-4c81-bb94-39780cee20b2</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/emma-ff9bc8b7-648b-4758-b28d-683e1d501ebf</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-armonia-blanca-ruscus-n-5-f631410c-d41e-48c1-b42e-2cbc06a6b26d</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-6-5a6e4690-a963-4eac-9a72-52f37950d43e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-distincion-rosas-rojas-252d4b10-8185-4ada-a4a0-2563de033b47</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-5-7dc0bb98-bdc0-4489-962a-581f5f6f2c94</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-paz-celestial-blancos-n-3-34a211ee-4559-4fe2-aa8d-e02a1bf5b8d7</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-nieve-sublime-de-lirios-n-2-7acdaea2-c36a-4827-b4e7-e0a33b65bb7b</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-armonia-blanca-ruscus-n-4-d62a89c8-01ff-4a90-9d1a-6f296e37b8d2</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/pink-dream-5ad1d9ce-5f2b-49bd-a096-8c09d216fbb7</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/petalo-chic-097ef312-690b-4c81-bb94-39780cee20b2</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/emma-ff9bc8b7-648b-4758-b28d-683e1d501ebf</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-armonia-blanca-ruscus-n-5-f631410c-d41e-48c1-b42e-2cbc06a6b26d</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-6-5a6e4690-a963-4eac-9a72-52f37950d43e</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-estelar-de-rosas-hortensias-c5e28971-5f63-4785-af04-631fd0bcc5ff</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-girasoles-deluxe-n-4-b73ea6a2-300e-4ebd-9778-d16fabf2dee0</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-explosion-de-color-alegria-b7c78a85-aa03-4c45-85b5-96176b1e9444</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-8-7153ca67-ba45-4a0c-802a-a0f3770c7255</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-n-6-a7a02cce-5e9a-4faf-bb1d-980be667d8dd</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-n-7-c30324cd-29de-4026-a8d7-43f8891a446e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campo-alegre-variedad-floral-d0f245f0-38ed-4c7a-aea2-69f8ededdc67</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/encanto-de-rosas-30c143a7-e4df-4aed-863b-5834bab492a6</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-distincion-blanca-n-2-dcb7102e-f3af-4d51-8bd3-1726e685365d</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-11-342d5e08-6f6f-4dfd-aed6-0c675cfd1de5</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-10-490299cc-0f0b-4b9d-8d16-ff6493bdf8bf</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-9-4bfac888-100d-4013-b59b-670b099cf9fe</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-10-2b84c849-897d-47c0-917b-e44c06514c23</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/alma-de-flores-fc411376-5ca7-4f82-9524-9abc07aa699c</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-6-84add035-9164-4f4b-84f4-739ecf63aea1</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-5-b984a216-1320-4aa3-90a5-55a59db77b04</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-nieve-sublime-de-lirios-n-3-1799afc9-7bfc-4df4-9500-d9bf1e53ee62</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-alborada-de-lirios-blancos-2a67dd4b-a88e-41ec-9789-9d7b05c7d9a8</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/aurora-d4bb0ecd-bf74-4e39-ae87-774d66bf4fce</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-6-b5829e2b-0046-454e-9cef-577c2719d1a4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-n-8-c6bbb4eb-319d-4e57-8780-63d95b52a940</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-11-342d5e08-6f6f-4dfd-aed6-0c675cfd1de5</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-10-490299cc-0f0b-4b9d-8d16-ff6493bdf8bf</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-9-4bfac888-100d-4013-b59b-670b099cf9fe</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-10-2b84c849-897d-47c0-917b-e44c06514c23</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/alma-de-flores-fc411376-5ca7-4f82-9524-9abc07aa699c</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-6-84add035-9164-4f4b-84f4-739ecf63aea1</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-5-b984a216-1320-4aa3-90a5-55a59db77b04</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-nieve-sublime-de-lirios-n-3-1799afc9-7bfc-4df4-9500-d9bf1e53ee62</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-alborada-de-lirios-blancos-2a67dd4b-a88e-41ec-9789-9d7b05c7d9a8</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/aurora-d4bb0ecd-bf74-4e39-ae87-774d66bf4fce</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-6-b5829e2b-0046-454e-9cef-577c2719d1a4</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-esperanza-azul-blanco-n-2-21ad8f9e-41a0-4aae-88d1-38b5106bca3e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-luz-de-verano-solidago-n-9-e7a8823b-64f5-4976-9260-d7651f9d088c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-girasoles-deluxe-n-5-307bca6a-589d-4667-914a-cc7cad343378</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campo-alegre-variedad-floral-n-2-65f90281-3861-417c-a638-a87eff2f7ea9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-10-7b0fbd8e-d976-4a37-9b17-b45dbb86474a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/grandeza-3de14d2e-c2f6-440d-9869-ce8514afba8d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/julian-d6086b54-8573-4d59-9778-ccca8e80a798</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/velo-novia-9bc1a550-638e-470e-afa8-688beace6ea0</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-13-c35f25b2-0876-4d8a-89eb-101bd3f63685</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/aurora-6f89022a-cbde-48e4-a17e-ad30120e0626</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-nube-celeste-lirios-a7f1f2b6-0c99-4c08-9d45-99676f90bd97</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-10-252f7bbc-838c-4403-8ead-ede395a116d2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-7-8ba8718a-d215-4ff1-9f76-7b87a5db2e73</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-silvestres-gerberas-n-8-170b0a7c-f5d2-4768-89ac-569e518b0925</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-nieve-sublime-de-lirios-n-4-43de95bb-d0de-4b5b-b795-fc7e95bb20fa</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-10-252f7bbc-838c-4403-8ead-ede395a116d2</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-7-9d867c95-fea3-4f53-8a92-7c48f5f5bac9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-suspiro-rojo-follaje-05b88d9d-12aa-4389-8363-fb66f0811d76</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-canto-de-primavera-rosa-71ac70d1-4a3c-4608-b4b0-7e90634c099a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/beso-de-amor-4103fdb7-c683-4396-96e0-fab144d294d7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-6-4b33e82a-76c3-4417-a705-8f15a27c45d1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-encanto-rosa-pastel-33ce64b1-d667-433d-a669-2e1649a4c259</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/amor-infinito-53f714a4-e7e4-487c-9748-4732d1ac291d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/camila-ab036f4d-b2a6-4407-bb4c-74f7876be9e0</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-12-bf07a397-96bb-4210-ae72-477d9ad716da</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-sol-naciente-de-girasoles-n-7-f9ef2734-d930-461b-90c4-19d2a563bda2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-radiante-de-girasoles-n-11-b0886985-e498-4890-b5a4-8933761db1f8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-7-07f8ba1a-cf1a-4ff7-af37-ba671b39eb0e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-8-ef1995c3-5b01-48bc-b074-c7f754b01e5c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-12-6ec86791-87cf-4849-97c5-ea16b927118e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-cosecha-floral-girasoles-n-11-6990464e-811c-47ce-bc81-43049f69015d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-7-6b8a3d1d-4643-4016-a8c0-38349be9aa4d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-campina-sol-alstroemerias-n-8-15d7435e-8522-468b-9d89-4f4356d26883</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-festival-de-primavera-floral-f6abd091-2aa0-4986-8892-65d78e9d6d6b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-10-408312b3-86d5-42cf-903d-1af09ea752a1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-fuego-de-amor-de-rosas-cd1ed2e6-09a5-4ed6-b109-ac081737d81a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/majestad-floral-c290d03e-4465-411e-b63b-1fed2575bf5c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-sinfonia-floral-rosa-d8dabddf-df2b-4c1e-8db8-b37bfa07c768</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/divina-pasion-3a59de0c-e545-41d5-9948-6fad92351bdc</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campo-alegre-variedad-floral-n-3-3c90ec18-2014-4443-9fec-bcab900b3559</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campo-alegre-variedad-floral-n-4-e580e88e-1a1e-4351-9bb6-e91398caf7a7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/esplendor-f8e5ac89-a986-4476-829f-b1a6023bba28</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-cono-elegance-rosas-carmesi-4ab9b474-544e-46c7-9dc4-68c7537e1ae5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-pureza-rosas-blancas-n-5-3c011eca-b2e1-46fe-bc35-6864ccdbb1bc</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-astromelias-d3e6b144-7f5a-4e28-a216-bc66839cdbf4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/mariana-6e8ebd15-c83f-4488-86f8-2bb154b13a00</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-serenidad-de-lirios-blancos-c58b791e-ef53-4c3a-bfea-4a76844d5ab1</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/leonor-18bce5ef-6d54-46e2-a35a-1dd2a1a0b778</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-8-57586872-17ec-4f40-8b4b-191e7d2fdda5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-9-e1e21a06-137e-44c9-9572-59b94d462f5a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-9-7a1224f2-2913-42bf-bfdb-64352bd337d5</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-8-71af666e-3a51-4040-913b-6dab162f53a4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-9-a8f50542-3d27-48e3-afef-1d4db4016597</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-8-21539a67-2012-4473-b7e6-b81dfe8c029d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-radiante-prado-dorado-n-10-73568409-8f83-46db-8e91-848a4cc5540a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-7-7e4f3564-73de-4a1e-8b1c-cebd6f51e3a7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <loc>https://floreriamiraflores.com/producto/bouquet-resplandor-solar-follaje-n-8-71af666e-3a51-4040-913b-6dab162f53a4</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-8-fbd02f8b-5d0a-4976-b1dd-c9164dbc7bf3</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-7-7e4f3564-73de-4a1e-8b1c-cebd6f51e3a7</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/blancas-n-4-d41a7a93-26d9-4760-8fcc-fe3f0a54f559</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-7-9542af91-40a3-4dc0-9047-56193fbeb8c4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-girasoles-deluxe-n-6-2ee59e5c-11c0-4083-b4dc-f4922a7b861f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/nube-de-petalos-282b6327-9425-47ea-8360-b9abfac8a093</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-dulce-angel-celeste-osito-c8cd3b10-41a4-423c-919c-bf210859a870</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-12-e3bf8911-bbee-478b-8bab-f2944dfca078</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-imperial-de-rosas-carmesi-d76684f2-d8c3-47e3-bffb-d4721c52666a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-9-3b071dff-6e0a-4c9b-b496-8e92d32b0c7f</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-encanto-rosa-pastel-n-2-8fcdc2ee-8fd9-4654-8342-882348ac2a76</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-melodia-rosa-de-primavera-13e3e8b6-84a1-463c-b451-0030dd163dfd</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-encanto-rosa-pastel-n-2-8fcdc2ee-8fd9-4654-8342-882348ac2a76</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-9-9e31ca8b-b555-41a1-836d-d515cff9c1f8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-dulce-angel-celeste-osito-n-2-2f742e5e-f7d2-4c3a-ae08-11a07d05b7bb</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-dulce-angel-celeste-osito-n-4-e6bcbcee-9c86-40c2-b2db-4f0158f7a60d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-festivo-luz-dorada-n-9-ebc96f64-542a-47fd-91ec-0cc77d60fcf5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-13-bf80c69a-afbb-47a9-b5c7-a8d3b822c507</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-gala-roja-eucalipto-3920c342-b7d2-478a-90b5-94d97d7e703d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-serenidad-de-lirios-blancos-n-2-2e34d317-e64a-4669-b799-1266ffef9ada</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-girasoles-destellos-dorados-n-13-2e9eca43-aae1-4fc0-bf59-9d47b0a96fb4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-nube-celeste-lirios-n-3-45dbf539-4ca8-4cff-9015-2324b2a7b173</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/cielo-infinito-6b057770-c4d9-4053-929c-cbeca1883f51</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/dalia-266a0e02-a484-4e1d-8019-955c544085a8</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-intenso-romance-de-rosas-e08e2f58-3026-4053-87c4-c56c75a964e2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-enamorados-terciopelo-rojo-4ada64cf-3818-4540-8695-b0329124c070</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-dulce-angel-celeste-osito-n-3-b9f17168-c444-43e6-a42b-1ec5925f916a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ugy-3e6714a7-d388-49cd-868e-60406898cc7d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/tierno-754608d1-cbcd-4728-905b-2a21c276cf07</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-oceano-lirios-blancos-81bffe53-e645-455c-9a44-39867c6284a7</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-sol-de-mayo-con-girasoles-n-10-619df841-a52f-4b27-be93-a3157b1efc8e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-sol-de-primavera-n-10-ace66033-a83a-4dbf-844a-847b5389e85f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-margaritas-amarillas-n-12-5c31ac28-91fb-4789-ab7e-a7a74707cd66</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-n-8-f82cb328-1717-452f-8b96-a59976ae2f8a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-serenata-pastel-de-rosas-0d26936e-343a-4165-9e17-1760b05f5f79</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-canto-de-primavera-rosa-n-2-2ed108e3-3ea6-47c7-b9be-3062d4636ae5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-canto-de-primavera-rosa-n-3-2497343d-a268-4beb-980d-54157333ed2a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-amor-sublime-de-rosas-11ec1886-2a37-46e9-b6e8-251cf8551144</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-silvestre-girasoles-deluxe-n-7-be60049f-eaef-4616-8687-1005932922cf</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-campestre-girasoles-miel-n-9-20125f38-1068-4550-8681-097c515897a0</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-nube-celeste-lirios-n-2-babf4927-33cc-43a5-865a-8ca3ceff32cc</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/romance-eterno-41caf1ea-0a9f-4714-af09-0b6f9e8389fe</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-seduccion-rosas-de-exportacion-n-3-af6bcfaf-8e71-4790-b240-cc6240c95c71</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-corazon-hortensias-celestes-vino-blanco-ferrero-9d6bde58-9998-454d-80a1-9888f115a016</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-rustica-osito-super-dad-vino-globo-corazon-32783c3f-95bc-4a8a-bc44-6ebb3137b0db</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/box-negro-tulipanes-bicolor-fucsia-y-naranja-ce1813d5-eb8f-47a8-9bca-a456616b2084</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-girasoles-radiantes-vino-globo-feliz-dia-papa-a26e4920-ad7a-4808-a5c2-529600664637</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-imperial-licor-fino-rosas-rojas-ferrero-rocher-49e51143-27e9-4518-94ce-4fb8a0ace94d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/dsd-640ce123-8bbb-41d8-a44e-5daac6b83a9b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-girasoles-del-sol-hojas-de-roble-549d5c5e-4e0c-4239-847f-c7f211c8cbf5</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/balde-ceramico-super-papa-con-vinos-osito-celeste-52b6b3d4-4fad-4204-92ed-619c5bce0f10</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/balde-ceramico-super-papa-con-vinos-osito-dorado-1c9b01a0-8a4f-407c-abea-d66fb159b011</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/balde-metalico-vino-chocolates-eres-el-mejor-papa-ebcf0fb9-5e4e-4b58-97ad-bbd23bc59b1f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-bienvenida-al-mundo-nino-80b65c9a-37d7-41e5-b30b-c4d149fec39e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-black-white-rosas-rojas-fucsias-just-for-you-49bc467f-19d8-49b7-8d0f-33a5f0af12ed</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/bouquet-floral-tulipanes-amarillos-radiantes-9e222bd5-1cc7-494e-8ab5-79d8470f495a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-blanco-tulipanes-fucsia-follaje-fresco-b6d29773-c323-45d5-8fa5-91c5014d2b3a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/box-negro-tulipanes-bicolor-fucsia-y-naranja-ce1813d5-eb8f-47a8-9bca-a456616b2084</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-cilindrico-snickers-rosas-rojas-el-mejor-papa-696fe0a1-124e-4aef-bb6b-c5a58d59f34f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-clasico-pasion-con-globos-corazon-peluche-cdc68c27-3f26-44e7-aeb0-909b610e12e2</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-luxury-rosas-azules-vino-eres-el-mejor-c396b60e-966d-4950-8919-8c9260929811</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/bouquet-floral-tulipanes-amarillos-radiantes-9e222bd5-1cc7-494e-8ab5-79d8470f495a</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/balde-eres-mi-heroe-con-peluche-futbolero-vinos-duo-5ce15f0c-e74d-4490-861e-ef57694d196c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/balde-metalico-celebracion-con-globo-dorado-vino-b18d792a-b126-4ecb-8042-bacd22e26089</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-primaveral-da4237ff-0270-43cd-9774-8cbcde6a95d4</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-corazon-black-rosas-azules-royal-vino-tinto-cc915642-88ab-45ed-b028-68f14f66b878</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/bouquet-nube-silvestre-gipsofila-celeste-lavanda-c6a18ad9-630f-498b-96bd-de1a3ae3aafe</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-white-minimalist-rosas-amarillas-luminosas-3c56c879-7d70-453b-865a-85dfe636d9af</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-corazon-plateado-rosas-azules-vino-ferrero-rocher-fe585640-7041-441f-b5a0-ac0e6f32898d</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-white-happy-father-s-day-rosas-azules-ferrero-ae8d36ba-3261-4251-a6b7-ef9fc2c6dc70</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/taza-canasta-osito-i-love-dad-licor-chocolates-92883bf8-a25b-4f03-98a3-4c223748395f</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/matilde-2ed07524-361a-4c21-a69e-a8a32ae95976</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-botanico-de-ensueno-rosas-pastel-lavanda-1150bf92-3a55-4e4b-9bda-6aab675a8de9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-gracias-por-todo-rosas-rojas-vino-ferrero-acd28469-f4f4-47f8-be36-5a7ac9f537ca</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/set-futbolero-eres-mi-heroe-con-vinos-topper-papa-fa69e664-e494-4c29-b6de-4c063bdfd48b</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/box-black-super-papa-rosas-azules-vino-bombones-108ae92a-1f5f-45b9-9a30-c83825091335</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-florencia-06a79fa9-1cd3-4e87-b823-2ccc1356af1a</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/cristal-65b5fbdc-82ce-4f3f-8de0-90549a12605e</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/papa-f5f4e603-2545-4aef-ae9b-0a0c4b90d78c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/real-eb050cc3-486b-4d6a-b221-5f6012934d64</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/exportacion-e2b714ef-5729-4eda-90a3-45d165ef6a61</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-338d35a8-fe5a-400f-a8e3-f0948f6cbf76</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-11-94b1f7fb-f5b1-4dc2-94f8-b8618a1fe0f9</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-9-edeb3e6a-4a82-4da1-88f4-b4849141ecbe</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-vitalidad-de-girasoles-campestres-n-4-9357c13e-8384-4e0f-b5d1-2d2e8c87995c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/centro-floral-lirios-eucalipto-cc7f02f8-c655-4d41-849d-61047b48c588</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/canasta-girasoles-iluminacion-estrella-4faf3a6f-f02b-41e5-a7ba-89e21bd9dfba</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-arcoiris-oferta-a3030e58-a01c-4f7e-adac-6e4ac7460353</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-12-07966a67-d291-4145-8d60-37fa5ca1a895</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-3-1c703649-75ad-4d27-9a28-756edefe1671</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-6-a680af34-aa57-4f44-a113-97e0f7440906</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/arreglo-alegria-campestre-de-girasoles-n-11-94b1f7fb-f5b1-4dc2-94f8-b8618a1fe0f9</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-francisca-ofertas-cb6aaecb-fd1c-42f2-a52e-42543de5f3f9</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/ramo-lucia-ofertas-58f6c8ac-ae50-44e5-98e5-49ad04e12ed2</loc>
-    <lastmod>2026-10-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://floreriamiraflores.com/producto/ramo-sol-de-miraflores-d0025619-3976-4497-bb4f-43984a30ae6c</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://floreriamiraflores.com/producto/ramo-sandra-ofertas-7f6f8a35-ae1b-406f-b38d-9319a3370099</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/ramo-lucia-ofertas-58f6c8ac-ae50-44e5-98e5-49ad04e12ed2</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://floreriamiraflores.com/producto/ramo-sol-de-miraflores-d0025619-3976-4497-bb4f-43984a30ae6c</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

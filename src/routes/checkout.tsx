@@ -83,6 +83,7 @@ function CheckoutPage() {
         fecha_entrega: data.fecha_entrega,
         hora_entrega: data.hora_entrega,
         notas: data.notas,
+        acepto_terminos: data.acepto_terminos,
         productos: items.map((item) => ({
           id: item.id,
           nombre: item.nombre,
@@ -358,6 +359,44 @@ function CheckoutPage() {
                 </div>
               </div>
             </fieldset>
+
+            {/* ── Aceptación de términos y condiciones ── */}
+            <div className="pt-2">
+              <label className="flex items-start gap-3 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  id="acepto_terminos"
+                  {...register("acepto_terminos")}
+                  className="mt-1 h-4 w-4 rounded border-[#E8DDD0] text-[#2C2420] focus:ring-[#2C2420] accent-[#2C2420] cursor-pointer"
+                />
+                <span className="font-body text-xs sm:text-sm text-[#2C2420]/80 leading-normal">
+                  He leído y acepto los{" "}
+                  <Link
+                    to="/terminos"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2C2420] underline underline-offset-2 hover:text-[#C4848A]"
+                  >
+                    Términos y condiciones
+                  </Link>{" "}
+                  y la{" "}
+                  <Link
+                    to="/cambios-y-devoluciones"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2C2420] underline underline-offset-2 hover:text-[#C4848A]"
+                  >
+                    Política de cambios y devoluciones
+                  </Link>
+                  . <span className="text-[#C4956A]">*</span>
+                </span>
+              </label>
+              {errors.acepto_terminos && (
+                <p className="mt-1.5 text-xs font-body text-red-500">
+                  {errors.acepto_terminos.message}
+                </p>
+              )}
+            </div>
 
             {/* ── Error global ── */}
             {submitError && (

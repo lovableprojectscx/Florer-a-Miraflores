@@ -56,6 +56,9 @@ test.describe("Checkout E2E — Flujo completo con interceptación segura", () =
     await expect(form.getByText("Ingresa tu dirección completa")).toBeVisible();
     await expect(form.getByText("Selecciona una fecha de entrega")).toBeVisible();
     await expect(form.getByText("Selecciona una hora de entrega")).toBeVisible();
+    await expect(
+      form.getByText("Debes aceptar los Términos y la Política de cambios"),
+    ).toBeVisible();
 
     // 3. Elegir distrito suma el delivery al total
     const summaryAside = page.locator("aside");
@@ -77,7 +80,7 @@ test.describe("Checkout E2E — Flujo completo con interceptación segura", () =
     const expectedTotal = (subtotalVal + deliveryVal).toFixed(2);
     await expect(submitBtn).toContainText(`S/ ${expectedTotal} PEN`);
 
-    // 4. Completar campos válidos y enviar
+    // 4. Completar campos válidos pero SIN marcar términos -> debe seguir bloqueado
     await page.locator("#nombre").fill("Cliente Prueba E2E");
     await page.locator("#telefono").fill("999888777");
     await page.locator("#email").fill("e2e@floreriamiraflores.com");
@@ -85,6 +88,14 @@ test.describe("Checkout E2E — Flujo completo con interceptación segura", () =
     await page.locator("#fecha_entrega").fill(getSafeFutureDate());
     await page.locator("#hora_entrega").selectOption("manana");
 
+    await submitBtn.click();
+    expect(interceptedCount).toBe(0);
+    await expect(
+      form.getByText("Debes aceptar los Términos y la Política de cambios"),
+    ).toBeVisible();
+
+    // 5. Marcar casilla de términos y enviar
+    await page.locator("#acepto_terminos").check();
     await submitBtn.click();
 
     // Verificar que la interceptación de red ocurrió (0 escrituras en BD real)

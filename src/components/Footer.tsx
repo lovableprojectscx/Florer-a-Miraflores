@@ -227,19 +227,50 @@ export function Footer({ config }: Props) {
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
             <p className="font-body font-light text-xs text-[#8A7A6E]">
               &copy; {new Date().getFullYear()} Florería Miraflores. Todos los derechos reservados.
             </p>
-            {config?.libro_reclamaciones_activo !== false && (
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-body">
               <Link
-                to="/libro-de-reclamaciones"
-                className="flex items-center gap-1.5 font-body font-medium text-xs text-[#2C2420] hover:text-[#8A7A6E] transition-colors border-b border-[#2C2420]/30 hover:border-[#2C2420] pb-0.5"
+                to="/terminos"
+                className="text-[#2C2420]/75 hover:text-[#2C2420] transition-colors hover:underline"
               >
-                <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} />
-                Libro de Reclamaciones
+                Términos y condiciones
               </Link>
-            )}
+              <span className="text-[#E8DDD0] hidden sm:inline" aria-hidden>
+                ·
+              </span>
+              <Link
+                to="/privacidad"
+                className="text-[#2C2420]/75 hover:text-[#2C2420] transition-colors hover:underline"
+              >
+                Política de privacidad
+              </Link>
+              <span className="text-[#E8DDD0] hidden sm:inline" aria-hidden>
+                ·
+              </span>
+              <Link
+                to="/cambios-y-devoluciones"
+                className="text-[#2C2420]/75 hover:text-[#2C2420] transition-colors hover:underline"
+              >
+                Cambios y devoluciones
+              </Link>
+              {config?.libro_reclamaciones_activo !== false && (
+                <>
+                  <span className="text-[#E8DDD0] hidden sm:inline" aria-hidden>
+                    ·
+                  </span>
+                  <Link
+                    to="/libro-de-reclamaciones"
+                    className="flex items-center gap-1.5 font-medium text-[#2C2420] hover:text-[#8A7A6E] transition-colors border-b border-[#2C2420]/30 hover:border-[#2C2420] pb-0.5"
+                  >
+                    <BookOpen className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    Libro de Reclamaciones
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -38,6 +38,9 @@ export const checkoutSchema = z.object({
     errorMap: () => ({ message: "Selecciona una hora de entrega" }),
   }),
   notas: z.string().optional(),
+  acepto_terminos: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar los Términos y la Política de cambios" }),
+  }),
 });
 
 export type CheckoutForm = z.infer<typeof checkoutSchema>;

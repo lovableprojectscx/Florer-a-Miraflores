@@ -11,6 +11,7 @@ const baseValidData = () => ({
   fecha_entrega: getFechaMinima(),
   hora_entrega: "manana" as const,
   notas: "Entregar en recepción",
+  acepto_terminos: true as const,
 });
 
 describe("checkoutSchema", () => {
@@ -21,6 +22,25 @@ describe("checkoutSchema", () => {
   it("acepta un formulario válido", () => {
     const res = checkoutSchema.safeParse(baseValidData());
     expect(res.success).toBe(true);
+  });
+
+  it("rechaza si no se aceptan los términos y condiciones (acepto_terminos false o ausente)", () => {
+    const sinAceptacion = checkoutSchema.safeParse({
+      ...baseValidData(),
+      acepto_terminos: false,
+    });
+    expect(sinAceptacion.success).toBe(false);
+
+    const sinCampo = checkoutSchema.safeParse({
+      nombre: "María García",
+      telefono: "999600482",
+      email: "maria@correo.com",
+      distrito_id: "dist-miraflores",
+      direccion: "Av. Larco 1234, Miraflores",
+      fecha_entrega: getFechaMinima(),
+      hora_entrega: "manana",
+    });
+    expect(sinCampo.success).toBe(false);
   });
 
   it("rechaza teléfono con menos de 9 dígitos", () => {

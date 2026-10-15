@@ -12,7 +12,7 @@ import type { BlogPostRow } from "@/types/database";
 export const Route = createFileRoute("/blog")({
   loader: async () => {
     const [posts, categorias, config] = await Promise.all([
-      getBlogPostsPublicos().catch(() => []),
+      getBlogPostsPublicos().catch(() => [] as BlogPostRow[]),
       getCategorias().catch(() => []),
       getConfig().catch(() => null),
     ]);
@@ -54,7 +54,10 @@ function BlogLayoutOrIndex() {
 
 function BlogIndexPage() {
   const { posts, categorias, config } = Route.useLoaderData();
-  const { visibles, total, mostrando, hayMas, verMas } = useVerMas(posts, 12);
+  const { visibles, total, mostrando, hayMas, verMas } = useVerMas<BlogPostRow>(
+    posts as BlogPostRow[],
+    12,
+  );
 
   return (
     <div className="min-h-screen bg-[#FDFAF6] flex flex-col">

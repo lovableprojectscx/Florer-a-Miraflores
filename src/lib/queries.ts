@@ -27,6 +27,7 @@ import type {
   BlogPostRow,
   BlogPostInsert,
   BlogPostUpdate,
+  SuscriptorRow,
 } from "@/types/database";
 import { resolverClavesTag } from "@/lib/tag-utils";
 import { filtrarCategoriasVisibles } from "@/lib/categorias-utils";
@@ -486,6 +487,7 @@ export interface CrearPedidoInput {
   subtotal: number;
   delivery: number;
   total: number;
+  acepto_terminos: boolean;
 }
 
 /**
@@ -518,6 +520,7 @@ export async function crearPedido(input: CrearPedidoInput): Promise<string> {
       delivery: input.delivery,
       total: input.total,
       estado: "pendiente" as const,
+      acepto_terminos: input.acepto_terminos,
     });
 
     if (!error) {
@@ -742,4 +745,78 @@ export async function getAdminBlogPosts(): Promise<BlogPostRow[]> {
   }
 
   return data ?? [];
+}
+
+// ─── Suscriptores ─────────────────────────────────────────────────────────────
+
+export interface InsertarSuscriptorResult {
+  ok: boolean;
+  yaRegistrado?: boolean;
+  error?: string;
+}
+
+/**
+ * Inserta un nuevo suscriptor desde el popup o checkout.
+ * OJO: RLS público solo permite INSERT, NO permite SELECT de vuelta.
+ * Por eso no se encadena `.select()`.
+ * Si el teléfono ya existe (error 23505), se reporta como exitoso (yaRegistrado: true).
+ */
+export async function insertarSuscriptor(input: {
+  nombre: string;
+  telefono: string;
+  consentimiento_texto: string;
+  origen?: string;
+}): Promise<InsertarSuscriptorResult> {
+  const { error } = await supabase.from("suscriptores").insert({
+    nombre: input.nombre.trim(),
+    telefono: input.telefono.trim(),
+    consentimiento: true,
+    consentimiento_texto: input.consentimiento_texto,
+    origen: input.origen ?? "popup_home",
+    activo: true,
+  });
+
+  if (!error) {
+    return { ok: true };
+  }
+
+  // Código 23505: violación de restricción única (teléfono ya registrado)
+  if (error.code === "23505") {
+    return { ok: true, yaRegistrado: true };
+  }
+
+  return { ok: false, error: error.message };
+}
+
+/**
+ * Obtiene la lista de todos los suscriptores (solo admin).
+ */
+export async function getAdminSuscriptores(): Promise<SuscriptorRow[]> {
+  const { data, error } = await supabase
+    .from("suscriptores")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}
+
+/**
+ * Da de baja a un suscriptor cambiando activo = false y baja_at = now().
+ */
+export async function darDeBajaSuscriptor(id: string): Promise<void> {
+  const { error } = await supabase
+    .from("suscriptores")
+    .update({
+      activo: false,
+      baja_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+
+  if (error) {
+    throw error;
+  }
 }

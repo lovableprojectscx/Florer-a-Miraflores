@@ -81,7 +81,8 @@ test.describe("Recorrido Completo de Compra y Auditoría Pre-Lanzamiento", () =>
       }
     }
 
-    // 7. Enviar formulario
+    // 7. Aceptar términos y enviar formulario
+    await page.locator('input[id="acepto_terminos"]').check();
     const btnConfirmar = page.locator('button[type="submit"]');
     await expect(btnConfirmar).toBeVisible();
     await btnConfirmar.click();

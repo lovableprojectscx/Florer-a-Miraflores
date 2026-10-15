@@ -11,6 +11,7 @@ const SIDEBAR_SECTIONS = [
   { label: "Testimonios", urlPart: "/admin/testimonios" },
   { label: "Blog", urlPart: "/admin/blog" },
   { label: "Popup", urlPart: "/admin/popup" },
+  { label: "Suscriptores", urlPart: "/admin/suscriptores" },
   { label: "Colecciones Home", urlPart: "/admin/colecciones-home" },
   { label: "Ocasiones Home", urlPart: "/admin/ocasiones" },
   { label: "Distritos", urlPart: "/admin/distritos" },

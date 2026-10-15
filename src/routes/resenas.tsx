@@ -7,6 +7,7 @@ import { WhatsappFab } from "@/components/WhatsappFab";
 import { ResenaCard } from "@/components/ResenaCard";
 import { getCategorias, getConfig, getTestimonios } from "@/lib/queries";
 import { formatGoogleSummary } from "@/lib/resenas-utils";
+import type { TestimonioRow } from "@/types/database";
 
 export const Route = createFileRoute("/resenas")({
   loader: async () => {
@@ -104,7 +105,7 @@ function ResenasPage() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               data-testid="resenas-grid"
             >
-              {testimonios.map((testimonio) => (
+              {testimonios.map((testimonio: TestimonioRow) => (
                 <ResenaCard key={testimonio.id} testimonio={testimonio} />
               ))}
             </div>

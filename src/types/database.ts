@@ -214,11 +214,15 @@ export interface PedidoRow {
   estado: EstadoPedido;
   izi_transaction_id: string | null;
   notas: string | null;
+  acepto_terminos?: boolean;
+  acepto_terminos_at?: string | null;
   created_at: string;
 }
 
 export type PedidoInsert = Omit<PedidoRow, "id" | "izi_transaction_id" | "created_at"> & {
   estado?: EstadoPedido;
+  acepto_terminos?: boolean;
+  acepto_terminos_at?: string | null;
 };
 export type PedidoUpdate = Partial<Pick<PedidoRow, "estado" | "izi_transaction_id" | "notas">>;
 
@@ -265,6 +269,26 @@ export interface BlogPostRow {
 
 export type BlogPostInsert = Omit<BlogPostRow, "id" | "created_at" | "updated_at">;
 export type BlogPostUpdate = Partial<BlogPostInsert>;
+
+// ─── suscriptores ─────────────────────────────────────────────────────────────
+
+export interface SuscriptorRow {
+  id: string;
+  nombre: string;
+  telefono: string;
+  consentimiento: boolean;
+  consentimiento_texto: string;
+  origen: string;
+  activo: boolean;
+  baja_at: string | null;
+  created_at: string;
+}
+
+export type SuscriptorInsert = Omit<SuscriptorRow, "id" | "created_at" | "baja_at"> & {
+  baja_at?: string | null;
+  activo?: boolean;
+};
+export type SuscriptorUpdate = Partial<SuscriptorInsert>;
 
 // --- Database (interfaz para el cliente tipado de Supabase) ---
 
@@ -347,6 +371,12 @@ export interface Database {
         Row: BlogPostRow;
         Insert: BlogPostInsert;
         Update: BlogPostUpdate;
+        Relationships: [];
+      };
+      suscriptores: {
+        Row: SuscriptorRow;
+        Insert: SuscriptorInsert;
+        Update: SuscriptorUpdate;
         Relationships: [];
       };
     };

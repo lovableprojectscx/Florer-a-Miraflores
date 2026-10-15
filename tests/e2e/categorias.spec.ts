@@ -52,11 +52,11 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
     // Nacimientos ahora es padre en el menú principal (39 productos activos)
     expect(listaUrls).toContain("/categoria/nacimientos");
 
-    // Defunción (0 productos), Tulipanes › Ramos (0 productos) y Niño/Niña vacías no deben aparecer en el menú
-    expect(listaUrls).not.toContain("/categoria/defuncion");
+    // Subcategorías vacías (0 productos) no deben aparecer en el menú
     expect(listaUrls).not.toContain("/categoria/tulipanes/ramos-tulipanes");
     expect(listaUrls).not.toContain("/categoria/nacimientos/nacimientos-nino");
     expect(listaUrls).not.toContain("/categoria/nacimientos/nacimientos-nina");
+    expect(listaUrls).not.toContain("/categoria/defuncion/lagrimas");
 
     for (const url of listaUrls) {
       const response = await page.goto(url);
@@ -91,14 +91,13 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
     await expect(productLinks.first()).toBeVisible();
   });
 
-  test("Entrar directo por URL a una categoría vacía (/categoria/defuncion) no da 404, muestra 'próximamente' y oculta tarjetas de subcategorías vacías", async ({
+  test("Entrar directo por URL a una subcategoría vacía (/categoria/defuncion/lagrimas) no da 404, muestra 'próximamente'", async ({
     page,
   }) => {
-    const response = await page.goto("/categoria/defuncion");
+    const response = await page.goto("/categoria/defuncion/lagrimas");
     expect(response?.status()).toBeLessThan(400);
 
-    await expect(page.getByRole("heading", { name: /defunción|condolencias/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /lágrimas/i })).toBeVisible();
     await expect(page.getByText(/próximamente/i)).toBeVisible();
-    await expect(page.getByText(/variedades y subcategorías/i)).toHaveCount(0);
   });
 });

@@ -84,7 +84,7 @@ function LibroReclamaciones() {
         </table>
         
         <p style="font-size: 12px; margin-top: -15px; margin-bottom: 20px;">
-          <strong>Grupo Flowerstore SAC</strong> &middot; RUC: 20613383159 &middot; Establecimiento Virtual &middot; Lima &mdash; Per&uacute;
+          <strong>Grupo Flowerstore SAC</strong> &middot; RUC: 20613383159 &middot; Establecimiento: Tienda virtual &mdash; florer-a-miraflores.vercel.app &mdash; Lima, Per&uacute;
         </p>
         
         <div class="section-title">1. Identificación del consumidor</div>
@@ -333,7 +333,7 @@ Fecha de registro: ${claimData.fecha}
 
 RAZÓN SOCIAL: Grupo Flowerstore SAC
 RUC: 20613383159
-ESTABLECIMIENTO: Tienda Virtual - Lima, Perú
+ESTABLECIMIENTO: Tienda virtual — florer-a-miraflores.vercel.app — Lima, Perú
 --------------------------------------------------
 
 1. IDENTIFICACIÓN DEL CONSUMIDOR:
@@ -472,6 +472,16 @@ no mayor a quince (15) días hábiles improrrogables.
                 <h1 className="font-display text-3xl md:text-5xl text-foreground mt-1">
                   Libro de Reclamaciones
                 </h1>
+                <p className="mt-2 text-xs font-body text-muted-foreground">
+                  Antes de presentar un reclamo, puedes revisar nuestra{" "}
+                  <Link
+                    to="/cambios-y-devoluciones"
+                    className="text-[#2C2420] underline underline-offset-2 hover:text-[#C4848A]"
+                  >
+                    Política de cambios y devoluciones
+                  </Link>
+                  .
+                </p>
               </div>
               <div className="text-right font-body text-xs text-muted-foreground">
                 <p>
@@ -488,7 +498,8 @@ no mayor a quince (15) días hábiles improrrogables.
             <p className="mt-6 font-body font-light text-sm text-foreground/80 leading-relaxed">
               <strong className="font-medium">Razón social:</strong> Grupo Flowerstore SAC ·{" "}
               <strong className="font-medium">RUC:</strong> 20613383159 ·{" "}
-              <strong className="font-medium">Establecimiento:</strong> Tienda Virtual — Lima, Perú.
+              <strong className="font-medium">Establecimiento:</strong> Tienda virtual —
+              florer-a-miraflores.vercel.app — Lima, Perú
             </p>
 
             {error && (

@@ -7,7 +7,7 @@ import { WhatsappFab } from "@/components/WhatsappFab";
 import { ProductGrid } from "@/components/ProductGrid";
 import { FilterSelect, ProductFiltersBar, useProductFilters } from "@/components/ProductFilters";
 import { getCategorias, getConfig, getProductosActivos } from "@/lib/queries";
-import type { CategoriaRow } from "@/types/database";
+import type { CategoriaRow, ProductoRow } from "@/types/database";
 
 export const Route = createFileRoute("/catalogo")({
   loader: async () => {
@@ -63,7 +63,7 @@ function CatalogoPage() {
 
     if (catFiltro !== "todas") {
       if (subFiltro !== "todas") {
-        out = out.filter((p) => p.categoria_id === subFiltro);
+        out = out.filter((p: ProductoRow) => p.categoria_id === subFiltro);
       } else {
         const idsValidos = new Set([
           catFiltro,
@@ -71,10 +71,10 @@ function CatalogoPage() {
             .filter((c: CategoriaRow) => c.parent_id === catFiltro)
             .map((c: CategoriaRow) => c.id),
         ]);
-        out = out.filter((p) => p.categoria_id && idsValidos.has(p.categoria_id));
+        out = out.filter((p: ProductoRow) => p.categoria_id && idsValidos.has(p.categoria_id));
       }
     } else if (ocasionFiltro !== "todas") {
-      out = out.filter((p) => p.categoria_id === ocasionFiltro);
+      out = out.filter((p: ProductoRow) => p.categoria_id === ocasionFiltro);
     }
 
     return out;

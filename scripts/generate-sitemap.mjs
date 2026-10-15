@@ -34,6 +34,9 @@ async function main() {
     { loc: `${BASE_URL}/resenas`, priority: "0.8", changefreq: "weekly" },
     { loc: `${BASE_URL}/blog`, priority: "0.8", changefreq: "weekly" },
     { loc: `${BASE_URL}/nosotros`, priority: "0.7", changefreq: "monthly" },
+    { loc: `${BASE_URL}/terminos`, priority: "0.5", changefreq: "monthly" },
+    { loc: `${BASE_URL}/privacidad`, priority: "0.5", changefreq: "monthly" },
+    { loc: `${BASE_URL}/cambios-y-devoluciones`, priority: "0.5", changefreq: "monthly" },
     { loc: `${BASE_URL}/libro-de-reclamaciones`, priority: "0.3", changefreq: "yearly" },
   ];
 
