@@ -132,7 +132,9 @@ test.describe("Fase 06-D — Orden en celular", () => {
     await waitForHydration(page, "main");
 
     // Click en Comprar ahora o Agregar al carrito
-    const comprarBtn = page.locator("button:has-text('Comprar ahora'), button:has-text('Agregar al carrito')").first();
+    const comprarBtn = page
+      .locator("button:has-text('Comprar ahora'), button:has-text('Agregar al carrito')")
+      .first();
     await expect(comprarBtn).toBeVisible();
     await comprarBtn.click();
     await page.waitForTimeout(500);

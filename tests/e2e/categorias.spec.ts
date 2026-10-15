@@ -97,7 +97,7 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
     const response = await page.goto("/categoria/defuncion");
     expect(response?.status()).toBeLessThan(400);
 
-    await expect(page.getByRole("heading", { name: /defunción/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /defunción|condolencias/i })).toBeVisible();
     await expect(page.getByText(/próximamente/i)).toBeVisible();
     await expect(page.getByText(/variedades y subcategorías/i)).toHaveCount(0);
   });

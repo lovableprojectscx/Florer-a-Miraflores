@@ -11,7 +11,9 @@ async function run() {
       ["1440", 1440, 900],
       ["1920", 1920, 1080],
     ]) {
-      console.log(`\n=== Capturando carrusel en producción real a ${name}px (${width}x${height}) ===`);
+      console.log(
+        `\n=== Capturando carrusel en producción real a ${name}px (${width}x${height}) ===`,
+      );
       const context = await browser.newContext({
         viewport: { width, height },
         deviceScaleFactor: 1,
@@ -35,7 +37,9 @@ async function run() {
       for (let i = 0; i < Math.min(count, 5); i++) {
         const box = await cards.nth(i).boundingBox();
         if (box) {
-          console.log(`  Card ${i + 1}: x=${box.x.toFixed(1)}, width=${box.width.toFixed(1)}, right=${(box.x + box.width).toFixed(1)}`);
+          console.log(
+            `  Card ${i + 1}: x=${box.x.toFixed(1)}, width=${box.width.toFixed(1)}, right=${(box.x + box.width).toFixed(1)}`,
+          );
         }
       }
 

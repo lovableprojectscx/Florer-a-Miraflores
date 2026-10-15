@@ -30,7 +30,9 @@ async function run() {
       console.log(`En ${name}px: ${count} tarjetas encontradas.`);
       for (let i = 0; i < Math.min(count, 5); i++) {
         const box = await cards.nth(i).boundingBox();
-        console.log(`  Card ${i + 1}: x=${box.x.toFixed(1)}, width=${box.width.toFixed(1)}, right=${(box.x + box.width).toFixed(1)}`);
+        console.log(
+          `  Card ${i + 1}: x=${box.x.toFixed(1)}, width=${box.width.toFixed(1)}, right=${(box.x + box.width).toFixed(1)}`,
+        );
       }
 
       await page.close();

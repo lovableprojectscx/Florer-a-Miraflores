@@ -155,15 +155,6 @@ export function Header({ categorias, config }: Props) {
       {/* Desktop Nav (Bottom Tier) */}
       <nav className="hidden lg:block border-t border-[#E8DDD0]/60">
         <ul className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 flex gap-3 lg:gap-4 xl:gap-6 2xl:gap-8 justify-center items-center h-12 whitespace-nowrap text-[11px] lg:text-[11.5px] xl:text-[12px] 2xl:text-[12.5px] tracking-[0.06em] xl:tracking-[0.08em] uppercase font-body font-light">
-          <li>
-            <Link
-              to="/"
-              className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors relative py-3 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
-              activeProps={{ className: "text-[#2C2420] font-normal after:scale-x-100" }}
-            >
-              Inicio
-            </Link>
-          </li>
           {padres.map((c) => {
             const hijas = hijasMap[c.id] ?? [];
             const hasSub = hijas.length > 0;
@@ -228,16 +219,6 @@ export function Header({ categorias, config }: Props) {
             </div>
 
             <nav className="flex-1 overflow-y-auto">
-              <div className="border-b border-[#E8DDD0]/60">
-                <Link
-                  to="/"
-                  onClick={close}
-                  className="block px-5 py-3.5 font-body text-xs tracking-widest uppercase text-[#2C2420] hover:bg-[#FAF8F5]"
-                >
-                  Inicio
-                </Link>
-              </div>
-
               {padres.map((c) => {
                 const isOpen = openCat === c.id;
                 const hijas = hijasMap[c.id] ?? [];
