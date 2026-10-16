@@ -84,12 +84,18 @@ test.describe("Mural de Recuerdos E2E", () => {
     await expect(backLink).toBeVisible();
   });
 
-  test("Home: la franja 'Recuerdos de entrega' respeta la regla de 0 publicados (no se renderiza)", async ({
+  test("Home: la franja 'Recuerdos de entrega' se renderiza con recuerdos publicados y enlace a /recuerdos", async ({
     page,
   }) => {
     await page.goto("/");
-    // Con 0 recuerdos publicados en producción, la sección NO debe existir en el DOM (ni título ni hueco)
     const section = page.locator('[data-testid="home-recuerdos-section"]');
-    await expect(section).toHaveCount(0);
+    await expect(section).toBeVisible();
+
+    const heading = section.getByRole("heading", { name: /Recuerdos de entrega/i, level: 2 });
+    await expect(heading).toBeVisible();
+
+    const verTodos = section.locator('[data-testid="ver-todos-recuerdos-link"]');
+    await expect(verTodos).toBeVisible();
+    await expect(verTodos).toHaveAttribute("href", "/recuerdos");
   });
 });
