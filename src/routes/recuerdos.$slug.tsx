@@ -182,26 +182,22 @@ function RecuerdoDetailPage() {
           {/* Columna Derecha: Detalle Emocional y Bloque de Conversión Directa */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#FFFFFF] p-6 sm:p-8 rounded-2xl border border-[#E8DDD0] shadow-sm space-y-5">
-              {/* Badges de Ocasión y Distrito */}
-              <div className="flex flex-wrap items-center gap-2">
-                {categoriaRelacionada && (
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-body tracking-wider uppercase bg-[#FAF8F5] text-rose-accent border border-[#E8DDD0]">
-                    {categoriaRelacionada.nombre}
-                  </span>
-                )}
-                {distrito && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-body tracking-wider uppercase bg-[#2C2420] text-white">
-                    <MapPin className="w-3 h-3 text-rose-accent" />
-                    Entrega en {distrito.nombre}
-                  </span>
-                )}
-                {recuerdo.fecha_publicacion && (
-                  <span className="inline-flex items-center gap-1 text-xs text-[#8A7A6E] font-body font-light ml-auto">
-                    <Calendar className="w-3 h-3 text-[#C4956A]" />
-                    {formatRecuerdoDate(recuerdo.fecha_publicacion)}
-                  </span>
-                )}
-              </div>
+              {/* Badges de Ocasión y Distrito (solo si realmente existen) */}
+              {(categoriaRelacionada || distrito) && (
+                <div className="flex flex-wrap items-center gap-2">
+                  {categoriaRelacionada && (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-body tracking-wider uppercase bg-[#FAF8F5] text-rose-accent border border-[#E8DDD0]">
+                      {categoriaRelacionada.nombre}
+                    </span>
+                  )}
+                  {distrito && (
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-body tracking-wider uppercase bg-[#2C2420] text-white">
+                      <MapPin className="w-3 h-3 text-rose-accent" />
+                      Entrega en {distrito.nombre}
+                    </span>
+                  )}
+                </div>
+              )}
 
               {/* Título de la historia */}
               <h1 className="font-display text-2xl sm:text-3xl text-[#2C2420] leading-tight">

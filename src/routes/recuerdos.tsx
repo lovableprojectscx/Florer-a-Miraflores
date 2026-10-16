@@ -78,6 +78,10 @@ function RecuerdosIndexPage() {
     });
   }, [recuerdos, selectedOcasion, selectedDistrito]);
 
+  const hayFiltrosDisponibles = useMemo(() => {
+    return recuerdos.some((r: RecuerdoRow) => r.categoria_relacionada_id || r.distrito_id);
+  }, [recuerdos]);
+
   // Paginación progresiva con useVerMas
   const { visibles, total, mostrando, hayMas, verMas } = useVerMas<RecuerdoRow>(
     recuerdosFiltrados,
@@ -152,62 +156,64 @@ function RecuerdosIndexPage() {
           </div>
         ) : (
           <>
-            {/* Barra de Filtros Interactivos */}
-            <div className="mb-8 p-4 rounded-xl bg-[#FFFFFF] border border-[#E8DDD0] shadow-xs space-y-4">
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                {/* Filtro por Ocasión (Pills) */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
-                  <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1 shrink-0 mr-1">
-                    <Filter className="w-3 h-3 text-[#C4956A]" /> Ocasión:
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedOcasion("todas")}
-                    className={`px-3 py-1.5 rounded-full text-xs font-body tracking-wide transition-all shrink-0 ${
-                      selectedOcasion === "todas"
-                        ? "bg-[#2C2420] text-white shadow-xs"
-                        : "bg-[#FAF8F5] text-[#5C5046] hover:bg-[#E8DDD0]/50"
-                    }`}
-                  >
-                    Todas
-                  </button>
-                  {ocasiones.map((oc: CategoriaRow) => (
+            {/* Barra de Filtros Interactivos (solo si existen recuerdos con ocasión o distrito asociado) */}
+            {hayFiltrosDisponibles && (
+              <div className="mb-8 p-4 rounded-xl bg-[#FFFFFF] border border-[#E8DDD0] shadow-xs space-y-4">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                  {/* Filtro por Ocasión (Pills) */}
+                  <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
+                    <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1 shrink-0 mr-1">
+                      <Filter className="w-3 h-3 text-[#C4956A]" /> Ocasión:
+                    </span>
                     <button
-                      key={oc.id}
                       type="button"
-                      onClick={() => setSelectedOcasion(oc.id)}
+                      onClick={() => setSelectedOcasion("todas")}
                       className={`px-3 py-1.5 rounded-full text-xs font-body tracking-wide transition-all shrink-0 ${
-                        selectedOcasion === oc.id
-                          ? "bg-rose-accent text-white shadow-xs"
+                        selectedOcasion === "todas"
+                          ? "bg-[#2C2420] text-white shadow-xs"
                           : "bg-[#FAF8F5] text-[#5C5046] hover:bg-[#E8DDD0]/50"
                       }`}
                     >
-                      {oc.nombre}
+                      Todas
                     </button>
-                  ))}
-                </div>
-
-                {/* Filtro por Distrito */}
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-[#C4956A]" /> Distrito:
-                  </span>
-                  <select
-                    aria-label="Filtrar por distrito"
-                    value={selectedDistrito}
-                    onChange={(e) => setSelectedDistrito(e.target.value)}
-                    className="px-3 py-1.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-xs font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
-                  >
-                    <option value="todos">Todos los distritos</option>
-                    {distritos.map((d: DistritoRow) => (
-                      <option key={d.id} value={d.id}>
-                        {d.nombre}
-                      </option>
+                    {ocasiones.map((oc: CategoriaRow) => (
+                      <button
+                        key={oc.id}
+                        type="button"
+                        onClick={() => setSelectedOcasion(oc.id)}
+                        className={`px-3 py-1.5 rounded-full text-xs font-body tracking-wide transition-all shrink-0 ${
+                          selectedOcasion === oc.id
+                            ? "bg-rose-accent text-white shadow-xs"
+                            : "bg-[#FAF8F5] text-[#5C5046] hover:bg-[#E8DDD0]/50"
+                        }`}
+                      >
+                        {oc.nombre}
+                      </button>
                     ))}
-                  </select>
+                  </div>
+
+                  {/* Filtro por Distrito */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-xs font-body font-medium uppercase tracking-wider text-[#8A7A6E] flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-[#C4956A]" /> Distrito:
+                    </span>
+                    <select
+                      aria-label="Filtrar por distrito"
+                      value={selectedDistrito}
+                      onChange={(e) => setSelectedDistrito(e.target.value)}
+                      className="px-3 py-1.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded-lg text-xs font-body text-[#2C2420] focus:outline-none focus:ring-1 focus:ring-rose-accent"
+                    >
+                      <option value="todos">Todos los distritos</option>
+                      {distritos.map((d: DistritoRow) => (
+                        <option key={d.id} value={d.id}>
+                          {d.nombre}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Grilla Tipo Collage / Polaroid de Recuerdos */}
             {recuerdosFiltrados.length > 0 ? (

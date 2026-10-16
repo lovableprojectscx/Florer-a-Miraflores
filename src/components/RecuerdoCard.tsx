@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Calendar, ArrowRight, Heart } from "lucide-react";
+import { MapPin, ArrowRight, Heart } from "lucide-react";
 import type { RecuerdoRow, CategoriaRow, DistritoRow } from "@/types/database";
-import { formatRecuerdoDate } from "@/lib/recuerdos-utils";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 interface RecuerdoCardProps {
@@ -41,38 +40,27 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
         {/* Overlay degradado sutil al hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Badges superiores sobre la imagen */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
-          {categoria ? (
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-body tracking-wider uppercase bg-[#FDFAF6]/90 backdrop-blur-sm text-[#2C2420] border border-[#E8DDD0]/80 shadow-xs">
-              {categoria.nombre}
-            </span>
-          ) : (
-            <span />
-          )}
-
-          {distrito && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-body tracking-wider uppercase bg-[#2C2420]/80 backdrop-blur-sm text-[#FDFAF6] shadow-xs">
-              <MapPin className="w-2.5 h-2.5 text-rose-accent" />
-              {distrito.nombre}
-            </span>
-          )}
-        </div>
+        {/* Badges superiores sobre la imagen: solo si realmente existen */}
+        {(categoria || distrito) && (
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none">
+            {categoria && (
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-body tracking-wider uppercase bg-[#FDFAF6]/90 backdrop-blur-sm text-[#2C2420] border border-[#E8DDD0]/80 shadow-xs">
+                {categoria.nombre}
+              </span>
+            )}
+            {distrito && (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-body tracking-wider uppercase bg-[#2C2420]/80 backdrop-blur-sm text-[#FDFAF6] shadow-xs ml-auto">
+                <MapPin className="w-2.5 h-2.5 text-rose-accent" />
+                {distrito.nombre}
+              </span>
+            )}
+          </div>
+        )}
       </Link>
 
       {/* Contenido descriptivo del recuerdo */}
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between bg-[#FFFFFF]">
         <div>
-          {/* Fecha del momento */}
-          {recuerdo.fecha_publicacion && (
-            <div className="flex items-center gap-1.5 text-[11px] text-[#8A7A6E] font-body font-light mb-2">
-              <Calendar className="w-3 h-3 text-[#C4956A]" />
-              <time dateTime={recuerdo.fecha_publicacion}>
-                {formatRecuerdoDate(recuerdo.fecha_publicacion)}
-              </time>
-            </div>
-          )}
-
           {/* Título emotivo */}
           <h2 className="font-display text-base sm:text-lg text-[#2C2420] group-hover:text-rose-accent transition-colors line-clamp-2 leading-snug">
             <Link to="/recuerdos/$slug" params={{ slug: recuerdo.slug }}>
