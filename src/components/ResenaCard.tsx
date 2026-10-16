@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Star, MessageCircle, ExternalLink, Image as ImageIcon } from "lucide-react";
 import type { TestimonioRow } from "@/types/database";
+import { formatTestimonioFecha } from "@/lib/resenas-utils";
 
 interface ResenaCardProps {
   testimonio: TestimonioRow;
@@ -75,21 +76,7 @@ export function ResenaCard({ testimonio, clampText = true }: ResenaCardProps) {
 
   const textoLargo = testimonio.texto.length > 200;
 
-  const fechaFormateada = testimonio.fecha
-    ? (() => {
-        try {
-          const [anio, mes, dia] = testimonio.fecha.split("-").map(Number);
-          const f = new Date(anio, mes - 1, dia);
-          return f.toLocaleDateString("es-PE", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-          });
-        } catch {
-          return testimonio.fecha;
-        }
-      })()
-    : null;
+  const fechaFormateada = formatTestimonioFecha(testimonio.fecha);
 
   return (
     <>

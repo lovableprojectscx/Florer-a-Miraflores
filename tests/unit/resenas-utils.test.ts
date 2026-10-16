@@ -4,6 +4,7 @@ import {
   formatRating,
   formatGoogleSummary,
   shouldShowHomeTestimonios,
+  formatTestimonioFecha,
 } from "@/lib/resenas-utils";
 
 describe("Validación del formulario de testimonios (Prompt 07)", () => {
@@ -144,5 +145,38 @@ describe("Regla de visibilidad de la franja en el home", () => {
     expect(shouldShowHomeTestimonios(true, 3)).toBe(true);
     expect(shouldShowHomeTestimonios(true, 6)).toBe(true);
     expect(shouldShowHomeTestimonios(true, 15)).toBe(true);
+  });
+});
+
+describe("Formato de fecha de reseñas (sin días inventados)", () => {
+  it("muestra 'mes año' para fechas YYYY-MM-DD sin incluir el día aproximado", () => {
+    const formattedAgo = formatTestimonioFecha("2026-08-15");
+    expect(formattedAgo).toBe("ago. 2026");
+    expect(formattedAgo).not.toContain("15");
+
+    const formattedMar = formatTestimonioFecha("2026-03-15");
+    expect(formattedMar).toBe("mar. 2026");
+    expect(formattedMar).not.toContain("15");
+
+    const formattedOct = formatTestimonioFecha("2026-10-15");
+    expect(formattedOct).toBe("oct. 2026");
+    expect(formattedOct).not.toContain("15");
+  });
+
+  it("acepta formato YYYY-MM devolviendo 'mes año'", () => {
+    expect(formatTestimonioFecha("2026-05")).toBe("may. 2026");
+    expect(formatTestimonioFecha("2026-12")).toBe("dic. 2026");
+  });
+
+  it("mantiene intactos textos relativos de reseñas de Google o WhatsApp", () => {
+    expect(formatTestimonioFecha("hace 2 meses")).toBe("hace 2 meses");
+    expect(formatTestimonioFecha("hace una semana")).toBe("hace una semana");
+  });
+
+  it("devuelve null ante valores nulos, indefinidos o vacíos", () => {
+    expect(formatTestimonioFecha(null)).toBeNull();
+    expect(formatTestimonioFecha(undefined)).toBeNull();
+    expect(formatTestimonioFecha("")).toBeNull();
+    expect(formatTestimonioFecha("   ")).toBeNull();
   });
 });

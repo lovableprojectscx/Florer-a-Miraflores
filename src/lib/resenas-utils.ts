@@ -115,3 +115,47 @@ export function formatGoogleSummary(
   const countStr = count.toLocaleString("es-PE");
   return `★ ${formattedRating} · ${countStr} ${count === 1 ? "reseña" : "reseñas"} en Google`;
 }
+
+/**
+ * Formatea la fecha de un testimonio mostrando solo "mes año" (ej. "ago. 2026")
+ * o el texto relativo original si no es una fecha numérica.
+ * Regla estricta: NUNCA muestra un día exacto para evitar datos inventados
+ * procedentes de aproximaciones (como el día 15 de cada mes).
+ */
+export function formatTestimonioFecha(fecha: string | null | undefined): string | null {
+  if (!fecha || typeof fecha !== "string") return null;
+  const trimmed = fecha.trim();
+  if (!trimmed) return null;
+
+  // Si tiene formato YYYY-MM-DD o YYYY-MM
+  const match = trimmed.match(/^(\d{4})-(\d{1,2})(?:-\d{1,2})?$/);
+  if (match) {
+    const anio = Number(match[1]);
+    const mes = Number(match[2]);
+    if (mes >= 1 && mes <= 12) {
+      const d = new Date(anio, mes - 1, 1);
+      return d.toLocaleDateString("es-PE", {
+        month: "short",
+        year: "numeric",
+      });
+    }
+  }
+
+  // Si es fecha ISO completa YYYY-MM-DDTHH:mm:ss...
+  if (/^\d{4}-\d{2}-\d{2}T/.test(trimmed)) {
+    try {
+      const parsed = new Date(trimmed);
+      if (!isNaN(parsed.getTime())) {
+        return parsed.toLocaleDateString("es-PE", {
+          month: "short",
+          year: "numeric",
+        });
+      }
+    } catch {
+      // Retornar fallback trimmed
+    }
+  }
+
+  // Texto relativo (ej: "hace 2 meses", "hace un año") o libre: devolver intacto
+  return trimmed;
+}

@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { PopupModal } from "@/components/PopupModal";
 import { HomeTestimonios } from "@/components/HomeTestimonios";
+import { HomeRecuerdos } from "@/components/HomeRecuerdos";
 import type { TagSeccion } from "@/components/Novedades";
 
 import {
@@ -21,12 +22,24 @@ import {
   getTags,
   getProductosPorTag,
   getTestimoniosHome,
+  getRecuerdosHome,
+  getDistritos,
 } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
   loader: async () => {
     // Fetch paralelo — todos los datos del home en una sola ronda
-    const [categorias, config, colecciones, banners, popup, tags, testimonios] = await Promise.all([
+    const [
+      categorias,
+      config,
+      colecciones,
+      banners,
+      popup,
+      tags,
+      testimonios,
+      recuerdos,
+      distritos,
+    ] = await Promise.all([
       getCategorias(),
       getConfig().catch(() => null),
       getColecciones().catch(() => []),
@@ -34,6 +47,8 @@ export const Route = createFileRoute("/")({
       getPopup().catch(() => null),
       getTags().catch(() => []),
       getTestimoniosHome().catch(() => []),
+      getRecuerdosHome(8).catch(() => []),
+      getDistritos().catch(() => []),
     ]);
 
     // Para cada tag activo, cargar sus productos en paralelo para el slider
@@ -47,7 +62,17 @@ export const Route = createFileRoute("/")({
       });
     }
 
-    return { categorias, config, colecciones, banners, popup, tagSecciones, testimonios };
+    return {
+      categorias,
+      config,
+      colecciones,
+      banners,
+      popup,
+      tagSecciones,
+      testimonios,
+      recuerdos,
+      distritos,
+    };
   },
 
   head: () => ({
@@ -71,8 +96,17 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { categorias, config, colecciones, banners, popup, tagSecciones, testimonios } =
-    Route.useLoaderData();
+  const {
+    categorias,
+    config,
+    colecciones,
+    banners,
+    popup,
+    tagSecciones,
+    testimonios,
+    recuerdos,
+    distritos,
+  } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,6 +117,7 @@ function HomePage() {
         <Novedades tagSecciones={tagSecciones} />
         <CategoryShowcase colecciones={colecciones} />
         <HomeTestimonios testimonios={testimonios} config={config} />
+        <HomeRecuerdos recuerdos={recuerdos} categorias={categorias} distritos={distritos} />
         <DeliveryZones />
         <Faq />
       </main>

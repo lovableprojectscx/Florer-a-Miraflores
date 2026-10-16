@@ -686,6 +686,45 @@ export async function getRecuerdosPublicos(filtros?: FiltrosRecuerdos): Promise<
 }
 
 /**
+ * Devuelve hasta N recuerdos publicados para la franja del Home.
+ * Ordenados estrictamente:
+ * 1. destacado DESC (primero destacados)
+ * 2. orden ASC
+ * 3. fecha_publicacion DESC
+ */
+export async function getRecuerdosHome(limite = 8): Promise<RecuerdoRow[]> {
+  try {
+    const nowIso = new Date().toISOString();
+    const { data, error } = await supabase
+      .from("recuerdos")
+      .select("*")
+      .eq("publicado", true)
+      .lte("fecha_publicacion", nowIso)
+      .order("destacado", { ascending: false })
+      .order("orden", { ascending: true })
+      .order("fecha_publicacion", { ascending: false })
+      .limit(limite);
+
+    if (error) {
+      if (error.code === "42P01" || error.code === "PGRST205") {
+        return [];
+      }
+      throw new Error(`[Supabase] ${error.message}`);
+    }
+
+    return data ?? [];
+  } catch (err) {
+    if (
+      err instanceof Error &&
+      (err.message.includes("42P01") || err.message.includes("PGRST205"))
+    ) {
+      return [];
+    }
+    throw err;
+  }
+}
+
+/**
  * Obtiene un recuerdo público por su slug con distrito, categoría y producto entregado.
  * Si no está publicado o su fecha es futura, retorna null.
  */

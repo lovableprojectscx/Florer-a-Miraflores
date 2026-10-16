@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { MapPin, Calendar, ArrowRight, Heart } from "lucide-react";
 import type { RecuerdoRow, CategoriaRow, DistritoRow } from "@/types/database";
 import { formatRecuerdoDate } from "@/lib/recuerdos-utils";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 interface RecuerdoCardProps {
   recuerdo: RecuerdoRow;
@@ -23,9 +24,10 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
         aria-label={`Ver historia de entrega: ${recuerdo.titulo}`}
       >
         {recuerdo.imagen_portada_url ? (
-          <img
-            src={recuerdo.imagen_portada_url}
+          <ResponsiveImage
+            url={recuerdo.imagen_portada_url}
             alt={recuerdo.titulo}
+            anchoMiniatura={480}
             loading="lazy"
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
           />

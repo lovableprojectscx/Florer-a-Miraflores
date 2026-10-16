@@ -83,4 +83,13 @@ test.describe("Mural de Recuerdos E2E", () => {
     const backLink = page.getByRole("link", { name: "Volver al Mural de Recuerdos" });
     await expect(backLink).toBeVisible();
   });
+
+  test("Home: la franja 'Recuerdos de entrega' respeta la regla de 0 publicados (no se renderiza)", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    // Con 0 recuerdos publicados en producción, la sección NO debe existir en el DOM (ni título ni hueco)
+    const section = page.locator('[data-testid="home-recuerdos-section"]');
+    await expect(section).toHaveCount(0);
+  });
 });
