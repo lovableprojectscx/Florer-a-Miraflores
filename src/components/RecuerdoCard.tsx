@@ -14,12 +14,12 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
   const distrito = distritos.find((d) => d.id === recuerdo.distrito_id);
 
   return (
-    <article className="group bg-[#FFFFFF] border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-[#C4956A]/60 transition-all duration-300 flex flex-col">
+    <article className="group bg-[#FFFFFF] border border-[#E8DDD0] rounded-lg overflow-hidden shadow-sm hover:shadow-md hover:border-[#C4956A]/60 transition-all duration-300 flex flex-col h-full">
       {/* Marco de imagen tipo Polaroid / Galería */}
       <Link
         to="/recuerdos/$slug"
         params={{ slug: recuerdo.slug }}
-        className="block relative aspect-[4/5] overflow-hidden bg-[#FAF8F5]"
+        className="block relative aspect-[4/5] overflow-hidden bg-[#FAF8F5] shrink-0"
         aria-label={`Ver historia de entrega: ${recuerdo.titulo}`}
       >
         {recuerdo.imagen_portada_url ? (
@@ -28,7 +28,8 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
             alt={recuerdo.titulo}
             anchoMiniatura={480}
             loading="lazy"
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+            style={{ objectPosition: "center 18%" }}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-[#8A7A6E]">
@@ -61,8 +62,8 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
       {/* Contenido descriptivo del recuerdo */}
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between bg-[#FFFFFF]">
         <div>
-          {/* Título emotivo */}
-          <h2 className="font-display text-base sm:text-lg text-[#2C2420] group-hover:text-rose-accent transition-colors line-clamp-2 leading-snug">
+          {/* Título emotivo con altura consistente para tarjetas contiguas */}
+          <h2 className="font-display text-base sm:text-lg text-[#2C2420] group-hover:text-rose-accent transition-colors line-clamp-2 leading-snug min-h-[2.75rem] flex items-center">
             <Link to="/recuerdos/$slug" params={{ slug: recuerdo.slug }}>
               {recuerdo.titulo}
             </Link>
@@ -76,8 +77,8 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
           )}
         </div>
 
-        {/* Pie con enlace de acción */}
-        <div className="mt-4 pt-3 border-t border-[#E8DDD0]/60 flex items-center justify-between">
+        {/* Pie con enlace de acción anclado al fondo */}
+        <div className="mt-auto pt-3 border-t border-[#E8DDD0]/60 flex items-center justify-between">
           <span className="text-[11px] font-body tracking-wider uppercase text-[#8A7A6E] group-hover:text-[#2C2420] transition-colors">
             Ver entrega & arreglo
           </span>

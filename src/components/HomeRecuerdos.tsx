@@ -102,13 +102,13 @@ export function HomeRecuerdos({ recuerdos, categorias = [], distritos = [] }: Ho
         <div
           ref={sliderRef}
           onScroll={checkScroll}
-          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 -mx-4 px-4 sm:mx-0 sm:px-0"
+          className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 -mx-4 px-4 sm:mx-0 sm:px-0"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {recuerdos.map((recuerdo) => (
             <div
               key={recuerdo.id}
-              className="w-[75vw] sm:w-[280px] md:w-[320px] lg:w-[340px] shrink-0 snap-start"
+              className="w-[75vw] sm:w-[280px] md:w-[320px] lg:w-[340px] shrink-0 snap-start flex flex-col"
             >
               <RecuerdoCard recuerdo={recuerdo} categorias={categorias} distritos={distritos} />
             </div>

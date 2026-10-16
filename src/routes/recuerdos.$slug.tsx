@@ -155,7 +155,8 @@ function RecuerdoDetailPage() {
                 <img
                   src={recuerdo.imagen_portada_url}
                   alt={recuerdo.titulo}
-                  className="w-full h-auto max-h-[750px] object-cover object-center"
+                  style={{ objectPosition: "center 18%" }}
+                  className="w-full h-auto max-h-[750px] object-cover"
                 />
               ) : (
                 <div className="aspect-[4/5] flex items-center justify-center bg-[#FAF8F5] text-[#8A7A6E]">
