@@ -8,6 +8,7 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 
 |   Versión   |   Fecha    |          Tipo           | Resumen de Cambios                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | :---------: | :--------: | :---------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **v1.12.3** | 2026-10-16 |  **Visual / UI / UX**   | Diagnóstico Visual y Encuadre Fotográfico Inteligente en Recuerdos: resolución del reporte de Sofía sobre imágenes recortadas («descuadradas»); calibración de punto focal (`object-position: center 18%`) para fotos verticales de smartphone (9:16 y 3:4) evitando recortes de cabezas de clientas y globos de helio superiores; homogeneización de altura en tarjetas con `h-full`, `items-stretch`, `min-h-[2.75rem]` en títulos y `mt-auto` en pie de acción; preservación 100% intacta del catálogo de productos (560 fotos).                                                                                                                                                                                                                                                |
 | **v1.12.2** | 2026-10-15 | **Home / UI / Storage** | Franja «Recuerdos de entrega» en Home debajo de reseñas con carrusel responsive (scroll-snap, flechas desktop, formato 4:5 con ResponsiveImage y miniaturas); regla de renderizado condicional (retorna null si 0 publicados); fechas de reseñas normalizadas a «mes año» (ej. «ago. 2026») sin días aproximados inventados; generación y subida de 28 miniaturas WebP (`thumbs/480` y `thumbs/960`) en bucket `testimonios` con nombres neutrales anónimos (`recuerdo-01.webp` ... `recuerdo-14.webp`); tests unitarios y suite E2E completa verificada al 100%.                                                                                                                                                                                                                  |
 | **v1.12.1** | 2026-10-15 |   **Privacidad / QA**   | Revisión de Seguridad y Privacidad en Mural de Recuerdos: despublicación preventiva en base de datos (`publicado = false`); anonimización de nombres de fotos en Storage (`recuerdo-01.webp` a `recuerdo-14.webp`); obligatoriedad de confirmación explícita de autorización del cliente para publicar en panel admin; campos de texto, ocasión, distrito y producto opcionales sin textos de relleno; botón WhatsApp «Quiero un arreglo así» cuando no hay producto asociado; estado vacío respetuoso «Pronto compartiremos nuestras entregas» en `/recuerdos`; prevención de reescritura de evidencias en prettier ignorando `docs/evidencias`.                                                                                                                                  |
 | **v1.12.0** | 2026-10-15 | **Pivote Estratégico**  | Reemplazo Arquitectónico de Blog a «Mural de Recuerdos». Sustitución del modelo de blog botánico tradicional por un mural visual interactivo tipo collage/polaroid con fotos reales de entregas en Lima (`/recuerdos`), asociadas a ocasión, distrito y producto del catálogo para compra directa; sincronización de métricas reales de Google (★ 4,8 · 129 reseñas); actualización de requisitos (RF-110 a RF-115) y esquema de datos (`public.recuerdos` con FKs a `distritos` y `productos`); política estricta de CERO invención de textos o testimonios ficticios; redirecciones 301 de `/blog` a `/recuerdos`; panel de administración `/admin/recuerdos` y generación de sitemap dinámico (628 URLs).                                                                       |
@@ -18,6 +19,72 @@ Este documento registra de manera cronológica y exhaustiva todos los cambios ar
 ---
 
 ## Detalle de Hitos y Actualizaciones
+
+### [v1.12.3] — 2026-10-16: Diagnóstico Visual, Encuadre Fotográfico Inteligente y Nivelación de Tarjetas
+
+#### Diagnóstico
+
+A raíz del reporte de Sofía («las imágenes se descuadraron o se han movido todo... las fotos salen descuadradas»), se realizó una auditoría forense completa:
+
+1. **Catálogo de productos intacto:** Se verificó que los buckets `productos` (560 fotos), `categorias` (28 fotos) y `banners` (4 fotos) no fueron alterados en Storage ni en código; sus imágenes conservan su proporción 1:1 original y responden HTTP 200 OK.
+2. **Causa real del descuadre en Recuerdos:**
+   - **Recorte por relación de aspecto:** Las fotos reales de entregas tomadas con smartphone son verticales (en proporciones 9:16 = 0.56 o 3:4 = 0.75). Al forzarlas en una caja 4:5 (= 0.80) con `object-cover object-center`, el navegador centraba la imagen y recortaba un 25-30% arriba y abajo, cortando cabezas/cabello de clientas y la mitad superior de los globos de helio (_"Te quiero"_, estrellas, corazones).
+   - **Desalineación de altura de tarjetas:** La tarjeta `<article>` no contaba con `h-full` ni altura mínima fija para el título. Los títulos de 1 línea producían tarjetas de ~505px, mientras los de 2 líneas producían tarjetas de ~535px, haciendo que en el carrusel de Home y en la grilla los botones inferiores y bordes bailaran arriba y abajo de forma desalineada.
+
+#### Solución Técnica Implementada
+
+1. **Punto focal de encuadre inteligente (`objectPosition: "center 18%"`):**
+   - En [`src/components/RecuerdoCard.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/RecuerdoCard.tsx) y [`src/routes/recuerdos.$slug.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/routes/recuerdos.$slug.tsx), se configuró `objectPosition: "center 18%"` sobre `ResponsiveImage` y la foto principal de detalle.
+   - Preserva íntegramente la parte superior (globos completos, cabello y rostro sin corte) manteniendo visible el arreglo floral en la parte baja.
+2. **Nivelación milimétrica de tarjetas:**
+   - Adición de `h-full` en `<article>` y `shrink-0` en el enlace de la imagen.
+   - En el contenedor de título emotivo: `min-h-[2.75rem] flex items-center` para que títulos de 1 o 2 líneas consuman el mismo espacio vertical.
+   - En el pie de acción: `mt-auto` para anclar rígidamente la línea divisoria y el botón «Ver entrega & arreglo» a la base inferior.
+   - En [`src/components/HomeRecuerdos.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/HomeRecuerdos.tsx): adición de `items-stretch` al slider y `flex flex-col` al slide individual, garantizando alturas uniformes en todo el carrusel.
+
+---
+
+### [v1.12.2] — 2026-10-15: Franja de Recuerdos en Home, Carrusel Responsive y Normalización de Fechas de Reseñas
+
+#### Contexto y Decisión Comercial (Jack)
+
+1. Exhibir las entregas reales en la página de inicio para impulsar la conversión inmediata, ubicando la sección de Recuerdos justo debajo de «Lo que dicen nuestros clientes».
+2. Normalizar las fechas de reseñas reales para no mostrar días exactos aproximados que no figuren en los registros originales.
+
+#### Cambios Implementados
+
+1. **Componente [`src/components/HomeRecuerdos.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/HomeRecuerdos.tsx):**
+   - Muestra hasta 8 recuerdos publicados (`getRecuerdosHome(8)` ordenados por `destacado DESC, orden ASC, created_at DESC`).
+   - Carrusel deslizable en dispositivos móviles con `snap-x snap-mandatory` y flechas de navegación izquierda/derecha en desktop.
+   - Renderizado condicional estricto: si hay 0 recuerdos publicados, la sección retorna `null` sin generar huecos en el layout.
+   - Enlace directo «Ver todos los recuerdos →» hacia `/recuerdos`.
+2. **Normalización de Fechas en Reseñas:**
+   - En [`src/lib/resenas-utils.ts`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/lib/resenas-utils.ts) y [`src/components/ResenaCard.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/components/ResenaCard.tsx), formateo a formato relativo o «mes año» (ej. «ago. 2026»), prohibiendo días inventados.
+3. **Optimización Multimedia en Storage:**
+   - Procesamiento de 28 miniaturas WebP (`thumbs/480` y `thumbs/960`) para las 14 fotos de entregas subidas a Supabase Storage con compresión Sharp.
+
+---
+
+### [v1.12.1] — 2026-10-15: Revisión de Seguridad, Privacidad y Consentimiento en Mural de Recuerdos
+
+#### Contexto y Decisión de Cumplimiento (Jack)
+
+Despublicación preventiva temporal de recuerdos con información no confirmada, y establecimiento de salvaguardas legales y de privacidad para fotografías de clientes reales.
+
+#### Cambios Implementados
+
+1. **Despublicación y Limpieza de Contenido:**
+   - Actualización en base de datos: `UPDATE public.recuerdos SET publicado = false WHERE publicado = true;`.
+   - Anonimización de nombres de archivo en Storage: renombramiento a identificadores neutrales (`recuerdo-01.webp` a `recuerdo-14.webp`) eliminando nombres de personas reales.
+   - Supresión de distritos, ocasiones y dedicatorias ficticias de los registros de prueba.
+2. **Salvaguardas en Panel Administrativo (`/admin/recuerdos`):**
+   - Casilla de verificación obligatoria: _"Confirmo que el cliente autorizó publicar esta foto"_ antes de permitir publicar.
+   - Campos de ocasión, distrito, producto vinculado y dedicatoria convertidos en estrictamente opcionales; si están vacíos, no se renderizan en las tarjetas públicas (cero textos de relleno).
+3. **Conversión Alternativa y Estado Vacío:**
+   - En [`src/routes/recuerdos.$slug.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/routes/recuerdos.$slug.tsx): si no hay `producto_id`, se oculta el bloque de producto y se ofrece botón directo de WhatsApp _"Quiero un arreglo así"_.
+   - En [`src/routes/recuerdos.tsx`](file:///c:/Users/JACK%20FRANKLIN/Desktop/Proyectos%20Idenza/Trabajos-Mayo/Floreria%20miraflores/floreria-miraflo-main/src/routes/recuerdos.tsx): si hay 0 publicados, mensaje amigable _"Pronto compartiremos nuestras entregas"_ en lugar de 404.
+
+---
 
 ### [v1.12.0] — 2026-10-15: Mural de Recuerdos de Entrega y Sustitución de Blog
 

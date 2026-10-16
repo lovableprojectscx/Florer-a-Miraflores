@@ -197,33 +197,38 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 | RF-102 | Franja carrusel horizontal en Home debajo de Colecciones, con regla: `mostrar_resenas_home = true` y >= 3 activas           | Media     | ✅     | Prompt 07 (Decisión Jack)        |
 | RF-103 | Enlace a `/resenas` en Footer y en sitemap.xml (sin JSON-LD artificial según directrices de Google)                         | Media     | ✅     | Prompt 07 (SEO)                  |
 | RF-104 | Módulo admin `/admin/testimonios`: CRUD, selector visual 1-5 estrellas, fotos WebP, aviso de no inventar y fallback SQL 007 | Alta      | ✅     | Prompt 07 (Panel Administrativo) |
+| RF-105 | Normalización de fechas de reseñas a formato «mes año» (ej. «ago. 2026») sin días aproximados ficticios                     | Media     | ✅     | Calibración Jack                 |
 
 ## 10.2. Mural de Recuerdos y Momentos Reales (Pivote Estratégico Fase 09/Recuerdos)
 
 _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías botánicas/teóricas por un **Mural de Recuerdos de Entrega** interactivo tipo collage/polaroid. Este mural exhibe fotografías reales de entregas y momentos especiales en Lima, asociadas a la ocasión (cumpleaños, aniversario, amor, graduación, etc.), distrito y arreglo floral entregado para maximizar la prueba social y la conversión directa hacia el catálogo y WhatsApp._
 
-| ID     | Requisito                                                                                                                                                    | Prioridad | Estado | Fuente                  |
-| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------ | ----------------------- |
-| RF-110 | Página pública `/recuerdos` (Mural): galería tipo collage/polaroid con fotos reales, filtros por ocasión y distrito, paginación y redirección 301 de `/blog` | Alta      | ✅     | Pivote Estratégico Jack |
-| RF-111 | Detalle `/recuerdos/$slug`: foto real HD en WebP, ocasión, distrito, dedicatoria/frase breve auténtica y 404 limpio si no existe o es borrador               | Alta      | ✅     | Pivote Estratégico Jack |
-| RF-112 | Conversión directa «Flores de este recuerdo»: bloque con el producto entregado (precio, foto) y botón para pedirlo al carrito o WhatsApp prellenado          | Media     | ✅     | Conversión Cruzada Jack |
-| RF-113 | Panel `/admin/recuerdos`: CRUD completo, asociación a foto WebP, distrito, ocasión, producto entregado, fecha, publicado y diálogo propio de eliminación     | Alta      | ✅     | Panel Admin Jack        |
-| RF-114 | Optimización multimedia: fotos de entrega en WebP en Storage con miniaturas responsivas vía `subirImagenConMiniaturas`                                       | Alta      | ✅     | Rendimiento y Storage   |
-| RF-115 | SEO local y Social Proof: Open Graph con foto real, meta tags orientados a distritos de Lima y ocasiones, sitemap.xml dinámico y marcado Schema.org          | Alta      | ✅     | SEO Técnico Jack        |
+| ID     | Requisito                                                                                                                                                     | Prioridad | Estado | Fuente                  |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ----------------------- |
+| RF-110 | Página pública `/recuerdos` (Mural): galería tipo collage/polaroid con fotos reales, filtros por ocasión y distrito, paginación y redirección 301 de `/blog`  | Alta      | ✅     | Pivote Estratégico Jack |
+| RF-111 | Detalle `/recuerdos/$slug`: foto real HD en WebP, ocasión, distrito, dedicatoria/frase breve auténtica y 404 limpio si no existe o es borrador                | Alta      | ✅     | Pivote Estratégico Jack |
+| RF-112 | Conversión directa «Flores de este recuerdo»: bloque con el producto entregado (precio, foto) y botón para pedirlo al carrito o WhatsApp prellenado           | Media     | ✅     | Conversión Cruzada Jack |
+| RF-113 | Panel `/admin/recuerdos`: CRUD completo, asociación a foto WebP, distrito, ocasión, producto entregado, fecha, publicado y diálogo propio de eliminación      | Alta      | ✅     | Panel Admin Jack        |
+| RF-114 | Optimización multimedia: fotos de entrega en WebP en Storage con miniaturas responsivas vía `subirImagenConMiniaturas`                                        | Alta      | ✅     | Rendimiento y Storage   |
+| RF-115 | SEO local y Social Proof: Open Graph con foto real, meta tags orientados a distritos de Lima y ocasiones, sitemap.xml dinámico y marcado Schema.org           | Alta      | ✅     | SEO Técnico Jack        |
+| RF-116 | Franja carrusel «Recuerdos de entrega» en Home debajo de reseñas con hasta 8 fotos 4:5, snap en móvil, flechas desktop y regla de 0 publicaciones (null)      | Alta      | ✅     | Decisión Jack           |
+| RF-117 | Protocolo de Privacidad y Consentimiento: casilla obligatoria de autorización en admin, campos opcionales sin datos inventados, fotos anonimizadas en Storage | Alta      | ✅     | Seguridad Legal Jack    |
 
 ## 11. Requisitos No Funcionales (RNF)
 
-| ID     | Requisito                                                                                         | Prioridad | Estado | Fuente                     |
-| ------ | ------------------------------------------------------------------------------------------------- | --------- | ------ | -------------------------- |
-| RNF-01 | Diseño responsivo calibrado para smartphones, tablets y pantallas de laptops                      | Alta      | ✅     | Cotización 3.1             |
-| RNF-02 | Identidad de marca (paleta crema/tierra/rosa, logo e isotipo vectoriales)                         | Alta      | ✅     | Cotización 3.1, CLAUDE §4  |
-| RNF-03 | SEO: meta tags por ruta, Open Graph, `robots.txt` excluyendo `/admin`                             | Media     | ⚠️     | CLAUDE §14                 |
-| RNF-04 | Schema.org estructurado `Florist`/`LocalBusiness`                                                 | Baja      | ⚠️     | CLAUDE §14                 |
-| RNF-05 | Seguridad: RLS estricto en todas las tablas; secrets solo en servidor; mitigación CVE-2026-102989 | Alta      | ✅     | CLAUDE §3, §11             |
-| RNF-06 | Optimización de imágenes en formato WebP con compresión de alto rendimiento                       | Media     | ✅     | CLAUDE §14, §18            |
-| RNF-07 | Feedback de errores al usuario (toasts/banners), compilación sin errores                          | Media     | ✅     | CLAUDE §18                 |
-| RNF-08 | Dominio propio configurado para producción                                                        | Media     | —      | Cotización 3.5 (operativo) |
-| RNF-09 | Manual de uso + capacitación 1h + 1 mes de soporte                                                | Media     | ❌     | Cotización 3.5 (servicio)  |
+| ID     | Requisito                                                                                                                     | Prioridad | Estado | Fuente                     |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | -------------------------- |
+| RNF-01 | Diseño responsivo calibrado para smartphones, tablets y pantallas de laptops                                                  | Alta      | ✅     | Cotización 3.1             |
+| RNF-02 | Identidad de marca (paleta crema/tierra/rosa, logo e isotipo vectoriales)                                                     | Alta      | ✅     | Cotización 3.1, CLAUDE §4  |
+| RNF-03 | SEO: meta tags por ruta, Open Graph, `robots.txt` excluyendo `/admin`                                                         | Media     | ⚠️     | CLAUDE §14                 |
+| RNF-04 | Schema.org estructurado `Florist`/`LocalBusiness`                                                                             | Baja      | ⚠️     | CLAUDE §14                 |
+| RNF-05 | Seguridad: RLS estricto en todas las tablas; secrets solo en servidor; mitigación CVE-2026-102989                             | Alta      | ✅     | CLAUDE §3, §11             |
+| RNF-06 | Optimización de imágenes en formato WebP con compresión de alto rendimiento                                                   | Media     | ✅     | CLAUDE §14, §18            |
+| RNF-07 | Feedback de errores al usuario (toasts/banners), compilación sin errores                                                      | Media     | ✅     | CLAUDE §18                 |
+| RNF-08 | Dominio propio configurado para producción                                                                                    | Media     | —      | Cotización 3.5 (operativo) |
+| RNF-09 | Manual de uso + capacitación 1h + 1 mes de soporte                                                                            | Media     | ❌     | Cotización 3.5 (servicio)  |
+| RNF-10 | Encuadre fotográfico inteligente (`objectPosition: center 18%`): preservación superior para evitar cortes de rostros y globos | Alta      | ✅     | Diagnóstico Sofía / Jack   |
+| RNF-11 | Homogeneidad de altura y alineación en tarjetas (`h-full`, `min-h` en título, `mt-auto` en pie)                               | Alta      | ✅     | Diagnóstico Sofía / Jack   |
 
 ---
 
