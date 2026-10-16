@@ -141,12 +141,20 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 
 ## 7.1. Promociones, Popup y Fidelización
 
-| ID      | Requisito                                                                                                           | Prioridad | Estado      | Fuente                           |
-| ------- | ------------------------------------------------------------------------------------------------------------------- | --------- | ----------- | -------------------------------- |
-| RF-064a | Listón lateral permanente de suscripción en color rosa (`#C4848A`)                                                  | Media     | 🔄 Retirado | Solicitud Cliente (v1.0.5)       |
-| RF-064b | Popup modal de captura de celular (+51) con control de frecuencia (máx 1 vez por sesión) y prevención de duplicados | Media     | ✅          | Solicitud Cliente (Fidelización) |
+| ID      | Requisito                                                                                                                                                                       | Prioridad | Estado      | Fuente                      |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- | --------------------------- |
+| RF-064a | Listón lateral permanente de suscripción en color rosa (`#C4848A`)                                                                                                              | Media     | 🔄 Retirado | Solicitud Cliente (v1.0.5)  |
+| RF-064b | Popup modal Club Florería Miraflores: formato horizontal en 2 columnas en laptop/desktop (altura $\le 400$px), retardo de 8s, velo suave y captura de celular (+51) no invasiva | Media     | ✅          | Solicitud Cliente (v1.12.4) |
 
 > **Nota sobre RF-064a:** El botón flotante lateral fue removido a solicitud explícita del cliente para mantener la interfaz completamente limpia y despojada de elementos adhesivos en los bordes laterales.
+
+> **Especificación técnica RF-064b (Opción A — Layout Apaisado No Invasivo):**
+>
+> 1. **Diseño en Desktop / Laptop (`md:`):** Disposición horizontal apaisada de 2 columnas (`max-w-2xl`, altura contenida ~360px a 380px) ocupando menos del 55% del alto de la pantalla, evitando la saturación visual en laptops de 1366×768 o 1440×900. Columna izquierda visual (40%) con fotografía promocional o isotipo de la marca, y columna derecha de formulario (60%).
+> 2. **Diseño en Móvil:** Disposición vertical compacta con banner superior delgado (`h-24`) y formulario optimizado con inputs de altura reducida (`h-9` a `h-10`) y límite `max-h-[92vh]` con scroll interno si fuese necesario, sin desbordar el viewport ni generar scroll horizontal.
+> 3. **Retardo y Velo No Invasivos:** Aparición retardada a los 8 segundos (8000ms) para permitir al visitante examinar el catálogo antes de cualquier interrupción. Velo de fondo suavizado (`bg-black/35 backdrop-blur-2xs`) para no oscurecer agresivamente el home.
+> 4. **Captura y Consentimiento Legal:** Campos obligatorios de Nombre completo (2-60 caracteres) y Teléfono móvil (+51, 9 dígitos comenzando en 9), casilla obligatoria de consentimiento con enlace a `/privacidad` (`CONSENTIMIENTO_TEXTO`), inserción en Supabase vía `insertarSuscriptor` (origen: `popup_home`).
+> 5. **Control de Frecuencia:** Máximo 1 sola vez por sesión (`sessionStorage.setItem("fm_popup_seen", "1")`), y supresión permanente si el usuario ya está suscrito (`localStorage.getItem("fm_subscribed") === "true"`).
 
 ---
 
