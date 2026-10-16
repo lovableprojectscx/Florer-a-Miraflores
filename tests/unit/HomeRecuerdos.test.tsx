@@ -137,4 +137,20 @@ describe("HomeRecuerdos - Franja en el Home", () => {
     expect(screen.queryByText(/no especificada/i)).toBeNull();
     expect(screen.queryByText(/sin distrito/i)).toBeNull();
   });
+
+  it("RNF-11: el slider utiliza items-stretch y cada contenedor de slide flex-col para igualar alturas", () => {
+    const recuerdos = crearRecuerdos(3);
+    const { container } = render(
+      <HomeRecuerdos recuerdos={recuerdos} categorias={mockCategorias} distritos={mockDistritos} />,
+    );
+
+    const slider = container.querySelector(".snap-x");
+    expect(slider?.className).toContain("items-stretch");
+
+    const slides = container.querySelectorAll(".snap-start");
+    expect(slides.length).toBe(3);
+    slides.forEach((slide) => {
+      expect(slide.className).toContain("flex-col");
+    });
+  });
 });

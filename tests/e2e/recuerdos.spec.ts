@@ -98,4 +98,31 @@ test.describe("Mural de Recuerdos E2E", () => {
     await expect(verTodos).toBeVisible();
     await expect(verTodos).toHaveAttribute("href", "/recuerdos");
   });
+
+  test("Calidad visual (RNF-10 y RNF-11): tarjetas de recuerdos con altura uniforme y punto focal superior", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const section = page.locator('[data-testid="home-recuerdos-section"]');
+    await expect(section).toBeVisible();
+
+    const cards = section.locator("article");
+    const count = await cards.count();
+    expect(count).toBeGreaterThan(0);
+
+    // Verificar RNF-10: las imágenes tienen object-position al 18% para no recortar cabezas ni globos
+    const firstImg = cards.first().locator("img");
+    await expect(firstImg).toBeVisible();
+    const objectPos = await firstImg.evaluate((el) => window.getComputedStyle(el).objectPosition);
+    expect(objectPos).toContain("18%");
+
+    // Verificar RNF-11: las tarjetas contiguas tienen la misma altura milimétrica
+    if (count >= 2) {
+      const box1 = await cards.nth(0).boundingBox();
+      const box2 = await cards.nth(1).boundingBox();
+      if (box1 && box2) {
+        expect(Math.abs(box1.height - box2.height)).toBeLessThanOrEqual(2);
+      }
+    }
+  });
 });
