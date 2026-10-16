@@ -7,7 +7,8 @@ test.describe("Home E2E — Acciones rápidas en tarjetas (RF-017 / RF-018)", ()
     // Evitar que el popup automático intercepte eventos de puntero durante la prueba
     await page.addInitScript(() => {
       try {
-        localStorage.setItem("fm_popup_seen", "true");
+        sessionStorage.setItem("fm_popup_seen", "1");
+        localStorage.setItem("fm_subscribed", "true");
       } catch {
         // no-op
       }

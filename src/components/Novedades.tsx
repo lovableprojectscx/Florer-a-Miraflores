@@ -13,10 +13,9 @@ import velvet from "@/assets/product-novedad-velvet.webp";
 import aurora from "@/assets/product-novedad-aurora.webp";
 
 // ─── Configuración de zoom y encuadre en fotos de producto del Home ─────────
-// Referencia: limafloralco.com (donde las flores llenan la foto cuadrada 1:1).
-// Valores evaluados para Sofía: 1.00, 1.15, 1.25 (por defecto en Fase 06-E), 1.35.
-export const ZOOM_FOTO_HOME = 1.25;
-export const OBJECT_POSITION_FOTO_HOME = "center 40%";
+// Por solicitud de Sofía y Jack: 1.00 (sin zoom artificial para que las flores y globos no se salgan del cuadro).
+export const ZOOM_FOTO_HOME = 1.0;
+export const OBJECT_POSITION_FOTO_HOME = "center center";
 
 // ─── Fallback cuando no hay datos en Supabase ────────────────────────────────
 
