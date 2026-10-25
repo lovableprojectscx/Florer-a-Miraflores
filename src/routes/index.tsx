@@ -51,11 +51,11 @@ export const Route = createFileRoute("/")({
       getDistritos().catch(() => []),
     ]);
 
-    // Para cada tag activo, cargar sus productos en paralelo para el slider
+    // Para cada tag activo, cargar hasta 8 productos para el slider optimizado
     const tagSecciones: TagSeccion[] = [];
     if (tags.length > 0) {
       const resultados = await Promise.all(
-        tags.map((tag) => getProductosPorTag(tag.clave, 16).catch(() => [])),
+        tags.map((tag) => getProductosPorTag(tag.clave, 8).catch(() => [])),
       );
       tags.forEach((tag, i) => {
         tagSecciones.push({ tag, productos: resultados[i] });

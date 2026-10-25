@@ -16,6 +16,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsappFab } from "@/components/WhatsappFab";
 import { ProductGrid } from "@/components/ProductGrid";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { useCartStore } from "@/store/cart";
 import { getRecuerdoPorSlug, getCategorias, getConfig } from "@/lib/queries";
 import {
@@ -152,9 +153,14 @@ function RecuerdoDetailPage() {
           <div className="lg:col-span-7 space-y-4">
             <div className="relative rounded-2xl overflow-hidden border border-[#E8DDD0] bg-[#FFFFFF] shadow-md">
               {recuerdo.imagen_portada_url ? (
-                <img
-                  src={recuerdo.imagen_portada_url}
+                <ResponsiveImage
+                  url={recuerdo.imagen_portada_url}
+                  fallbackUrl={recuerdo.imagen_portada_url}
+                  anchoMiniatura={960}
+                  anchosMiniatura={[960]}
+                  originalWidth={1600}
                   alt={recuerdo.titulo}
+                  fetchPriority="high"
                   style={{ objectPosition: "center 18%" }}
                   className="w-full h-auto max-h-[750px] object-cover"
                 />
@@ -169,11 +175,15 @@ function RecuerdoDetailPage() {
             {recuerdo.fotos_galeria && recuerdo.fotos_galeria.length > 0 && (
               <div className="flex items-center gap-3 overflow-x-auto pb-2">
                 {recuerdo.fotos_galeria.map((foto, idx) => (
-                  <img
+                  <ResponsiveImage
                     key={idx}
-                    src={foto}
+                    url={foto}
+                    fallbackUrl={foto}
+                    anchoMiniatura={480}
+                    anchosMiniatura={[480]}
                     alt={`${recuerdo.titulo} - foto ${idx + 1}`}
                     className="w-20 h-20 object-cover rounded-lg border border-[#E8DDD0] cursor-pointer hover:opacity-80 transition-opacity"
+                    loading="lazy"
                   />
                 ))}
               </div>

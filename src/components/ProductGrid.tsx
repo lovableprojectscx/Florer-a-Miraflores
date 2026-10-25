@@ -9,7 +9,7 @@ import { useCartStore } from "@/store/cart";
 import type { Product } from "@/data/catalog";
 import type { ProductoRow, TagRow } from "@/types/database";
 import { useState, useEffect, useRef } from "react";
-import { supabase } from "@/lib/supabase";
+import { getAllTags } from "@/lib/queries";
 import { slugify } from "@/lib/utils";
 import { getTagBadgeInfo } from "@/lib/tag-utils";
 import { useVerMas } from "@/hooks/use-ver-mas";
@@ -51,12 +51,11 @@ export function ProductGrid({
   const articleRefs = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
-    supabase
-      .from("tags")
-      .select("*")
-      .then(({ data }: { data: TagRow[] | null }) => {
+    getAllTags()
+      .then((data) => {
         if (data) setTags(data);
-      });
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -115,6 +114,7 @@ export function ProductGrid({
                       url={primeraImagen}
                       fallbackUrl={primeraImagen || romantico}
                       anchoMiniatura={480}
+                      anchosMiniatura={[480]}
                       alt={p.nombre}
                       loading="lazy"
                       sizes="(min-width: 1536px) 360px, (min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"

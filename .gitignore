@@ -44,6 +44,7 @@ Thumbs.db
 *.sln
 *.sw?
 .fuse_hidden*
+scripts/data/
 
 # Bun lockfiles (forzar npm en Vercel CI)
 bun.lock

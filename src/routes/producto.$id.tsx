@@ -14,10 +14,10 @@ import {
   getProductosPorCategoria,
   getCategorias,
   getConfig,
+  getTags,
 } from "@/lib/queries";
 import { useCartStore } from "@/store/cart";
 import type { CategoriaRow, ProductoRow, TagRow } from "@/types/database";
-import { supabase } from "@/lib/supabase";
 import { slugify, extractIdFromSlug } from "@/lib/utils";
 import { getTagBadgeInfo } from "@/lib/tag-utils";
 import { imagenUrl, imagenSrcSet, onImageThumbError } from "@/lib/image-utils";
@@ -41,10 +41,7 @@ export const Route = createFileRoute("/producto/$id")({
       getProductoPorId(realId),
       getCategorias(),
       getConfig().catch(() => null),
-      supabase
-        .from("tags")
-        .select("*")
-        .then(({ data }: { data: TagRow[] | null }) => data ?? []),
+      getTags().catch(() => []),
     ]);
 
     if (!product) throw redirect({ to: "/" });

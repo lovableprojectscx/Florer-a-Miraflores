@@ -3,6 +3,7 @@ import { X, Sparkles, Check, Loader2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import type { PopupRow, ConfigRow } from "@/types/database";
 import { insertarSuscriptor } from "@/lib/queries";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 interface Props {
   popup?: PopupRow | null;
@@ -212,8 +213,11 @@ function PopupModalInner({ popup, config }: Props) {
             {/* Columna Izquierda: Visual / Imagen promocional */}
             {popup?.imagen_url ? (
               <div className="relative w-full h-24 sm:h-28 md:h-auto md:w-5/12 shrink-0 bg-[#FAF8F6] overflow-hidden">
-                <img
-                  src={popup.imagen_url}
+                <ResponsiveImage
+                  url={popup.imagen_url}
+                  fallbackUrl={popup.imagen_url}
+                  anchoMiniatura={480}
+                  anchosMiniatura={[480]}
                   alt="Club Florería Miraflores"
                   className="w-full h-full object-cover block"
                 />

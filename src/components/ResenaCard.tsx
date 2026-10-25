@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Star, MessageCircle, ExternalLink, Image as ImageIcon } from "lucide-react";
 import type { TestimonioRow } from "@/types/database";
 import { formatTestimonioFecha } from "@/lib/resenas-utils";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 
 interface ResenaCardProps {
   testimonio: TestimonioRow;
@@ -139,8 +140,11 @@ export function ResenaCard({ testimonio, clampText = true }: ResenaCardProps) {
               title="Ver foto del arreglo"
               aria-label="Ver foto del arreglo"
             >
-              <img
-                src={testimonio.imagen_url}
+              <ResponsiveImage
+                url={testimonio.imagen_url}
+                fallbackUrl={testimonio.imagen_url}
+                anchoMiniatura={480}
+                anchosMiniatura={[480]}
                 alt={`Foto compartida por ${testimonio.nombre}`}
                 className="w-full h-full object-cover"
                 loading="lazy"

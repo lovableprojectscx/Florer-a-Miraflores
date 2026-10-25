@@ -108,4 +108,24 @@ describe("ProductGrid — paginación 'Ver más' y placeholder de imagen", () =>
     expect(img2.getAttribute("src")).toBeTruthy();
     expect(img2.getAttribute("src")).not.toBe("undefined");
   });
+
+  it("tarjetas de producto restringen srcset a 480w para proteger la cuota de transferencia", () => {
+    const productos = [
+      {
+        ...crearProductos(1)[0],
+        imagenes: [
+          "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/ramo.webp",
+        ],
+      },
+    ];
+
+    render(<ProductGrid products={productos} tamanoLote={24} />);
+
+    const img = screen.getByAltText(productos[0].nombre) as HTMLImageElement;
+    const srcset = img.getAttribute("srcset");
+
+    // Debe contener 480w y NO debe contener 960w ni 2560w para tarjetas de catálogo
+    expect(srcset).toContain("thumbs/480/ramo.webp 480w");
+    expect(srcset).not.toContain("960w");
+  });
 });

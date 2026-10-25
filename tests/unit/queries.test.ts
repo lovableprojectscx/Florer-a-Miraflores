@@ -48,6 +48,7 @@ vi.mock("@/lib/supabase", () => ({
 
 import {
   crearPedido,
+  clearQueryCache,
   getTodasCategoriasActivas,
   getCategoriaIdsConProductosActivos,
   getCategorias,
@@ -99,6 +100,7 @@ const sampleInput: CrearPedidoInput = {
 describe("crearPedido", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    clearQueryCache();
   });
 
   it("éxito al primer intento: genera FM-XXXXXX y llama a insert una sola vez", async () => {
@@ -167,6 +169,7 @@ describe("crearPedido", () => {
 describe("Consultas de lectura en queries.ts", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    clearQueryCache();
     queryResult = { data: [], error: null };
     tableResults = {};
   });

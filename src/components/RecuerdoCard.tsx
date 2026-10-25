@@ -27,6 +27,7 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
             url={recuerdo.imagen_portada_url}
             alt={recuerdo.titulo}
             anchoMiniatura={480}
+            anchosMiniatura={[480]}
             loading="lazy"
             style={{ objectPosition: "center 18%" }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
