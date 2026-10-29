@@ -197,4 +197,26 @@ test.describe("Problema 4 — Tarjetas de producto 1:1 y carrusel de borde a bor
     const diff = Math.abs(imgBox!.width - imgBox!.height);
     expect(diff).toBeLessThanOrEqual(2);
   });
+
+  test("Ficha de producto (/producto/:id): foto principal cuadrada 1:1 en concordancia con el catálogo", async ({
+    page,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop", "Solo desktop");
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/catalogo");
+    await waitForHydration(page, "main");
+
+    const firstProductLink = page.locator('main article a[href^="/producto/"]').first();
+    await expect(firstProductLink).toBeVisible();
+    await firstProductLink.click();
+    await waitForHydration(page, "main");
+
+    const mainImgContainer = page.locator("main .aspect-square").first();
+    await expect(mainImgContainer).toBeVisible();
+
+    const box = await mainImgContainer.boundingBox();
+    expect(box).not.toBeNull();
+    const diff = Math.abs(box!.width - box!.height);
+    expect(diff).toBeLessThanOrEqual(2);
+  });
 });
