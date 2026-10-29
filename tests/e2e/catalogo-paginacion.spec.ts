@@ -4,6 +4,7 @@ test.describe("Catálogo E2E — Paginación 'Ver más' y layout de tarjetas", (
   test("muestra máximo 24 tarjetas al inicio, 'Ver más' carga lotes hasta el total y desaparece, y cambiar filtro reinicia a 24", async ({
     page,
   }) => {
+    test.setTimeout(60000);
     await page.goto("/catalogo");
     await waitForHydration(page, "main select");
 

@@ -420,10 +420,10 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
   return withMemoryCache("colecciones", async () => {
     // Paso 1: traer colecciones con datos de la categoría y las categorías visibles con productos
     const [{ data, error }, categoriasVisibles] = await Promise.all([
-    supabase
-      .from("colecciones_home")
-      .select(
-        `
+      supabase
+        .from("colecciones_home")
+        .select(
+          `
       *,
       categoria:categorias (
         id,
@@ -434,112 +434,115 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
         activo
       )
     `,
-      )
-      .eq("activo", true)
-      .order("orden", { ascending: true }),
-    getCategorias(),
-  ]);
+        )
+        .eq("activo", true)
+        .order("orden", { ascending: true }),
+      getCategorias(),
+    ]);
 
-  if (error) throw new Error(`[Supabase] ${error.message}`);
+    if (error) throw new Error(`[Supabase] ${error.message}`);
 
-  // Las colecciones configuradas por Jack deben mostrarse SIEMPRE en su orden,
-  // salvo que la categoría esté desactivada (activo = false). Si tiene 0 productos activos,
-  // la colección se muestra igual.
-  const colecciones = (
-    (data ?? []) as (ColeccionConCategoria & { categoria: { activo?: boolean } })[]
-  ).filter((c) => {
-    const cat = c.categoria as { id?: string; activo?: boolean } | null;
-    return Boolean(cat?.id && cat.activo !== false);
-  }) as ColeccionConCategoria[];
+    // Las colecciones configuradas por Jack deben mostrarse SIEMPRE en su orden,
+    // salvo que la categoría esté desactivada (activo = false). Si tiene 0 productos activos,
+    // la colección se muestra igual.
+    const colecciones = (
+      (data ?? []) as (ColeccionConCategoria & { categoria: { activo?: boolean } })[]
+    ).filter((c) => {
+      const cat = c.categoria as { id?: string; activo?: boolean } | null;
+      return Boolean(cat?.id && cat.activo !== false);
+    }) as ColeccionConCategoria[];
 
-  // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas visibles
-  if (colecciones.length < 6) {
-    const existingCatIds = new Set(
-      colecciones.map((c) => (c.categoria as { id?: string })?.id).filter(Boolean),
-    );
-    const targetSlugs = ["cumpleanos", "ramos", "tulipanes", "girasoles", "arreglos-florales"];
-    const extras = categoriasVisibles.filter((c) => targetSlugs.includes(c.slug));
+    // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas visibles
+    if (colecciones.length < 6) {
+      const existingCatIds = new Set(
+        colecciones.map((c) => (c.categoria as { id?: string })?.id).filter(Boolean),
+      );
+      const targetSlugs = ["cumpleanos", "ramos", "tulipanes", "girasoles", "arreglos-florales"];
+      const extras = categoriasVisibles.filter((c) => targetSlugs.includes(c.slug));
 
-    for (const ext of extras) {
-      if (!existingCatIds.has(ext.id) && colecciones.length < 6) {
-        existingCatIds.add(ext.id);
-        colecciones.push({
-          id: `extra-${ext.id}`,
-          categoria_id: ext.id,
-          imagen_custom_url: null,
-          orden: colecciones.length,
-          activo: true,
-          categoria: {
-            id: ext.id,
-            nombre: ext.nombre,
-            slug: ext.slug,
-            imagen_url: ext.imagen_url,
-            parent_id: ext.parent_id,
-          },
-        } as ColeccionConCategoria);
+      for (const ext of extras) {
+        if (!existingCatIds.has(ext.id) && colecciones.length < 6) {
+          existingCatIds.add(ext.id);
+          colecciones.push({
+            id: `extra-${ext.id}`,
+            categoria_id: ext.id,
+            imagen_custom_url: null,
+            orden: colecciones.length,
+            activo: true,
+            categoria: {
+              id: ext.id,
+              nombre: ext.nombre,
+              slug: ext.slug,
+              imagen_url: ext.imagen_url,
+              parent_id: ext.parent_id,
+            },
+          } as ColeccionConCategoria);
+        }
       }
     }
-  }
 
-  // Orden equilibrado para el Bento Collage:
-  // 0: Hero Bento (Amor / Aniversario)
-  // 1: Vertical Bento (Graduación)
-  // 2, 3, 4, 5: Cuarteto inferior (Cumpleaños, Ramos, Tulipanes, Ofertas)
-  const preferredOrder = [
-    "amor-aniversario",
-    "graduacion",
-    "cumpleanos",
-    "ramos",
-    "tulipanes",
-    "ofertas",
-  ];
+    // Orden equilibrado para el Bento Collage:
+    // 0: Hero Bento (Amor / Aniversario)
+    // 1: Vertical Bento (Graduación)
+    // 2, 3, 4, 5: Cuarteto inferior (Cumpleaños, Ramos, Tulipanes, Ofertas)
+    const preferredOrder = [
+      "amor-aniversario",
+      "graduacion",
+      "cumpleanos",
+      "ramos",
+      "tulipanes",
+      "ofertas",
+    ];
 
-  colecciones.sort((a, b) => {
-    const isExtraA = String(a.id).startsWith("extra-");
-    const isExtraB = String(b.id).startsWith("extra-");
-    if (!isExtraA && !isExtraB) {
+    colecciones.sort((a, b) => {
+      const isExtraA = String(a.id).startsWith("extra-");
+      const isExtraB = String(b.id).startsWith("extra-");
+      if (!isExtraA && !isExtraB) {
+        return (a.orden ?? 0) - (b.orden ?? 0);
+      }
+      if (!isExtraA && isExtraB) return -1;
+      if (isExtraA && !isExtraB) return 1;
+
+      const slugA = (a.categoria as { slug?: string } | undefined)?.slug ?? "";
+      const slugB = (b.categoria as { slug?: string } | undefined)?.slug ?? "";
+      const idxA = preferredOrder.indexOf(slugA);
+      const idxB = preferredOrder.indexOf(slugB);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
       return (a.orden ?? 0) - (b.orden ?? 0);
-    }
-    if (!isExtraA && isExtraB) return -1;
-    if (isExtraA && !isExtraB) return 1;
+    });
 
-    const slugA = (a.categoria as { slug?: string } | undefined)?.slug ?? "";
-    const slugB = (b.categoria as { slug?: string } | undefined)?.slug ?? "";
-    const idxA = preferredOrder.indexOf(slugA);
-    const idxB = preferredOrder.indexOf(slugB);
-    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-    if (idxA !== -1) return -1;
-    if (idxB !== -1) return 1;
-    return (a.orden ?? 0) - (b.orden ?? 0);
-  });
+    // Paso 2: recopilar los parent_ids únicos y buscar sus slugs
+    const parentIds = [
+      ...new Set(
+        colecciones
+          .map((c) => (c.categoria as { parent_id?: string | null })?.parent_id)
+          .filter(Boolean) as string[],
+      ),
+    ];
 
-  // Paso 2: recopilar los parent_ids únicos y buscar sus slugs
-  const parentIds = [
-    ...new Set(
-      colecciones
-        .map((c) => (c.categoria as { parent_id?: string | null })?.parent_id)
-        .filter(Boolean) as string[],
-    ),
-  ];
+    if (parentIds.length === 0) return colecciones;
 
-  if (parentIds.length === 0) return colecciones;
+    const { data: padres } = await supabase
+      .from("categorias")
+      .select("id, slug")
+      .in("id", parentIds);
 
-  const { data: padres } = await supabase.from("categorias").select("id, slug").in("id", parentIds);
+    const padreMap: Record<string, string> = {};
+    (padres ?? []).forEach((p: { id: string; slug: string }) => {
+      padreMap[p.id] = p.slug;
+    });
 
-  const padreMap: Record<string, string> = {};
-  (padres ?? []).forEach((p: { id: string; slug: string }) => {
-    padreMap[p.id] = p.slug;
-  });
-
-  // Paso 3: inyectar el slug del padre en cada colección
-  return colecciones.map((col) => {
-    const parentId = (col.categoria as { parent_id?: string | null })?.parent_id;
-    if (!parentId || !padreMap[parentId]) return col;
-    return {
-      ...col,
-      categoria: col.categoria ? { ...col.categoria, padre: { slug: padreMap[parentId] } } : null,
-    };
-  });
+    // Paso 3: inyectar el slug del padre en cada colección
+    return colecciones.map((col) => {
+      const parentId = (col.categoria as { parent_id?: string | null })?.parent_id;
+      if (!parentId || !padreMap[parentId]) return col;
+      return {
+        ...col,
+        categoria: col.categoria ? { ...col.categoria, padre: { slug: padreMap[parentId] } } : null,
+      };
+    });
   });
 }
 

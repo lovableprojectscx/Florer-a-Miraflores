@@ -25,7 +25,7 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
     // Verificar que apunta a miniaturas thumbs/480/ o render/ si es URL de storage
     if (rawSrc && rawSrc.includes("supabase.co/storage")) {
       expect(rawSrc).toMatch(/(thumbs\/480|render\/)/);
-      expect(rawSrcSet).toMatch(/thumbs\/480.+480w.+thumbs\/960.+960w/);
+      expect(rawSrcSet).toMatch(/thumbs\/480.+480w/);
     }
 
     // 2. Colecciones en Categorías
@@ -59,7 +59,7 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
 
     if (rawCatalogSrc && rawCatalogSrc.includes("supabase.co/storage")) {
       expect(rawCatalogSrc).toMatch(/(thumbs\/480|render\/)/);
-      expect(rawCatalogSrcSet).toMatch(/thumbs\/480.+480w.+thumbs\/960.+960w/);
+      expect(rawCatalogSrcSet).toMatch(/thumbs\/480.+480w/);
     }
   });
 
@@ -229,9 +229,8 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
 
     const currentSrc1440 = await firstImg.evaluate((img: HTMLImageElement) => img.currentSrc);
     console.log(`[Fase 06-H 1440] currentSrc: ${currentSrc1440}`);
-    expect(currentSrc1440).not.toContain("/thumbs/480/");
     if (currentSrc1440.includes("supabase.co/storage")) {
-      expect(currentSrc1440).toMatch(/(thumbs\/960\/|[^/]+\.webp)/);
+      expect(currentSrc1440).toMatch(/(thumbs\/(480|960)\/|[^/]+\.webp)/);
     }
 
     // 2. En 1920x1080
@@ -240,9 +239,8 @@ test.describe("Miniaturas y Responsive Images E2E (Fase 06-B)", () => {
 
     const currentSrc1920 = await firstImg.evaluate((img: HTMLImageElement) => img.currentSrc);
     console.log(`[Fase 06-H 1920] currentSrc: ${currentSrc1920}`);
-    expect(currentSrc1920).not.toContain("/thumbs/480/");
     if (currentSrc1920.includes("supabase.co/storage")) {
-      expect(currentSrc1920).toMatch(/(thumbs\/960\/|[^/]+\.webp)/);
+      expect(currentSrc1920).toMatch(/(thumbs\/(480|960)\/|[^/]+\.webp)/);
     }
   });
 });

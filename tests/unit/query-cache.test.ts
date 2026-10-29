@@ -6,7 +6,7 @@ let tableResults: Record<string, unknown> = {};
 const methods = ["select", "eq", "order", "maybeSingle", "or", "overlaps", "in", "limit", "lte"];
 
 function createChain(table?: string) {
-  const chain: Record<string, any> = {};
+  const chain: Record<string, unknown> = {};
   methods.forEach((m) => {
     chain[m] = vi.fn(() => chain);
   });
