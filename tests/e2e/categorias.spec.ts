@@ -81,4 +81,24 @@ test.describe("Categorías públicas — visibilidad y navegación sin categorí
     const productLinks = page.locator('main a[href^="/producto/"]');
     await expect(productLinks.first()).toBeVisible();
   });
+
+  test("Condolencias (/categoria/defuncion) muestra subcategorías activas y catálogo fúnebre (RF-003a)", async ({
+    page,
+  }) => {
+    await page.goto("/categoria/defuncion");
+    await expect(page.locator("h1")).toHaveText(/condolencias/i);
+
+    // Debe mostrar los chips de subcategorías
+    await expect(page.getByRole("link", { name: "Coronas Fúnebres" }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: "Cruces" }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: "Lágrima con Pedestal" }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: "Lágrimas" }).first()).toBeVisible();
+
+    // Debe mostrar productos fúnebres solemnes
+    const productLinks = page.locator('main a[href^="/producto/"]');
+    await expect(productLinks.first()).toBeVisible();
+
+    // No debe mostrar arreglos festivos de girasoles
+    await expect(page.getByText("Arreglo Festivo Luz Dorada N° 4")).toHaveCount(0);
+  });
 });
