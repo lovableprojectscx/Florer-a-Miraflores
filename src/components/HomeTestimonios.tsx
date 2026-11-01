@@ -44,9 +44,9 @@ export function HomeTestimonios({ testimonios, config }: HomeTestimoniosProps) {
       data-testid="home-testimonios-section"
       aria-label="Reseñas de clientes"
     >
-      <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1536px] mx-auto">
         {/* Cabecera de la sección */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 px-4 sm:px-6 lg:px-8">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-[11px] tracking-[0.25em] uppercase font-body text-[#8A7A6E]">
@@ -98,21 +98,22 @@ export function HomeTestimonios({ testimonios, config }: HomeTestimoniosProps) {
           </div>
         </div>
 
-        {/* Carrusel horizontal (mismo patrón borde a borde de Novedades) */}
+        {/* Carrusel horizontal alineado armónicamente con los productos (con margen perimetral en móvil) */}
         <div
           ref={sliderRef}
           onScroll={checkScroll}
-          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 -mx-4 px-4 sm:mx-0 sm:px-0"
+          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 px-4 sm:px-6 lg:px-8 scroll-pl-4 sm:scroll-pl-6 lg:scroll-pl-8 w-full"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {testimonios.map((testimonio) => (
             <div
               key={testimonio.id}
-              className="w-[85vw] sm:w-[340px] md:w-[380px] lg:w-[420px] shrink-0 snap-start"
+              className="w-[80vw] max-w-[320px] sm:max-w-none sm:w-[340px] md:w-[380px] lg:w-[420px] shrink-0 snap-start"
             >
               <ResenaCard testimonio={testimonio} clampText={true} />
             </div>
           ))}
+          <div className="flex-shrink-0 w-4 sm:w-2" aria-hidden="true" />
         </div>
       </div>
     </section>

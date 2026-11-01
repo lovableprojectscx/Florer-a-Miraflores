@@ -43,9 +43,9 @@ export function HomeRecuerdos({ recuerdos, categorias = [], distritos = [] }: Ho
       data-testid="home-recuerdos-section"
       aria-label="Recuerdos de entrega"
     >
-      <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1536px] mx-auto">
         {/* Cabecera de la sección */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 px-4 sm:px-6 lg:px-8">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-[11px] tracking-[0.25em] uppercase font-body text-[#8A7A6E]">
@@ -98,21 +98,22 @@ export function HomeRecuerdos({ recuerdos, categorias = [], distritos = [] }: Ho
           </div>
         </div>
 
-        {/* Carrusel horizontal idéntico al de reseñas */}
+        {/* Carrusel horizontal alineado armónicamente con los productos (con margen perimetral en móvil) */}
         <div
           ref={sliderRef}
           onScroll={checkScroll}
-          className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 -mx-4 px-4 sm:mx-0 sm:px-0"
+          className="flex items-stretch gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 px-4 sm:px-6 lg:px-8 scroll-pl-4 sm:scroll-pl-6 lg:scroll-pl-8 w-full"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {recuerdos.map((recuerdo) => (
             <div
               key={recuerdo.id}
-              className="w-[75vw] sm:w-[280px] md:w-[320px] lg:w-[340px] shrink-0 snap-start flex flex-col"
+              className="w-[72vw] max-w-[280px] sm:max-w-none sm:w-[280px] md:w-[320px] lg:w-[340px] shrink-0 snap-start flex flex-col"
             >
               <RecuerdoCard recuerdo={recuerdo} categorias={categorias} distritos={distritos} />
             </div>
           ))}
+          <div className="flex-shrink-0 w-4 sm:w-2" aria-hidden="true" />
         </div>
       </div>
     </section>
