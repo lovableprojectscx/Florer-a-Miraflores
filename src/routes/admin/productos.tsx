@@ -17,6 +17,7 @@ import {
   FileImage,
   Search,
   Filter,
+  ExternalLink,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import type { ProductoRow, ProductoTag, CategoriaRow, TagRow } from "@/types/database";
@@ -27,6 +28,8 @@ import {
 } from "@/lib/image-optimizer";
 import { findTagByClave, resolverClavesTag } from "@/lib/tag-utils";
 import { armarOpcionesCategoriaSelect } from "@/lib/categorias-utils";
+import { slugify } from "@/lib/utils";
+import { invalidateProductCache } from "@/lib/queries";
 
 export const Route = createFileRoute("/admin/productos")({
   head: () => ({ meta: [{ title: "Productos | Admin Florería Miraflores" }] }),
@@ -954,6 +957,7 @@ function ProductosPage() {
   const [filterTag, setFilterTag] = useState("todos");
   const [lastEditedId, setLastEditedId] = useState<string | null>(null);
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
+  const [errorNotice, setErrorNotice] = useState<string | null>(null);
 
   const cargarDatos = useCallback(async () => {
     setLoading(true);
@@ -1091,6 +1095,7 @@ function ProductosPage() {
 
   async function handleCreate(form: FormState) {
     setSaving(true);
+    setErrorNotice(null);
     const nombreProd = form.nombre.trim();
     try {
       const { data, error } = await supabase
@@ -1105,11 +1110,15 @@ function ProductosPage() {
           imagenes: form.imagenes.filter(Boolean),
           orden: 0,
         })
-        .select("id")
+        .select()
         .single();
       if (error) throw error;
+      if (!data) {
+        throw new Error("No se pudo crear el producto en la base de datos.");
+      }
+      invalidateProductCache(data.id);
       setShowCreate(false);
-      const newId = data?.id;
+      const newId = data.id;
       if (newId) setLastEditedId(newId);
       setSuccessNotice(`Producto "${nombreProd}" creado exitosamente.`);
       await cargarDatos();
@@ -1125,6 +1134,11 @@ function ProductosPage() {
       }, 6000);
     } catch (err) {
       console.error(err);
+      setErrorNotice(
+        err instanceof Error
+          ? err.message
+          : "Error al crear el producto. Verifica los permisos de administrador.",
+      );
     } finally {
       setSaving(false);
     }
@@ -1133,10 +1147,11 @@ function ProductosPage() {
   async function handleEdit(form: FormState) {
     if (!editando) return;
     setSaving(true);
+    setErrorNotice(null);
     const editedId = editando.id;
     const editedNombre = form.nombre.trim();
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("productos")
         .update({
           nombre: editedNombre,
@@ -1147,8 +1162,15 @@ function ProductosPage() {
           activo: form.activo,
           imagenes: form.imagenes.filter(Boolean),
         })
-        .eq("id", editedId);
+        .eq("id", editedId)
+        .select();
       if (error) throw error;
+      if (!data || data.length === 0) {
+        throw new Error(
+          "La base de datos no modificó ninguna fila. Verifica que tu sesión siga activa y pertenezca a administradores autorizados.",
+        );
+      }
+      invalidateProductCache(editedId);
       setEditando(null);
       setLastEditedId(editedId);
       setSuccessNotice(`Producto "${editedNombre}" actualizado correctamente.`);
@@ -1163,6 +1185,11 @@ function ProductosPage() {
       }, 6000);
     } catch (err) {
       console.error(err);
+      setErrorNotice(
+        err instanceof Error
+          ? err.message
+          : "Error al actualizar el producto. Por favor, reintenta.",
+      );
     } finally {
       setSaving(false);
     }
@@ -1170,29 +1197,39 @@ function ProductosPage() {
 
   async function handleDelete() {
     if (!eliminando) return;
+    setErrorNotice(null);
     try {
       const { error } = await supabase.from("productos").delete().eq("id", eliminando.id);
       if (error) throw error;
+      invalidateProductCache(eliminando.id);
       setEliminando(null);
       await cargarDatos();
     } catch (err) {
       console.error(err);
+      setErrorNotice(
+        err instanceof Error
+          ? err.message
+          : "Error al eliminar el producto. Verifica los permisos de administrador.",
+      );
     }
   }
 
   async function handleToggleActivo(producto: ProductoConCategoria) {
     setTogglingId(producto.id);
+    setErrorNotice(null);
     try {
       const { error } = await supabase
         .from("productos")
         .update({ activo: !producto.activo })
         .eq("id", producto.id);
       if (error) throw error;
+      invalidateProductCache(producto.id);
       setProductos((prev) =>
         prev.map((p) => (p.id === producto.id ? { ...p, activo: !p.activo } : p)),
       );
     } catch (err) {
       console.error(err);
+      setErrorNotice("Error al cambiar el estado del producto.");
     } finally {
       setTogglingId(null);
     }
@@ -1376,6 +1413,24 @@ function ProductosPage() {
         </div>
       )}
 
+      {/* Banner de error visual al fallar operaciones */}
+      {errorNotice && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-300 text-red-900 text-xs sm:text-sm font-body flex items-center justify-between rounded-md shadow-xs animate-fade-in">
+          <div className="flex items-center gap-2.5">
+            <div className="w-6 h-6 rounded-full bg-red-200 text-red-800 flex items-center justify-center flex-shrink-0">
+              <AlertCircle className="w-4 h-4" strokeWidth={2} />
+            </div>
+            <span className="font-medium">{errorNotice}</span>
+          </div>
+          <button
+            onClick={() => setErrorNotice(null)}
+            className="p-1 text-red-700 hover:text-red-950 transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
       {!loading && (
         <p className="font-body text-xs text-[#8A7A6E] mb-4">
           {hasActiveFilters ? (
@@ -1480,11 +1535,23 @@ function ProductosPage() {
                     </div>
                   </td>
 
-                  {/* Nombre */}
-                  <td className="px-4 py-3">
-                    <p className="font-body text-sm text-[#2C2420] font-medium">
+                  {/* Nombre y Descripción */}
+                  <td className="px-4 py-3 max-w-xs md:max-w-sm">
+                    <p className="font-body text-sm text-[#2C2420] font-medium leading-snug">
                       {producto.nombre}
                     </p>
+                    {producto.descripcion ? (
+                      <p
+                        className="font-body text-xs text-[#8A7A6E] line-clamp-2 mt-1 leading-relaxed"
+                        title={producto.descripcion}
+                      >
+                        {producto.descripcion}
+                      </p>
+                    ) : (
+                      <p className="font-body text-[11px] text-[#C4956A]/70 italic mt-0.5">
+                        (Sin descripción)
+                      </p>
+                    )}
                   </td>
 
                   {/* Precio */}
@@ -1546,7 +1613,16 @@ function ProductosPage() {
 
                   {/* Acciones */}
                   <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex items-center justify-end gap-1.5">
+                      <a
+                        href={`/producto/${slugify(producto.nombre)}-${producto.id}?preview=1`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+                        title="Ver en la tienda (enlace directo sin caché)"
+                      >
+                        <ExternalLink className="h-4 w-4" strokeWidth={1.5} />
+                      </a>
                       <button
                         onClick={() => setEditando(producto)}
                         className="p-1.5 text-[#8A7A6E] hover:text-[#C4956A] transition-colors"
@@ -1631,6 +1707,18 @@ function ProductosPage() {
                     <p className="font-body text-xs text-[#8A7A6E] mt-0.5">
                       {producto.categoria_nombre}
                     </p>
+                    {producto.descripcion ? (
+                      <p
+                        className="font-body text-xs text-[#8A7A6E] line-clamp-2 mt-1 leading-relaxed"
+                        title={producto.descripcion}
+                      >
+                        {producto.descripcion}
+                      </p>
+                    ) : (
+                      <p className="font-body text-[11px] text-[#C4956A]/70 italic mt-0.5">
+                        (Sin descripción)
+                      </p>
+                    )}
                   </div>
                   <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                     <p className="font-body text-sm text-[#2C2420] font-bold">
@@ -1672,7 +1760,17 @@ function ProductosPage() {
                     )}
                   </button>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
+                  <a
+                    href={`/producto/${slugify(producto.nombre)}-${producto.id}?preview=1`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 px-2.5 py-1.5 border border-[#E8DDD0] hover:border-[#2C2420] font-body text-xs text-[#8A7A6E] hover:text-[#2C2420] transition-colors rounded"
+                    title="Ver en la tienda (enlace directo)"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.5} />
+                    <span>Ver</span>
+                  </a>
                   <button
                     onClick={() => setEditando(producto)}
                     className="flex items-center gap-1 px-3 py-1.5 border border-[#E8DDD0] hover:border-[#C4956A] font-body text-xs text-[#8A7A6E] hover:text-[#C4956A] transition-colors rounded"

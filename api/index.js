@@ -45,7 +45,14 @@ export function resolveCacheControl(url, method = "GET", status = 200) {
     pathOnly.startsWith("/checkout") ||
     pathOnly.startsWith("/confirmacion");
 
-  if ((method === "GET" || method === "HEAD") && status === 200 && !isPrivate) {
+  // Bypass explícito de caché para previsualizaciones desde admin o forzado sin caché
+  const hasBypassParam =
+    rawUrl.includes("preview=") ||
+    rawUrl.includes("nocache=") ||
+    rawUrl.includes("v=") ||
+    rawUrl.includes("t=");
+
+  if ((method === "GET" || method === "HEAD") && status === 200 && !isPrivate && !hasBypassParam) {
     // Páginas públicas SSR: cachear 120s en Vercel Edge CDN, stale-while-revalidate 600s
     return "public, s-maxage=120, stale-while-revalidate=600";
   }

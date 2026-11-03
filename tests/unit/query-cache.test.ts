@@ -40,6 +40,7 @@ vi.mock("@/lib/supabase", () => ({
 
 import {
   clearQueryCache,
+  invalidateProductCache,
   getCategorias,
   getConfig,
   getDistritos,
@@ -221,5 +222,40 @@ describe("Caché en memoria de consultas estáticas (src/lib/queries.ts)", () =>
 
     await getRecuerdosHome(8);
     expect(queryCalls).toBe(callsRec);
+  });
+
+  it("clearQueryCache con prefijo purga únicamente las claves correspondientes", async () => {
+    tableResults["categorias"] = [{ id: "cat-1", nombre: "Rosas", orden: 1, activo: true, parent_id: null }];
+    tableResults["config"] = { id: "conf-1", whatsapp: "+51 999 600 482" };
+
+    await getCategorias();
+    await getConfig();
+    const callsAfterBoth = queryCalls;
+
+    // Purgar solo config
+    clearQueryCache("config");
+
+    // getCategorias sigue en caché (no debe incrementar queryCalls)
+    await getCategorias();
+    expect(queryCalls).toBe(callsAfterBoth);
+
+    // getConfig fue purgado, debe consultar nuevamente
+    await getConfig();
+    expect(queryCalls).toBeGreaterThan(callsAfterBoth);
+  });
+
+  it("invalidateProductCache purga la caché de productos activos", async () => {
+    tableResults["productos"] = [{ id: "prod-1", nombre: "Girasol", activo: true, precio: 50, imagenes: [], tags: [] }];
+
+    await getProductosActivos();
+    const calls1 = queryCalls;
+
+    await getProductosActivos();
+    expect(queryCalls).toBe(calls1);
+
+    invalidateProductCache("prod-1");
+
+    await getProductosActivos();
+    expect(queryCalls).toBeGreaterThan(calls1);
   });
 });

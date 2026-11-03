@@ -53,8 +53,29 @@ interface CacheEntry<T> {
 const memoryCache = new Map<string, CacheEntry<unknown>>();
 const DEFAULT_TTL_MS = 60 * 1000; // 60 segundos de vida en memoria
 
-export function clearQueryCache(): void {
-  memoryCache.clear();
+export function clearQueryCache(prefixOrKey?: string): void {
+  if (!prefixOrKey) {
+    memoryCache.clear();
+    return;
+  }
+  for (const key of memoryCache.keys()) {
+    if (key === prefixOrKey || key.startsWith(prefixOrKey) || key.includes(prefixOrKey)) {
+      memoryCache.delete(key);
+    }
+  }
+}
+
+export function invalidateProductCache(productId?: string): void {
+  if (productId) {
+    memoryCache.delete(`producto_id_${productId}`);
+  }
+  memoryCache.delete("productos_activos");
+  // Purgar también cualquier entrada de listados de productos
+  for (const key of memoryCache.keys()) {
+    if (key.startsWith("productos_") || key.startsWith("tag_prods_")) {
+      memoryCache.delete(key);
+    }
+  }
 }
 
 async function withMemoryCache<T>(

@@ -66,4 +66,19 @@ describe("Reglas de Caché Edge en Vercel (resolveCacheControl en api/index.js)"
     const header500 = resolveCacheControl("/", "GET", 500);
     expect(header500).toBe("private, no-cache, no-store, must-revalidate");
   });
+
+  it("Peticiones con parámetros de bypass (preview=, nocache=, v=, t=) nunca se cachean en CDN", () => {
+    const rutasConBypass = [
+      "/producto/ramo-primavera-123?preview=1",
+      "/producto/ramo-primavera-123?nocache=1",
+      "/producto/ramo-primavera-123?v=1730665000",
+      "/producto/ramo-primavera-123?t=1730665000",
+      "/?preview=1",
+    ];
+
+    for (const ruta of rutasConBypass) {
+      const header = resolveCacheControl(ruta, "GET", 200);
+      expect(header).toBe("private, no-cache, no-store, must-revalidate");
+    }
+  });
 });
