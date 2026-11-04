@@ -20,6 +20,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { ensureAdminSession } from "@/lib/admin-auth";
 import type { ProductoRow, ProductoTag, CategoriaRow, TagRow } from "@/types/database";
 import {
   convertToWebP,
@@ -456,6 +457,143 @@ function ProductoForm({
             Guardar
           </button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Modal de reautenticación para proteger el trabajo ante expiración de sesión ---
+
+interface ReauthModalProps {
+  onSuccess: () => void;
+  onClose: () => void;
+  defaultEmail?: string;
+  itemNombre?: string;
+}
+
+function ReauthModal({ onSuccess, onClose, defaultEmail, itemNombre }: ReauthModalProps) {
+  const [email, setEmail] = useState(defaultEmail || "pedidos@floreriamiraflores.com");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: { user?: { email?: string } } | null } }) => {
+      if (session?.user?.email) {
+        setEmail(session.user.email);
+      }
+    });
+  }, []);
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    if (!password.trim()) {
+      setError("Por favor, ingresa tu contraseña de administrador.");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+      if (authError) throw authError;
+      if (!data?.session) throw new Error("No se pudo iniciar sesión. Verifica tus credenciales.");
+      onSuccess();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al iniciar sesión.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center px-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+      <div className="bg-white border border-[#E8DDD0] w-full max-w-md p-6 sm:p-8 shadow-2xl relative">
+        <button
+          onClick={onClose}
+          type="button"
+          className="absolute top-4 right-4 text-[#8A7A6E] hover:text-[#2C2420] transition-colors p-1"
+          aria-label="Cerrar modal"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0">
+            <AlertCircle className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="font-display text-lg text-[#2C2420]">Sesión Expirada</h3>
+            <p className="font-body text-xs text-[#8A7A6E]">
+              {itemNombre
+                ? `Tus cambios en "${itemNombre}" están protegidos.`
+                : "Tus datos están protegidos."}
+            </p>
+          </div>
+        </div>
+
+        <p className="font-body text-xs text-[#2C2420]/80 mb-5 leading-relaxed bg-[#FDFAF6] p-3 border border-[#E8DDD0] rounded">
+          Tu sesión cerró automáticamente por inactividad tras varios días. Ingresa tu contraseña para{" "}
+          <strong>guardar tus cambios sin perder nada</strong>.
+        </p>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs font-body rounded flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-1">
+              Email Administrador
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full h-10 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A]"
+            />
+          </div>
+
+          <div>
+            <label className="block font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-1">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoFocus
+              required
+              placeholder="••••••••"
+              className="w-full h-10 px-3 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A]"
+            />
+          </div>
+
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={loading}
+              className="h-10 px-4 font-body text-xs tracking-wider uppercase text-[#8A7A6E] hover:text-[#2C2420] transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="h-10 px-5 bg-[#2C2420] hover:bg-[#2C2420]/80 disabled:opacity-50 text-white font-body text-xs tracking-widest uppercase transition-colors flex items-center gap-2"
+            >
+              {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+              Reconectar y Guardar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
@@ -958,6 +1096,14 @@ function ProductosPage() {
   const [lastEditedId, setLastEditedId] = useState<string | null>(null);
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
   const [errorNotice, setErrorNotice] = useState<string | null>(null);
+  const [showReauth, setShowReauth] = useState(false);
+  const [pendingAction, setPendingAction] = useState<
+    | { type: "edit"; form: FormState; productoId: string }
+    | { type: "create"; form: FormState }
+    | { type: "delete"; producto: ProductoRow }
+    | { type: "toggle"; producto: ProductoConCategoria }
+    | null
+  >(null);
 
   const cargarDatos = useCallback(async () => {
     setLoading(true);
@@ -1096,6 +1242,13 @@ function ProductosPage() {
   async function handleCreate(form: FormState) {
     setSaving(true);
     setErrorNotice(null);
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      setPendingAction({ type: "create", form });
+      setShowReauth(true);
+      setSaving(false);
+      return;
+    }
     const nombreProd = form.nombre.trim();
     try {
       const { data, error } = await supabase
@@ -1150,6 +1303,15 @@ function ProductosPage() {
     setErrorNotice(null);
     const editedId = editando.id;
     const editedNombre = form.nombre.trim();
+
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      setPendingAction({ type: "edit", form, productoId: editedId });
+      setShowReauth(true);
+      setSaving(false);
+      return;
+    }
+
     try {
       const { data, error } = await supabase
         .from("productos")
@@ -1198,6 +1360,12 @@ function ProductosPage() {
   async function handleDelete() {
     if (!eliminando) return;
     setErrorNotice(null);
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      setPendingAction({ type: "delete", producto: eliminando });
+      setShowReauth(true);
+      return;
+    }
     try {
       const { error } = await supabase.from("productos").delete().eq("id", eliminando.id);
       if (error) throw error;
@@ -1217,6 +1385,13 @@ function ProductosPage() {
   async function handleToggleActivo(producto: ProductoConCategoria) {
     setTogglingId(producto.id);
     setErrorNotice(null);
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      setPendingAction({ type: "toggle", producto });
+      setShowReauth(true);
+      setTogglingId(null);
+      return;
+    }
     try {
       const { error } = await supabase
         .from("productos")
@@ -1232,6 +1407,27 @@ function ProductosPage() {
       setErrorNotice("Error al cambiar el estado del producto.");
     } finally {
       setTogglingId(null);
+    }
+  }
+
+  async function handleReauthSuccess() {
+    setShowReauth(false);
+    setErrorNotice(null);
+    if (!pendingAction) {
+      await cargarDatos();
+      return;
+    }
+    const action = pendingAction;
+    setPendingAction(null);
+    if (action.type === "edit") {
+      await handleEdit(action.form);
+    } else if (action.type === "create") {
+      await handleCreate(action.form);
+    } else if (action.type === "delete") {
+      setEliminando(action.producto);
+      await handleDelete();
+    } else if (action.type === "toggle") {
+      await handleToggleActivo(action.producto);
     }
   }
 
@@ -1415,19 +1611,32 @@ function ProductosPage() {
 
       {/* Banner de error visual al fallar operaciones */}
       {errorNotice && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-300 text-red-900 text-xs sm:text-sm font-body flex items-center justify-between rounded-md shadow-xs animate-fade-in">
+        <div className="mb-6 p-4 bg-red-50 border border-red-300 text-red-900 text-xs sm:text-sm font-body flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-md shadow-xs animate-fade-in">
           <div className="flex items-center gap-2.5">
             <div className="w-6 h-6 rounded-full bg-red-200 text-red-800 flex items-center justify-center flex-shrink-0">
               <AlertCircle className="w-4 h-4" strokeWidth={2} />
             </div>
             <span className="font-medium">{errorNotice}</span>
           </div>
-          <button
-            onClick={() => setErrorNotice(null)}
-            className="p-1 text-red-700 hover:text-red-950 transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-3 self-end sm:self-auto flex-shrink-0">
+            {(errorNotice.includes("sesión") ||
+              errorNotice.includes("administrador") ||
+              errorNotice.includes("fila")) && (
+              <button
+                type="button"
+                onClick={() => setShowReauth(true)}
+                className="px-3 py-1.5 bg-red-800 hover:bg-red-900 text-white font-body text-xs font-medium rounded transition-colors"
+              >
+                Reconectar sesión
+              </button>
+            )}
+            <button
+              onClick={() => setErrorNotice(null)}
+              className="p-1 text-red-700 hover:text-red-950 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       )}
 
@@ -1823,6 +2032,22 @@ function ProductosPage() {
           nombre={eliminando.nombre}
           onConfirm={handleDelete}
           onCancel={() => setEliminando(null)}
+        />
+      )}
+      {showReauth && (
+        <ReauthModal
+          onSuccess={handleReauthSuccess}
+          onClose={() => {
+            setShowReauth(false);
+            setSaving(false);
+          }}
+          itemNombre={
+            pendingAction?.type === "edit"
+              ? pendingAction.form.nombre
+              : pendingAction?.type === "create"
+              ? pendingAction.form.nombre
+              : undefined
+          }
         />
       )}
     </div>

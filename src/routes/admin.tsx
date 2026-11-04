@@ -23,15 +23,14 @@ import {
   Users,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { ensureAdminSession } from "@/lib/admin-auth";
 import logoImg from "@/assets/logo-miraflores.webp";
 
 // Auth guard — corre ANTES que los loaders de rutas hijas
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (!session) throw redirect({ to: "/admin-login" });
+    const status = await ensureAdminSession();
+    if (!status.ok) throw redirect({ to: "/admin-login" });
   },
   component: AdminLayout,
 });
@@ -64,14 +63,50 @@ function AdminLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    supabase.auth
-      .getSession()
-      .then(
-        ({ data: { session } }: { data: { session: { user?: { email?: string } } | null } }) => {
-          setEmail(session?.user?.email ?? "");
-        },
-      );
-  }, []);
+    // 1. Obtener email inicial verificado
+    ensureAdminSession().then((status) => {
+      if (status.ok && status.email) {
+        setEmail(status.email);
+      } else {
+        navigate({ to: "/admin-login" });
+      }
+    });
+
+    // 2. Suscribirse a eventos de autenticación de Supabase
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(
+      (event: string, session: { user?: { email?: string } } | null) => {
+        if (event === "SIGNED_OUT" || !session) {
+          setEmail("");
+          navigate({ to: "/admin-login" });
+        } else if (session?.user?.email) {
+          setEmail(session.user.email);
+        }
+      },
+    );
+
+    // 3. Auto-refresco al reactivar la pestaña o ventana (evita caída por laptop suspendida)
+    const handleRevalidate = async () => {
+      if (document.visibilityState === "visible") {
+        const status = await ensureAdminSession();
+        if (!status.ok) {
+          navigate({ to: "/admin-login" });
+        } else if (status.email) {
+          setEmail(status.email);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleRevalidate);
+    window.addEventListener("focus", handleRevalidate);
+
+    return () => {
+      subscription.unsubscribe();
+      document.removeEventListener("visibilitychange", handleRevalidate);
+      window.removeEventListener("focus", handleRevalidate);
+    };
+  }, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
