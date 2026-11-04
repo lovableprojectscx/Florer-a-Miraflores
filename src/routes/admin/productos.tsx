@@ -134,6 +134,7 @@ interface ProductoFormProps {
   onClose: () => void;
   onSave: (form: FormState) => Promise<void>;
   titulo: string;
+  productoId?: string;
 }
 
 function ProductoForm({
@@ -144,14 +145,72 @@ function ProductoForm({
   onClose,
   onSave,
   titulo,
+  productoId,
 }: ProductoFormProps) {
   const [form, setForm] = useState<FormState>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [uploading, setUploading] = useState<number | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [borradorPendiente, setBorradorPendiente] = useState<FormState | null>(null);
   const fileRef0 = useRef<HTMLInputElement>(null);
   const fileRef1 = useRef<HTMLInputElement>(null);
   const fileRefs = [fileRef0, fileRef1];
+
+  const draftKey = productoId ? `admin_prod_draft_${productoId}` : undefined;
+
+  // Comprobar si existe un borrador guardado en localStorage en este navegador
+  useEffect(() => {
+    if (!draftKey) return;
+    try {
+      const saved = localStorage.getItem(draftKey);
+      if (saved) {
+        const parsed: FormState = JSON.parse(saved);
+        if (
+          parsed.descripcion !== initial.descripcion ||
+          parsed.nombre !== initial.nombre ||
+          parsed.precio !== initial.precio
+        ) {
+          setBorradorPendiente(parsed);
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, [draftKey, initial]);
+
+  // Auto-guardado en localStorage en tiempo real mientras el usuario escribe
+  useEffect(() => {
+    if (!draftKey) return;
+    try {
+      if (
+        form.descripcion !== initial.descripcion ||
+        form.nombre !== initial.nombre ||
+        form.precio !== initial.precio
+      ) {
+        localStorage.setItem(draftKey, JSON.stringify(form));
+      }
+    } catch {
+      // ignore
+    }
+  }, [form, draftKey, initial]);
+
+  function restaurarBorrador() {
+    if (borradorPendiente) {
+      setForm(borradorPendiente);
+      setBorradorPendiente(null);
+    }
+  }
+
+  function descartarBorrador() {
+    if (draftKey) {
+      try {
+        localStorage.removeItem(draftKey);
+      } catch {
+        // ignore
+      }
+    }
+    setBorradorPendiente(null);
+  }
 
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -216,10 +275,21 @@ function ProductoForm({
     return Object.keys(errs).length === 0;
   }
 
-  function handleSubmit(e: React.FormEvent | React.MouseEvent) {
+  async function handleSubmit(e: React.FormEvent | React.MouseEvent) {
     e.preventDefault();
     if (!validate()) return;
-    void onSave(form);
+    try {
+      await onSave(form);
+      if (draftKey) {
+        try {
+          localStorage.removeItem(draftKey);
+        } catch {
+          // ignore
+        }
+      }
+    } catch {
+      // ignore
+    }
   }
 
   const slots = Array.from({ length: MAX_IMAGENES }, (_, i) => form.imagenes[i] ?? "");
@@ -242,6 +312,34 @@ function ProductoForm({
 
         {/* Body */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+          {/* Alerta de borrador recuperable */}
+          {borradorPendiente && (
+            <div className="p-3 bg-amber-50 border border-amber-300 text-amber-900 rounded text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 animate-fade-in">
+              <div>
+                <p className="font-medium">Se encontró un borrador guardado en este navegador.</p>
+                <p className="text-[11px] text-amber-700">
+                  ¿Deseas restaurar el texto que estabas escribiendo previamente?
+                </p>
+              </div>
+              <div className="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={restaurarBorrador}
+                  className="px-3 py-1 bg-amber-700 hover:bg-amber-800 text-white font-medium rounded text-xs transition-colors"
+                >
+                  Restaurar borrador
+                </button>
+                <button
+                  type="button"
+                  onClick={descartarBorrador}
+                  className="px-2 py-1 text-amber-800 hover:text-amber-950 text-xs transition-colors"
+                >
+                  Descartar
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Nombre */}
           <div>
             <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
@@ -2011,6 +2109,7 @@ function ProductosPage() {
           saving={saving}
           onClose={() => setShowCreate(false)}
           onSave={handleCreate}
+          productoId="nuevo"
         />
       )}
       {showBulkImport && (
@@ -2025,6 +2124,7 @@ function ProductosPage() {
           saving={saving}
           onClose={() => setEditando(null)}
           onSave={handleEdit}
+          productoId={editando.id}
         />
       )}
       {eliminando && (
