@@ -100,6 +100,8 @@ export interface TagSeccion {
 
 interface Props {
   tagSecciones: TagSeccion[];
+  id?: string;
+  sinFallback?: boolean;
 }
 
 // ─── Subcomponente: Card limpia estilo Lima Floral ──────────────────────────
@@ -352,16 +354,20 @@ function TagSection({ tag, productos }: TagSeccion) {
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 
-export function Novedades({ tagSecciones }: Props) {
+export function Novedades({ tagSecciones, id = "novedades", sinFallback = false }: Props) {
   const secciones: TagSeccion[] =
-    tagSecciones.length > 0 ? tagSecciones : [{ tag: FALLBACK_TAG, productos: FALLBACK_PRODUCTOS }];
+    tagSecciones.length > 0
+      ? tagSecciones
+      : sinFallback
+        ? []
+        : [{ tag: FALLBACK_TAG, productos: FALLBACK_PRODUCTOS }];
 
   const seccionesConProductos = secciones.filter((s) => s.productos.length > 0);
 
   if (seccionesConProductos.length === 0) return null;
 
   return (
-    <div id="novedades" className="bg-[#FFFFFF] divide-y divide-[#E8DDD0]/50">
+    <div id={id} className="bg-[#FFFFFF] divide-y divide-[#E8DDD0]/50">
       {seccionesConProductos.map((seccion) => (
         <TagSection key={seccion.tag.id} tag={seccion.tag} productos={seccion.productos} />
       ))}

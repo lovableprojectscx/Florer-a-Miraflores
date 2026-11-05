@@ -108,14 +108,33 @@ function HomePage() {
     distritos,
   } = Route.useLoaderData();
 
+  // Partición de secciones de tags por directriz editorial de Sofía:
+  // 1. Franja inicial: Lanzamientos, Más solicitados, Edición limitada, Ofertas especiales y Orquídeas.
+  // 2. Franja inferior: "Globos para enamorar", situada específicamente debajo de "Explora nuestras colecciones".
+  const TAGS_POST_COLECCIONES = new Set(["globos_para_enamorar"]);
+
+  const seccionesPrincipales = tagSecciones.filter(
+    (s) => !TAGS_POST_COLECCIONES.has(s.tag.clave),
+  );
+  const seccionesPostColecciones = tagSecciones.filter(
+    (s) => TAGS_POST_COLECCIONES.has(s.tag.clave),
+  );
+
   return (
     <div className="min-h-screen bg-background">
       {config?.anuncio_barra && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
       <main>
         <Hero banners={banners} />
-        <Novedades tagSecciones={tagSecciones} />
+        <Novedades tagSecciones={seccionesPrincipales} />
         <CategoryShowcase colecciones={colecciones} />
+        {seccionesPostColecciones.length > 0 && (
+          <Novedades
+            tagSecciones={seccionesPostColecciones}
+            id="novedades-post-colecciones"
+            sinFallback
+          />
+        )}
         <HomeTestimonios testimonios={testimonios} config={config} />
         <HomeRecuerdos recuerdos={recuerdos} categorias={categorias} distritos={distritos} />
         <DeliveryZones />

@@ -234,7 +234,7 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
 | RF-116 | Franja carrusel «Recuerdos de entrega» en Home debajo de reseñas con hasta 8 fotos 4:5, snap en móvil, flechas desktop y regla de 0 publicaciones (null)      | Alta      | ✅     | Decisión Jack           |
 | RF-117 | Protocolo de Privacidad y Consentimiento: casilla obligatoria de autorización en admin, campos opcionales sin datos inventados, fotos anonimizadas en Storage | Alta      | ✅     | Seguridad Legal Jack    |
 | RF-118 | Orden taxonómico calibrado de submenús (Ocasión, Condolencias, Complementos) y visibilidad incondicional de complementos creados por Sofía sin borrar productos | Alta      | ✅     | Requerimiento Sofía / Jack |
-| RF-119 | Franja dinámica de tags en Home con secuencia «Ofertas especiales» → «Orquídeas» → «Globos para enamorar», vinculando categoría Orquídeas sin mutar productos | Alta      | ✅     | Requerimiento Sofía / Jack |
+| RF-119 | Franjas editoriales de tags en Home: secuencia inicial con «Ofertas especiales» → «Orquídeas» (vinculando categoría sin mutar productos), y sección «Globos para enamorar» posicionada estratégicamente debajo de «Explora nuestras colecciones» | Alta      | ✅     | Requerimiento Sofía / Jack |
 
 ## 11. Requisitos No Funcionales (RNF)
 
