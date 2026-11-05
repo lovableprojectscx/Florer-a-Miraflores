@@ -39,6 +39,25 @@ export function Header({ categorias, config }: Props) {
     return acc;
   }, {});
 
+  // Calibración responsiva para barra desktop de categorías (RNF-01, RF-005c, RF-028)
+  // En laptops y pantallas compactas (lg: 1024px - 1279px), 13 categorías exceden el ancho visible.
+  // Priorizamos las 9 categorías botánicas y de ocasión estipuladas en RF-005c,
+  // y agrupamos las secundarias/promocionales en un menú elegante "Más ▾".
+  // En pantallas amplias (xl: >= 1280px), todas se muestran desplegadas directamente en la barra.
+  const MAX_CATEGORIAS_LG = 9;
+  const SLUGS_SECUNDARIOS = new Set(["corporativo", "novedades", "ofertas", "mas-vendido"]);
+
+  const padresBotanicos = padres.filter((c) => !SLUGS_SECUNDARIOS.has(c.slug));
+  const padresPromocionales = padres.filter((c) => SLUGS_SECUNDARIOS.has(c.slug));
+
+  const padresDirectosLg = padresBotanicos.slice(0, MAX_CATEGORIAS_LG);
+  const idsDirectosLgSet = new Set(padresDirectosLg.map((c) => c.id));
+
+  const padresOverflowLg = [
+    ...padresBotanicos.slice(MAX_CATEGORIAS_LG),
+    ...padresPromocionales,
+  ];
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
@@ -154,14 +173,16 @@ export function Header({ categorias, config }: Props) {
 
       {/* Desktop Nav (Bottom Tier) */}
       <nav className="hidden lg:block border-t border-[#E8DDD0]/60">
-        <ul className="max-w-[1400px] mx-auto px-4 lg:px-6 xl:px-8 flex gap-3 lg:gap-4 xl:gap-6 2xl:gap-8 justify-center items-center h-12 whitespace-nowrap text-[11px] lg:text-[11.5px] xl:text-[12px] 2xl:text-[12.5px] tracking-[0.06em] xl:tracking-[0.08em] uppercase font-body font-light">
+        <ul className="max-w-[1400px] mx-auto px-2 lg:px-4 xl:px-8 flex gap-2 lg:gap-2.5 xl:gap-4 2xl:gap-6 justify-center items-center h-12 whitespace-nowrap text-[10px] lg:text-[10.5px] xl:text-[11.5px] 2xl:text-[12px] tracking-[0.04em] xl:tracking-[0.07em] uppercase font-body font-light">
           {padres.map((c) => {
             const hijas = hijasMap[c.id] ?? [];
             const hasSub = hijas.length > 0;
+            const esDirectoEnLg = idsDirectosLgSet.has(c.id);
+
             return (
               <li
                 key={c.slug}
-                className="relative py-3 group"
+                className={`relative py-3 group ${esDirectoEnLg ? "inline-flex items-center" : "hidden xl:inline-flex items-center"}`}
                 onMouseEnter={() => setHoveredCat(c.id)}
                 onMouseLeave={() => setHoveredCat(null)}
               >
@@ -195,6 +216,61 @@ export function Header({ categorias, config }: Props) {
               </li>
             );
           })}
+
+          {/* Menú desplegable "Más ▾" para pantallas compactas de laptop (1024px - 1279px) */}
+          {padresOverflowLg.length > 0 && (
+            <li
+              className="xl:hidden relative py-3 group inline-flex items-center"
+              onMouseEnter={() => setHoveredCat("mas-categorias")}
+              onMouseLeave={() => setHoveredCat(null)}
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  setHoveredCat((prev) => (prev === "mas-categorias" ? null : "mas-categorias"))
+                }
+                className="text-[#2C2420]/80 hover:text-[#2C2420] transition-colors inline-flex items-center gap-0.5 cursor-pointer relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#2C2420] after:scale-x-0 group-hover:after:scale-x-100 after:transition-transform font-normal"
+                aria-label="Más categorías"
+                aria-haspopup="true"
+              >
+                <span>Más</span>
+                <ChevronDown className="h-2.5 w-2.5 opacity-70 group-hover:opacity-100 transition-opacity" />
+              </button>
+
+              {hoveredCat === "mas-categorias" && (
+                <div className="absolute top-full right-0 min-w-[210px] bg-white border border-[#E8DDD0] shadow-xl py-2 z-50 animate-fadeIn rounded-sm">
+                  {padresOverflowLg.map((sec) => {
+                    const subHijas = hijasMap[sec.id] ?? [];
+                    return (
+                      <div key={sec.id} className="group/sub">
+                        <Link
+                          to="/categoria/$slug"
+                          params={{ slug: sec.slug }}
+                          className="block px-5 py-2 text-[11px] tracking-wider uppercase font-body font-light text-[#2C2420]/80 hover:text-[#2C2420] hover:bg-[#FAF8F5] transition-colors text-left"
+                        >
+                          {sec.nombre}
+                        </Link>
+                        {subHijas.length > 0 && (
+                          <div className="pl-4 pb-1 border-l-2 border-[#E8DDD0] ml-5 my-1">
+                            {subHijas.map((sub) => (
+                              <Link
+                                key={sub.id}
+                                to="/categoria/$slug/$sub"
+                                params={{ slug: sec.slug, sub: sub.slug }}
+                                className="block py-1 text-[10px] tracking-wide uppercase font-body text-[#736B63] hover:text-[#2C2420] transition-colors text-left"
+                              >
+                                {sub.nombre}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </li>
+          )}
         </ul>
       </nav>
 

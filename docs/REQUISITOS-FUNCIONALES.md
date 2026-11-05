@@ -235,6 +235,7 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
 | RF-117 | Protocolo de Privacidad y Consentimiento: casilla obligatoria de autorización en admin, campos opcionales sin datos inventados, fotos anonimizadas en Storage | Alta      | ✅     | Seguridad Legal Jack    |
 | RF-118 | Orden taxonómico calibrado de submenús (Ocasión, Condolencias, Complementos) y visibilidad incondicional de complementos creados por Sofía sin borrar productos | Alta      | ✅     | Requerimiento Sofía / Jack |
 | RF-119 | Franjas editoriales de tags en Home: secuencia inicial con «Ofertas especiales» → «Orquídeas» (vinculando categoría sin mutar productos), y sección «Globos para enamorar» posicionada estratégicamente debajo de «Explora nuestras colecciones» | Alta      | ✅     | Requerimiento Sofía / Jack |
+| RF-120 | Navbar desktop responsivo adaptable en laptops (1024px-1279px, e.g. 1084px): eliminación de desbordamiento horizontal mediante micropadding, gaps dinámicos y menú «Más ▾» para categorías secundarias/comerciales (Más vendidos, Ofertas, Novedades, Corporativos) | Alta      | ✅     | Auditoría UX Jack / Sofía |
 
 ## 11. Requisitos No Funcionales (RNF)
 
