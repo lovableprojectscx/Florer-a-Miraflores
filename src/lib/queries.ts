@@ -415,12 +415,21 @@ export async function getTags(): Promise<TagRow[]> {
  */
 export async function getProductosPorTag(clave: string, limit = 5): Promise<ProductoRow[]> {
   return withMemoryCache(`productos_tag_${clave}_${limit}`, async () => {
+    const isOrquideas = clave.toLowerCase() === "orquideas" || clave.toLowerCase() === "orquidea";
     const claves = resolverClavesTag(clave);
-    const { data, error } = await supabase
+
+    let query = supabase
       .from("productos")
       .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
-      .eq("activo", true)
-      .overlaps("tags", claves)
+      .eq("activo", true);
+
+    if (isOrquideas) {
+      query = query.or("tags.cs.{orquideas},categoria_id.eq.50c4251e-d651-40e7-a8b4-b77c0119156c");
+    } else {
+      query = query.overlaps("tags", claves);
+    }
+
+    const { data, error } = await query
       .order("orden", { ascending: true })
       .limit(limit);
 
@@ -442,15 +451,21 @@ export async function getTagPorClave(clave: string): Promise<TagRow | null> {
  * Devuelve todos los productos activos asociados a un tag específico.
  */
 export async function getTodosProductosPorTag(clave: string): Promise<ProductoRow[]> {
+  const isOrquideas = clave.toLowerCase() === "orquideas" || clave.toLowerCase() === "orquidea";
   const claves = resolverClavesTag(clave);
-  const { data, error } = await supabase
+  let query = supabase
     .from("productos")
     .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
-    .eq("activo", true)
-    .overlaps("tags", claves)
-    .order("orden", { ascending: true });
+    .eq("activo", true);
 
-  return throwOnError(data, error);
+  if (isOrquideas) {
+    query = query.or("tags.cs.{orquideas},categoria_id.eq.50c4251e-d651-40e7-a8b4-b77c0119156c");
+  } else {
+    query = query.overlaps("tags", claves);
+  }
+
+  const { data, error } = await query.order("orden", { ascending: true });
+  return throwOnError(data as ProductoRow[], error);
 }
 
 // ─── Colecciones home ─────────────────────────────────────────────────────────

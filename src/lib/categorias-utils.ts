@@ -82,6 +82,13 @@ export function filtrarCategoriasVisibles(
 
     // Subcategoría: padre debe existir y estar activo, y la subcategoría debe tener ≥1 producto activo
     if (!padresActivos.has(c.parent_id)) return false;
+
+    // Excepción de negocio para Complementos: mostrar todas las opciones que la tienda ofrece
+    const padre = padresActivos.get(c.parent_id);
+    if (padre && padre.slug === "complementos") {
+      return true;
+    }
+
     return idsConProdSet.has(c.id);
   });
 }

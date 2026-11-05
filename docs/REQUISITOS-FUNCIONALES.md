@@ -233,6 +233,8 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
 | RF-115 | SEO local y Social Proof: Open Graph con foto real, meta tags orientados a distritos de Lima y ocasiones, sitemap.xml dinámico y marcado Schema.org           | Alta      | ✅     | SEO Técnico Jack        |
 | RF-116 | Franja carrusel «Recuerdos de entrega» en Home debajo de reseñas con hasta 8 fotos 4:5, snap en móvil, flechas desktop y regla de 0 publicaciones (null)      | Alta      | ✅     | Decisión Jack           |
 | RF-117 | Protocolo de Privacidad y Consentimiento: casilla obligatoria de autorización en admin, campos opcionales sin datos inventados, fotos anonimizadas en Storage | Alta      | ✅     | Seguridad Legal Jack    |
+| RF-118 | Orden taxonómico calibrado de submenús (Ocasión, Condolencias, Complementos) y visibilidad incondicional de complementos creados por Sofía sin borrar productos | Alta      | ✅     | Requerimiento Sofía / Jack |
+| RF-119 | Franja dinámica de tags en Home con secuencia «Ofertas especiales» → «Orquídeas» → «Globos para enamorar», vinculando categoría Orquídeas sin mutar productos | Alta      | ✅     | Requerimiento Sofía / Jack |
 
 ## 11. Requisitos No Funcionales (RNF)
 
@@ -267,3 +269,5 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
   - Página dedicada `/nosotros` (RF-026).
   - Navegación híbrida y subfiltros de subcategorías (RF-003a, RF-006a).
   - Adaptabilidad y proporciones optimizadas en laptops (RF-028).
+  - Orden taxonómico de submenús y visibilidad de complementos (RF-118).
+  - Franja editorial de tags en Home con Orquídeas y Globos (RF-119).
