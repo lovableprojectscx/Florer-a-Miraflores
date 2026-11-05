@@ -162,6 +162,14 @@ El estado de compra reside exclusivamente en el cliente (`src/store/cart.ts`):
   3. Enlace directo post-guardado `[Ver en tienda en vivo →]` con bypass de caché para comprobación instantánea.
   4. Invalidación bidireccional reactiva (`invalidateCategoryCache` + `invalidateProductCache`).
 
+### 5.5. Taxonomía de Categorías y Reorganización Semántica (SQL 013)
+
+- **Separación Funcional por Ejes de Catálogo:**
+  1. **Ocasión:** Estrictamente ocasiones emotivas y eventos de vida (*Amor / Aniversario*, *Cumpleaños*, *Nacimientos*, *Condolencias*, *Graduación*, *Para Él*, *Mejórate Pronto*, *Inauguración*). Se erradican productos de formato físico (floreros, centros de mesa) de esta categoría.
+  2. **Formatos de Arreglo (`Arreglos Florales`):** Contenedor exclusivo de diseños elaborados en bases (*Luxury Box*, *Centros de Mesa*, *Floreros / Jarrones*, *Detalle*, *Arreglos Blancos*, *Flores Azules*).
+  3. **Categorías Estelares Promovidas:** *Ramos* (61 productos) y *Arreglos Premium* (54 productos) operan como Categorías Padre independientes de primer nivel, asegurando acceso directo sin anidamiento innecesario.
+  4. **Protección de Enlaces Históricos:** Las rutas previas (`/categoria/ocasion/centros-de-mesa`, `/categoria/arreglos-florales/ramos`) redirigen en cliente y servidor a su nueva ruta canónica mediante `resolverRedireccionSubcategoria`.
+
 ---
 
 ## 6. Modelo de Datos (Supabase PostgreSQL 17)

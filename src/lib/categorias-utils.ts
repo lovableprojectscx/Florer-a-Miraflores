@@ -25,6 +25,10 @@ export const CATEGORY_SLUG_ALIASES: Record<string, string> = {
   aniversario: "amor-aniversario",
   cumple: "cumpleanos",
   "san-valentin": "amor-aniversario",
+  floreros: "jarrones",
+  orquideas: "orquideasparaprom",
+  "centro-de-mesa": "centros-de-mesa",
+  "centros-mesa": "centros-de-mesa",
 };
 
 /**
