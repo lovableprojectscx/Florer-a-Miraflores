@@ -26,7 +26,10 @@ export const CATEGORY_SLUG_ALIASES: Record<string, string> = {
   cumple: "cumpleanos",
   "san-valentin": "amor-aniversario",
   floreros: "jarrones",
-  orquideas: "orquideasparaprom",
+  orquideasparaprom: "orquideas",
+  "orquideas-para-prom": "orquideas",
+  "orquideas-prom": "orquideas-fiesta-prom",
+  "fiesta-prom": "orquideas-fiesta-prom",
   "centro-de-mesa": "centros-de-mesa",
   "centros-mesa": "centros-de-mesa",
 };
@@ -83,9 +86,9 @@ export function filtrarCategoriasVisibles(
     // Subcategoría: padre debe existir y estar activo, y la subcategoría debe tener ≥1 producto activo
     if (!padresActivos.has(c.parent_id)) return false;
 
-    // Excepción de negocio para Complementos: mostrar todas las opciones que la tienda ofrece
+    // Excepción de negocio para Complementos y Orquídeas: mostrar todas las opciones que la tienda ofrece
     const padre = padresActivos.get(c.parent_id);
-    if (padre && padre.slug === "complementos") {
+    if (padre && (padre.slug === "complementos" || padre.slug === "orquideas")) {
       return true;
     }
 
