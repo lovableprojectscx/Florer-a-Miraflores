@@ -135,3 +135,36 @@ Si un cliente realizaba un pedido y la generación aleatoria de número de pedid
    - Cualquier otro código de error (como restricciones de validación o RLS) falla de inmediato sin reintentar.
    - Si tras 3 intentos consecutivos se mantiene la colisión, se lanza un mensaje legible al cliente indicándole la alternativa de comunicarse vía WhatsApp (`+51 999 600 482`) para coordinar su orden directamente.
 2. Certificado mediante suite unitaria completa con mock de Supabase (`tests/unit/queries.test.ts`).
+
+---
+
+## 5. Incidencia 5: Falsa percepción de fallo al guardar cambios en la categoría "Amor"
+
+### Descripción del síntoma
+
+El cliente y la administradora (Sofía) reportaron que al editar la descripción y el precio de un producto en la categoría "Amor" (específicamente el arreglo *"Adriana"*, cambiado a S/ 10.00), los cambios "no se guardaban" y en la tienda seguía viéndose la información por defecto, mientras que en otras categorías (Floreros, Girasoles, Mejórate) los cambios se reflejaban de inmediato.
+
+### Causa raíz identificada
+
+1. **Los datos SÍ se guardaban en la base de datos:** La auditoría de logs HTTP de Supabase confirmó que la petición `PATCH` a `productos?id=eq.f5afe2d5-9115-491d-ad85-190bd79d8920` respondió con estado `200 OK` y el nuevo precio (S/ 10.00). Los datos nunca se perdieron.
+2. **Disparidad de ordenamiento entre Admin y Tienda:**
+   - En el panel `/admin/productos`, la tabla se ordenaba alfabéticamente por `nombre ASC`. Dado que empieza con "A", el producto *"Adriana"* figuraba en la **posición #1**.
+   - En la tienda pública (`/categoria/ocasion/amor-aniversario`), la grilla se ordena por `orden ASC` con paginación por lotes de 24 productos ("Ver más").
+   - La categoría *"Amor / Aniversario"* alberga **121 productos**. *"Adriana"* tenía `orden: 417`, situándose en el **puesto #50 (página 3)**.
+   - En cambio, las otras categorías probadas por Sofía tenían menos de 24 productos (Floreros: 4, Girasoles: 4, Mejórate: 13, Para Él: 19). En ellas, la totalidad de productos cabe en una sola pantalla sin paginación, por lo que cualquier edición se apreciaba al instante.
+3. **Confusión de URL y slug inexistente:**
+   - La categoría canónica en la base de datos es *"Amor / Aniversario"* con slug `amor-aniversario` bajo la categoría padre `ocasion`. Si el usuario ingresaba directamente a `/categoria/amor`, el sistema respondía 404 por falta de mapeo de alias.
+4. **Caché CDN de Vercel:**
+   - El CDN público de Vercel mantenía una caché de 120 segundos sin bypass para usuarios con sesión administrativa iniciada.
+
+### Solución implementada
+
+1. **Priorización inmediata en BD:** Se actualizó `orden = 0` para *"Adriana"*, garantizando que encabece la categoría en la tienda pública.
+2. **Control de posición y botón #1 en el Administrador:**
+   - Se añadió el campo `orden` editable en `ProductoForm` junto con el botón de acción rápida *"★ Destacar al inicio (#1)"*.
+   - Se agregó el ordenamiento *"Orden en tienda (Como lo ve el cliente)"* en el listado del panel administrativo.
+   - Al guardar, el aviso de éxito incluye el enlace de validación directa `[Ver en tienda en vivo →]` con parámetro `preview=1`.
+3. **Normalización y alias de categorías (`src/lib/categorias-utils.ts`):** Mapeo de `amor`, `aniversario` y `san-valentin` hacia `amor-aniversario`, y redirección HTTP automática de rutas padre hacia `/categoria/:padre/:sub`.
+4. **Bypass de Caché CDN para Administradores (`api/index.js`):** Peticiones con cookies `sb-*` reciben `Cache-Control: private, no-cache, no-store`, asegurando vista en tiempo real para administradores. Reducción del TTL público a 15 segundos.
+5. **Blindaje de sesión:** Validación `ensureAdminSession()` e invalidación de caché en `admin/categorias.tsx`.
+6. **Certificación:** Suite de 195 pruebas unitarias (`vitest run`), verificación de tipos y compilación sin errores.

@@ -17,6 +17,7 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 | RF-002  | Imágenes de producto en alta calidad optimizadas en WebP (Supabase Storage)                                                                                                                                                                                                                                                  | Alta      | ✅     | Cotización 3.1                       |
 | RF-003  | Navegación por categoría padre → subcategorías → productos                                                                                                                                                                                                                                                                   | Alta      | ✅     | CLAUDE §5, §8                        |
 | RF-003a | Navegación híbrida padre/hijos: `/categoria/:slug` muestra chips interactivos de subcategorías y la grilla unificada con todos los productos de sus hijas                                                                                                                                                                    | Alta      | ✅     | Solicitud Cliente (v1.3.0)           |
+| RF-003b | Normalización y resolución de alias de categorías y subcategorías (`categorias-utils.ts`): `/categoria/amor`, `/categoria/aniversario` y `/categoria/san-valentin` resuelven a `/categoria/ocasion/amor-aniversario` sin 404, redirigiendo rutas padre con `parent_id` automáticamente a su ruta jerárquica canónica | Alta      | ✅     | Auditoría Sofía / Incidencia Amor    |
 | RF-004  | Categorías sin subcategoría (Arreglos Premium, Ofertas) muestran productos directo                                                                                                                                                                                                                                           | Media     | ✅     | CLAUDE §7                            |
 | RF-005  | Nav desktop con dropdown de subcategorías y mobile con acordeón                                                                                                                                                                                                                                                              | Media     | ✅     | CLAUDE §8                            |
 | RF-005a | Header con desplazamiento natural (scroll no estático / `relative`) que sube y se oculta con el scroll                                                                                                                                                                                                                       | Media     | ✅     | Solicitud Cliente (v1.4.0)           |
@@ -31,6 +32,8 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 | RF-009c | Concordancia de imagen 1:1 en Ficha de Producto (`producto.$id.tsx`): contenedor principal en `aspect-square` idéntico al catálogo y miniaturas (`w-20 h-20`), eliminando recortes laterales de arreglos florales                                                                                                            | Alta      | ✅     | Solicitud Cliente (v1.13.1)          |
 
 > **Detalle RF-003a (Navegación híbrida padre/hijos):** Al navegar hacia una categoría con subcategorías como `/categoria/tulipanes`, `/categoria/arreglos-florales` o `/categoria/defuncion` (Condolencias), el usuario visualiza en la cabecera los accesos directos a cada subcategoría (`/categoria/tulipanes/en-caja`, `/categoria/defuncion/coronas-funebres`, etc.) y simultáneamente, en la parte inferior, la lista agregada de todos los productos pertenecientes a cualquiera de sus hijas mediante la consulta Supabase `getProductosPorCategorias`. En `v1.13.3`, se normalizó el catálogo de Condolencias ingiriendo las 40 fotos 4K en estudio clasificadas en sus 4 subcategorías (Coronas Fúnebres, Cruces, Lágrima con Pedestal, Lágrimas), reclasificando la `Corona Homenaje Sublime Paz Eterna` desde Inauguración y retirando el `Arreglo Festivo Luz Dorada N° 4` hacia Arreglos Premium.
+>
+> **Detalle RF-003b (Normalización y alias de categorías):** Para prevenir errores 404 cuando la administradora o un visitante accede a rutas abreviadas como `/categoria/amor`, el sistema consulta un diccionario declarativo de alias en `src/lib/categorias-utils.ts` que redirige inmediatamente a la subcategoría correcta (`amor` -> `amor-aniversario`, `aniversario` -> `amor-aniversario`, `cumple` -> `cumpleanos`, etc.). Si una categoría consultada en `/categoria/$slug` posee un `parent_id`, se resuelve el slug del padre y se redirige con HTTP 301/302 a `/categoria/$padre/$slug`, asegurando una estructura URL canónica y consistente.
 >
 > **Detalle RF-005a (Header con scroll natural):** El elemento `<header>` utiliza posicionamiento `relative z-30` en lugar de `sticky top-0`, permitiendo que al desplazarse hacia abajo el encabezado suba fluidamente junto con el contenido de la página, liberando un 100% de la altura de pantalla útil para la exploración de arreglos florales.
 >
@@ -159,12 +162,17 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 
 ---
 
-## 7.2. Resolución de Incidencias y Usabilidad en Catálogo
+## 7.2. Resolución de Incidencias, Usabilidad y Resiliencia en Administración
 
-| ID      | Requisito                                                                                                      | Prioridad | Estado | Fuente               |
-| ------- | -------------------------------------------------------------------------------------------------------------- | --------- | ------ | -------------------- |
-| RF-064c | Normalización y resolución automática de alias de tags (`tag-utils.ts`) para mantener colores dinámicos        | Alta      | ✅     | Incidencia Reportada |
-| RF-061a | Feedback visual inmediato al guardar/editar producto (banner de éxito, resalte de fila en ámbar y auto-scroll) | Alta      | ✅     | Incidencia Reportada |
+| ID      | Requisito                                                                                                                                                                          | Prioridad | Estado | Fuente                         |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | ------------------------------ |
+| RF-064c | Normalización y resolución automática de alias de tags (`tag-utils.ts`) para mantener colores dinámicos                                                                            | Alta      | ✅     | Incidencia Reportada           |
+| RF-061a | Feedback visual inmediato al guardar/editar producto (banner de éxito, resalte de fila en ámbar y auto-scroll)                                                                     | Alta      | ✅     | Incidencia Reportada           |
+| RF-061b | Control de posición en catálogo (`orden` numérico editable), botón "★ Destacar al inicio (#1)", filtro "Orden en tienda" y enlace de verificación en vivo `[Ver en tienda en vivo →]` | Alta      | ✅     | Incidencia Amor / Auditoría    |
+| RF-062b | Blindaje de sesión administrativa (`ensureAdminSession()`) e invalidación de caché reactiva en mutaciones CRUD de categorías (`/admin/categorias`)                                 | Alta      | ✅     | Seguridad y Auditoría Operativa |
+| RF-SES1 | Auto-recuperación de sesión y refresh proactivo de tokens antes de mutaciones críticas                                                                                            | Alta      | ✅     | Auditoría Sesión / RNF-07      |
+| RF-SES2 | Modal de re-autenticación in-situ sin pérdida de formulario si expira el JWT durante la edición de productos                                                                       | Alta      | ✅     | Auditoría Sesión / Usabilidad  |
+| RF-SES3 | Persistencia reactiva de borradores en tiempo real en `localStorage` con borrado automático tras guardado exitoso                                                                   | Alta      | ✅     | Auditoría Pérdida de Datos     |
 
 ---
 
@@ -238,6 +246,7 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
 | RNF-09 | Manual de uso + capacitación 1h + 1 mes de soporte                                                                            | Media     | ❌     | Cotización 3.5 (servicio)  |
 | RNF-10 | Encuadre fotográfico inteligente (`objectPosition: center 18%`): preservación superior para evitar cortes de rostros y globos | Alta      | ✅     | Diagnóstico Sofía / Jack   |
 | RNF-11 | Homogeneidad de altura y alineación en tarjetas (`h-full`, `min-h` en título, `mt-auto` en pie)                               | Alta      | ✅     | Diagnóstico Sofía / Jack   |
+| RNF-12 | Bypass de caché CDN (Vercel Edge) para administradores (cookies `sb-*`) e invalidación pública responsiva con TTL 15s           | Alta      | ✅     | Incidencia Amor / Rendimiento |
 
 ---
 

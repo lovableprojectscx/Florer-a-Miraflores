@@ -152,6 +152,16 @@ El estado de compra reside exclusivamente en el cliente (`src/store/cart.ts`):
 - Los items se almacenan con su identificador, nombre, precio, cantidad e imagen.
 - No se guarda en la base de datos hasta que el cliente envía formalmente el formulario de checkout, evitando sobrecarga de registros huérfanos.
 
+### 5.4. Capa de Caché Edge, Normalización de Alias y Paridad de Orden
+
+- **Bypass de Caché Edge para Administradores (`api/index.js`):** El puente serverless analiza las cabeceras HTTP de cada petición entrante. Si detecta cookies de sesión de Supabase Auth (`sb-` o `Authorization: Bearer`), responde automáticamente con `Cache-Control: private, no-cache, no-store, must-revalidate`. Esto garantiza que los cambios ejecutados por el equipo administrativo (como Sofía) se reflejen de inmediato sin esperar la expiración de la CDN. Para visitantes anónimos, la caché pública se calibra con `s-maxage=15, stale-while-revalidate=60`.
+- **Motor de Normalización de Slugs y Redirección Canónica (`src/lib/categorias-utils.ts`, `src/routes/categoria.$slug.tsx`):** Un diccionario declarativo (`CATEGORY_SLUG_ALIASES`) resuelve alias históricos o abreviados (`amor`, `aniversario`, `san-valentin` -> `amor-aniversario`; `cumple` -> `cumpleanos`). Además, cualquier ruta padre que tenga un `parent_id` asignado en la base de datos se redirige automáticamente mediante HTTP a su jerarquía completa `/categoria/:padre/:sub`, erradicando errores 404.
+- **Paridad de Ordenamiento Admin vs Tienda (`src/routes/admin/productos.tsx`):** La tienda pública ordena por defecto por `orden ASC`. Para evitar la disonancia donde un producto aparecía de primero en la tabla admin por orden alfabético (`nombre ASC`) pero en la página 3 de la tienda (por tener `orden: 417` entre 121 productos), se incorporó:
+  1. Campo `orden` editable con botón directo *"★ Destacar al inicio (#1)"*.
+  2. Opción de filtro en el Admin *"Orden en tienda (Como lo ve el cliente)"*.
+  3. Enlace directo post-guardado `[Ver en tienda en vivo →]` con bypass de caché para comprobación instantánea.
+  4. Invalidación bidireccional reactiva (`invalidateCategoryCache` + `invalidateProductCache`).
+
 ---
 
 ## 6. Modelo de Datos (Supabase PostgreSQL 17)
@@ -191,6 +201,10 @@ erDiagram
 | **Checkout & Delivery**       |   ✅   | Validación Zod, selección de distrito con tarifa en tiempo real y código `FM-XXXXXX`.    |
 | **Confirmación de Compra**    |   ✅   | Resumen de pedido con botón de contacto y seguimiento en WhatsApp.                       |
 | **Panel Administrativo**      |   ✅   | CRUD completo para las 10 tablas, auto-scroll ámbar al editar productos, reordenamiento. |
+| **Control de Orden y Paridad**|   ✅   | Campo `orden` editable, botón "★ Destacar #1", ordenamiento "Como lo ve el cliente" y link en vivo. |
+| **Alias de Categorías (SEO)** |   ✅   | Normalización inteligente (`amor` -> `amor-aniversario`), redirección a ruta canónica jerárquica. |
+| **Bypass Caché Edge CDN**     |   ✅   | Desactivación de caché de borde para admins logueados (`sb-*`), TTL responsivo público de 15s. |
+| **Resiliencia de Sesión**     |   ✅   | Auto-recuperación de JWT, modal in situ sin perder texto y guardado en `localStorage`. |
 | **Gestión de Tags**           |   ✅   | Unificación de alias bidireccional en `tag-utils.ts` con colores dinámicos reflejados.   |
 | **Imágenes HD WebP**          |   ✅   | Activos optimizados servidos a través del CDN de Supabase Storage.                       |
 | **Seguridad Core**            |   ✅   | Parche `@tanstack/react-start 1.168.60` (CVE-2026-102989) y políticas RLS activas.       |
