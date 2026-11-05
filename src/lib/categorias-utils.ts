@@ -17,6 +17,25 @@ export type CategoriaRedirectTarget =
   | { to: "/categoria/$slug/$sub"; params: { slug: string; sub: string }; url: string };
 
 /**
+ * Mapeo canónico de alias frecuentes de slugs de categorías para asegurar
+ * redirecciones amigables (ej: 'amor' -> 'amor-aniversario').
+ */
+export const CATEGORY_SLUG_ALIASES: Record<string, string> = {
+  amor: "amor-aniversario",
+  aniversario: "amor-aniversario",
+  cumple: "cumpleanos",
+  "san-valentin": "amor-aniversario",
+};
+
+/**
+ * Normaliza un slug de categoría resolviendo alias conocidos y minúsculas sin espacios.
+ */
+export function normalizarSlugCategoria(slug: string): string {
+  const clean = slug.trim().toLowerCase();
+  return CATEGORY_SLUG_ALIASES[clean] || clean;
+}
+
+/**
  * Filtra las categorías visibles en la web pública según la regla de negocio:
  * - Una categoría inactiva (`!activo`) nunca es visible.
  * - Una categoría padre (`parent_id === null`) es visible si tiene ≥1 producto activo directo
@@ -245,14 +264,24 @@ export function resolverRedireccionSubcategoria(
   subSlug: string,
   categorias: CategoriaRow[],
 ): CategoriaRedirectTarget | null {
+  const normParent = normalizarSlugCategoria(parentSlug);
+  const normSub = normalizarSlugCategoria(subSlug);
+
   const activas = categorias.filter((c) => c.activo);
-  const padreActual = activas.find((c) => c.slug === parentSlug);
-  const candidata = activas.find((c) => c.slug === subSlug);
+  const padreActual = activas.find((c) => c.slug === normParent);
+  const candidata = activas.find((c) => c.slug === normSub);
 
   if (!candidata) return null;
 
-  // Si ya es hija directa del padre indicado en la URL, no hay redirección
+  // Si ya es hija directa del padre indicado en la URL, verificar si alguno de los slugs de la URL era alias
   if (padreActual && candidata.parent_id === padreActual.id) {
+    if (parentSlug !== padreActual.slug || subSlug !== candidata.slug) {
+      return {
+        to: "/categoria/$slug/$sub",
+        params: { slug: padreActual.slug, sub: candidata.slug },
+        url: `/categoria/${padreActual.slug}/${candidata.slug}`,
+      };
+    }
     return null;
   }
 

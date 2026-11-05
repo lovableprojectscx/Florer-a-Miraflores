@@ -33,6 +33,7 @@ import type {
   SuscriptorRow,
 } from "@/types/database";
 import { resolverClavesTag } from "@/lib/tag-utils";
+import { normalizarSlugCategoria } from "@/lib/categorias-utils";
 import { filtrarCategoriasVisibles } from "@/lib/categorias-utils";
 
 // ─── Helper interno ───────────────────────────────────────────────────────────
@@ -73,6 +74,26 @@ export function invalidateProductCache(productId?: string): void {
   // Purgar también cualquier entrada de listados de productos
   for (const key of memoryCache.keys()) {
     if (key.startsWith("productos_") || key.startsWith("tag_prods_")) {
+      memoryCache.delete(key);
+    }
+  }
+}
+
+export function invalidateCategoryCache(categorySlug?: string): void {
+  memoryCache.delete("categorias");
+  memoryCache.delete("colecciones");
+  if (categorySlug) {
+    const norm = normalizarSlugCategoria(categorySlug);
+    memoryCache.delete(`categoria_slug_${norm}`);
+    memoryCache.delete(`categoria_slug_${categorySlug}`);
+  }
+  for (const key of memoryCache.keys()) {
+    if (
+      key.startsWith("categoria_") ||
+      key.startsWith("colecciones") ||
+      key.startsWith("productos_cat_") ||
+      key.startsWith("productos_cats_")
+    ) {
       memoryCache.delete(key);
     }
   }
@@ -143,12 +164,13 @@ export async function getCategorias(): Promise<CategoriaRow[]> {
  * Útil para la página /categoria/:slug.
  */
 export async function getCategoriaPorSlug(slug: string): Promise<CategoriaConHijas | null> {
-  return withMemoryCache(`categoria_slug_${slug}`, async () => {
+  const normSlug = normalizarSlugCategoria(slug);
+  return withMemoryCache(`categoria_slug_${normSlug}`, async () => {
     // 1. Obtener la categoría padre
     const { data: cat, error: catError } = await supabase
       .from("categorias")
       .select("*")
-      .eq("slug", slug)
+      .eq("slug", normSlug)
       .eq("activo", true)
       .maybeSingle();
 

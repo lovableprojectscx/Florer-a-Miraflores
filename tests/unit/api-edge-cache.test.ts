@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import { resolveCacheControl } from "../../api/index.js";
 
 describe("Reglas de Caché Edge en Vercel (resolveCacheControl en api/index.js)", () => {
-  it("GET / asigna cabecera s-maxage=120 y stale-while-revalidate=600 para absorber tráfico en CDN", () => {
+  it("GET / asigna cabecera s-maxage=15 y stale-while-revalidate=60 para absorber tráfico en CDN", () => {
     const cacheHeader = resolveCacheControl("/", "GET", 200);
-    expect(cacheHeader).toBe("public, s-maxage=120, stale-while-revalidate=600");
+    expect(cacheHeader).toBe("public, s-maxage=15, stale-while-revalidate=60");
   });
 
   it("HEAD / también recibe cabecera pública de Edge CDN", () => {
     const cacheHeader = resolveCacheControl("/", "HEAD", 200);
-    expect(cacheHeader).toBe("public, s-maxage=120, stale-while-revalidate=600");
+    expect(cacheHeader).toBe("public, s-maxage=15, stale-while-revalidate=60");
   });
 
   it("GET /catalogo y páginas públicas de catálogo/categorías/productos se cachean en el Edge", () => {
@@ -28,8 +28,20 @@ describe("Reglas de Caché Edge en Vercel (resolveCacheControl en api/index.js)"
 
     for (const ruta of rutasPublicas) {
       const header = resolveCacheControl(ruta, "GET", 200);
-      expect(header).toBe("public, s-maxage=120, stale-while-revalidate=600");
+      expect(header).toBe("public, s-maxage=15, stale-while-revalidate=60");
     }
+  });
+
+  it("Peticiones con cookies de autenticación o tokens de administrador nunca se cachean en CDN", () => {
+    const headerCookie = resolveCacheControl("/categoria/ocasion/amor-aniversario", "GET", 200, {
+      cookie: "sb-sdrkiomeesoctsxeidmu-auth-token=xyz; other=123",
+    });
+    expect(headerCookie).toBe("private, no-cache, no-store, must-revalidate");
+
+    const headerAuth = resolveCacheControl("/catalogo", "GET", 200, {
+      authorization: "Bearer test-admin-token",
+    });
+    expect(headerAuth).toBe("private, no-cache, no-store, must-revalidate");
   });
 
   it("Rutas administrativas (/admin, /admin/...) son estrictamente privadas y nunca se cachean", () => {

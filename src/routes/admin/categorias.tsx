@@ -21,6 +21,8 @@ import {
   eliminarImagenConMiniaturas,
 } from "@/lib/image-optimizer";
 import { toast } from "sonner";
+import { ensureAdminSession } from "@/lib/admin-auth";
+import { invalidateCategoryCache } from "@/lib/queries";
 import {
   buscarConflictoSlugCategoria,
   calcularConteoProductosPorCategoria,
@@ -476,6 +478,12 @@ function CategoriasPage() {
   const treeData = buildTree();
 
   async function handleCreate(form: FormState) {
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      toast.error("Tu sesión ha expirado o no tienes permisos de administrador.");
+      return;
+    }
+
     const conflicto = buscarConflictoSlugCategoria(form.slug, categorias);
     if (conflicto) {
       toast.error(conflicto);
@@ -498,6 +506,7 @@ function CategoriasPage() {
       });
 
       if (error) throw error;
+      invalidateCategoryCache(form.slug);
       setShowCreate(false);
       toast.success("Categoría creada correctamente.");
       await cargarDatos();
@@ -517,6 +526,12 @@ function CategoriasPage() {
 
   async function handleEdit(form: FormState) {
     if (!editando) return;
+
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      toast.error("Tu sesión ha expirado o no tienes permisos de administrador.");
+      return;
+    }
 
     const conflicto = buscarConflictoSlugCategoria(form.slug, categorias, editando.id);
     if (conflicto) {
@@ -538,6 +553,10 @@ function CategoriasPage() {
         .eq("id", editando.id);
 
       if (error) throw error;
+      invalidateCategoryCache(form.slug);
+      if (editando.slug !== form.slug) {
+        invalidateCategoryCache(editando.slug);
+      }
       setEditando(null);
       toast.success("Categoría actualizada correctamente.");
       await cargarDatos();
@@ -558,6 +577,13 @@ function CategoriasPage() {
 
   async function handleDelete() {
     if (!eliminando) return;
+
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      toast.error("Tu sesión ha expirado o no tienes permisos de administrador.");
+      return;
+    }
+
     try {
       const { error } = await supabase.from("categorias").delete().eq("id", eliminando.id);
       if (error) throw error;
@@ -567,6 +593,7 @@ function CategoriasPage() {
         void eliminarImagenStorage(eliminando.imagen_url);
       }
 
+      invalidateCategoryCache(eliminando.slug);
       setEliminando(null);
       toast.success("Categoría eliminada correctamente.");
       await cargarDatos();
@@ -579,6 +606,12 @@ function CategoriasPage() {
   }
 
   async function handleToggleActivo(cat: CategoriaRow) {
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) {
+      toast.error("Tu sesión ha expirado.");
+      return;
+    }
+
     setTogglingId(cat.id);
     try {
       const { error } = await supabase
@@ -587,6 +620,7 @@ function CategoriasPage() {
         .eq("id", cat.id);
 
       if (error) throw error;
+      invalidateCategoryCache(cat.slug);
       setCategorias((prev) => prev.map((c) => (c.id === cat.id ? { ...c, activo: !c.activo } : c)));
     } catch (err) {
       console.error(err);
@@ -596,6 +630,9 @@ function CategoriasPage() {
   }
 
   async function handleReorder(cat: CategoriaRow, direction: "up" | "down") {
+    const sessionCheck = await ensureAdminSession();
+    if (!sessionCheck.ok) return;
+
     // Filtrar categorías del mismo nivel para reordenar
     const levelCats = categorias.filter((c) => c.parent_id === cat.parent_id);
     const index = levelCats.findIndex((c) => c.id === cat.id);
@@ -622,6 +659,7 @@ function CategoriasPage() {
 
       if (error2) throw error2;
 
+      invalidateCategoryCache();
       await cargarDatos();
     } catch (err) {
       console.error("Error al reordenar:", err);

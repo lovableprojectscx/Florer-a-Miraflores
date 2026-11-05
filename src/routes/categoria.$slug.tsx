@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, Outlet, useMatches } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect, Outlet, useMatches } from "@tanstack/react-router";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -11,16 +11,34 @@ import {
   getConfig,
   getProductosPorCategorias,
 } from "@/lib/queries";
+import { normalizarSlugCategoria } from "@/lib/categorias-utils";
 import type { CategoriaRow, ProductoRow } from "@/types/database";
 
 export const Route = createFileRoute("/categoria/$slug")({
   loader: async ({ params }) => {
+    const normSlug = normalizarSlugCategoria(params.slug);
     const [cat, categorias, config] = await Promise.all([
-      getCategoriaPorSlug(params.slug),
+      getCategoriaPorSlug(normSlug),
       getCategorias(),
       getConfig().catch(() => null),
     ]);
     if (!cat) throw notFound();
+
+    // Si la categoría tiene un padre activo o el slug de la URL no es el canónico, redirigir
+    if (cat.parent_id) {
+      const padre = categorias.find((c) => c.id === cat.parent_id);
+      if (padre) {
+        throw redirect({
+          to: "/categoria/$slug/$sub",
+          params: { slug: padre.slug, sub: cat.slug },
+        });
+      }
+    } else if (params.slug !== cat.slug) {
+      throw redirect({
+        to: "/categoria/$slug",
+        params: { slug: cat.slug },
+      });
+    }
 
     // Cargamos tanto productos directos como los de sus subcategorías
     const allIds = [cat.id, ...cat.hijas.map((h) => h.id)];

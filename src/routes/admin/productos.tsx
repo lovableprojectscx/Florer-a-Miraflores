@@ -30,7 +30,7 @@ import {
 import { findTagByClave, resolverClavesTag } from "@/lib/tag-utils";
 import { armarOpcionesCategoriaSelect } from "@/lib/categorias-utils";
 import { slugify } from "@/lib/utils";
-import { invalidateProductCache } from "@/lib/queries";
+import { invalidateProductCache, invalidateCategoryCache } from "@/lib/queries";
 
 export const Route = createFileRoute("/admin/productos")({
   head: () => ({ meta: [{ title: "Productos | Admin Florería Miraflores" }] }),
@@ -45,7 +45,7 @@ const BUCKET = "productos";
 
 // --- Tipos internos ---
 
-type SortField = "nombre" | "precio" | "created_at";
+type SortField = "nombre" | "precio" | "created_at" | "orden";
 type SortDir = "asc" | "desc";
 
 interface FormState {
@@ -56,6 +56,7 @@ interface FormState {
   tags: ProductoTag[];
   activo: boolean;
   imagenes: string[];
+  orden: number;
 }
 
 const EMPTY_FORM: FormState = {
@@ -66,6 +67,7 @@ const EMPTY_FORM: FormState = {
   tags: [],
   activo: true,
   imagenes: [],
+  orden: 0,
 };
 
 // --- Helpers ---
@@ -79,6 +81,7 @@ function buildFormFromProducto(p: ProductoRow): FormState {
     tags: p.tags ?? [],
     activo: p.activo,
     imagenes: p.imagenes.slice(0, MAX_IMAGENES),
+    orden: typeof p.orden === "number" ? p.orden : 0,
   };
 }
 
@@ -440,6 +443,42 @@ function ProductoForm({
               Selecciona como máximo 1 tag para evitar que el producto se repita en varias secciones
               de la página de inicio.
             </p>
+          </div>
+
+          {/* Posición en catálogo / Orden */}
+          <div className="bg-[#FAF8F5] border border-[#E8DDD0] p-3 rounded space-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                  Posición en catálogo (Orden)
+                </label>
+                <p className="text-[11px] text-[#8A7A6E]/80">
+                  Menor número = aparece primero en la tienda (0 = primera posición).
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setField("orden", 0)}
+                className="px-2.5 py-1 text-xs font-body font-medium bg-[#2C2420] text-white hover:bg-[#1A1A1A] rounded transition-colors flex items-center gap-1 shadow-xs"
+                title="Pone el orden en 0 para que aparezca al inicio de la categoría"
+              >
+                ★ Destacar al inicio (#1)
+              </button>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                min="0"
+                value={form.orden}
+                onChange={(e) => setField("orden", Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-24 h-9 px-3 bg-white border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A]"
+              />
+              <span className="text-xs text-[#8A7A6E]">
+                {form.orden === 0
+                  ? "✓ Aparecerá en los primeros lugares de la categoría."
+                  : `Posición actual asignada: ${form.orden}`}
+              </span>
+            </div>
           </div>
 
           {/* Activo */}
@@ -1192,7 +1231,7 @@ function ProductosPage() {
   const [filterEstado, setFilterEstado] = useState("todos");
   const [filterTag, setFilterTag] = useState("todos");
   const [lastEditedId, setLastEditedId] = useState<string | null>(null);
-  const [successNotice, setSuccessNotice] = useState<string | null>(null);
+  const [successNotice, setSuccessNotice] = useState<React.ReactNode | null>(null);
   const [errorNotice, setErrorNotice] = useState<string | null>(null);
   const [showReauth, setShowReauth] = useState(false);
   const [pendingAction, setPendingAction] = useState<
@@ -1329,6 +1368,7 @@ function ProductosPage() {
     let cmp = 0;
     if (sortField === "nombre") cmp = a.nombre.localeCompare(b.nombre, "es");
     if (sortField === "precio") cmp = a.precio - b.precio;
+    if (sortField === "orden") cmp = (a.orden ?? 0) - (b.orden ?? 0);
     if (sortField === "created_at") {
       const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
       const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
@@ -1359,7 +1399,7 @@ function ProductosPage() {
           tags: form.tags,
           activo: form.activo,
           imagenes: form.imagenes.filter(Boolean),
-          orden: 0,
+          orden: form.orden ?? 0,
         })
         .select()
         .single();
@@ -1368,10 +1408,23 @@ function ProductosPage() {
         throw new Error("No se pudo crear el producto en la base de datos.");
       }
       invalidateProductCache(data.id);
+      invalidateCategoryCache();
       setShowCreate(false);
       const newId = data.id;
       if (newId) setLastEditedId(newId);
-      setSuccessNotice(`Producto "${nombreProd}" creado exitosamente.`);
+      setSuccessNotice(
+        <span className="flex flex-wrap items-center gap-2">
+          <span>Producto "{nombreProd}" creado exitosamente.</span>
+          <a
+            href={`/producto/${newId}?preview=1`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline font-semibold text-emerald-900 hover:text-black inline-flex items-center gap-1 ml-1"
+          >
+            Ver en tienda en vivo →
+          </a>
+        </span>,
+      );
       await cargarDatos();
       if (newId) {
         setTimeout(() => {
@@ -1421,6 +1474,7 @@ function ProductosPage() {
           tags: form.tags,
           activo: form.activo,
           imagenes: form.imagenes.filter(Boolean),
+          orden: form.orden ?? 0,
         })
         .eq("id", editedId)
         .select();
@@ -1431,9 +1485,22 @@ function ProductosPage() {
         );
       }
       invalidateProductCache(editedId);
+      invalidateCategoryCache();
       setEditando(null);
       setLastEditedId(editedId);
-      setSuccessNotice(`Producto "${editedNombre}" actualizado correctamente.`);
+      setSuccessNotice(
+        <span className="flex flex-wrap items-center gap-2">
+          <span>Producto "{editedNombre}" actualizado correctamente.</span>
+          <a
+            href={`/producto/${editedId}?preview=1`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline font-semibold text-emerald-900 hover:text-black inline-flex items-center gap-1 ml-1"
+          >
+            Ver en tienda en vivo →
+          </a>
+        </span>,
+      );
       await cargarDatos();
       setTimeout(() => {
         const el = document.getElementById(`prod-row-${editedId}`);
@@ -1664,6 +1731,7 @@ function ProductosPage() {
                 className="bg-transparent font-body text-xs text-[#2C2420] outline-none cursor-pointer pr-4"
               >
                 <option value="created_at-desc">Más recientes primero</option>
+                <option value="orden-asc">Orden en tienda (Como lo ve el cliente)</option>
                 <option value="nombre-asc">Nombre (A - Z)</option>
                 <option value="nombre-desc">Nombre (Z - A)</option>
                 <option value="precio-asc">Precio (Menor a Mayor)</option>

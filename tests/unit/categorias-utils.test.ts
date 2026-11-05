@@ -342,4 +342,24 @@ describe("resolverRedireccionSubcategoria", () => {
       ]),
     ).toBeNull();
   });
+
+  it("normaliza alias como 'amor' y redirige /categoria/ocasion/amor a /categoria/ocasion/amor-aniversario", () => {
+    const amorHija = makeCat({
+      id: "c-amor",
+      nombre: "Amor / Aniversario",
+      slug: "amor-aniversario",
+      parent_id: "p-ocasion",
+    });
+
+    const redirect = resolverRedireccionSubcategoria("ocasion", "amor", [
+      ocasion,
+      amorHija,
+    ]);
+
+    expect(redirect).toEqual({
+      to: "/categoria/$slug/$sub",
+      params: { slug: "ocasion", sub: "amor-aniversario" },
+      url: "/categoria/ocasion/amor-aniversario",
+    });
+  });
 });

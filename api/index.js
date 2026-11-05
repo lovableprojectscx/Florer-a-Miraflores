@@ -36,7 +36,7 @@ function getRequestBody(req) {
   });
 }
 
-export function resolveCacheControl(url, method = "GET", status = 200) {
+export function resolveCacheControl(url, method = "GET", status = 200, headers = {}) {
   const rawUrl = url || "/";
   const pathOnly = rawUrl.split("?")[0].toLowerCase();
   const isPrivate =
@@ -52,11 +52,19 @@ export function resolveCacheControl(url, method = "GET", status = 200) {
     rawUrl.includes("v=") ||
     rawUrl.includes("t=");
 
-  if ((method === "GET" || method === "HEAD") && status === 200 && !isPrivate && !hasBypassParam) {
-    // Páginas públicas SSR: cachear 120s en Vercel Edge CDN, stale-while-revalidate 600s
-    return "public, s-maxage=120, stale-while-revalidate=600";
+  // Si hay cookies de sesión de Supabase/admin o token de autorización, nunca servir desde CDN cache
+  const cookieHeader = headers?.cookie || (typeof headers?.get === "function" ? headers.get("cookie") : "") || "";
+  const authHeader = headers?.authorization || (typeof headers?.get === "function" ? headers.get("authorization") : "") || "";
+  const isAdminOrAuth =
+    cookieHeader.includes("sb-") ||
+    cookieHeader.includes("admin") ||
+    Boolean(authHeader);
+
+  if ((method === "GET" || method === "HEAD") && status === 200 && !isPrivate && !hasBypassParam && !isAdminOrAuth) {
+    // Páginas públicas SSR: cachear 15s en Vercel Edge CDN para proteger la BD ante picos, stale-while-revalidate 60s
+    return "public, s-maxage=15, stale-while-revalidate=60";
   }
-  // Rutas administrativas, mutaciones o privadas: nunca cachear
+  // Rutas administrativas, mutaciones o navegación autenticada: nunca cachear
   return "private, no-cache, no-store, must-revalidate";
 }
 
@@ -70,7 +78,7 @@ async function writeWebResponse(webRes, res, req) {
   // Optimización de Egress / CDN Edge Caching en Vercel:
   // Si la respuesta no define Cache-Control explícito, asignamos cabeceras inteligentes.
   if (!res.hasHeader("cache-control")) {
-    res.setHeader("Cache-Control", resolveCacheControl(req?.url, req?.method, webRes.status));
+    res.setHeader("Cache-Control", resolveCacheControl(req?.url, req?.method, webRes.status, req?.headers));
   }
 
   if (webRes.body) {
