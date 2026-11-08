@@ -2,7 +2,7 @@
 
 Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md` (secciones 6, 7, 8, 9, 13, 14), cotización aprobada y solicitudes de mejora continua e iteración del cliente. Cada requisito cuenta con ID, prioridad, estado verificado en código y fuente, para emplearse como **matriz de trazabilidad** en el análisis del sistema.
 
-Última revisión: 2026-10-08
+Última revisión: 2026-11-08
 
 **Leyenda de estado:** ✅ Implementado · ⚠️ Parcial / En auditoría · ❌ Pendiente · 🔄 Modificado / Retirado por cliente  
 **Prioridad:** Alta (bloquea entrega) · Media · Baja
@@ -183,8 +183,8 @@ Especificación formal de requisitos, derivada de las peticiones del `CLAUDE.md`
 
 | ID     | Requisito                                     | Prioridad | Estado | Fuente        |
 | ------ | --------------------------------------------- | --------- | ------ | ------------- |
-| RF-070 | Estado "Recibido" (pedido y pago confirmados) | Media     | ⚠️     | Cotización §2 |
-| RF-071 | Estado "En preparación"                       | Media     | ❌     | Cotización §2 |
+| RF-070 | Estado "Recibido" (`pendiente`, pedido registrado) | Media     | ✅     | Cotización §2 |
+| RF-071 | Estado "En preparación" (`en_preparacion`)         | Media     | ✅     | Cotización §2 |
 | RF-072 | Estado "En camino"                            | Media     | ✅     | Cotización §2 |
 | RF-073 | Estado "Entregado"                            | Media     | ✅     | Cotización §2 |
 
@@ -237,6 +237,9 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
 | RF-119 | Franjas editoriales de tags en Home: secuencia inicial con «Ofertas especiales» → «Orquídeas» (vinculando categoría sin mutar productos), y sección «Globos para enamorar» posicionada estratégicamente debajo de «Explora nuestras colecciones» | Alta      | ✅     | Requerimiento Sofía / Jack |
 | RF-120 | Navbar desktop responsivo adaptable en laptops: eliminación de desbordamiento horizontal mediante micropadding, gaps dinámicos y adaptación armónica | Alta      | ✅     | Auditoría UX Jack / Sofía |
 | RF-121 | Reestructuración taxonómica Sofía (SQL 015): «Novedades» reubicada como subcategoría en «Ocasión» (orden 8), «Orquídeas» promovida a categoría Padre en menú con subcategoría «Orquídeas Fiesta Prom», y envoltorio multilínea centrado (`flex-wrap`) en resolución 100% | Alta      | ✅     | Solicitud Sofía / Jack     |
+| RF-122 | Descripciones enriquecidas con formato Markdown seguro en ficha de producto (`ReactMarkdown` + `formatProductMarkdown`) y editor dual *Escribir / Vista previa* con barra rápida (`+ Viñeta`, `Negrita`) en `/admin/productos` | Alta      | ✅     | Solicitud Sofía / Jack     |
+| RF-123 | Ocultación suave sin borrado destructivo (*soft-hide* mediante conmutadores `activo` / `publicado`) en productos, categorías, banners, testimonios y recuerdos, más limpieza automática en Storage al eliminar definitivamente un producto sin referencias compartidas | Alta      | ✅     | Solicitud Jack / Sofía     |
+| RF-124 | Descubribilidad para agentes de IA (*Agentic Browsing* `2/2`): archivo estructurado `/llms.txt` con catálogo, cobertura en Lima y canales oficiales, más marcado `BreadcrumbList` JSON-LD en categorías, subcategorías y productos | Alta      | ✅     | Auditoría SEO / QA Jack    |
 
 ## 11. Requisitos No Funcionales (RNF)
 
@@ -244,9 +247,9 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
 | ------ | ----------------------------------------------------------------------------------------------------------------------------- | --------- | ------ | -------------------------- |
 | RNF-01 | Diseño responsivo calibrado para smartphones, tablets y pantallas de laptops                                                  | Alta      | ✅     | Cotización 3.1             |
 | RNF-02 | Identidad de marca (paleta crema/tierra/rosa, logo e isotipo vectoriales)                                                     | Alta      | ✅     | Cotización 3.1, CLAUDE §4  |
-| RNF-03 | SEO: meta tags por ruta, Open Graph, `robots.txt` excluyendo `/admin`                                                         | Media     | ⚠️     | CLAUDE §14                 |
-| RNF-04 | Schema.org estructurado `Florist`/`LocalBusiness`                                                                             | Baja      | ⚠️     | CLAUDE §14                 |
-| RNF-05 | Seguridad: RLS estricto en todas las tablas; secrets solo en servidor; mitigación CVE-2026-102989                             | Alta      | ✅     | CLAUDE §3, §11             |
+| RNF-03 | SEO Técnico: canonical autorreferencial dinámico por ruta, Open Graph `es_PE`, `noindex` en admin/checkout y `robots.txt`     | Alta      | ✅     | CLAUDE §14 / QA SEO        |
+| RNF-04 | Schema.org estructurado (`Florist`, `Product`, `BreadcrumbList`) serializado con escape anti-XSS `safeJsonLd()`               | Alta      | ✅     | CLAUDE §14 / QA Seguridad  |
+| RNF-05 | Seguridad BD y Storage (`SQL 005` + `SQL 016`): RLS en 14 tablas, `is_admin()` `SECURITY INVOKER`, trigger anti-tampering `trg_pedidos_zz_integridad_precios` y bloqueo de políticas temporales | Alta      | ✅     | CLAUDE §3, §11 / QA RLS    |
 | RNF-06 | Optimización de imágenes en formato WebP con compresión de alto rendimiento                                                   | Media     | ✅     | CLAUDE §14, §18            |
 | RNF-07 | Feedback de errores al usuario (toasts/banners), compilación sin errores                                                      | Media     | ✅     | CLAUDE §18                 |
 | RNF-08 | Dominio propio configurado para producción                                                                                    | Media     | —      | Cotización 3.5 (operativo) |
@@ -256,20 +259,21 @@ _Decisión estratégica del negocio: Se reemplaza el blog convencional de guías
 | RNF-12 | Bypass de caché CDN (Vercel Edge) para administradores (cookies `sb-*`) e invalidación pública responsiva con TTL 15s           | Alta      | ✅     | Incidencia Amor / Rendimiento |
 | RNF-13 | Integridad referencial y preservación absoluta de catálogo (cero `DELETE` en categorías con productos; solo actualización `parent_id`) | Alta      | ✅     | Seguridad de Datos / Jack  |
 | RNF-14 | Paridad taxonómica en panel administrativo: coherencia en selectores de asignación y listados en `/admin/categorias` y `/admin/productos` | Alta      | ✅     | Usabilidad Sofía / Admin   |
+| RNF-15 | Salud de Supabase Storage, `Cache-Control: public, max-age=31536000` (1 año) en el 100% de objetos S3, simetría 1:1:1 de miniaturas (`thumbs/480`, `thumbs/960`, original `<= 1600px`), 0 huérfanos y File Egress `< 1.2 MB` por lote de 24 tarjetas en catálogo | Alta      | ✅     | Auditoría Storage / Egress Jack |
+| RNF-16 | GEO-Targeting Local Lima Metropolitana (`<html lang="es-PE">`, `geo.region="PE-LIM"`, `geo.placename="Miraflores, Lima"`, coordenadas `-12.1217;-77.0298`) | Alta      | ✅     | Auditoría SEO / GEO Jack   |
+| RNF-17 | Resiliencia bajo carga y concurrencia certificada (`> 250 req/s`, `0%` tasa de error, `P95 < 900 ms` en Vercel Edge + Supabase) | Alta      | ✅     | Auditoría Stress QA Jack   |
+| RNF-18 | Accesibilidad WCAG 2.1 AA en textos secundarios y breadcrumbs (`#5C4D42`, ratio `>= 4.5:1`), logo comprimido (`11 KB`) y precarga SSR del Hero LCP | Alta      | ✅     | Auditoría PageSpeed Jack   |
 
 ---
 
 ## 12. Resumen para el análisis de cumplimiento
 
-- **Completitud Funcional de la Tienda:** 92% de los requerimientos operativos de la plataforma se encuentran activos y verificados en producción.
+- **Completitud Funcional y No Funcional de la Tienda:** **96%** de los requerimientos operativos, de seguridad, SEO/GEO y eficiencia de Storage/Egress se encuentran activos y certificados en producción (`v1.14.0`).
 - **Bloqueantes Externos (Fase 3):**
   - Pasarela IZIPay (RF-040 a RF-044) en espera de credenciales comerciales del comercio.
   - Servicio de Correo Transaccional (RF-080).
 - **Últimas Mejoras Incorporadas con Éxito:**
-  - Header con scroll natural no adhesivo (RF-005a).
-  - Bento Collage editorial asimétrico en Home (RF-025).
-  - Página dedicada `/nosotros` (RF-026).
-  - Navegación híbrida y subfiltros de subcategorías (RF-003a, RF-006a).
-  - Adaptabilidad y proporciones optimizadas en laptops (RF-028).
-  - Orden taxonómico de submenús y visibilidad de complementos (RF-118).
-  - Franja editorial de tags en Home con Orquídeas y Globos (RF-119).
+  - Saneamiento integral de Supabase Storage y File Egress: `3,033` archivos con simetría 100% (`984×3` en productos), `0` huérfanos, `-43.4%` de peso neto en S3 (`490.45 MB` -> `277.41 MB`), `-97%` de File Egress en catálogo y `Cache-Control: max-age=31536000` en S3 (RNF-15).
+  - Blindaje SQL 016 con trigger anti-tampering de precios en PostgreSQL, políticas de Storage cerradas a `is_admin()` e índices FK (RNF-05).
+  - SEO canónico dinámico por ruta, `BreadcrumbList` con `safeJsonLd()`, GEO-targeting `PE-LIM` y `/llms.txt` (RF-124, RNF-03, RNF-04, RNF-16).
+  - Descripciones en Markdown con vista previa en Admin y soft-hide sin pérdida de catálogo (RF-122, RF-123).

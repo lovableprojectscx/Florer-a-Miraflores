@@ -225,7 +225,9 @@ describe("Caché en memoria de consultas estáticas (src/lib/queries.ts)", () =>
   });
 
   it("clearQueryCache con prefijo purga únicamente las claves correspondientes", async () => {
-    tableResults["categorias"] = [{ id: "cat-1", nombre: "Rosas", orden: 1, activo: true, parent_id: null }];
+    tableResults["categorias"] = [
+      { id: "cat-1", nombre: "Rosas", orden: 1, activo: true, parent_id: null },
+    ];
     tableResults["config"] = { id: "conf-1", whatsapp: "+51 999 600 482" };
 
     await getCategorias();
@@ -245,7 +247,9 @@ describe("Caché en memoria de consultas estáticas (src/lib/queries.ts)", () =>
   });
 
   it("invalidateProductCache purga la caché de productos activos", async () => {
-    tableResults["productos"] = [{ id: "prod-1", nombre: "Girasol", activo: true, precio: 50, imagenes: [], tags: [] }];
+    tableResults["productos"] = [
+      { id: "prod-1", nombre: "Girasol", activo: true, precio: 50, imagenes: [], tags: [] },
+    ];
 
     await getProductosActivos();
     const calls1 = queryCalls;

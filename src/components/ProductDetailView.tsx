@@ -75,7 +75,7 @@ export function ProductDetailView({
 
       <main className="max-w-[1536px] mx-auto px-5 md:px-12 lg:px-16 py-8 md:py-14">
         {/* Breadcrumb */}
-        <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-8 flex flex-wrap items-center gap-1.5">
+        <nav className="text-[11px] tracking-widest uppercase font-body font-light text-[#5C4D42] mb-8 flex flex-wrap items-center gap-1.5">
           <Link to="/" className="hover:text-[#2C2420] transition-colors">
             Inicio
           </Link>
@@ -125,8 +125,8 @@ export function ProductDetailView({
                   url={imagenes[activeImg]}
                   fallbackUrl={imagenes[activeImg] || fallbackImg}
                   anchoMiniatura={960}
-                  originalWidth={1600}
-                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  anchosMiniatura={[480, 960]}
+                  sizes="(max-width: 640px) 480px, 960px"
                   alt={product.nombre}
                   fetchPriority="high"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
@@ -176,7 +176,7 @@ export function ProductDetailView({
             </h1>
             <p className="mt-3 font-body text-2xl sm:text-3xl font-semibold text-[#2C2420]">
               S/. {product.precio.toFixed(2)}{" "}
-              <span className="text-sm font-normal text-[#8A7A6E]">PEN</span>
+              <span className="text-sm font-normal text-[#5C4D42]">PEN</span>
             </p>
 
             <div className="my-6 border-t border-[#E8DDD0]/80" />
@@ -185,7 +185,9 @@ export function ProductDetailView({
               <div className="font-body font-light text-sm sm:text-base text-[#2C2420]/85 leading-relaxed">
                 <ReactMarkdown
                   components={{
-                    p: ({ children }) => <p className="mb-3 last:mb-0 leading-relaxed">{children}</p>,
+                    p: ({ children }) => (
+                      <p className="mb-3 last:mb-0 leading-relaxed">{children}</p>
+                    ),
                     ul: ({ children }) => (
                       <ul className="list-disc pl-5 space-y-1.5 my-3 marker:text-[#C4956A]">
                         {children}
@@ -220,7 +222,7 @@ export function ProductDetailView({
 
             {/* Selector de cantidad */}
             <div className="mt-8">
-              <p className="font-body text-xs tracking-[0.16em] uppercase text-[#8A7A6E] mb-3 font-medium">
+              <p className="font-body text-xs tracking-[0.16em] uppercase text-[#5C4D42] mb-3 font-medium">
                 Cantidad
               </p>
               <div className="flex items-center gap-3">
@@ -271,7 +273,7 @@ export function ProductDetailView({
                 <p className="font-body font-medium text-xs sm:text-sm text-[#2C2420]">
                   Delivery el mismo día en Lima y Callao
                 </p>
-                <p className="font-body font-light text-xs text-[#8A7A6E] mt-0.5 leading-relaxed">
+                <p className="font-body font-light text-xs text-[#5C4D42] mt-0.5 leading-relaxed">
                   Miraflores, San Isidro, Surco, Barranco, Lince y más distritos. Elige tu fecha y
                   rango horario en el checkout.
                 </p>
@@ -284,7 +286,7 @@ export function ProductDetailView({
         {relacionados.length > 0 && (
           <section className="mt-20 md:mt-28 border-t border-[#E8DDD0] pt-14">
             <div className="mb-10">
-              <p className="font-body text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
+              <p className="font-body text-xs tracking-[0.2em] uppercase text-[#5C4D42] mb-2 font-normal">
                 — También te puede interesar
               </p>
               <h2 className="font-display text-3xl md:text-4xl text-[#2C2420] font-normal">

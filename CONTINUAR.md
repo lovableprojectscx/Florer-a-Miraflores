@@ -18,13 +18,13 @@ Para marca/logo: `brand/README.md`, `brand/logo/`, `brand/tokens.css`.
 
 ## Contexto mínimo (por si solo lees esto)
 
-- Proyecto: **Florería Miraflores**, e-commerce de flores en Lima. React 19 + TanStack Start + Supabase, deploy Vercel. ~300 productos cargados, preparando lanzamiento.
-- Dueño: Jack (IDENZA). Responde en español, tono cercano ("mi pana"), honesto, distinguiendo código vs config vs bloqueado.
-- Estado: catálogo, carrito, checkout con delivery y panel admin ✅. Pendiente bloqueante: IZIPay (credenciales) y correo automático.
+- Proyecto: **Florería Miraflores**, e-commerce de flores en Lima. React 19 + TanStack Start + Supabase (`sdrkiomeesoctsxeidmu`, São Paulo `sa-east-1`), deploy Vercel (`https://florer-a-miraflores.vercel.app/`). `974` productos activos cargados y saneados, certificado para lanzamiento (`v1.14.0`).
+- Dueño: Jack (IDENZA). Responde en español, tono cercano ("mi pana"), honesto, distinguiendo código vs config vs bloqueado, con datos 100% empíricos certificados (nunca inventados).
+- Estado: catálogo (`974` productos), carrito, checkout multi-método (Mercado Pago Checkout Pro, Culqi, Yape/Plin, Transferencia, Efectivo), correos automáticos (Resend), panel admin completo, seguridad RLS + anti-tampering (`SQL 016`), SEO/GEO/AEO y Storage/Egress S3 saneado ✅.
 
 ## Lo que sigue (de `spec-kit/tasks.md`)
 
-**P1 antes de lanzar:** paginación del catálogo, fotos más grandes (estilo Lima Floral), arreglar categorías (Nacimientos / dividir niño-niña / Tulipanes), estado "En preparación".
+**Operativo post-lanzamiento (Sofía / Admin):** revisar precios placeholder `S/. 1.00` en el lote `Pack 5`, subir foto del producto `"Infinito"` (`pack5_4k_320_320_IMG_8981_Estudio.webp` faltante en origen) y configurar dominio propio final `floreriamiraflores.com` en Vercel cuando DNS esté listo.
 
 ## Cómo lo abriste (recordatorio para Jack)
 
@@ -67,3 +67,18 @@ Chat nuevo en Cowork → misma carpeta conectada (`floreria-miraflo-main`) → c
   5. Desactivar "Allow new users to sign up" en Supabase Auth (_Authentication > Providers > Email_).
   6. Repartir productos en Nacimientos Niño/Niña en el panel administrativo.
   7. Confirmar tabla de Tulipanes (`docs/sql/004-tulipanes-reasignacion.sql`).
+
+## Estado al 08-11-2026 (v1.14.0 — Certificación Integral QA, Storage S3 & Egress y Suite E2E SDD)
+
+- **Infraestructura y Saneamiento Storage/Egress (`scripts/saneamiento-storage-egress.mjs`):**
+  - Purgados `313` archivos huérfanos en S3 (`28.53 MB` liberados) tras cruce contra las 9 tablas de PostgreSQL (`974` productos intactos).
+  - Generadas `986` miniaturas WebP faltantes (`480w` y `960w` en `productos` y `popup`) + recomprimidos `552` originales 4K (`<= 1600px` q82, `-229.44 MB`).
+  - Reparados `580` headers `Cache-Control` en S3 (de `no-cache` / `max-age=3600` a `public, max-age=31536000`).
+  - **Resultado neto S3:** de `490.45 MB` (`2,360` archivos) a **`277.41 MB` (`3,033` archivos, `-43.4%`)** con simetría exacta `1:1:1` (`productos`: `984×3=2952`, `testimonios`: `14×3=42`, `categorias`: `9×3=27`, `banners`: `3×3=9`, `popup`: `1×3=3`).
+- **Seguridad y Base de Datos (`docs/sql/016-security-rls-antitampering.sql`):**
+  - `16/16` pruebas reales `npm run test:rls` en verde (RLS todas las tablas, bloqueo de escalación admin, trigger anti-tampering `trg_pedidos_zz_integridad_precios` recalculando precios/cupón/delivery desde servidor y bloqueo de escrituras anónimas en Storage).
+- **Código y Suite QA E2E (`tests/e2e/qa-storage-egress-seo.spec.ts`):**
+  - `popup.tsx`, `productos.tsx` y `ProductDetailView.tsx` alineados al contrato de miniaturas `480w/960w` y limpieza segura de huérfanos.
+  - SEO/GEO/AEO certificado: `<link rel="canonical">` dinámico, geo tags `PE-LIM`, JSON-LD (`Florist`, `Product`, `BreadcrumbList`), `/llms.txt` y contraste WCAG AA (`#5C4D42`).
+  - `200/200` tests unitarios Vitest + suite Playwright E2E multi-dispositivo + `6` informes PDF regenerados en `docs/certificaciones-qa-final/pdf/`.
+  - Veredicto en `docs/CERTIFICACION-LANZAMIENTO.md`: **APROBADO PARA LANZAMIENTO EN PRODUCCIÓN (GO)**.

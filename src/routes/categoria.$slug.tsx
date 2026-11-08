@@ -1,4 +1,11 @@
-import { createFileRoute, Link, notFound, redirect, Outlet, useMatches } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  redirect,
+  Outlet,
+  useMatches,
+} from "@tanstack/react-router";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";

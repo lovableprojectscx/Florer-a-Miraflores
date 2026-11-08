@@ -351,10 +351,7 @@ describe("resolverRedireccionSubcategoria", () => {
       parent_id: "p-ocasion",
     });
 
-    const redirect = resolverRedireccionSubcategoria("ocasion", "amor", [
-      ocasion,
-      amorHija,
-    ]);
+    const redirect = resolverRedireccionSubcategoria("ocasion", "amor", [ocasion, amorHija]);
 
     expect(redirect).toEqual({
       to: "/categoria/$slug/$sub",

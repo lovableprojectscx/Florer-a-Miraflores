@@ -1,15 +1,16 @@
 RUN  v5.0.4 C:/Users/JACK FRANKLIN/Desktop/Proyectos Idenza/Trabajos-Mayo/Floreria miraflores/floreria-miraflo-main
 
- ✓ tests/rls/rls.test.ts (16 tests) 4819ms
+ ✓ tests/rls/rls.test.ts (16 tests) 5457ms
    ✓ RLS — Políticas de seguridad con anon key (16)
-     ✓ anon PUEDE leer la tabla pública 'productos' 423ms
-     ✓ anon NO PUEDE insertar, actualizar ni borrar en 'productos' 594ms
-     ✓ anon NO PUEDE insertar, actualizar ni borrar en 'categorias' 445ms
-     ✓ anon NO PUEDE actualizar ni borrar en 'pedidos' ni 'reclamaciones' 449ms
-     ✓ anon NO PUEDE insertar, actualizar ni borrar en 'blog_posts', ni leer borradores 457ms
-     ✓ anon NO PUEDE subir ni sobrescribir archivos en Supabase Storage ('productos', 'banners', 'categorias') 796ms
+     ✓ anon PUEDE leer la tabla pública 'productos' 328ms
+     ✓ anon NO PUEDE insertar, actualizar ni borrar en 'productos' 792ms
+     ✓ anon NO PUEDE insertar, actualizar ni borrar en 'categorias' 528ms
+     ✓ anon NO PUEDE actualizar ni borrar en 'pedidos' ni 'reclamaciones' 489ms
+     ✓ anon NO PUEDE insertar, actualizar ni borrar en 'blog_posts', ni leer borradores 490ms
+     ✓ anon NO PUEDE subir ni sobrescribir archivos en Supabase Storage ('productos', 'banners', 'categorias') 1013ms
+     ✓ Trigger PostgreSQL Anti-Tampering sobreescribe precios manipulados (S/ 0.01) y fuerza estado 'pendiente' en 'pedidos' 353ms
 
  Test Files  1 passed (1)
       Tests  16 passed (16)
-   Start at  10:37:49
-   Duration  5.50s (tests 91%, import 9%)
+   Start at  11:22:37
+   Duration  6.05s (tests 93%, import 7%)

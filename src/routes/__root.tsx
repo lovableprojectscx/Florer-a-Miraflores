@@ -19,9 +19,7 @@ function NotFoundComponent() {
         <p className="text-xs tracking-[0.25em] uppercase text-[#A34E55] font-body mb-2">
           Error 404
         </p>
-        <h1 className="font-display text-4xl sm:text-5xl text-[#2C2420]">
-          Página no encontrada
-        </h1>
+        <h1 className="font-display text-4xl sm:text-5xl text-[#2C2420]">Página no encontrada</h1>
         <p className="mt-3 text-sm text-[#5C4D42] font-body leading-relaxed">
           El arreglo o sección que buscas ya no está disponible o cambió de dirección.
         </p>
@@ -51,9 +49,7 @@ function ErrorComponent({ error, reset }: { error: unknown; reset: () => void })
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#FDFAF6] px-4">
       <div className="max-w-md text-center">
-        <h1 className="font-display text-3xl text-[#2C2420]">
-          No pudimos cargar esta página
-        </h1>
+        <h1 className="font-display text-3xl text-[#2C2420]">No pudimos cargar esta página</h1>
         <p className="mt-2 text-sm text-[#5C4D42] font-body">
           Ocurrió un inconveniente temporal de conexión. Puedes reintentar o volver al inicio.
         </p>

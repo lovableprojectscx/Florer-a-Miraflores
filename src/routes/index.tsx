@@ -118,9 +118,7 @@ export const Route = createFileRoute("/")({
               rel: "preload",
               as: "image",
               href: heroPreloadHref,
-              ...(heroPreloadSrcSet
-                ? { imageSrcSet: heroPreloadSrcSet, imageSizes: "100vw" }
-                : {}),
+              ...(heroPreloadSrcSet ? { imageSrcSet: heroPreloadSrcSet, imageSizes: "100vw" } : {}),
               fetchPriority: "high",
             },
           ]
@@ -148,33 +146,31 @@ function HomePage() {
   // 2. Franja inferior: "Globos para enamorar", situada específicamente debajo de "Explora nuestras colecciones".
   const TAGS_POST_COLECCIONES = new Set(["globos_para_enamorar"]);
 
-  const seccionesPrincipales = tagSecciones.filter(
-    (s) => !TAGS_POST_COLECCIONES.has(s.tag.clave),
-  );
-  const seccionesPostColecciones = tagSecciones.filter(
-    (s) => TAGS_POST_COLECCIONES.has(s.tag.clave),
+  const seccionesPrincipales = tagSecciones.filter((s) => !TAGS_POST_COLECCIONES.has(s.tag.clave));
+  const seccionesPostColecciones = tagSecciones.filter((s) =>
+    TAGS_POST_COLECCIONES.has(s.tag.clave),
   );
 
   const floristSchema = {
     "@context": "https://schema.org",
     "@type": "Florist",
-    "name": "Florería Miraflores",
-    "image": "https://floreriamiraflores.com/Logo.webp",
-    "telephone": "+51999600482",
-    "url": "https://floreriamiraflores.com",
-    "priceRange": "S/.",
-    "address": {
+    name: "Florería Miraflores",
+    image: "https://floreriamiraflores.com/Logo.webp",
+    telephone: "+51999600482",
+    url: "https://floreriamiraflores.com",
+    priceRange: "S/.",
+    address: {
       "@type": "PostalAddress",
-      "addressLocality": "Miraflores",
-      "addressRegion": "Lima",
-      "addressCountry": "PE"
+      addressLocality: "Miraflores",
+      addressRegion: "Lima",
+      addressCountry: "PE",
     },
-    "geo": {
+    geo: {
       "@type": "GeoCoordinates",
-      "latitude": -12.1217,
-      "longitude": -77.0298
+      latitude: -12.1217,
+      longitude: -77.0298,
     },
-    "areaServed": [
+    areaServed: [
       "Miraflores",
       "San Isidro",
       "Santiago de Surco",
@@ -184,24 +180,16 @@ function HomePage() {
       "Jesús María",
       "Magdalena del Mar",
       "Lince",
-      "Lima Metropolitana"
+      "Lima Metropolitana",
     ],
-    "openingHoursSpecification": [
+    openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "opens": "08:00",
-        "closes": "20:00"
-      }
-    ]
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        opens: "08:00",
+        closes: "20:00",
+      },
+    ],
   };
 
   return (

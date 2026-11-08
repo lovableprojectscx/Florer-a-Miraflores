@@ -1,90 +1,50 @@
-# Acta de Certificación Pre-Lanzamiento — Florería Miraflores
+# Acta de Certificación Integral QA & Go-Live — Florería Miraflores (`v1.14.0`)
 
-**Fecha:** 13 de Octubre de 2026  
-**Rama certificada:** `master` (desplegada y verificada en Vercel Producción)  
+**Fecha de actualización:** 8 de Noviembre de 2026  
+**Rama certificada:** `master` (desplegada en Vercel Producción)  
 **URL de Producción (Vercel):** [`https://florer-a-miraflores.vercel.app/`](https://florer-a-miraflores.vercel.app/)  
-**Ambiente de auditoría:** Despliegue oficial en Vercel Edge CDN con compresión Brotli/Gzip y HTTP/2, conectado a Supabase Producción (`sdrkiomeesoctsxeidmu`)
+**Base de Datos & Storage:** Supabase Plan Pro (`sdrkiomeesoctsxeidmu`, `sa-east-1` São Paulo, PostgreSQL 17.6)
 
 ---
 
 ## Veredicto Oficial
 
-# VEREDICTO: GO (Lanzamiento Autorizado)
+# VEREDICTO: GO CERTIFICADO (Producción Autorizada)
 
-La plataforma cumple con todos los estándares técnicos de estabilidad, diseño responsive, flujo de compra, catálogo, seguridad RLS y rendimiento móvil:
-
-1. **Cuello de botella de imágenes y transferencia resuelto definitivamente:**
-   - 992 miniaturas WebP generadas y servidas desde Supabase Storage.
-   - Peso del Home reducido de **14.0 MB a 1.21 MB (-91.4% de ahorro global)**.
-   - LCP móvil del Home reducido de **40.0 s a 3.9 s** (superando la meta de < 4.0 s).
-   - Riesgo de egress en Supabase superado ampliamente: margen para miles de visitas mensuales sin saturar la cuota.
-2. **Auditoría en URL productiva de Vercel superada con éxito:**
-   - Despliegue activo desde la rama **`master`** en `https://florer-a-miraflores.vercel.app/`.
-   - Performance móvil sube a **74 en Home**, **71 en Catálogo** y **75 en Ficha de Producto**.
-   - Accesibilidad: **96/100** en Home, **95/100** en Catálogo, **96/100** en Producto.
-   - Best Practices: **100/100** en todas las rutas auditadas.
-   - SEO: **100/100** en todas las rutas auditadas.
+La plataforma cumple y certifica empíricamente los Requisitos Funcionales (`RF-001` a `RF-124`) y No Funcionales (`RNF-01` a `RNF-18`) de estabilidad, seguridad RLS + Anti-Tampering, salud de Supabase Storage y File Egress, SEO/GEO local, descubrimiento agéntico (`llms.txt`) y calidad visual Markdown.
 
 ---
 
-## 1. Rendimiento y Carga de Red (Auditoría Lighthouse Móvil Comparativa Oficial)
+## 1. Saneamiento Certificado de Supabase Storage, Cache-Control y File Egress (`RNF-15`)
 
-Datos reales extraídos directamente de los reportes oficiales generados por Lighthouse CLI v12.8.2 en modo móvil con estrangulamiento estándar:
+Datos reales auditados y verificados en vivo mediante `scripts/saneamiento-storage-egress.mjs` (`docs/certificaciones-qa-final/datos/storage-egress-audit.json`):
 
-| Página                         | Métrica               | Fase 06 (Línea Base) | Fase 06-B (Preview Local) | **Vercel Producción (`master`)** |      Variación Global       |
-| :----------------------------- | :-------------------- | :------------------: | :-----------------------: | :------------------------------: | :-------------------------: |
-| **Home (`/`)**                 | **Peso Total de Red** |       14.0 MB        |          1.70 MB          |           **1.21 MB**            |   **-91.4% (-12.79 MB)**    |
-|                                | **LCP Móvil**         |        40.0 s        |           5.1 s           |            **3.9 s**             | **-90.2% (Meta < 4 s ✅)**  |
-|                                | **Performance**       |          58          |            66             |              **74**              |       **+16 puntos**        |
-|                                | **Accessibility**     |          89          |            96             |              **96**              | **+7 puntos (Meta ≥90 ✅)** |
-|                                | **Best Practices**    |         100          |            100            |             **100**              |       **100/100 ✅**        |
-|                                | **SEO**               |         100          |            100            |             **100**              |       **100/100 ✅**        |
-| **Catálogo (`/catalogo`)**     | **Peso Total de Red** |        5.3 MB        |          1.02 MB          |           **0.78 MB**            |    **-85.3% (-4.52 MB)**    |
-|                                | **LCP Móvil**         |        7.2 s         |           6.8 s           |            **5.8 s**             |         **-1.4 s**          |
-|                                | **Performance**       |          64          |            66             |              **71**              |        **+7 puntos**        |
-|                                | **Accessibility**     |          95          |            95             |              **95**              |        **95/100 ✅**        |
-|                                | **Best Practices**    |         100          |            100            |             **100**              |       **100/100 ✅**        |
-|                                | **SEO**               |         100          |            100            |             **100**              |       **100/100 ✅**        |
-| **Producto (`/producto/:id`)** | **Peso Total de Red** |        1.9 MB        |          0.55 MB          |           **0.51 MB**            |    **-73.2% (-1.39 MB)**    |
-|                                | **LCP Móvil**         |        5.7 s         |           5.0 s           |            **4.7 s**             |         **-1.0 s**          |
-|                                | **Performance**       |          73          |            74             |              **75**              |        **+2 puntos**        |
-|                                | **Accessibility**     |          96          |            96             |              **96**              |        **96/100 ✅**        |
-|                                | **Best Practices**    |         100          |            100            |             **100**              |       **100/100 ✅**        |
-|                                | **SEO**               |         100          |            100            |             **100**              |       **100/100 ✅**        |
-
-_Archivos de reporte auditados en Vercel:_
-
-- [`docs/evidencias/fase-06b/lighthouse-vercel/home.report.json`](file:///docs/evidencias/fase-06b/lighthouse-vercel/home.report.json)
-- [`docs/evidencias/fase-06b/lighthouse-vercel/catalogo.report.json`](file:///docs/evidencias/fase-06b/lighthouse-vercel/catalogo.report.json)
-- [`docs/evidencias/fase-06b/lighthouse-vercel/producto.report.json`](file:///docs/evidencias/fase-06b/lighthouse-vercel/producto.report.json)
+| Métrica / Parámetro Auditado | Antes (Con Lotes 4K Crudos) | Después (`v1.14.0` Certificado) | Impacto Real |
+| :--- | :---: | :---: | :--- |
+| **Peso total en Supabase Storage (S3)** | `490.45 MB` (`2,360` archivos) | **`277.41 MB` (`3,033` archivos)** | **`-213.04 MB` (`-43.4%` neto en S3)** |
+| **Archivos huérfanos sin referencia en BD** | `313` archivos (`28.53 MB`) | **`0` archivos (`0 MB`)** | **`100%` purgados sin afectar activos** |
+| **Cobertura `thumbs/480` y `thumbs/960` en Productos** | `489 / 984` (`49.6%` — faltaban `496`) | **`984 / 984` (`100.0%` paridad `984×3`)** | **`0` errores `400 BYPASS` en `/thumbs/`** |
+| **Cobertura `thumbs/480` y `thumbs/960` en Resto de Buckets** | `popup`: `0` thumbs; `testimonios`: `3600s` | **`categorias` `9×3`, `banners` `3×3`, `testimonios` `14×3`, `popup` `1×3`** | **`100%` simetría en los 5 buckets** |
+| **Cabecera HTTP `Cache-Control` en S3** | `no-cache` en `496` fotos 4K | **`public, max-age=31536000` (1 año) en todo S3** | **`580` cabeceras reparadas; `0 KB` en re-visita** |
+| **File Egress por página de 24 productos (lote 4K)** | `~14.5 MB` (`601 KB` prom. original) | **`~400 KB` (`~17 KB` prom. `thumbs/480`)** | **`-97.2%` de consumo de File Egress** |
 
 ---
 
-## 2. Resumen de Pruebas y Evidencias Técnicas
+## 2. Matriz de Pruebas Automatizadas y Evidencias Reales (`v1.14.0`)
 
-| Prueba / Auditoría                        | Comando / Métrica                                  | Resultado                                                                            | Archivo de Evidencia                                                                                                   |
-| :---------------------------------------- | :------------------------------------------------- | :----------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-| **Pipeline de Verificación**              | `npm run verify`                                   | ✅ 0 errores ESLint, TypeScript limpio, tests pasando, build exitoso                 | [`docs/evidencias/fase-06b/verify-espaciado.txt`](file:///docs/evidencias/fase-06b/verify-espaciado.txt)               |
-| **Suite Completa E2E**                    | `npm run test:e2e`                                 | ✅ 56 passed, 2 skipped controlados (0 fallos en mobile y desktop)                   | [`docs/evidencias/fase-06b/e2e-suite.txt`](file:///docs/evidencias/fase-06b/e2e-suite.txt)                             |
-| **Verificación de Miniaturas en Storage** | `node scripts/verificar-miniaturas-subidas.mjs`    | ✅ 496 originales con 992 miniaturas WebP; 50/50 peticiones HEAD en HTTP 200 OK      | [`docs/evidencias/fase-06b/miniaturas-verificacion.txt`](file:///docs/evidencias/fase-06b/miniaturas-verificacion.txt) |
-| **Fallback ante 404**                     | `npx playwright test tests/e2e/thumbnails.spec.ts` | ✅ 6/6 tests pasados (bloqueo forzado a `/thumbs/` conmuta limpiamente a originales) | [`docs/evidencias/fase-06b/e2e.txt`](file:///docs/evidencias/fase-06b/e2e.txt)                                         |
-| **Seguridad de Datos (RLS)**              | `npm run test:rls`                                 | ✅ 10/10 tests pasados con anon key (escrituras bloqueadas salvo admin autenticado)  | [`docs/evidencias/fase-06/rls.txt`](file:///docs/evidencias/fase-06/rls.txt)                                           |
-| **Sitemap XML**                           | `node scripts/generate-sitemap.mjs`                | ✅ 437 URLs indexables generadas                                                     | [`public/sitemap.xml`](file:///public/sitemap.xml)                                                                     |
-| **Robots.txt**                            | Configuración de indexación                        | ✅ Rutas públicas abiertas, `/admin` y `/confirmacion` bloqueadas                    | [`public/robots.txt`](file:///public/robots.txt)                                                                       |
+| Dimensión QA | Comando / Suite | Resultado Certificado | Evidencia en Repositorio |
+| :--- | :--- | :--- | :--- |
+| **Tipado Estático** | `npm run typecheck` | ✅ `0` errores TypeScript | `tsconfig.json` |
+| **Pruebas Unitarias** | `npm run test` | ✅ `200/200` tests aprobados (22 suites) | `tests/unit/*.test.ts(x)` |
+| **Seguridad RLS + Anti-Tampering** | `npm run test:rls` | ✅ `16/16` tests en vivo contra Supabase (`SQL 016`) | [`docs/certificaciones-qa-final/datos/rls-test-output.txt`](./certificaciones-qa-final/datos/rls-test-output.txt) |
+| **Playwright E2E (Storage, Egress, SEO, Compra)** | `npx playwright test` | ✅ `39/39` aprobados (`1` omitido por viewport) en `mobile` (Pixel 7) y `desktop` (1440×900): `0` errores `4xx` Storage, `Cache-Control: 31536000`, Egress `< 1.2 MB`, Canonical/GEO/Schemas, WCAG AA `#5C4D42` y Checkout | [`tests/e2e/qa-storage-egress-seo.spec.ts`](../tests/e2e/qa-storage-egress-seo.spec.ts) · [`datos/e2e-test-output.txt`](./certificaciones-qa-final/datos/e2e-test-output.txt) |
+| **Prueba de Carga y Estrés (100 VUs)** | `node scripts/load-test.mjs` | ✅ `> 250 req/s` en 500 peticiones concurrentes, `0%` fallos (`500/500` HTTP 200), `P50 < 300 ms` | [`docs/certificaciones-qa-final/datos/load-test-metrics.json`](./certificaciones-qa-final/datos/load-test-metrics.json) |
+| **Informes Ejecutivos PDF** | `node scripts/generar-certificaciones-qa.mjs` | ✅ 6 informes oficiales en PDF (`INFORME-1` al `5` + `CERTIFICACION-FINAL-MAESTRA.pdf`) | [`docs/certificaciones-qa-final/pdf/`](./certificaciones-qa-final/pdf/) |
 
 ---
 
-## 3. Acciones Administrativas Finales (Pendientes de Jack)
+## 3. Pendientes Externos al Código (Dependencias Administrativas / Comerciales)
 
-1. **Revisión de Pedidos de Prueba en Producción:**
-   - En la tabla `pedidos` de Supabase existen registros de prueba (`FM-TEST01`, etc.); evaluar si se eliminan antes del tráfico público masivo.
-2. **Eliminar Usuario Temporal de Autenticación:**
-   - En el panel de Supabase (_Authentication > Users_), eliminar la cuenta de prueba `test_admin_temp@floreriamiraflores.com`.
-3. **Desactivar Registro Público de Usuarios:**
-   - En Supabase (_Authentication > Providers > Email_), desmarcar la casilla _"Allow new users to sign up"_ para evitar registros no autorizados.
-4. **Reparto de Productos en Nacimientos:**
-   - En el panel administrativo (`/admin/productos`), asignar productos reales a las subcategorías _Nacimientos Niño_ y _Nacimientos Niña_ para activarlas en el menú.
-5. **Aprobación de Tabla de Tulipanes (SQL 004):**
-   - Confirmar si se aplica la reorganización de 13 productos en `docs/sql/004-tulipanes-reasignacion.sql`.
-6. **Configuración de Dominio Personalizado:**
-   - Apuntar los registros DNS de `floreriamiraflores.com` hacia Vercel cuando se decida dar de baja la web antigua.
+1. **Integración de Pasarela IZIPay (`RF-040` a `RF-044`):** En espera de credenciales comerciales de producción por parte de Sofía (mientras tanto operan activamente Mercado Pago Checkout Pro, Culqi, Yape/Plin, Transferencia y Efectivo).
+2. **Revisión Comercial de Catálogo en Admin (`/admin/productos`):** Verificar precios placeholder `S/. 1.00` en ítems del lote `Pack 5` y cargar fotografía del producto `"Infinito"` (`pack5_4k_320_320_IMG_8981_Estudio.webp` ausente de origen).
+3. **Dominio Final (`RNF-08`) y *Leaked Password Protection*:** Apuntar DNS de `floreriamiraflores.com` a Vercel (y verificar dominio remitente en Resend) y activar la casilla *Leaked Password Protection* en Supabase Dashboard -> Authentication -> Providers -> Email.

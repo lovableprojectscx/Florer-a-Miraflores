@@ -429,9 +429,7 @@ export async function getProductosPorTag(clave: string, limit = 5): Promise<Prod
       query = query.overlaps("tags", claves);
     }
 
-    const { data, error } = await query
-      .order("orden", { ascending: true })
-      .limit(limit);
+    const { data, error } = await query.order("orden", { ascending: true }).limit(limit);
 
     return throwOnError(data as ProductoRow[], error);
   });

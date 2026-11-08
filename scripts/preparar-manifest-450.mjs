@@ -686,7 +686,9 @@ export async function generateManifest() {
   let globalOrder = 11; // Los 10 base ya tienen 1-10
 
   for (const group of GROUPS_CONFIG) {
-    const folderPath = resolve(process.cwd(), group.folder);
+    const folderPath = fs.existsSync(resolve(process.cwd(), "raw-media", group.folder))
+      ? resolve(process.cwd(), "raw-media", group.folder)
+      : resolve(process.cwd(), group.folder);
     const files = fs
       .readdirSync(folderPath)
       .filter((item) => {

@@ -239,7 +239,9 @@ async function main() {
   console.log("   Autenticación exitosa.");
 
   // 2. Procesar y subir cada foto
-  const sourceFolder = resolve(process.cwd(), "testimonio 4K");
+  const sourceFolder = existsSync(resolve(process.cwd(), "raw-media", "testimonio 4K"))
+    ? resolve(process.cwd(), "raw-media", "testimonio 4K")
+    : resolve(process.cwd(), "testimonio 4K");
 
   for (const item of TESTIMONIOS_DATA) {
     const inputPath = join(sourceFolder, item.originalFile);

@@ -1,20 +1,20 @@
 {
-  "fecha": "2026-11-08T15:38:00.245Z",
+  "fecha": "2026-11-08T16:22:49.146Z",
   "target": "https://florer-a-miraflores.vercel.app",
   "concurrencia": 100,
   "totalRequests": 500,
-  "warmupColdStartMaxMs": 3517.2,
-  "tiempoTotalSec": 1.96,
-  "rps": 255.57,
+  "warmupColdStartMaxMs": 3751.9,
+  "tiempoTotalSec": 1.66,
+  "rps": 301.37,
   "completadas": 500,
   "fallidas": 0,
   "latenciasMs": {
-    "avg": 366.4,
-    "p50": 261.9,
-    "p90": 630.8,
-    "p95": 853.5,
-    "min": 101.8,
-    "max": 1037.1
+    "avg": 260.4,
+    "p50": 194.4,
+    "p90": 509.9,
+    "p95": 596.7,
+    "min": 96.7,
+    "max": 1627.3
   },
   "statusCounts": {
     "200": 500

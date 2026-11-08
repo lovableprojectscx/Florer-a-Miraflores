@@ -47,7 +47,7 @@ export function Occasions({ ocasiones }: Props) {
     <section className="bg-[#FAF8F5]/70 px-5 md:px-12 lg:px-16 py-16 md:py-24">
       <div className="max-w-[1536px] mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
-          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
+          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#5C4D42] mb-2 font-medium">
             — Momentos especiales
           </p>
           <h2 className="font-display text-[#2C2420] text-3xl md:text-5xl lg:text-6xl font-normal leading-tight">

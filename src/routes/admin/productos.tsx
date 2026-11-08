@@ -493,7 +493,9 @@ function ProductoForm({
                 {form.descripcion && form.descripcion.trim() ? (
                   <ReactMarkdown
                     components={{
-                      p: ({ children }) => <p className="mb-2.5 last:mb-0 leading-relaxed">{children}</p>,
+                      p: ({ children }) => (
+                        <p className="mb-2.5 last:mb-0 leading-relaxed">{children}</p>
+                      ),
                       ul: ({ children }) => (
                         <ul className="list-disc pl-5 space-y-1 my-2 marker:text-[#C4956A]">
                           {children}
@@ -744,11 +746,15 @@ function ReauthModal({ onSuccess, onClose, defaultEmail, itemNombre }: ReauthMod
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }: { data: { session: { user?: { email?: string } } | null } }) => {
-      if (session?.user?.email) {
-        setEmail(session.user.email);
-      }
-    });
+    supabase.auth
+      .getSession()
+      .then(
+        ({ data: { session } }: { data: { session: { user?: { email?: string } } | null } }) => {
+          if (session?.user?.email) {
+            setEmail(session.user.email);
+          }
+        },
+      );
   }, []);
 
   async function handleLogin(e: React.FormEvent) {
@@ -801,8 +807,8 @@ function ReauthModal({ onSuccess, onClose, defaultEmail, itemNombre }: ReauthMod
         </div>
 
         <p className="font-body text-xs text-[#2C2420]/80 mb-5 leading-relaxed bg-[#FDFAF6] p-3 border border-[#E8DDD0] rounded">
-          Tu sesión cerró automáticamente por inactividad tras varios días. Ingresa tu contraseña para{" "}
-          <strong>guardar tus cambios sin perder nada</strong>.
+          Tu sesión cerró automáticamente por inactividad tras varios días. Ingresa tu contraseña
+          para <strong>guardar tus cambios sin perder nada</strong>.
         </p>
 
         {error && (
@@ -1661,8 +1667,18 @@ function ProductosPage() {
       return;
     }
     try {
+      const imgsProducto = Array.isArray(eliminando.imagenes) ? [...eliminando.imagenes] : [];
       const { error } = await supabase.from("productos").delete().eq("id", eliminando.id);
       if (error) throw error;
+      // Limpiar archivos en Storage únicamente si ningún otro producto referencia esa URL
+      for (const imgUrl of imgsProducto) {
+        const compartida = productos.some(
+          (p) => p.id !== eliminando.id && Array.isArray(p.imagenes) && p.imagenes.includes(imgUrl),
+        );
+        if (!compartida) {
+          void eliminarImagenStorage(imgUrl);
+        }
+      }
       invalidateProductCache(eliminando.id);
       setEliminando(null);
       await cargarDatos();
@@ -2342,8 +2358,8 @@ function ProductosPage() {
             pendingAction?.type === "edit"
               ? pendingAction.form.nombre
               : pendingAction?.type === "create"
-              ? pendingAction.form.nombre
-              : undefined
+                ? pendingAction.form.nombre
+                : undefined
           }
         />
       )}

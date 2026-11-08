@@ -1,0 +1,59 @@
+{
+  "executedAt": "2026-11-08T16:08:18.216Z",
+  "before": {
+    "totalFiles": 2360,
+    "totalMB": 490.45
+  },
+  "actions": {
+    "orphansDeleted": 313,
+    "orphanMBFreed": 28.53,
+    "thumbs480Created": 496,
+    "thumbs960Created": 490,
+    "originalsOptimized": 552,
+    "recompressionMBSaved": 229.44,
+    "s3CacheHeadersFixed": 580
+  },
+  "after": {
+    "totalFiles": 3033,
+    "totalMB": 277.41,
+    "netMBReduction": 213.04,
+    "netPctReduction": 43.4,
+    "buckets": {
+      "productos": {
+        "files": 2952,
+        "mb": 268.26,
+        "rootFiles": 984,
+        "thumbs480": 984,
+        "thumbs960": 984
+      },
+      "categorias": {
+        "files": 27,
+        "mb": 3.06,
+        "rootFiles": 9,
+        "thumbs480": 9,
+        "thumbs960": 9
+      },
+      "banners": {
+        "files": 9,
+        "mb": 0.98,
+        "rootFiles": 3,
+        "thumbs480": 3,
+        "thumbs960": 3
+      },
+      "testimonios": {
+        "files": 42,
+        "mb": 4.71,
+        "rootFiles": 14,
+        "thumbs480": 14,
+        "thumbs960": 14
+      },
+      "popup": {
+        "files": 3,
+        "mb": 0.4,
+        "rootFiles": 1,
+        "thumbs480": 1,
+        "thumbs960": 1
+      }
+    }
+  }
+}

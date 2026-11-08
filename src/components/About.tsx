@@ -6,7 +6,7 @@ export function About() {
     <section id="about" className="px-5 md:px-12 lg:px-16 py-16 md:py-24 bg-white">
       <div className="max-w-[1536px] mx-auto grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
         <div>
-          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2.5 font-normal">
+          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#5C4D42] mb-2.5 font-medium">
             — Nuestro atelier
           </p>
           <h2 className="font-display text-[#2C2420] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1]">
@@ -50,7 +50,7 @@ export function About() {
             <p className="font-body text-[10px] tracking-widest uppercase font-medium text-[#2C2420]">
               Atelier Miraflores
             </p>
-            <p className="font-display text-xs sm:text-sm text-[#8A7A6E] italic">
+            <p className="font-display text-xs sm:text-sm text-[#5C4D42] italic">
               Flores 100% frescas cada mañana
             </p>
           </div>

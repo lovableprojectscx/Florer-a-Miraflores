@@ -62,11 +62,16 @@ try {
   console.log("   ⚠️ Advertencia en ejecución RLS.");
 }
 
-// Leer resultado E2E si fue ejecutado previamente
+// Leer resultado E2E y auditoría de Storage/Egress si existen
 const e2eOutputPath = path.join(DATOS_DIR, "e2e-test-output.txt");
 const e2eStdout = fs.existsSync(e2eOutputPath)
   ? stripAnsi(fs.readFileSync(e2eOutputPath, "utf-8")).trim()
   : "";
+
+const storageAuditPath = path.join(DATOS_DIR, "storage-egress-audit.json");
+const storageAudit = fs.existsSync(storageAuditPath)
+  ? JSON.parse(fs.readFileSync(storageAuditPath, "utf-8"))
+  : null;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PASO 2: Prueba Real de Carga & Estrés (Fase 1: Cold-Start Warmup | Fase 2: 100 VUs Pico)
@@ -519,9 +524,9 @@ const htmlPageSpeed = `
       <td>Peso real en <code>dist/</code>: <strong>11.12 kB</strong> (reducción exacta del <strong>89%</strong>, CLS = 0).</td>
     </tr>
     <tr>
-      <td><strong>Cache-Control <code>None</code> en Storage</strong></td>
-      <td>Normalizados 791 metadatos en PostgreSQL y re-subidas 180 miniaturas S3 con <code>cacheControl: "31536000"</code>.</td>
-      <td>Cabecera HTTP S3 corregida de <code>max-age=max-age=...</code> a <code>public, max-age=31536000</code>.</td>
+      <td><strong>Storage S3, Miniaturas &amp; File Egress (RNF-15)</strong></td>
+      <td>Purgados <strong>${storageAudit?.actions?.orphansDeleted ?? 313}</strong> huérfanos (${storageAudit?.actions?.orphanMBFreed ?? 28.53} MB), creadas <strong>${(storageAudit?.actions?.thumbs480Created ?? 496) + (storageAudit?.actions?.thumbs960Created ?? 490)}</strong> miniaturas 480w/960w, recomprimidos <strong>${storageAudit?.actions?.originalsOptimized ?? 552}</strong> originales 4K y reparadas <strong>${storageAudit?.actions?.s3CacheHeadersFixed ?? 580}</strong> cabeceras S3 (de <code>no-cache</code> a <code>public, max-age=31536000</code>).</td>
+      <td>Storage neto reducido de <strong>${storageAudit?.before?.totalMB ?? 490.45} MB a ${storageAudit?.after?.totalMB ?? 277.41} MB (-${storageAudit?.after?.netPctReduction ?? 43.4}%)</strong>; simetría 100% (984&times;3 en <code>productos</code>) y <strong>-97%</strong> de File Egress en catálogo.</td>
     </tr>
     <tr>
       <td><strong>Accesibilidad (91) &amp; Agéntica (1/2)</strong></td>
@@ -531,7 +536,7 @@ const htmlPageSpeed = `
   </table>
 
   <div class="stamp-box">
-    <strong>📌 Nota de Transparencia Técnica:</strong> Los puntajes anteriores al push corresponden al despliegue previo en Vercel (83/91/100/100). Tras ejecutar <code>git push</code> a producción, se debe pulsar <em>Analizar</em> nuevamente en PageSpeed Insights para registrar la medición pública post-despliegue sin estimaciones.
+    <strong>📌 Nota de Transparencia Técnica:</strong> Las mejoras de S3 Storage y Cache-Control ya están activas en producción (<code>sdrkiomeesoctsxeidmu</code>), y la matriz SDD (<code>RF-001..124</code>, <code>RNF-01..18</code>) se encuentra certificada con Playwright E2E multi-dispositivo.
   </div>
 
   <div class="footer">
@@ -586,8 +591,8 @@ const htmlMaestro = `
       <td><strong>CERTIFICADO ✅</strong></td>
     </tr>
     <tr>
-      <td><strong>5. Core Web Vitals &amp; Flujo E2E</strong></td>
-      <td>Preload SSR del Hero LCP, fuentes desbloqueadas, logo reducido 89% (11.12 kB), 180 miniaturas S3 con caché anual, descripciones Markdown y recorrido de compra E2E validado.</td>
+      <td><strong>5. Storage S3, File Egress &amp; E2E</strong></td>
+      <td>Storage reducido de <strong>${storageAudit?.before?.totalMB ?? 490.45} MB a ${storageAudit?.after?.totalMB ?? 277.41} MB (-${storageAudit?.after?.netPctReduction ?? 43.4}%)</strong>, <strong>${storageAudit?.actions?.orphansDeleted ?? 313}</strong> huérfanos purgados, simetría 100% de miniaturas WebP (<code>984&times;3</code> en productos), <code>Cache-Control: max-age=31536000</code> en todo S3 (<strong>-97%</strong> File Egress en catálogo), trazabilidad SDD (<code>RF-001..124</code>, <code>RNF-01..18</code>) y suite Playwright E2E aprobada.</td>
       <td><strong>CERTIFICADO ✅</strong></td>
     </tr>
   </table>

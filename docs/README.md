@@ -15,6 +15,12 @@
 | [TESTING.md](./TESTING.md)                                           | Guía de pruebas automatizadas (Vitest unitario, Vitest RLS y Playwright E2E mobile/desktop) y regla de protección de datos de producción.                                      |
 | [DIAGNOSTICO-CATEGORIAS.md](./DIAGNOSTICO-CATEGORIAS.md)             | Diagnóstico de solo lectura sobre la jerarquía de categorías, conteo de productos, causas de los 3 reclamos de categorías y matriz de decisiones D1/D2.                        |
 | [PLAN-DE-TRABAJO.md](./PLAN-DE-TRABAJO.md)                           | Backlog priorizado de mejoras y pendientes antes y después del lanzamiento.                                                                                                    |
+| [GUIA-PANEL-CATEGORIAS.md](./GUIA-PANEL-CATEGORIAS.md)               | Guía operativa para administración de categorías padre, subcategorías y fotos de portada.                                                                                     |
+| [GUIA-PANEL-BLOG.md](./GUIA-PANEL-BLOG.md)                           | Manual de publicación de notas editoriales y optimización de contenido en `/admin/blog`.                                                                                       |
+| [GUIA-PANEL-TESTIMONIOS.md](./GUIA-PANEL-TESTIMONIOS.md)             | Manual de moderación y carga de testimonios y valoraciones de clientes.                                                                                                       |
+| [GUIA-BANNERS-MOVIL.md](./GUIA-BANNERS-MOVIL.md)                     | Especificación de resoluciones y pesos para banners responsivos (Desktop 2560×960 vs Mobile 1080×1350).                                                                       |
+| [certificaciones-qa-final/](./certificaciones-qa-final/)             | Expediente formal con los 6 PDFs certificados, capturas de pantalla de evidencia y métricas JSON crudas de auditoría.                                                          |
+| [sql/](./sql/)                                                       | Scripts SQL versionados (003 a 016) aplicados en Supabase para esquemas, RLS, triggers y funciones.                                                                            |
 
 ### Documentos relacionados (fuera de `docs/`)
 

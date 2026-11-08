@@ -122,7 +122,9 @@ async function main() {
   });
   if (authErr) throw authErr;
 
-  const sourceFolder = resolve(process.cwd(), "testimonio 4K");
+  const sourceFolder = existsSync(resolve(process.cwd(), "raw-media", "testimonio 4K"))
+    ? resolve(process.cwd(), "raw-media", "testimonio 4K")
+    : resolve(process.cwd(), "testimonio 4K");
 
   for (let i = 0; i < RECUERDOS_DATA.length; i++) {
     const item = RECUERDOS_DATA[i];

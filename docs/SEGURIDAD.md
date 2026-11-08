@@ -106,86 +106,19 @@ En el Dashboard de Supabase (**Authentication → Providers → Email** / **User
 
 ---
 
-## 6. Riesgo de Montos en Checkout y Mitigación (Fase 05)
+## 6. Blindaje Anti-Tampering de Precios e Índices en Producción (`docs/sql/016-seguridad-rls-antitampering-indices.sql`)
 
-### 6.1. Descripción del Riesgo
+### 6.1. Solución Activa en Servidor (PostgreSQL Trigger + Validación en Cliente)
 
-En la arquitectura actual de checkout:
+Para impedir cualquier manipulación de importes (`subtotal`, `delivery`, `total`) o estados (`pagado`, `izi_transaction_id`) mediante peticiones HTTP directas a PostgREST con la `anon key`:
 
-- Los valores de `subtotal`, `delivery` y `total` se calculan en el navegador del cliente (`src/routes/checkout.tsx` y `src/lib/queries.ts`).
-- La política RLS `pedidos.insert_public` permite la inserción anónima (`FOR INSERT TO anon, authenticated WITH CHECK (true)`).
-- Un usuario con conocimientos técnicos podría enviar una petición HTTP directa a la API REST de Supabase manipulando el payload con precios arbitrarios (por ejemplo, `total: 0.10` en un pedido de S/ 200).
-
-### 6.2. Mitigación Actual (Operativa / Manual)
-
-- Actualmente **no existe pasarela de cobro desatendido en vivo**: todo pedido se coordina manualmente vía WhatsApp (`+51 999 600 482`).
-- La persona encargada de la florería recibe la alerta del pedido en WhatsApp, revisa el detalle en el panel de administración (`/admin/pedidos`) y coteja el monto con el catálogo y la tarifa oficial del distrito antes de solicitar o confirmar la transferencia (Yape/Plin/bancaria).
-- Por lo tanto, el riesgo financiero está mitigado por la verificación humana previa al despacho.
-
-### 6.3. Propuesta Futura (Obligatoria antes de IZIPay / Cobro Online)
-
-Antes de activar cobros automáticos con tarjeta (IZIPay u otra pasarela), el backend **debe** recalcular y validar obligatoriamente los montos desde la fuente de verdad (tablas `productos` y `distritos`).
-
-Se plantean dos alternativas técnicas:
-
-1. **Opción A (Recomendada): Edge Function `crear-pedido`**  
-   El cliente envía solo `[{ id, cantidad }]` y `distrito_id`. Una Edge Function calcula precios, crea la sesión de pago con IZIPay e inserta el pedido con `service_role`. La política pública `insert_public` de `pedidos` se revoca.
-2. **Opción B (Nivel BD): Trigger `BEFORE INSERT` en `public.pedidos`**  
-   Recalcula automáticamente los montos y rechaza el insert si hay discrepancia.
-
-#### Borrador del Trigger en PostgreSQL (comentado, NO aplicar sin aprobación):
-
-```sql
--- -- ==============================================================================
--- -- BORRADOR DE TRIGGER PARA RECALCULAR / VALIDAR MONTOS EN PUBLIC.PEDIDOS
--- -- (NO EJECUTAR HASTA APROBACIÓN DE FASE POST-LANZAMIENTO / IZIPAY)
--- -- ==============================================================================
---
--- CREATE OR REPLACE FUNCTION public.validar_recalcular_pedido()
--- RETURNS TRIGGER AS $$
--- DECLARE
---   item jsonb;
---   precio_db numeric;
---   subtotal_calculado numeric := 0;
---   delivery_calculado numeric := 0;
--- BEGIN
---   -- 1. Recalcular subtotal sumando precios oficiales de cada producto en BD
---   FOR item IN SELECT * FROM jsonb_array_elements(NEW.productos)
---   LOOP
---     SELECT precio INTO precio_db
---     FROM public.productos
---     WHERE id = (item->>'id')::uuid AND activo = true;
---
---     IF NOT FOUND THEN
---       RAISE EXCEPTION 'Producto % no encontrado o inactivo', (item->>'id');
---     END IF;
---
---     subtotal_calculado := subtotal_calculado + (precio_db * COALESCE((item->>'cantidad')::int, 1));
---   END LOOP;
---
---   -- 2. Recalcular costo de delivery desde la tabla distritos
---   IF NEW.distrito_id IS NOT NULL THEN
---     SELECT precio_delivery INTO delivery_calculado
---     FROM public.distritos
---     WHERE id = NEW.distrito_id AND activo = true;
---
---     IF NOT FOUND THEN
---       delivery_calculado := 0;
---     END IF;
---   END IF;
---
---   -- 3. Forzar los montos calculados por el servidor
---   NEW.subtotal := subtotal_calculado;
---   NEW.delivery := delivery_calculado;
---   NEW.total    := subtotal_calculado + delivery_calculado;
---
---   RETURN NEW;
--- END;
--- $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
---
--- -- DROP TRIGGER IF EXISTS trg_validar_recalcular_pedido ON public.pedidos;
--- -- CREATE TRIGGER trg_validar_recalcular_pedido
--- --   BEFORE INSERT ON public.pedidos
--- --   FOR EACH ROW
--- --   EXECUTE FUNCTION public.validar_recalcular_pedido();
-```
+1. **Nivel Base de Datos (Fuente de Verdad Ineludible):**
+   - Se desplegó en producción la función `public.pedidos_integridad_y_precios()` (`SECURITY DEFINER`, `search_path = public`) conectada al trigger `BEFORE INSERT` **`trg_pedidos_zz_integridad_precios`** sobre `public.pedidos`.
+   - Recorre `NEW.productos`, consulta el `precio` oficial vigente en `public.productos` (rechazando IDs inexistentes, inactivos o cantidades inválidas), obtiene `precio_delivery` desde `public.distritos`, sobreescribe `NEW.subtotal`, `NEW.delivery` y `NEW.total`, fuerza `NEW.estado := 'pendiente'` y anula `NEW.izi_transaction_id := NULL`.
+   - Incluye modo de verificación *dry-run* no contaminante (`notas LIKE '%__RLS_TAMPER_DRY_RUN__%'` → aborta con `SQLSTATE P0099` devolviendo en el detalle los montos recalculados reales sin persistir filas basura en producción).
+2. **Endurecimiento Adicional en `SQL 016`:**
+   - Conversión de `public.is_admin()` a `SECURITY INVOKER` con política `admins_select_own_row` (`user_id = (SELECT auth.uid())`) y `GRANT SELECT (user_id)` sobre `public.admins` (**0 advertencias** en Supabase Security Advisor).
+   - Bloqueo de políticas residuales de `storage.objects` (`allow_temp_upload_productos`, `allow_temp_update_productos`) exigiéndoles rol `authenticated` y `public.is_admin()`.
+   - Creación de los 5 índices de llaves foráneas faltantes (`idx_productos_categoria_id`, `idx_pedidos_distrito_id`, `idx_categorias_parent_id`, `idx_colecciones_home_categoria_id`, `idx_ocasiones_home_categoria_id`).
+3. **Certificación Automatizada (`npm run test:rls`):**
+   - La suite `tests/rls/rls.test.ts` (**16/16 tests aprobados**) verifica en vivo contra Supabase tanto el bloqueo RLS en tablas públicas/privadas como la corrección automática de precios adulterados (`total: 0.10` → recalculado al monto real del catálogo + distrito) mediante el trigger `trg_pedidos_zz_integridad_precios`.

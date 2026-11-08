@@ -91,12 +91,12 @@ function CatalogoPage() {
         {/* Ruta + Eyebrow en una línea */}
         <nav
           aria-label="Ruta de navegación"
-          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-2 md:mb-3"
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-widest uppercase font-body font-light text-[#5C4D42] mb-2 md:mb-3"
         >
           <Link to="/" className="hover:text-[#2C2420] transition-colors">
             Inicio
           </Link>
-          <span aria-hidden className="text-[#8A7A6E]/60">
+          <span aria-hidden className="text-[#5C4D42]/60">
             /
           </span>
           <span className="text-[#2C2420]">Catálogo</span>

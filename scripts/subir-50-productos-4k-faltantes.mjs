@@ -51,7 +51,9 @@ async function main() {
   for (let idx = 0; idx < items.length; idx++) {
     const item = items[idx];
     const itemNum = idx + 1;
-    const fullSourcePath = resolve(process.cwd(), item.sourcePath);
+    const fullSourcePath = existsSync(resolve(process.cwd(), "raw-media", item.sourcePath))
+      ? resolve(process.cwd(), "raw-media", item.sourcePath)
+      : resolve(process.cwd(), item.sourcePath);
 
     console.log(`[${itemNum}/${items.length}] Procesando: ${item.nombre}...`);
 

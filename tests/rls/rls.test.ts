@@ -277,10 +277,9 @@ describe("RLS — Políticas de seguridad con anon key", () => {
       const { error: uploadErr } = await anonClient.storage
         .from(bucket)
         .upload("__rls_probe_unauthorized__.txt", payload, { upsert: false });
-      expect(
-        uploadErr !== null,
-        `Bucket '${bucket}' permitió subida anónima inesperada`,
-      ).toBe(true);
+      expect(uploadErr !== null, `Bucket '${bucket}' permitió subida anónima inesperada`).toBe(
+        true,
+      );
 
       const { error: updateErr } = await anonClient.storage
         .from(bucket)
@@ -295,7 +294,11 @@ describe("RLS — Políticas de seguridad con anon key", () => {
   it("Trigger PostgreSQL Anti-Tampering sobreescribe precios manipulados (S/ 0.01) y fuerza estado 'pendiente' en 'pedidos'", async () => {
     const [{ data: prods, error: prodErr }, { data: dists, error: distErr }] = await Promise.all([
       anonClient.from("productos").select("id, nombre, precio").eq("activo", true).limit(1),
-      anonClient.from("distritos").select("id, nombre, precio_delivery").eq("activo", true).limit(1),
+      anonClient
+        .from("distritos")
+        .select("id, nombre, precio_delivery")
+        .eq("activo", true)
+        .limit(1),
     ]);
     expect(prodErr).toBeNull();
     expect(distErr).toBeNull();
@@ -307,7 +310,10 @@ describe("RLS — Políticas de seguridad con anon key", () => {
     const qty = 2;
     const expectedSubtotal = (Number(realProd.precio) * qty).toFixed(2);
     const expectedDelivery = Number(realDist.precio_delivery).toFixed(2);
-    const expectedTotal = (Number(realProd.precio) * qty + Number(realDist.precio_delivery)).toFixed(2);
+    const expectedTotal = (
+      Number(realProd.precio) * qty +
+      Number(realDist.precio_delivery)
+    ).toFixed(2);
 
     // Intento de ataque directo vía PostgREST / Postman enviando precio S/ 0.01, delivery S/ 0 y estado 'entregado'.
     // La marca '__RLS_TAMPER_DRY_RUN__' ejecuta todo el cálculo del trigger y aborta con código P0099 sin guardar filas.

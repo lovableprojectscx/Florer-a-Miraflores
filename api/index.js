@@ -53,14 +53,22 @@ export function resolveCacheControl(url, method = "GET", status = 200, headers =
     rawUrl.includes("t=");
 
   // Si hay cookies de sesión de Supabase/admin o token de autorización, nunca servir desde CDN cache
-  const cookieHeader = headers?.cookie || (typeof headers?.get === "function" ? headers.get("cookie") : "") || "";
-  const authHeader = headers?.authorization || (typeof headers?.get === "function" ? headers.get("authorization") : "") || "";
+  const cookieHeader =
+    headers?.cookie || (typeof headers?.get === "function" ? headers.get("cookie") : "") || "";
+  const authHeader =
+    headers?.authorization ||
+    (typeof headers?.get === "function" ? headers.get("authorization") : "") ||
+    "";
   const isAdminOrAuth =
-    cookieHeader.includes("sb-") ||
-    cookieHeader.includes("admin") ||
-    Boolean(authHeader);
+    cookieHeader.includes("sb-") || cookieHeader.includes("admin") || Boolean(authHeader);
 
-  if ((method === "GET" || method === "HEAD") && status === 200 && !isPrivate && !hasBypassParam && !isAdminOrAuth) {
+  if (
+    (method === "GET" || method === "HEAD") &&
+    status === 200 &&
+    !isPrivate &&
+    !hasBypassParam &&
+    !isAdminOrAuth
+  ) {
     // Páginas públicas SSR: cachear 15s en Vercel Edge CDN para proteger la BD ante picos, stale-while-revalidate 60s
     return "public, s-maxage=15, stale-while-revalidate=60";
   }
@@ -78,7 +86,10 @@ async function writeWebResponse(webRes, res, req) {
   // Optimización de Egress / CDN Edge Caching en Vercel:
   // Si la respuesta no define Cache-Control explícito, asignamos cabeceras inteligentes.
   if (!res.hasHeader("cache-control")) {
-    res.setHeader("Cache-Control", resolveCacheControl(req?.url, req?.method, webRes.status, req?.headers));
+    res.setHeader(
+      "Cache-Control",
+      resolveCacheControl(req?.url, req?.method, webRes.status, req?.headers),
+    );
   }
 
   if (webRes.body) {

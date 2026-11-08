@@ -19,7 +19,7 @@ Asegurar que la tienda cargue ultra rápido en dispositivos móviles 4G (donde s
    ```bash
    npx lighthouse https://florer-a-miraflores.vercel.app/ --preset=mobile --output=json,html
    ```
-2. **Inspección de Assets Críticos**:
-   - Comprobar que no existan imágenes JPG/PNG pesadas mayores a 200 KB en el Home o Catálogo.
-   - Verificar cabeceras de respuesta `Cache-Control: public, max-age=31536000, immutable` en miniaturas.
+2. **Inspección de Assets Críticos, Storage S3 y File Egress (`RNF-15`)**:
+   - Comprobar paridad estricta 1:1:1 entre original (`<= 1600px` en productos), `thumbs/960` (~49 KB) y `thumbs/480` (~17 KB) en los buckets `productos`, `categorias`, `banners`, `testimonios` y `popup` (`node scripts/saneamiento-storage-egress.mjs`).
+   - Verificar cabeceras reales de S3 (`Cache-Control: public, max-age=31536000`) mediante `GET` y Playwright (`tests/e2e/qa-storage-egress-seo.spec.ts`), asegurando `0` errores HTTP `4xx` en `/thumbs/`, `0` archivos huérfanos y transferencia de catálogo `< 1.2 MB` por lote de 24 tarjetas.
    - Code-splitting verificado: módulos de `/admin` no deben descargarse en el storefront público.

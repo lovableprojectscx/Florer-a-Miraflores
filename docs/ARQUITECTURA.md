@@ -170,6 +170,17 @@ El estado de compra reside exclusivamente en el cliente (`src/store/cart.ts`):
   3. **Categorías Estelares Promovidas:** *Ramos* (61 productos) y *Arreglos Premium* (54 productos) operan como Categorías Padre independientes de primer nivel, asegurando acceso directo sin anidamiento innecesario.
   4. **Protección de Enlaces Históricos:** Las rutas previas (`/categoria/ocasion/centros-de-mesa`, `/categoria/arreglos-florales/ramos`) redirigen en cliente y servidor a su nueva ruta canónica mediante `resolverRedireccionSubcategoria`.
 
+### 5.6. Gobernanza de Supabase Storage, Cache-Control y Control de File Egress (v1.14.0)
+
+- **Simetría 100% de Miniaturas WebP en S3 (`RNF-15`):** Los 5 buckets públicos activos (`productos`: 984×3 = 2,952 archivos; `testimonios`: 14×3 = 42; `categorias`: 9×3 = 27; `banners`: 3×3 = 9; `popup`: 1×3 = 3; total `3,033` archivos, `277.41 MB`) mantienen paridad estricta entre activo raíz (`<= 1600px` para productos, `2560px` para banners Hero), miniatura intermedia `thumbs/960` (`~49 KB`) y miniatura móvil `thumbs/480` (`~17 KB`).
+- **Inmutabilidad de Caché HTTP (`Cache-Control: public, max-age=31536000`):** Todos los objetos en S3 sirven TTL de 1 año en cabeceras HTTP reales, garantizando `0` respuestas `no-cache`, `0` errores `400/404` en `/thumbs/` y presupuesto de carga inicial en `/catalogo` `< 1.2 MB` por lote de 24 tarjetas.
+- **Prevención de Archivos Huérfanos:** Todos los módulos administrativos (`/admin/productos`, `/admin/categorias`, `/admin/banners`, `/admin/popup`, `/admin/testimonios`, `/admin/recuerdos`) emplean `subirImagenConMiniaturas` y `eliminarImagenConMiniaturas` (`src/lib/image-optimizer.ts`). Al eliminar definitivamente un producto, se purgan sus archivos de Storage únicamente si ningún otro registro comparte la misma URL.
+
+### 5.7. Seguridad Anti-Tampering en BD, SEO Dinámico, GEO-Targeting y Navegación Agéntica (SQL 016)
+
+- **Trigger PostgreSQL Anti-Tampering (`trg_pedidos_zz_integridad_precios`):** Antes de insertar en `public.pedidos`, el motor PostgreSQL recalcula `subtotal` consultando `public.productos`, `delivery` consultando `public.distritos` y `total`, fuerza `estado = 'pendiente'` y limpia `izi_transaction_id`.
+- **SEO Canónico, GEO Local y Agentes IA (`RF-124`, `RNF-03`, `RNF-04`, `RNF-16`):** `__root.tsx` genera `<link rel="canonical">` autorreferencial por ruta pública, inyecta `noindex, nofollow` en `/admin`, `/checkout` y `/confirmacion`, define metadatos GEO (`PE-LIM`, `Miraflores, Lima`, `-12.1217;-77.0298`), serializa JSON-LD (`Florist`, `Product`, `BreadcrumbList`) con escape seguro `safeJsonLd()` y expone `/llms.txt` (`2/2` en Lighthouse Agentic Browsing).
+
 ---
 
 ## 6. Modelo de Datos (Supabase PostgreSQL 17)

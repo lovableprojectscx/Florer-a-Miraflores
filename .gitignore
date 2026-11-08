@@ -51,6 +51,7 @@ bun.lock
 bunfig.toml
 
 # Local raw media directories
+raw-media/
 02_Fotos_Con_Fondo_Prompt_4K/
 03_Fotos_Paquete_2_4K/
 CON FONDO HECHO 4K/

@@ -100,9 +100,8 @@ function ProductPage() {
   const { product, subcat, parentCat } = data;
   const canonicalUrl = `https://floreriamiraflores.com/producto/${slugify(product.nombre)}-${product.id}`;
 
-  const breadcrumbItems: Array<{ "@type": string; position: number; name: string; item: string }> = [
-    { "@type": "ListItem", position: 1, name: "Inicio", item: "https://floreriamiraflores.com/" },
-  ];
+  const breadcrumbItems: Array<{ "@type": string; position: number; name: string; item: string }> =
+    [{ "@type": "ListItem", position: 1, name: "Inicio", item: "https://floreriamiraflores.com/" }];
   if (parentCat && subcat) {
     breadcrumbItems.push(
       {
@@ -147,22 +146,23 @@ function ProductPage() {
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "name": product.nombre,
-    "image": product.imagenes && product.imagenes.length > 0 ? product.imagenes : undefined,
-    "description": stripMarkdown(product.descripcion) || product.nombre,
-    "sku": product.id,
-    "category": subcat?.nombre ?? "Flores y Regalos",
-    "offers": {
+    name: product.nombre,
+    image: product.imagenes && product.imagenes.length > 0 ? product.imagenes : undefined,
+    description: stripMarkdown(product.descripcion) || product.nombre,
+    sku: product.id,
+    category: subcat?.nombre ?? "Flores y Regalos",
+    offers: {
       "@type": "Offer",
-      "priceCurrency": "PEN",
-      "price": Number(product.precio).toFixed(2),
-      "availability": product.activo !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      "url": canonicalUrl,
-      "seller": {
+      priceCurrency: "PEN",
+      price: Number(product.precio).toFixed(2),
+      availability:
+        product.activo !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      url: canonicalUrl,
+      seller: {
         "@type": "Florist",
-        "name": "Florería Miraflores"
-      }
-    }
+        name: "Florería Miraflores",
+      },
+    },
   };
 
   return (
