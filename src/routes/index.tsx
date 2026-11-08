@@ -12,6 +12,8 @@ import { PopupModal } from "@/components/PopupModal";
 import { HomeTestimonios } from "@/components/HomeTestimonios";
 import { HomeRecuerdos } from "@/components/HomeRecuerdos";
 import type { TagSeccion } from "@/components/Novedades";
+import { imagenUrl, imagenSrcSet } from "@/lib/image-utils";
+import { safeJsonLd } from "@/lib/utils";
 
 import {
   getCategorias,
@@ -75,23 +77,56 @@ export const Route = createFileRoute("/")({
     };
   },
 
-  head: () => ({
-    meta: [
-      { title: "Florería Miraflores | Flores y regalos a domicilio en Lima" },
-      {
-        name: "description",
-        content:
-          "Boutique floral en Miraflores, Lima. Ramos, box florales y arreglos únicos con delivery el mismo día en Miraflores, Surco, Barranco, Lince y San Isidro.",
-      },
-      { property: "og:title", content: "Florería Miraflores" },
-      {
-        property: "og:description",
-        content:
-          "Flores y regalos a domicilio en Lima. Delivery en Miraflores, Surco, Barranco, Lince y San Isidro.",
-      },
-      { property: "og:type", content: "website" },
-    ],
-  }),
+  head: ({ loaderData }) => {
+    const firstBanner = loaderData?.banners?.[0];
+    const heroPreloadHref = firstBanner?.imagen_mobile_url
+      ? firstBanner.imagen_mobile_url
+      : firstBanner?.imagen_url
+        ? imagenUrl(firstBanner.imagen_url, 960)
+        : null;
+    const heroPreloadSrcSet =
+      firstBanner?.imagen_url && !firstBanner?.imagen_mobile_url
+        ? imagenSrcSet(firstBanner.imagen_url, { original: 2560, anchos: [960] })
+        : undefined;
+
+    return {
+      meta: [
+        { title: "Florería Miraflores | Flores y regalos a domicilio en Lima" },
+        {
+          name: "description",
+          content:
+            "Boutique floral en Miraflores, Lima. Ramos, box florales y arreglos únicos con delivery el mismo día en Miraflores, Surco, Barranco, Lince y San Isidro.",
+        },
+        {
+          property: "og:title",
+          content: "Florería Miraflores | Flores y regalos a domicilio en Lima",
+        },
+        {
+          property: "og:description",
+          content:
+            "Flores y regalos a domicilio en Lima. Delivery el mismo día en Miraflores, Surco, Barranco, Lince y San Isidro.",
+        },
+        { property: "og:type", content: "website" },
+        { name: "geo.region", content: "PE-LIM" },
+        { name: "geo.placename", content: "Miraflores, Lima" },
+        { name: "geo.position", content: "-12.1217;-77.0298" },
+        { name: "ICBM", content: "-12.1217, -77.0298" },
+      ],
+      links: heroPreloadHref
+        ? [
+            {
+              rel: "preload",
+              as: "image",
+              href: heroPreloadHref,
+              ...(heroPreloadSrcSet
+                ? { imageSrcSet: heroPreloadSrcSet, imageSizes: "100vw" }
+                : {}),
+              fetchPriority: "high",
+            },
+          ]
+        : [],
+    };
+  },
   component: HomePage,
 });
 
@@ -120,8 +155,62 @@ function HomePage() {
     (s) => TAGS_POST_COLECCIONES.has(s.tag.clave),
   );
 
+  const floristSchema = {
+    "@context": "https://schema.org",
+    "@type": "Florist",
+    "name": "Florería Miraflores",
+    "image": "https://floreriamiraflores.com/Logo.webp",
+    "telephone": "+51999600482",
+    "url": "https://floreriamiraflores.com",
+    "priceRange": "S/.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Miraflores",
+      "addressRegion": "Lima",
+      "addressCountry": "PE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -12.1217,
+      "longitude": -77.0298
+    },
+    "areaServed": [
+      "Miraflores",
+      "San Isidro",
+      "Santiago de Surco",
+      "Barranco",
+      "San Borja",
+      "La Molina",
+      "Jesús María",
+      "Magdalena del Mar",
+      "Lince",
+      "Lima Metropolitana"
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "08:00",
+        "closes": "20:00"
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      {/* Marcado estructurado Schema.org Florist & LocalBusiness */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(floristSchema) }}
+      />
       {config?.anuncio_barra && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
       <main>

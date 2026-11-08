@@ -69,7 +69,7 @@ export function ResponsiveImage({
       data-thumb-srcset={calculatedSrcSet}
       alt={alt}
       loading={hasError ? "eager" : loading}
-      decoding="async"
+      decoding={rest.fetchPriority === "high" ? "sync" : "async"}
       className={className}
       onError={(e) => {
         setHasError(true);

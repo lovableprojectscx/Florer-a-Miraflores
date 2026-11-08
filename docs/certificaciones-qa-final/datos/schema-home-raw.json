@@ -1,0 +1,56 @@
+{
+  "canonical": "https://floreriamiraflores.com/",
+  "preloadImg": "/assets/logo-miraflores-BflKYVnc.webp",
+  "htmlLang": "es-PE",
+  "geoRegion": "PE-LIM",
+  "schemas": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Florist",
+      "name": "Florería Miraflores",
+      "image": "https://floreriamiraflores.com/Logo.webp",
+      "telephone": "+51999600482",
+      "url": "https://floreriamiraflores.com",
+      "priceRange": "S/.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Miraflores",
+        "addressRegion": "Lima",
+        "addressCountry": "PE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -12.1217,
+        "longitude": -77.0298
+      },
+      "areaServed": [
+        "Miraflores",
+        "San Isidro",
+        "Santiago de Surco",
+        "Barranco",
+        "San Borja",
+        "La Molina",
+        "Jesús María",
+        "Magdalena del Mar",
+        "Lince",
+        "Lima Metropolitana"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "08:00",
+          "closes": "20:00"
+        }
+      ]
+    }
+  ]
+}

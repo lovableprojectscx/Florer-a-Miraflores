@@ -80,7 +80,7 @@ export function RecuerdoCard({ recuerdo, categorias = [], distritos = [] }: Recu
 
         {/* Pie con enlace de acción anclado al fondo */}
         <div className="mt-auto pt-3 border-t border-[#E8DDD0]/60 flex items-center justify-between">
-          <span className="text-[11px] font-body tracking-wider uppercase text-[#8A7A6E] group-hover:text-[#2C2420] transition-colors">
+          <span className="text-[11px] font-body tracking-wider uppercase text-[#5C4D42] font-medium group-hover:text-[#2C2420] transition-colors">
             Ver entrega & arreglo
           </span>
           <span className="w-6 h-6 rounded-full bg-[#FAF8F5] border border-[#E8DDD0] flex items-center justify-center text-[#2C2420] group-hover:bg-[#2C2420] group-hover:text-white group-hover:border-[#2C2420] transition-all">

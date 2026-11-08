@@ -1,0 +1,51 @@
+{
+  "canonical": "https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-3ebb3652-4cfd-4889-9dd3-f984cacb8f34",
+  "schemas": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Bouquet Armonía de Girasoles Frescos",
+      "image": [
+        "https://sdrkiomeesoctsxeidmu.supabase.co/storage/v1/object/public/productos/1791253625791-vrh1pfh7ka9.webp"
+      ],
+      "description": "Radiante arreglo de girasoles seleccionados y flores complementarias, transmitiendo calidez, energía y vitalidad.",
+      "sku": "3ebb3652-4cfd-4889-9dd3-f984cacb8f34",
+      "category": "Nacimientos",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "PEN",
+        "price": "100.00",
+        "availability": "https://schema.org/InStock",
+        "url": "https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-3ebb3652-4cfd-4889-9dd3-f984cacb8f34",
+        "seller": {
+          "@type": "Florist",
+          "name": "Florería Miraflores"
+        }
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://floreriamiraflores.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Nacimientos",
+          "item": "https://floreriamiraflores.com/categoria/nacimientos"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Bouquet Armonía de Girasoles Frescos",
+          "item": "https://floreriamiraflores.com/producto/bouquet-armonia-de-girasoles-frescos-3ebb3652-4cfd-4889-9dd3-f984cacb8f34"
+        }
+      ]
+    }
+  ]
+}

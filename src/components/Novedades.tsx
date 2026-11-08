@@ -291,6 +291,7 @@ function TagSection({ tag, productos }: TagSeccion) {
           <Link
             to="/tag/$key"
             params={{ key: tag.clave }}
+            aria-label={`Ver colección ${tag.nombre} - Reserva tu favorito`}
             className="inline-flex items-center text-xs sm:text-sm text-[#3E3834] hover:text-[#1E1E1D] font-normal transition-colors group/link"
           >
             <span>Reserva tu favorito</span>

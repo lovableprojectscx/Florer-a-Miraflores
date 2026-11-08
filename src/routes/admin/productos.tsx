@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import ReactMarkdown from "react-markdown";
 import {
   Plus,
   Pencil,
@@ -18,6 +19,9 @@ import {
   Search,
   Filter,
   ExternalLink,
+  Eye,
+  List,
+  Bold,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { ensureAdminSession } from "@/lib/admin-auth";
@@ -29,7 +33,7 @@ import {
 } from "@/lib/image-optimizer";
 import { findTagByClave, resolverClavesTag } from "@/lib/tag-utils";
 import { armarOpcionesCategoriaSelect } from "@/lib/categorias-utils";
-import { slugify } from "@/lib/utils";
+import { slugify, formatProductMarkdown } from "@/lib/utils";
 import { invalidateProductCache, invalidateCategoryCache } from "@/lib/queries";
 
 export const Route = createFileRoute("/admin/productos")({
@@ -158,6 +162,39 @@ function ProductoForm({
   const fileRef0 = useRef<HTMLInputElement>(null);
   const fileRef1 = useRef<HTMLInputElement>(null);
   const fileRefs = [fileRef0, fileRef1];
+  const [tabDescripcion, setTabDescripcion] = useState<"escribir" | "preview">("escribir");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  function insertarViñeta() {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = form.descripcion;
+    const prefix = start === 0 || text[start - 1] === "\n" ? "- " : "\n- ";
+    const newText = text.substring(0, start) + prefix + text.substring(end);
+    setField("descripcion", newText);
+    setTimeout(() => {
+      textarea.focus();
+      const nextPos = start + prefix.length;
+      textarea.setSelectionRange(nextPos, nextPos);
+    }, 0);
+  }
+
+  function insertarNegrita() {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = form.descripcion;
+    const selected = text.substring(start, end) || "texto";
+    const newText = text.substring(0, start) + `**${selected}**` + text.substring(end);
+    setField("descripcion", newText);
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + 2, start + 2 + selected.length);
+    }, 0);
+  }
 
   const draftKey = productoId ? `admin_prod_draft_${productoId}` : undefined;
 
@@ -379,18 +416,110 @@ function ProductoForm({
             )}
           </div>
 
-          {/* Descripcion */}
+          {/* Descripcion con soporte Markdown y Vista Previa */}
           <div>
-            <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E] mb-1.5">
-              Descripcion
-            </label>
-            <textarea
-              rows={3}
-              value={form.descripcion}
-              onChange={(e) => setField("descripcion", e.target.value)}
-              placeholder="Describe el producto..."
-              className="w-full px-3 py-2 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors resize-none"
-            />
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block font-body text-xs tracking-widest uppercase text-[#8A7A6E]">
+                Descripción
+              </label>
+
+              {/* Selector de modo Escribir / Vista previa */}
+              <div className="flex items-center gap-1 bg-[#F5EFEB] p-0.5 rounded text-xs">
+                <button
+                  type="button"
+                  onClick={() => setTabDescripcion("escribir")}
+                  className={`px-2.5 py-1 rounded text-xs font-body transition-colors cursor-pointer flex items-center gap-1 ${
+                    tabDescripcion === "escribir"
+                      ? "bg-white text-[#2C2420] font-medium shadow-xs"
+                      : "text-[#8A7A6E] hover:text-[#2C2420]"
+                  }`}
+                >
+                  <Pencil className="w-3 h-3" />
+                  Escribir
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTabDescripcion("preview")}
+                  className={`px-2.5 py-1 rounded text-xs font-body transition-colors cursor-pointer flex items-center gap-1 ${
+                    tabDescripcion === "preview"
+                      ? "bg-white text-[#2C2420] font-medium shadow-xs"
+                      : "text-[#8A7A6E] hover:text-[#2C2420]"
+                  }`}
+                >
+                  <Eye className="w-3 h-3" />
+                  Vista previa
+                </button>
+              </div>
+            </div>
+
+            {tabDescripcion === "escribir" ? (
+              <div className="space-y-1.5">
+                {/* Barra de herramientas rápida */}
+                <div className="flex items-center gap-2 pb-1 text-xs">
+                  <button
+                    type="button"
+                    onClick={insertarViñeta}
+                    title="Insertar viñeta / item de lista"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#FAF8F5] border border-[#E8DDD0] hover:border-[#C4956A] text-[#2C2420] rounded text-xs transition-colors cursor-pointer"
+                  >
+                    <List className="w-3 h-3 text-[#C4956A]" />
+                    <span>+ Viñeta</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={insertarNegrita}
+                    title="Texto en negrita"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 bg-[#FAF8F5] border border-[#E8DDD0] hover:border-[#C4956A] text-[#2C2420] rounded text-xs transition-colors cursor-pointer"
+                  >
+                    <Bold className="w-3 h-3 text-[#C4956A]" />
+                    <span>Negrita</span>
+                  </button>
+                  <span className="text-[11px] text-[#8A7A6E] hidden sm:inline ml-auto">
+                    Tip: doble Enter = párrafo separado
+                  </span>
+                </div>
+
+                <textarea
+                  ref={textareaRef}
+                  rows={6}
+                  value={form.descripcion}
+                  onChange={(e) => setField("descripcion", e.target.value)}
+                  placeholder="Ejemplo:&#10;Hermoso arreglo de 24 rosas rojas seleccionadas.&#10;&#10;- 24 rosas rojas importadas&#10;- Peluche tierno de 20cm&#10;- Follaje y flores de complemento&#10;- Tarjeta para dedicatoria&#10;&#10;**Envíos:** Delivery en Lima Metropolitana."
+                  className="w-full px-3 py-2 bg-[#FDFAF6] border border-[#E8DDD0] font-body text-sm text-[#2C2420] outline-none focus:border-[#C4956A] transition-colors resize-y min-h-[140px] leading-relaxed"
+                />
+              </div>
+            ) : (
+              <div className="w-full min-h-[140px] p-3.5 bg-[#FAF8F5] border border-[#E8DDD0] rounded font-body text-sm text-[#2C2420]/85 leading-relaxed overflow-y-auto">
+                {form.descripcion && form.descripcion.trim() ? (
+                  <ReactMarkdown
+                    components={{
+                      p: ({ children }) => <p className="mb-2.5 last:mb-0 leading-relaxed">{children}</p>,
+                      ul: ({ children }) => (
+                        <ul className="list-disc pl-5 space-y-1 my-2 marker:text-[#C4956A]">
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="list-decimal pl-5 space-y-1 my-2 marker:text-[#C4956A]">
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children }) => <li className="pl-0.5 leading-relaxed">{children}</li>,
+                      strong: ({ children }) => (
+                        <strong className="font-semibold text-[#2C2420]">{children}</strong>
+                      ),
+                      em: ({ children }) => <em className="italic text-[#5C5046]">{children}</em>,
+                    }}
+                  >
+                    {formatProductMarkdown(form.descripcion)}
+                  </ReactMarkdown>
+                ) : (
+                  <p className="text-xs text-[#8A7A6E] italic">
+                    (No hay descripción escrita aún. Cambia a "Escribir" para redactarla).
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Categoria */}

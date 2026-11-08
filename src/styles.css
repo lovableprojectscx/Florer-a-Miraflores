@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,400;1,9..40,600&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -120,14 +119,15 @@
   @keyframes pulse-rose {
     0%,
     100% {
-      box-shadow: 0 0 0 0 oklch(0.66 0.078 17 / 0.5);
+      transform: scale(1);
     }
     50% {
-      box-shadow: 0 0 0 14px oklch(0.66 0.078 17 / 0);
+      transform: scale(1.06);
     }
   }
   .animate-pulse-rose {
-    animation: pulse-rose 2.4s ease-out infinite;
+    animation: pulse-rose 2.4s ease-in-out infinite;
+    will-change: transform;
   }
 
   @keyframes marquee-fade {

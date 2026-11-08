@@ -112,6 +112,8 @@ export function Header({ categorias, config }: Props) {
           <img
             src={logoImg}
             alt="Florería Miraflores"
+            width={180}
+            height={48}
             className="h-8 sm:h-10 lg:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </Link>

@@ -86,6 +86,7 @@ export function ResenaCard({ testimonio, clampText = true }: ResenaCardProps) {
           {/* Header de la tarjeta: Estrellas y Fuente */}
           <div className="flex items-center justify-between gap-2 mb-3">
             <div
+              role="img"
               className="flex items-center gap-1"
               aria-label={`${testimonio.estrellas} de 5 estrellas`}
             >
@@ -113,7 +114,7 @@ export function ResenaCard({ testimonio, clampText = true }: ResenaCardProps) {
               <button
                 type="button"
                 onClick={() => setExpandido(!expandido)}
-                className="mt-2 text-xs font-medium text-[#C4848A] hover:underline cursor-pointer"
+                className="mt-2 text-xs font-medium text-[#A34E55] hover:underline cursor-pointer"
               >
                 {expandido ? "Leer menos" : "Leer más"}
               </button>
@@ -124,11 +125,11 @@ export function ResenaCard({ testimonio, clampText = true }: ResenaCardProps) {
         {/* Footer de la tarjeta: Autor, Fecha y Foto si hay */}
         <div className="pt-3 border-t border-[#E8DDD0]/50 flex items-center justify-between gap-3 mt-auto">
           <div className="min-w-0">
-            <h4 className="font-body font-medium text-sm text-[#2C2420] truncate">
+            <h3 className="font-body font-medium text-sm text-[#2C2420] truncate">
               {testimonio.nombre}
-            </h4>
+            </h3>
             {fechaFormateada && (
-              <p className="font-body text-xs text-[#8A7A6E]">{fechaFormateada}</p>
+              <p className="font-body text-xs text-[#6E5D52]">{fechaFormateada}</p>
             )}
           </div>
 

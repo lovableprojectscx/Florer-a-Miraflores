@@ -12,6 +12,7 @@ import {
   getProductosPorCategorias,
 } from "@/lib/queries";
 import { normalizarSlugCategoria } from "@/lib/categorias-utils";
+import { safeJsonLd } from "@/lib/utils";
 import type { CategoriaRow, ProductoRow } from "@/types/database";
 
 export const Route = createFileRoute("/categoria/$slug")({
@@ -88,8 +89,26 @@ function CategoriaPage() {
   const hijasVisibles = cat.hijas.filter((h: CategoriaRow) => idsVisibles.has(h.id));
   const hermanas = categorias.filter((c: CategoriaRow) => !c.parent_id && c.slug !== cat.slug);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://floreriamiraflores.com/" },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: cat.nombre,
+        item: `https://floreriamiraflores.com/categoria/${cat.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-[#FDFAF6]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }}
+      />
       {config && <AnnouncementBar config={config} />}
       <Header categorias={categorias} config={config} />
 
@@ -97,7 +116,7 @@ function CategoriaPage() {
         {/* Ruta + Eyebrow en una línea */}
         <nav
           aria-label="Ruta de navegación"
-          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-widest uppercase font-body font-light text-[#8A7A6E] mb-2 md:mb-3"
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-widest uppercase font-body font-light text-[#5C4D42] mb-2 md:mb-3"
         >
           <Link to="/" className="hover:text-[#2C2420] transition-colors">
             Inicio

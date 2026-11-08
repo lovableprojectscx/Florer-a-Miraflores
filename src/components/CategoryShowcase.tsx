@@ -42,7 +42,7 @@ export function CategoryShowcase({ colecciones }: Props) {
     >
       <div className="max-w-[1380px] mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
-          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2 font-normal">
+          <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#5C4D42] mb-2 font-medium">
             — Colecciones exclusivas
           </p>
           <h2 className="font-display text-[#2C2420] text-3xl md:text-5xl lg:text-6xl leading-tight font-normal">

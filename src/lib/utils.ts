@@ -51,3 +51,60 @@ export function extractIdFromSlug(slug: string): string {
 
   return slug;
 }
+
+/**
+ * Normaliza y enriquece descripciones de productos para renderizado Markdown:
+ * - Convierte viñetas unicode (•, ·, ⁃, ▪, ▫) al inicio de línea en guiones Markdown "- "
+ * - Añade doble espacio al final de líneas normales para respetar saltos de línea suaves
+ * - Respeta párrafos vacíos y listas nativas
+ */
+export function formatProductMarkdown(text: string | null | undefined): string {
+  if (!text) return "";
+
+  const normalized = text.replace(/\r\n/g, "\n");
+
+  return normalized
+    .split("\n")
+    .map((rawLine) => {
+      // Convertir viñetas unicode o guiones largos al inicio en "- "
+      const line = rawLine.replace(/^[\t ]*[•·⁃▪▫–—]\s*/, "- ");
+
+      // Si es un item de lista (- o * o 1.), dejarlo tal cual para que forme <ul> / <ol>
+      if (/^[\t ]*([*\-+]|\d+\.)\s/.test(line)) {
+        return line;
+      }
+
+      // Si la línea está vacía, dejarla vacía (para separar párrafos limpios)
+      if (line.trim() === "") {
+        return "";
+      }
+
+      // Línea de texto normal: agregar dos espacios al final para respetar salto de línea simple
+      return line + "  ";
+    })
+    .join("\n");
+}
+
+/**
+ * Remueve formato Markdown para meta tags SEO (og:description, etc.)
+ */
+export function stripMarkdown(text: string | null | undefined): string {
+  if (!text) return "";
+  return text
+    .replace(/^[\t ]*[•·⁃▪▫–—*\-+]\s*/gm, "")
+    .replace(/[*_~`#]/g, "")
+    .replace(/\n+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Serializa datos JSON-LD escapando caracteres HTML críticos (<, >, &)
+ * para prevenir cualquier inyección XSS en bloques <script type="application/ld+json">.
+ */
+export function safeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026");
+}

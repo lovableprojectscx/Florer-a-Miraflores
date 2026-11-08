@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
+import ReactMarkdown from "react-markdown";
 import { ShoppingBag, Zap, Minus, Plus, MapPin } from "lucide-react";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Header } from "@/components/Header";
@@ -9,6 +10,7 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { useCartStore } from "@/store/cart";
 import { getTagBadgeInfo } from "@/lib/tag-utils";
+import { formatProductMarkdown } from "@/lib/utils";
 import fallbackImg from "@/assets/product-box-romantico.webp";
 import type { ProductoRow, CategoriaRow, TagRow, ConfigRow } from "@/types/database";
 
@@ -180,8 +182,39 @@ export function ProductDetailView({
             <div className="my-6 border-t border-[#E8DDD0]/80" />
 
             {product.descripcion && (
-              <div className="prose text-[#2C2420]/80 font-body font-light text-sm sm:text-base leading-relaxed">
-                <p>{product.descripcion}</p>
+              <div className="font-body font-light text-sm sm:text-base text-[#2C2420]/85 leading-relaxed">
+                <ReactMarkdown
+                  components={{
+                    p: ({ children }) => <p className="mb-3 last:mb-0 leading-relaxed">{children}</p>,
+                    ul: ({ children }) => (
+                      <ul className="list-disc pl-5 space-y-1.5 my-3 marker:text-[#C4956A]">
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className="list-decimal pl-5 space-y-1.5 my-3 marker:text-[#C4956A]">
+                        {children}
+                      </ol>
+                    ),
+                    li: ({ children }) => <li className="pl-1 leading-relaxed">{children}</li>,
+                    strong: ({ children }) => (
+                      <strong className="font-semibold text-[#2C2420]">{children}</strong>
+                    ),
+                    em: ({ children }) => <em className="italic text-[#5C5046]">{children}</em>,
+                    h3: ({ children }) => (
+                      <h3 className="font-display font-medium text-base text-[#2C2420] mt-4 mb-2">
+                        {children}
+                      </h3>
+                    ),
+                    h4: ({ children }) => (
+                      <h4 className="font-display font-medium text-sm text-[#2C2420] mt-3 mb-1.5">
+                        {children}
+                      </h4>
+                    ),
+                  }}
+                >
+                  {formatProductMarkdown(product.descripcion)}
+                </ReactMarkdown>
               </div>
             )}
 

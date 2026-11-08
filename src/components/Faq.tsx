@@ -56,7 +56,7 @@ export function Faq() {
       <div className="max-w-[1536px] mx-auto">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           <div className="lg:col-span-5">
-            <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2.5 font-normal">
+            <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#5C4D42] mb-2.5 font-medium">
               — Resolvemos tus dudas
             </p>
             <h2 className="font-display text-[#2C2420] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-[1.1]">

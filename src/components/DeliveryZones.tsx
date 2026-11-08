@@ -18,7 +18,7 @@ export function DeliveryZones() {
         {/* Encabezado */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           <div>
-            <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#8A7A6E] mb-2.5 font-normal">
+            <p className="font-body text-[11px] md:text-xs tracking-[0.2em] uppercase text-[#5C4D42] mb-2.5 font-medium">
               — Llevamos tus flores
             </p>
             <h2 className="font-display text-[#2C2420] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal leading-tight">
@@ -36,7 +36,7 @@ export function DeliveryZones() {
                   <Truck className="h-5 w-5 text-[#2C2420]" strokeWidth={1.25} />
                 </div>
                 <div>
-                  <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
+                  <p className="font-body text-[10px] tracking-widest uppercase text-[#5C4D42] font-medium mb-0.5">
                     Entrega
                   </p>
                   <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">
@@ -50,7 +50,7 @@ export function DeliveryZones() {
                   <Clock className="h-5 w-5 text-[#2C2420]" strokeWidth={1.25} />
                 </div>
                 <div>
-                  <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
+                  <p className="font-body text-[10px] tracking-widest uppercase text-[#5C4D42] font-medium mb-0.5">
                     Hora límite
                   </p>
                   <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">
@@ -64,7 +64,7 @@ export function DeliveryZones() {
                   <MapPin className="h-5 w-5 text-[#2C2420]" strokeWidth={1.25} />
                 </div>
                 <div>
-                  <p className="font-body text-[10px] tracking-widest uppercase text-[#8A7A6E] mb-0.5">
+                  <p className="font-body text-[10px] tracking-widest uppercase text-[#5C4D42] font-medium mb-0.5">
                     Cobertura
                   </p>
                   <p className="font-body font-medium text-[#2C2420] text-sm sm:text-base">

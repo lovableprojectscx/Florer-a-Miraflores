@@ -47,6 +47,8 @@ export function Footer({ config }: Props) {
               <img
                 src={logoImg}
                 alt="Florería Miraflores"
+                width={160}
+                height={40}
                 className="h-9 sm:h-10 w-auto object-contain"
               />
             </Link>
@@ -55,7 +57,7 @@ export function Footer({ config }: Props) {
               ocasiones inolvidables en Lima.
             </p>
             <div className="pt-2">
-              <p className="text-[10px] tracking-widest uppercase font-body text-[#8A7A6E] mb-1">
+              <p className="text-[10px] tracking-widest uppercase font-body text-[#5C4D42] font-medium mb-1">
                 Atención Inmediata
               </p>
               <a
@@ -153,7 +155,7 @@ export function Footer({ config }: Props) {
             </h4>
             <div className="space-y-3 font-body font-light text-xs sm:text-sm text-[#2C2420]/75">
               <p>Tienda Virtual · Lima, Perú</p>
-              <p className="text-xs text-[#8A7A6E]">
+              <p className="text-xs text-[#5C4D42]">
                 Horario de atención:
                 <br />
                 <span className="text-[#2C2420] font-medium">{horario}</span>
@@ -162,7 +164,7 @@ export function Footer({ config }: Props) {
 
             {/* Redes sociales */}
             <div className="mt-6">
-              <p className="text-[10px] tracking-widest uppercase font-body text-[#8A7A6E] mb-3">
+              <p className="text-[10px] tracking-widest uppercase font-body text-[#5C4D42] font-medium mb-3">
                 Síguenos
               </p>
               <div className="flex gap-3">
@@ -228,7 +230,7 @@ export function Footer({ config }: Props) {
           </div>
 
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-            <p className="font-body font-light text-xs text-[#8A7A6E]">
+            <p className="font-body font-light text-xs text-[#5C4D42]">
               &copy; {new Date().getFullYear()} Florería Miraflores. Todos los derechos reservados.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-body">

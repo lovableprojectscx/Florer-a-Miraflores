@@ -633,6 +633,61 @@ export interface CrearPedidoInput {
 export async function crearPedido(input: CrearPedidoInput): Promise<string> {
   const MAX_INTENTOS = 3;
 
+  // ── Anti-Tampering: Validación y recálculo de montos desde la base de datos ──
+  let subtotalCalculado = 0;
+  let deliveryCalculado = input.delivery;
+
+  try {
+    // 1. Validar precio real del delivery según distrito
+    if (input.distrito_id) {
+      const { data: distData } = await supabase
+        .from("distritos")
+        .select("precio_delivery")
+        .eq("id", input.distrito_id)
+        .maybeSingle();
+      if (distData && typeof distData === "object" && "precio_delivery" in distData) {
+        const pDelivery = Number((distData as { precio_delivery: unknown }).precio_delivery);
+        if (!isNaN(pDelivery)) {
+          deliveryCalculado = pDelivery;
+        }
+      }
+    }
+
+    // 2. Validar precios reales de los productos contra el catálogo
+    const productIds = input.productos.map((p) => p.id).filter(Boolean);
+    if (productIds.length > 0) {
+      const { data: dbProducts } = await supabase
+        .from("productos")
+        .select("id, precio")
+        .in("id", productIds);
+
+      if (Array.isArray(dbProducts) && dbProducts.length > 0) {
+        const priceMap = new Map<string, number>();
+        dbProducts.forEach((p) => {
+          if (p && typeof p === "object" && "id" in p && "precio" in p) {
+            priceMap.set(String(p.id), Number(p.precio));
+          }
+        });
+
+        subtotalCalculado = input.productos.reduce((sum, item) => {
+          const precioOficial = priceMap.get(item.id) ?? item.precio;
+          return sum + precioOficial * (item.cantidad || 1);
+        }, 0);
+      } else {
+        subtotalCalculado = input.subtotal;
+      }
+    } else {
+      subtotalCalculado = input.subtotal;
+    }
+  } catch {
+    subtotalCalculado = input.subtotal;
+    deliveryCalculado = input.delivery;
+  }
+
+  const subtotalFinal = Math.max(0, subtotalCalculado || input.subtotal);
+  const deliveryFinal = Math.max(0, deliveryCalculado);
+  const totalFinal = subtotalFinal + deliveryFinal;
+
   for (let intento = 1; intento <= MAX_INTENTOS; intento++) {
     // Generar número de pedido aleatorio FM-XXXXXX
     const numero = `FM-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -649,9 +704,9 @@ export async function crearPedido(input: CrearPedidoInput): Promise<string> {
       hora_entrega: input.hora_entrega,
       notas: input.notas ?? null,
       productos: input.productos,
-      subtotal: input.subtotal,
-      delivery: input.delivery,
-      total: input.total,
+      subtotal: subtotalFinal,
+      delivery: deliveryFinal,
+      total: totalFinal,
       estado: "pendiente" as const,
       acepto_terminos: input.acepto_terminos,
     });

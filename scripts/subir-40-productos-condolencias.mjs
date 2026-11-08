@@ -8,7 +8,7 @@ const supabaseAnonKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkcmtpb21lZXNvY3RzeGVpZG11Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNjE3MzAsImV4cCI6MjA5NDczNzczMH0.PSWFG95ZjsabOTNnOLf1CkA035H7tU3EwSNnEAYy0u8";
 
 const adminEmail = "pedidos@floreriamiraflores.com";
-const adminPassword = "idenza.site";
+const adminPassword = process.env.E2E_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD || "";
 
 const CAT_IDS = {
   condolenciasPadre: "99ef0939-f5c5-4d0b-9aeb-41040869b7d4",

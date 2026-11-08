@@ -49,11 +49,11 @@ export function HomeTestimonios({ testimonios, config }: HomeTestimoniosProps) {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 px-4 sm:px-6 lg:px-8">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-[11px] tracking-[0.25em] uppercase font-body text-[#8A7A6E]">
+              <span className="text-[11px] tracking-[0.25em] uppercase font-body text-[#5C4D42] font-medium">
                 Experiencias Reales
               </span>
               {googleSummary && (
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#4285F4] bg-[#4285F4]/10 px-2 py-0.5 rounded-full">
+                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#1A73E8] bg-[#4285F4]/10 px-2 py-0.5 rounded-full">
                   <Star className="w-3 h-3 fill-[#E0A96D] text-[#E0A96D]" />
                   {googleSummary}
                 </span>
@@ -89,7 +89,7 @@ export function HomeTestimonios({ testimonios, config }: HomeTestimoniosProps) {
 
             <Link
               to="/resenas"
-              className="inline-flex items-center gap-1.5 text-xs font-body tracking-wider uppercase text-[#C4848A] hover:text-[#2C2420] font-medium transition-colors ml-2"
+              className="inline-flex items-center gap-1.5 text-xs font-body tracking-wider uppercase text-[#A34E55] hover:text-[#2C2420] font-medium transition-colors ml-2"
               data-testid="ver-todas-resenas-link"
             >
               <span>Ver todas las reseñas</span>

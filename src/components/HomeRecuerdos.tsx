@@ -48,18 +48,18 @@ export function HomeRecuerdos({ recuerdos, categorias = [], distritos = [] }: Ho
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 px-4 sm:px-6 lg:px-8">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-[11px] tracking-[0.25em] uppercase font-body text-[#8A7A6E]">
+              <span className="text-[11px] tracking-[0.25em] uppercase font-body text-[#5C4D42] font-medium">
                 Entregas Reales
               </span>
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#C4848A] bg-[#C4848A]/10 px-2 py-0.5 rounded-full">
-                <Camera className="w-3 h-3 text-[#C4848A]" />
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#A34E55] bg-[#C4848A]/10 px-2 py-0.5 rounded-full">
+                <Camera className="w-3 h-3 text-[#A34E55]" />
                 Momentos en Lima
               </span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-[#2C2420]">
               Recuerdos de entrega
             </h2>
-            <p className="mt-1 font-body font-light text-xs sm:text-sm text-[#8A7A6E]">
+            <p className="mt-1 font-body font-light text-xs sm:text-sm text-[#5C4D42]">
               Fotografías de entregas reales compartidas con el cariño de nuestros clientes.
             </p>
           </div>
@@ -89,7 +89,7 @@ export function HomeRecuerdos({ recuerdos, categorias = [], distritos = [] }: Ho
 
             <Link
               to="/recuerdos"
-              className="inline-flex items-center gap-1.5 text-xs font-body tracking-wider uppercase text-[#C4848A] hover:text-[#2C2420] font-medium transition-colors ml-2"
+              className="inline-flex items-center gap-1.5 text-xs font-body tracking-wider uppercase text-[#A34E55] hover:text-[#2C2420] font-medium transition-colors ml-2"
               data-testid="ver-todos-recuerdos-link"
             >
               <span>Ver todos los recuerdos</span>

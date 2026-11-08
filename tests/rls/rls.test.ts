@@ -236,4 +236,112 @@ describe("RLS — Políticas de seguridad con anon key", () => {
       .select();
     expect(delErr !== null || (delData ?? []).length === 0).toBe(true);
   });
+
+  it("anon NO PUEDE insertar, actualizar ni borrar en 'recuerdos', ni leer borradores", async () => {
+    const { data: drafts, error: draftErr } = await anonClient
+      .from("recuerdos")
+      .select("id, slug, publicado")
+      .eq("publicado", false)
+      .limit(5);
+    expect(draftErr).toBeNull();
+    expect(drafts ?? []).toHaveLength(0);
+
+    const { error: insertErr } = await anonClient.from("recuerdos").insert({
+      titulo: "[RLS-TEST-NO-INSERT]",
+      slug: "rls-test-no-insert-000000",
+      contenido: "Intento no autorizado",
+      publicado: false,
+    });
+    expect(isRlsError(insertErr)).toBe(true);
+  });
+
+  it("anon NO PUEDE leer correos de 'admins' ni insertar nuevos administradores", async () => {
+    const { data: emailRows, error: emailErr } = await anonClient
+      .from("admins")
+      .select("user_id, email")
+      .limit(5);
+    expect(emailErr !== null || (emailRows ?? []).length === 0).toBe(true);
+
+    const { data: idRows, error: idErr } = await anonClient
+      .from("admins")
+      .select("user_id")
+      .limit(5);
+    expect(idErr).toBeNull();
+    expect(idRows ?? []).toHaveLength(0);
+  });
+
+  it("anon NO PUEDE subir ni sobrescribir archivos en Supabase Storage ('productos', 'banners', 'categorias')", async () => {
+    const payload = new Blob(["rls-probe"], { type: "text/plain" });
+
+    for (const bucket of ["productos", "banners", "categorias"] as const) {
+      const { error: uploadErr } = await anonClient.storage
+        .from(bucket)
+        .upload("__rls_probe_unauthorized__.txt", payload, { upsert: false });
+      expect(
+        uploadErr !== null,
+        `Bucket '${bucket}' permitió subida anónima inesperada`,
+      ).toBe(true);
+
+      const { error: updateErr } = await anonClient.storage
+        .from(bucket)
+        .update("__rls_probe_unauthorized__.txt", payload, { upsert: true });
+      expect(
+        updateErr !== null,
+        `Bucket '${bucket}' permitió actualización anónima inesperada`,
+      ).toBe(true);
+    }
+  });
+
+  it("Trigger PostgreSQL Anti-Tampering sobreescribe precios manipulados (S/ 0.01) y fuerza estado 'pendiente' en 'pedidos'", async () => {
+    const [{ data: prods, error: prodErr }, { data: dists, error: distErr }] = await Promise.all([
+      anonClient.from("productos").select("id, nombre, precio").eq("activo", true).limit(1),
+      anonClient.from("distritos").select("id, nombre, precio_delivery").eq("activo", true).limit(1),
+    ]);
+    expect(prodErr).toBeNull();
+    expect(distErr).toBeNull();
+    expect((prods ?? []).length).toBe(1);
+    expect((dists ?? []).length).toBe(1);
+
+    const realProd = prods![0];
+    const realDist = dists![0];
+    const qty = 2;
+    const expectedSubtotal = (Number(realProd.precio) * qty).toFixed(2);
+    const expectedDelivery = Number(realDist.precio_delivery).toFixed(2);
+    const expectedTotal = (Number(realProd.precio) * qty + Number(realDist.precio_delivery)).toFixed(2);
+
+    // Intento de ataque directo vía PostgREST / Postman enviando precio S/ 0.01, delivery S/ 0 y estado 'entregado'.
+    // La marca '__RLS_TAMPER_DRY_RUN__' ejecuta todo el cálculo del trigger y aborta con código P0099 sin guardar filas.
+    const { error: tamperErr } = await anonClient.from("pedidos").insert({
+      numero: "FM-000000",
+      nombre_cliente: "Auditoría Anti-Tampering",
+      telefono: "999000111",
+      email: "auditoria@floreriamiraflores.com",
+      distrito_id: realDist.id,
+      direccion: "Av. Larco 100",
+      fecha_entrega: "2026-12-01",
+      hora_entrega: "manana",
+      productos: [
+        {
+          id: realProd.id,
+          nombre: "PRECIO ADULTERADO",
+          precio: 0.01,
+          cantidad: qty,
+          imagen: "",
+        },
+      ],
+      subtotal: 0.02,
+      delivery: 0,
+      total: 0.02,
+      estado: "entregado",
+      izi_transaction_id: "FAKE-TXN-999",
+      acepto_terminos: true,
+      notas: "__RLS_TAMPER_DRY_RUN__",
+    });
+
+    expect(tamperErr).not.toBeNull();
+    expect(tamperErr?.code).toBe("P0099");
+    expect(tamperErr?.message).toContain(
+      `ANTI_TAMPER_VERIFIED:subtotal=${expectedSubtotal}|delivery=${expectedDelivery}|total=${expectedTotal}|estado=pendiente`,
+    );
+  });
 });
