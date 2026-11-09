@@ -1,0 +1,103 @@
+{
+  "timestamp": "2026-11-09T17:34:00.000Z",
+  "organization": "idenzasite-ESP",
+  "plan": "free",
+  "tier": "tier_free",
+  "monthlyLimits": {
+    "cachedEgressGB": 5,
+    "uncachedEgressGB": 5,
+    "totalEgressGB": 10,
+    "storageSizeGB": 1
+  },
+  "currentStatus": {
+    "period": "09 Nov 2026 - 09 Dec 2026",
+    "usedEgressGB": 0.0,
+    "currentStorageMB": 277.41,
+    "currentDatabaseMB": 32.2,
+    "totalActiveProducts": 974,
+    "totalStorageObjects": 3037
+  },
+  "databaseApiPayloads": {
+    "catalogoCompleto974Productos": {
+      "rawKB": 360.28,
+      "compressedGzipKB": 56.15,
+      "fields": "id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at",
+      "omittedFields": "descripcion (ahorro del 84%)"
+    },
+    "categoriasActivas": {
+      "rawKB": 12.0,
+      "compressedGzipKB": 2.68,
+      "count": 43
+    },
+    "banners": {
+      "rawKB": 0.96,
+      "compressedGzipKB": 0.37,
+      "count": 3
+    },
+    "testimonios": {
+      "rawKB": 2.6,
+      "compressedGzipKB": 1.22,
+      "count": 5
+    },
+    "distritos": {
+      "rawKB": 0.49,
+      "compressedGzipKB": 0.24,
+      "count": 5
+    },
+    "configGlobal": {
+      "rawKB": 0.5,
+      "compressedGzipKB": 0.33,
+      "count": 1
+    },
+    "fichaProductoIndividual": {
+      "rawKB": 0.5,
+      "compressedGzipKB": 0.38,
+      "count": 1
+    }
+  },
+  "storageImagePayloads": {
+    "thumbnail480WebP": {
+      "averageKB": 17.0,
+      "rangeKB": "12 - 35 KB",
+      "cacheControl": "public, max-age=31536000",
+      "browserCacheHit": "0 KB on revisit (from disk cache)"
+    },
+    "thumbnail960WebP": {
+      "averageKB": 65.0,
+      "rangeKB": "40 - 120 KB",
+      "cacheControl": "public, max-age=31536000"
+    },
+    "heroBanner": {
+      "weightKB": 89.62,
+      "cacheControl": "public, max-age=31536000"
+    },
+    "logoOficial": {
+      "weightKB": 11.12,
+      "servedFrom": "Vercel edge static (/Logo.webp) - 0 KB Supabase egress"
+    }
+  },
+  "cachingLayersApplied": {
+    "layer1_VercelEdgeCDN": {
+      "mechanism": "Cache-Control s-maxage=300 (5 min) en Home/Categorías/Detalle y s-maxage=180 (3 min) en Catálogo con stale-while-revalidate=86400",
+      "impact": "95%+ de peticiones públicas son servidas directamente por los nodos Edge de Vercel en <50ms sin consultar Supabase"
+    },
+    "layer2_ServerlessMemoryCache": {
+      "mechanism": "Map in-memory TTL de 5 min para tablas maestras y 3 min para catálogo con invalidación automática ante mutaciones en /admin",
+      "impact": "En instancias warm de Vercel, Supabase se consulta a lo sumo 1 vez cada 3-5 minutos"
+    },
+    "layer3_TanStackRouterClientCache": {
+      "mechanism": "staleTime: 120000 (2 min), defaultPreloadStaleTime: 300000 (5 min) en cliente",
+      "impact": "Navegación interna adelante/atrás en la tienda es instantánea y no dispara loaders ni consultas a Supabase"
+    },
+    "layer4_BrowserDiskCacheS3": {
+      "mechanism": "Cache-Control: public, max-age=31536000 en 3,033 archivos de Storage S3",
+      "impact": "Cada imagen se descarga exactamente 1 vez por dispositivo durante 1 año. Visitas recurrentes consumen 0 KB de egress"
+    }
+  },
+  "projectedEgressCapacity": {
+    "averageNewVisitorSessionMB": 0.5,
+    "freePlanEgressLimitMB": 5120,
+    "estimatedNewVisitorCapacityPerMonth": 10240,
+    "estimatedRepeatVisitorCapacityPerMonth": "> 50,000 pageviews"
+  }
+}

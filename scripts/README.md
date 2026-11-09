@@ -20,6 +20,7 @@ Este directorio reúne los scripts ejecutables para el pipeline de build, audito
 | `scripts/generar-certificaciones-qa.mjs` | Ejecuta las suites en vivo contra Supabase, mide latencias y compila los 6 informes formales en PDF. | `docs/certificaciones-qa-final/pdf/*.pdf` |
 | `scripts/load-test.mjs` | Prueba de estrés de 100 usuarios concurrentes (100 VUs / 500 peticiones) contra el Edge CDN. | `docs/certificaciones-qa-final/datos/load-test-metrics.json` |
 | `scripts/saneamiento-storage-egress.mjs` | Saneamiento maestro de Storage S3: purga de huérfanos, compresión `<= 1600px`, miniaturas `480w/960w` y `Cache-Control: 31536000`. | `docs/certificaciones-qa-final/datos/storage-egress-audit.json` |
+| `scripts/auditoria-egress-real.mjs` | Auditoría empírica de Egress REST/API de Supabase: mide bytes brutos y Gzip por endpoint y calcula la proyección mensual. | `docs/certificaciones-qa-final/datos/egress-audit-metrics.json` |
 
 ---
 

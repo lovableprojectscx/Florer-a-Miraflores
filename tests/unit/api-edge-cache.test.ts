@@ -2,19 +2,21 @@ import { describe, expect, it } from "vitest";
 import { resolveCacheControl } from "../../api/index.js";
 
 describe("Reglas de Caché Edge en Vercel (resolveCacheControl en api/index.js)", () => {
-  it("GET / asigna cabecera s-maxage=15 y stale-while-revalidate=60 para absorber tráfico en CDN", () => {
+  it("GET / asigna cabecera s-maxage=300 y stale-while-revalidate=86400 para absorber tráfico en CDN", () => {
     const cacheHeader = resolveCacheControl("/", "GET", 200);
-    expect(cacheHeader).toBe("public, s-maxage=15, stale-while-revalidate=60");
+    expect(cacheHeader).toBe("public, s-maxage=300, stale-while-revalidate=86400");
   });
 
   it("HEAD / también recibe cabecera pública de Edge CDN", () => {
     const cacheHeader = resolveCacheControl("/", "HEAD", 200);
-    expect(cacheHeader).toBe("public, s-maxage=15, stale-while-revalidate=60");
+    expect(cacheHeader).toBe("public, s-maxage=300, stale-while-revalidate=86400");
   });
 
   it("GET /catalogo y páginas públicas de catálogo/categorías/productos se cachean en el Edge", () => {
+    const headerCatalogo = resolveCacheControl("/catalogo", "GET", 200);
+    expect(headerCatalogo).toBe("public, s-maxage=180, stale-while-revalidate=86400");
+
     const rutasPublicas = [
-      "/catalogo",
       "/categoria/ramos",
       "/categoria/rosas/premium",
       "/producto/ramo-primavera-123",
@@ -28,7 +30,7 @@ describe("Reglas de Caché Edge en Vercel (resolveCacheControl en api/index.js)"
 
     for (const ruta of rutasPublicas) {
       const header = resolveCacheControl(ruta, "GET", 200);
-      expect(header).toBe("public, s-maxage=15, stale-while-revalidate=60");
+      expect(header).toBe("public, s-maxage=300, stale-while-revalidate=86400");
     }
   });
 

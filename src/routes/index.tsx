@@ -29,6 +29,7 @@ import {
 } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
+  staleTime: 120_000, // 2 minutos de frescura en cliente: evita re-fetch masivo en navegación interna
   loader: async () => {
     // Fetch paralelo — todos los datos del home en una sola ronda
     const [

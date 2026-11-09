@@ -10,7 +10,8 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreload: false,
-    defaultPreloadStaleTime: 30000,
+    defaultStaleTime: 120_000, // 2 minutos de frescura en cliente: previene re-queries en navegación interna
+    defaultPreloadStaleTime: 300_000, // 5 minutos para preload
   });
 
   return router;

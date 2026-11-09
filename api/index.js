@@ -69,8 +69,11 @@ export function resolveCacheControl(url, method = "GET", status = 200, headers =
     !hasBypassParam &&
     !isAdminOrAuth
   ) {
-    // Páginas públicas SSR: cachear 15s en Vercel Edge CDN para proteger la BD ante picos, stale-while-revalidate 60s
-    return "public, s-maxage=15, stale-while-revalidate=60";
+    // Páginas públicas SSR: cachear en Edge CDN de Vercel para blindar Supabase Egress
+    // Catálogo masivo: 3 min (180s) | Resto de la tienda (Home, Producto, Categorías, Nosotros): 5 min (300s)
+    const isCatalog = pathOnly === "/catalogo";
+    const maxAgeSec = isCatalog ? 180 : 300;
+    return `public, s-maxage=${maxAgeSec}, stale-while-revalidate=86400`;
   }
   // Rutas administrativas, mutaciones o navegación autenticada: nunca cachear
   return "private, no-cache, no-store, must-revalidate";

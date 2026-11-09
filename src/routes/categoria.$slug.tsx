@@ -23,6 +23,7 @@ import { safeJsonLd } from "@/lib/utils";
 import type { CategoriaRow, ProductoRow } from "@/types/database";
 
 export const Route = createFileRoute("/categoria/$slug")({
+  staleTime: 120_000, // 2 minutos de frescura en cliente: evita re-fetch masivo en navegación interna
   loader: async ({ params }) => {
     const normSlug = normalizarSlugCategoria(params.slug);
     const [cat, categorias, config] = await Promise.all([

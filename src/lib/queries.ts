@@ -52,7 +52,9 @@ interface CacheEntry<T> {
 }
 
 const memoryCache = new Map<string, CacheEntry<unknown>>();
-const DEFAULT_TTL_MS = 60 * 1000; // 60 segundos de vida en memoria
+const DEFAULT_TTL_MS = 60 * 1000; // 60 segundos de vida en memoria por defecto
+const STATIC_TTL_MS = 5 * 60 * 1000; // 5 minutos para tablas maestras estáticas (categorias, banners, distritos, config, tags)
+const CATALOG_TTL_MS = 3 * 60 * 1000; // 3 minutos para listados de catálogo y productos por categoría
 
 export function clearQueryCache(prefixOrKey?: string): void {
   if (!prefixOrKey) {
@@ -149,14 +151,18 @@ export async function getCategoriaIdsConProductosActivos(): Promise<string[]> {
  * productos activos (directos o en subcategorías hijas activas).
  */
 export async function getCategorias(): Promise<CategoriaRow[]> {
-  return withMemoryCache("categorias", async () => {
-    const [todas, idsConProductos] = await Promise.all([
-      getTodasCategoriasActivas(),
-      getCategoriaIdsConProductosActivos(),
-    ]);
+  return withMemoryCache(
+    "categorias",
+    async () => {
+      const [todas, idsConProductos] = await Promise.all([
+        getTodasCategoriasActivas(),
+        getCategoriaIdsConProductosActivos(),
+      ]);
 
-    return filtrarCategoriasVisibles(todas, idsConProductos);
-  });
+      return filtrarCategoriasVisibles(todas, idsConProductos);
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 /**
@@ -165,34 +171,38 @@ export async function getCategorias(): Promise<CategoriaRow[]> {
  */
 export async function getCategoriaPorSlug(slug: string): Promise<CategoriaConHijas | null> {
   const normSlug = normalizarSlugCategoria(slug);
-  return withMemoryCache(`categoria_slug_${normSlug}`, async () => {
-    // 1. Obtener la categoría padre
-    const { data: cat, error: catError } = await supabase
-      .from("categorias")
-      .select("*")
-      .eq("slug", normSlug)
-      .eq("activo", true)
-      .maybeSingle();
+  return withMemoryCache(
+    `categoria_slug_${normSlug}`,
+    async () => {
+      // 1. Obtener la categoría padre
+      const { data: cat, error: catError } = await supabase
+        .from("categorias")
+        .select("*")
+        .eq("slug", normSlug)
+        .eq("activo", true)
+        .maybeSingle();
 
-    if (catError) {
-      throw new Error(`[Supabase] ${catError.message}`);
-    }
-    if (!cat) return null;
+      if (catError) {
+        throw new Error(`[Supabase] ${catError.message}`);
+      }
+      if (!cat) return null;
 
-    // 2. Obtener sus hijas
-    const { data: hijas, error: hijasError } = await supabase
-      .from("categorias")
-      .select("*")
-      .eq("parent_id", cat.id)
-      .eq("activo", true)
-      .order("orden", { ascending: true });
+      // 2. Obtener sus hijas
+      const { data: hijas, error: hijasError } = await supabase
+        .from("categorias")
+        .select("*")
+        .eq("parent_id", cat.id)
+        .eq("activo", true)
+        .order("orden", { ascending: true });
 
-    if (hijasError) {
-      throw new Error(`[Supabase] ${hijasError.message}`);
-    }
+      if (hijasError) {
+        throw new Error(`[Supabase] ${hijasError.message}`);
+      }
 
-    return { ...cat, hijas: hijas ?? [] };
-  });
+      return { ...cat, hijas: hijas ?? [] };
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Productos ────────────────────────────────────────────────────────────────
@@ -202,16 +212,20 @@ export async function getCategoriaPorSlug(slug: string): Promise<CategoriaConHij
  * ordenados por `orden`.
  */
 export async function getProductosPorCategoria(categoriaId: string): Promise<ProductoRow[]> {
-  return withMemoryCache(`productos_cat_${categoriaId}`, async () => {
-    const { data, error } = await supabase
-      .from("productos")
-      .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
-      .eq("categoria_id", categoriaId)
-      .eq("activo", true)
-      .order("orden", { ascending: true });
+  return withMemoryCache(
+    `productos_cat_${categoriaId}`,
+    async () => {
+      const { data, error } = await supabase
+        .from("productos")
+        .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
+        .eq("categoria_id", categoriaId)
+        .eq("activo", true)
+        .order("orden", { ascending: true });
 
-    return throwOnError(data as ProductoRow[], error);
-  });
+      return throwOnError(data as ProductoRow[], error);
+    },
+    CATALOG_TTL_MS,
+  );
 }
 
 /**
@@ -220,16 +234,20 @@ export async function getProductosPorCategoria(categoriaId: string): Promise<Pro
 export async function getProductosPorCategorias(categoriaIds: string[]): Promise<ProductoRow[]> {
   if (categoriaIds.length === 0) return [];
   const cacheKey = `productos_cats_${categoriaIds.slice().sort().join(",")}`;
-  return withMemoryCache(cacheKey, async () => {
-    const { data, error } = await supabase
-      .from("productos")
-      .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
-      .in("categoria_id", categoriaIds)
-      .eq("activo", true)
-      .order("orden", { ascending: true });
+  return withMemoryCache(
+    cacheKey,
+    async () => {
+      const { data, error } = await supabase
+        .from("productos")
+        .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
+        .in("categoria_id", categoriaIds)
+        .eq("activo", true)
+        .order("orden", { ascending: true });
 
-    return throwOnError(data as ProductoRow[], error);
-  });
+      return throwOnError(data as ProductoRow[], error);
+    },
+    CATALOG_TTL_MS,
+  );
 }
 
 /**
@@ -238,15 +256,19 @@ export async function getProductosPorCategorias(categoriaIds: string[]): Promise
  * Optimizado: omite descripcion en listados masivos para reducir egress de BD (-84%).
  */
 export async function getProductosActivos(): Promise<ProductoRow[]> {
-  return withMemoryCache("productos_activos", async () => {
-    const { data, error } = await supabase
-      .from("productos")
-      .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
-      .eq("activo", true)
-      .order("orden", { ascending: true });
+  return withMemoryCache(
+    "productos_activos",
+    async () => {
+      const { data, error } = await supabase
+        .from("productos")
+        .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
+        .eq("activo", true)
+        .order("orden", { ascending: true });
 
-    return throwOnError(data as ProductoRow[], error);
-  });
+      return throwOnError(data as ProductoRow[], error);
+    },
+    CATALOG_TTL_MS,
+  );
 }
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -298,11 +320,15 @@ export async function getProductoPorId(id: string): Promise<ProductoRow | null> 
  * La tabla `config` siempre tiene exactamente 1 fila (upsert).
  */
 export async function getConfig(): Promise<ConfigRow | null> {
-  return withMemoryCache("config", async () => {
-    const { data, error } = await supabase.from("config").select("*").maybeSingle();
-    if (error) throw new Error(`[Supabase] ${error.message}`);
-    return data;
-  });
+  return withMemoryCache(
+    "config",
+    async () => {
+      const { data, error } = await supabase.from("config").select("*").maybeSingle();
+      if (error) throw new Error(`[Supabase] ${error.message}`);
+      return data;
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Banners ──────────────────────────────────────────────────────────────────
@@ -311,15 +337,19 @@ export async function getConfig(): Promise<ConfigRow | null> {
  * Devuelve los banners activos ordenados por `orden` ascendente.
  */
 export async function getBanners(): Promise<BannerRow[]> {
-  return withMemoryCache("banners", async () => {
-    const { data, error } = await supabase
-      .from("banners")
-      .select("*")
-      .eq("activo", true)
-      .order("orden", { ascending: true });
+  return withMemoryCache(
+    "banners",
+    async () => {
+      const { data, error } = await supabase
+        .from("banners")
+        .select("*")
+        .eq("activo", true)
+        .order("orden", { ascending: true });
 
-    return throwOnError(data, error);
-  });
+      return throwOnError(data, error);
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Popup ────────────────────────────────────────────────────────────────────
@@ -329,19 +359,23 @@ export async function getBanners(): Promise<BannerRow[]> {
  * Retorna null si no existe o si está inactivo.
  */
 export async function getPopup(): Promise<PopupRow | null> {
-  return withMemoryCache("popup", async () => {
-    const hoy = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
+  return withMemoryCache(
+    "popup",
+    async () => {
+      const hoy = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
 
-    const { data, error } = await supabase
-      .from("popup")
-      .select("*")
-      .eq("activo", true)
-      .or(`fecha_expiracion.is.null,fecha_expiracion.gte.${hoy}`)
-      .maybeSingle();
+      const { data, error } = await supabase
+        .from("popup")
+        .select("*")
+        .eq("activo", true)
+        .or(`fecha_expiracion.is.null,fecha_expiracion.gte.${hoy}`)
+        .maybeSingle();
 
-    if (error) throw new Error(`[Supabase] ${error.message}`);
-    return data;
-  });
+      if (error) throw new Error(`[Supabase] ${error.message}`);
+      return data;
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Distritos ────────────────────────────────────────────────────────────────
@@ -351,15 +385,19 @@ export async function getPopup(): Promise<PopupRow | null> {
  * Se usan en el checkout para mostrar opciones y calcular el delivery.
  */
 export async function getDistritos(): Promise<DistritoRow[]> {
-  return withMemoryCache("distritos", async () => {
-    const { data, error } = await supabase
-      .from("distritos")
-      .select("*")
-      .eq("activo", true)
-      .order("nombre", { ascending: true });
+  return withMemoryCache(
+    "distritos",
+    async () => {
+      const { data, error } = await supabase
+        .from("distritos")
+        .select("*")
+        .eq("activo", true)
+        .order("nombre", { ascending: true });
 
-    return throwOnError(data, error);
-  });
+      return throwOnError(data, error);
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Ocasiones home ───────────────────────────────────────────────────────────
@@ -368,15 +406,19 @@ export async function getDistritos(): Promise<DistritoRow[]> {
  * Devuelve las ocasiones del home activas ordenadas por `orden`.
  */
 export async function getOcasiones(): Promise<OcasionHomeRow[]> {
-  return withMemoryCache("ocasiones_home", async () => {
-    const { data, error } = await supabase
-      .from("ocasiones_home")
-      .select("*")
-      .eq("activo", true)
-      .order("orden", { ascending: true });
+  return withMemoryCache(
+    "ocasiones_home",
+    async () => {
+      const { data, error } = await supabase
+        .from("ocasiones_home")
+        .select("*")
+        .eq("activo", true)
+        .order("orden", { ascending: true });
 
-    return throwOnError(data, error);
-  });
+      return throwOnError(data, error);
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Tags del home ─────────────────────────────────────────────────────────────────
@@ -385,11 +427,15 @@ export async function getOcasiones(): Promise<OcasionHomeRow[]> {
  * Devuelve todos los tags (con caché en memoria para evitar peticiones redundantes).
  */
 export async function getAllTags(): Promise<TagRow[]> {
-  return withMemoryCache("all_tags", async () => {
-    const { data, error } = await supabase.from("tags").select("*");
-    if (error) throw new Error(`[Supabase] ${error.message}`);
-    return (data as TagRow[]) || [];
-  });
+  return withMemoryCache(
+    "all_tags",
+    async () => {
+      const { data, error } = await supabase.from("tags").select("*");
+      if (error) throw new Error(`[Supabase] ${error.message}`);
+      return (data as TagRow[]) || [];
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 /**
@@ -397,16 +443,20 @@ export async function getAllTags(): Promise<TagRow[]> {
  * ordenados por `orden` ascendente.
  */
 export async function getTags(): Promise<TagRow[]> {
-  return withMemoryCache("tags_home", async () => {
-    const { data, error } = await supabase
-      .from("tags")
-      .select("*")
-      .eq("activo", true)
-      .eq("mostrar_en_home", true)
-      .order("orden", { ascending: true });
+  return withMemoryCache(
+    "tags_home",
+    async () => {
+      const { data, error } = await supabase
+        .from("tags")
+        .select("*")
+        .eq("activo", true)
+        .eq("mostrar_en_home", true)
+        .order("orden", { ascending: true });
 
-    return throwOnError(data, error);
-  });
+      return throwOnError(data, error);
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 /**
@@ -414,25 +464,31 @@ export async function getTags(): Promise<TagRow[]> {
  * (o sus variantes históricas) en su array `tags[]`.
  */
 export async function getProductosPorTag(clave: string, limit = 5): Promise<ProductoRow[]> {
-  return withMemoryCache(`productos_tag_${clave}_${limit}`, async () => {
-    const isOrquideas = clave.toLowerCase() === "orquideas" || clave.toLowerCase() === "orquidea";
-    const claves = resolverClavesTag(clave);
+  return withMemoryCache(
+    `productos_tag_${clave}_${limit}`,
+    async () => {
+      const isOrquideas = clave.toLowerCase() === "orquideas" || clave.toLowerCase() === "orquidea";
+      const claves = resolverClavesTag(clave);
 
-    let query = supabase
-      .from("productos")
-      .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
-      .eq("activo", true);
+      let query = supabase
+        .from("productos")
+        .select("id, nombre, precio, imagenes, tags, categoria_id, activo, orden, created_at")
+        .eq("activo", true);
 
-    if (isOrquideas) {
-      query = query.or("tags.cs.{orquideas},categoria_id.eq.50c4251e-d651-40e7-a8b4-b77c0119156c");
-    } else {
-      query = query.overlaps("tags", claves);
-    }
+      if (isOrquideas) {
+        query = query.or(
+          "tags.cs.{orquideas},categoria_id.eq.50c4251e-d651-40e7-a8b4-b77c0119156c",
+        );
+      } else {
+        query = query.overlaps("tags", claves);
+      }
 
-    const { data, error } = await query.order("orden", { ascending: true }).limit(limit);
+      const { data, error } = await query.order("orden", { ascending: true }).limit(limit);
 
-    return throwOnError(data as ProductoRow[], error);
-  });
+      return throwOnError(data as ProductoRow[], error);
+    },
+    CATALOG_TTL_MS,
+  );
 }
 
 /**
@@ -473,13 +529,15 @@ export async function getTodosProductosPorTag(clave: string): Promise<ProductoRo
  * Útil para renderizar el CategoryShowcase con nombre, slug e imagen real.
  */
 export async function getColecciones(): Promise<ColeccionConCategoria[]> {
-  return withMemoryCache("colecciones", async () => {
-    // Paso 1: traer colecciones con datos de la categoría y las categorías visibles con productos
-    const [{ data, error }, categoriasVisibles] = await Promise.all([
-      supabase
-        .from("colecciones_home")
-        .select(
-          `
+  return withMemoryCache(
+    "colecciones",
+    async () => {
+      // Paso 1: traer colecciones con datos de la categoría y las categorías visibles con productos
+      const [{ data, error }, categoriasVisibles] = await Promise.all([
+        supabase
+          .from("colecciones_home")
+          .select(
+            `
       *,
       categoria:categorias (
         id,
@@ -490,116 +548,120 @@ export async function getColecciones(): Promise<ColeccionConCategoria[]> {
         activo
       )
     `,
-        )
-        .eq("activo", true)
-        .order("orden", { ascending: true }),
-      getCategorias(),
-    ]);
+          )
+          .eq("activo", true)
+          .order("orden", { ascending: true }),
+        getCategorias(),
+      ]);
 
-    if (error) throw new Error(`[Supabase] ${error.message}`);
+      if (error) throw new Error(`[Supabase] ${error.message}`);
 
-    // Las colecciones configuradas por Jack deben mostrarse SIEMPRE en su orden,
-    // salvo que la categoría esté desactivada (activo = false). Si tiene 0 productos activos,
-    // la colección se muestra igual.
-    const colecciones = (
-      (data ?? []) as (ColeccionConCategoria & { categoria: { activo?: boolean } })[]
-    ).filter((c) => {
-      const cat = c.categoria as { id?: string; activo?: boolean } | null;
-      return Boolean(cat?.id && cat.activo !== false);
-    }) as ColeccionConCategoria[];
+      // Las colecciones configuradas por Jack deben mostrarse SIEMPRE en su orden,
+      // salvo que la categoría esté desactivada (activo = false). Si tiene 0 productos activos,
+      // la colección se muestra igual.
+      const colecciones = (
+        (data ?? []) as (ColeccionConCategoria & { categoria: { activo?: boolean } })[]
+      ).filter((c) => {
+        const cat = c.categoria as { id?: string; activo?: boolean } | null;
+        return Boolean(cat?.id && cat.activo !== false);
+      }) as ColeccionConCategoria[];
 
-    // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas visibles
-    if (colecciones.length < 6) {
-      const existingCatIds = new Set(
-        colecciones.map((c) => (c.categoria as { id?: string })?.id).filter(Boolean),
-      );
-      const targetSlugs = ["cumpleanos", "ramos", "tulipanes", "girasoles", "arreglos-florales"];
-      const extras = categoriasVisibles.filter((c) => targetSlugs.includes(c.slug));
+      // Si hay menos de 6 colecciones en colecciones_home, complementar con categorías destacadas visibles
+      if (colecciones.length < 6) {
+        const existingCatIds = new Set(
+          colecciones.map((c) => (c.categoria as { id?: string })?.id).filter(Boolean),
+        );
+        const targetSlugs = ["cumpleanos", "ramos", "tulipanes", "girasoles", "arreglos-florales"];
+        const extras = categoriasVisibles.filter((c) => targetSlugs.includes(c.slug));
 
-      for (const ext of extras) {
-        if (!existingCatIds.has(ext.id) && colecciones.length < 6) {
-          existingCatIds.add(ext.id);
-          colecciones.push({
-            id: `extra-${ext.id}`,
-            categoria_id: ext.id,
-            imagen_custom_url: null,
-            orden: colecciones.length,
-            activo: true,
-            categoria: {
-              id: ext.id,
-              nombre: ext.nombre,
-              slug: ext.slug,
-              imagen_url: ext.imagen_url,
-              parent_id: ext.parent_id,
-            },
-          } as ColeccionConCategoria);
+        for (const ext of extras) {
+          if (!existingCatIds.has(ext.id) && colecciones.length < 6) {
+            existingCatIds.add(ext.id);
+            colecciones.push({
+              id: `extra-${ext.id}`,
+              categoria_id: ext.id,
+              imagen_custom_url: null,
+              orden: colecciones.length,
+              activo: true,
+              categoria: {
+                id: ext.id,
+                nombre: ext.nombre,
+                slug: ext.slug,
+                imagen_url: ext.imagen_url,
+                parent_id: ext.parent_id,
+              },
+            } as ColeccionConCategoria);
+          }
         }
       }
-    }
 
-    // Orden equilibrado para el Bento Collage:
-    // 0: Hero Bento (Amor / Aniversario)
-    // 1: Vertical Bento (Graduación)
-    // 2, 3, 4, 5: Cuarteto inferior (Cumpleaños, Ramos, Tulipanes, Ofertas)
-    const preferredOrder = [
-      "amor-aniversario",
-      "graduacion",
-      "cumpleanos",
-      "ramos",
-      "tulipanes",
-      "ofertas",
-    ];
+      // Orden equilibrado para el Bento Collage:
+      // 0: Hero Bento (Amor / Aniversario)
+      // 1: Vertical Bento (Graduación)
+      // 2, 3, 4, 5: Cuarteto inferior (Cumpleaños, Ramos, Tulipanes, Ofertas)
+      const preferredOrder = [
+        "amor-aniversario",
+        "graduacion",
+        "cumpleanos",
+        "ramos",
+        "tulipanes",
+        "ofertas",
+      ];
 
-    colecciones.sort((a, b) => {
-      const isExtraA = String(a.id).startsWith("extra-");
-      const isExtraB = String(b.id).startsWith("extra-");
-      if (!isExtraA && !isExtraB) {
+      colecciones.sort((a, b) => {
+        const isExtraA = String(a.id).startsWith("extra-");
+        const isExtraB = String(b.id).startsWith("extra-");
+        if (!isExtraA && !isExtraB) {
+          return (a.orden ?? 0) - (b.orden ?? 0);
+        }
+        if (!isExtraA && isExtraB) return -1;
+        if (isExtraA && !isExtraB) return 1;
+
+        const slugA = (a.categoria as { slug?: string } | undefined)?.slug ?? "";
+        const slugB = (b.categoria as { slug?: string } | undefined)?.slug ?? "";
+        const idxA = preferredOrder.indexOf(slugA);
+        const idxB = preferredOrder.indexOf(slugB);
+        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+        if (idxA !== -1) return -1;
+        if (idxB !== -1) return 1;
         return (a.orden ?? 0) - (b.orden ?? 0);
-      }
-      if (!isExtraA && isExtraB) return -1;
-      if (isExtraA && !isExtraB) return 1;
+      });
 
-      const slugA = (a.categoria as { slug?: string } | undefined)?.slug ?? "";
-      const slugB = (b.categoria as { slug?: string } | undefined)?.slug ?? "";
-      const idxA = preferredOrder.indexOf(slugA);
-      const idxB = preferredOrder.indexOf(slugB);
-      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-      if (idxA !== -1) return -1;
-      if (idxB !== -1) return 1;
-      return (a.orden ?? 0) - (b.orden ?? 0);
-    });
+      // Paso 2: recopilar los parent_ids únicos y buscar sus slugs
+      const parentIds = [
+        ...new Set(
+          colecciones
+            .map((c) => (c.categoria as { parent_id?: string | null })?.parent_id)
+            .filter(Boolean) as string[],
+        ),
+      ];
 
-    // Paso 2: recopilar los parent_ids únicos y buscar sus slugs
-    const parentIds = [
-      ...new Set(
-        colecciones
-          .map((c) => (c.categoria as { parent_id?: string | null })?.parent_id)
-          .filter(Boolean) as string[],
-      ),
-    ];
+      if (parentIds.length === 0) return colecciones;
 
-    if (parentIds.length === 0) return colecciones;
+      const { data: padres } = await supabase
+        .from("categorias")
+        .select("id, slug")
+        .in("id", parentIds);
 
-    const { data: padres } = await supabase
-      .from("categorias")
-      .select("id, slug")
-      .in("id", parentIds);
+      const padreMap: Record<string, string> = {};
+      (padres ?? []).forEach((p: { id: string; slug: string }) => {
+        padreMap[p.id] = p.slug;
+      });
 
-    const padreMap: Record<string, string> = {};
-    (padres ?? []).forEach((p: { id: string; slug: string }) => {
-      padreMap[p.id] = p.slug;
-    });
-
-    // Paso 3: inyectar el slug del padre en cada colección
-    return colecciones.map((col) => {
-      const parentId = (col.categoria as { parent_id?: string | null })?.parent_id;
-      if (!parentId || !padreMap[parentId]) return col;
-      return {
-        ...col,
-        categoria: col.categoria ? { ...col.categoria, padre: { slug: padreMap[parentId] } } : null,
-      };
-    });
-  });
+      // Paso 3: inyectar el slug del padre en cada colección
+      return colecciones.map((col) => {
+        const parentId = (col.categoria as { parent_id?: string | null })?.parent_id;
+        if (!parentId || !padreMap[parentId]) return col;
+        return {
+          ...col,
+          categoria: col.categoria
+            ? { ...col.categoria, padre: { slug: padreMap[parentId] } }
+            : null,
+        };
+      });
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Pedidos ──────────────────────────────────────────────────────────────────
@@ -778,35 +840,39 @@ export async function getTestimonios(): Promise<TestimonioRow[]> {
  * Devuelve hasta 6 testimonios destacados activos para la franja del Home.
  */
 export async function getTestimoniosHome(): Promise<TestimonioRow[]> {
-  return withMemoryCache("testimonios_home", async () => {
-    try {
-      const { data, error } = await supabase
-        .from("testimonios")
-        .select("*")
-        .eq("activo", true)
-        .order("destacado", { ascending: false })
-        .order("orden", { ascending: true })
-        .order("created_at", { ascending: false })
-        .limit(6);
+  return withMemoryCache(
+    "testimonios_home",
+    async () => {
+      try {
+        const { data, error } = await supabase
+          .from("testimonios")
+          .select("*")
+          .eq("activo", true)
+          .order("destacado", { ascending: false })
+          .order("orden", { ascending: true })
+          .order("created_at", { ascending: false })
+          .limit(6);
 
-      if (error) {
-        if (error.code === "42P01" || error.code === "PGRST205") {
+        if (error) {
+          if (error.code === "42P01" || error.code === "PGRST205") {
+            return [];
+          }
+          throw new Error(`[Supabase] ${error.message}`);
+        }
+
+        return data ?? [];
+      } catch (err) {
+        if (
+          err instanceof Error &&
+          (err.message.includes("42P01") || err.message.includes("PGRST205"))
+        ) {
           return [];
         }
-        throw new Error(`[Supabase] ${error.message}`);
+        throw err;
       }
-
-      return data ?? [];
-    } catch (err) {
-      if (
-        err instanceof Error &&
-        (err.message.includes("42P01") || err.message.includes("PGRST205"))
-      ) {
-        return [];
-      }
-      throw err;
-    }
-  });
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 // ─── Mural de Recuerdos ───────────────────────────────────────────────────────
@@ -878,37 +944,41 @@ export async function getRecuerdosPublicos(filtros?: FiltrosRecuerdos): Promise<
  * 3. fecha_publicacion DESC
  */
 export async function getRecuerdosHome(limite = 8): Promise<RecuerdoRow[]> {
-  return withMemoryCache(`recuerdos_home_${limite}`, async () => {
-    try {
-      const nowIso = new Date().toISOString();
-      const { data, error } = await supabase
-        .from("recuerdos")
-        .select("*")
-        .eq("publicado", true)
-        .lte("fecha_publicacion", nowIso)
-        .order("destacado", { ascending: false })
-        .order("orden", { ascending: true })
-        .order("fecha_publicacion", { ascending: false })
-        .limit(limite);
+  return withMemoryCache(
+    `recuerdos_home_${limite}`,
+    async () => {
+      try {
+        const nowIso = new Date().toISOString();
+        const { data, error } = await supabase
+          .from("recuerdos")
+          .select("*")
+          .eq("publicado", true)
+          .lte("fecha_publicacion", nowIso)
+          .order("destacado", { ascending: false })
+          .order("orden", { ascending: true })
+          .order("fecha_publicacion", { ascending: false })
+          .limit(limite);
 
-      if (error) {
-        if (error.code === "42P01" || error.code === "PGRST205") {
+        if (error) {
+          if (error.code === "42P01" || error.code === "PGRST205") {
+            return [];
+          }
+          throw new Error(`[Supabase] ${error.message}`);
+        }
+
+        return data ?? [];
+      } catch (err) {
+        if (
+          err instanceof Error &&
+          (err.message.includes("42P01") || err.message.includes("PGRST205"))
+        ) {
           return [];
         }
-        throw new Error(`[Supabase] ${error.message}`);
+        throw err;
       }
-
-      return data ?? [];
-    } catch (err) {
-      if (
-        err instanceof Error &&
-        (err.message.includes("42P01") || err.message.includes("PGRST205"))
-      ) {
-        return [];
-      }
-      throw err;
-    }
-  });
+    },
+    STATIC_TTL_MS,
+  );
 }
 
 /**

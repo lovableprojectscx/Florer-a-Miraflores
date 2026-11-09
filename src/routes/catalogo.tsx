@@ -10,6 +10,7 @@ import { getCategorias, getConfig, getProductosActivos } from "@/lib/queries";
 import type { CategoriaRow, ProductoRow } from "@/types/database";
 
 export const Route = createFileRoute("/catalogo")({
+  staleTime: 120_000, // 2 minutos de frescura en cliente: evita re-fetch masivo en navegación interna
   loader: async () => {
     const [productos, categorias, config] = await Promise.all([
       getProductosActivos().catch(() => []),

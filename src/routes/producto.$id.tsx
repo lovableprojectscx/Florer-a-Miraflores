@@ -13,6 +13,7 @@ import { slugify, extractIdFromSlug, stripMarkdown, safeJsonLd } from "@/lib/uti
 // ─── Loader & Route ────────────────────────────────────────────────────────────
 
 export const Route = createFileRoute("/producto/$id")({
+  staleTime: 120_000, // 2 minutos de frescura en cliente: evita re-fetch masivo en navegación interna
   loader: async ({ params }) => {
     const realId = extractIdFromSlug(params.id);
     const [product, categorias, config, tags] = await Promise.all([
