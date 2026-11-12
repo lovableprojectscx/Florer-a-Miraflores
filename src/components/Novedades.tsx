@@ -13,8 +13,11 @@ import velvet from "@/assets/product-novedad-velvet.webp";
 import aurora from "@/assets/product-novedad-aurora.webp";
 
 // ─── Configuración de zoom y encuadre en fotos de producto del Home ─────────
-// Por solicitud de Sofía y Jack: 1.00 (sin zoom artificial para que las flores y globos no se salgan del cuadro).
-export const ZOOM_FOTO_HOME = 1.0;
+// Configuración evaluada y calibrada: 1.10 (+10% zoom base en reposo).
+// Logra el balance estético ideal: los arreglos florales llenan mejor la tarjeta cuadrada 1:1
+// reduciendo el espacio vacío de estudio, mientras mantiene un margen de seguridad (~10-15%)
+// para que globos altos, orejas de peluches/jirafitas y varas de orquídeas no se recorten en reposo ni en hover.
+export const ZOOM_FOTO_HOME = 1.10;
 export const OBJECT_POSITION_FOTO_HOME = "center center";
 
 // ─── Fallback cuando no hay datos en Supabase ────────────────────────────────
