@@ -17,7 +17,7 @@ import aurora from "@/assets/product-novedad-aurora.webp";
 // Logra el balance estético ideal: los arreglos florales llenan mejor la tarjeta cuadrada 1:1
 // reduciendo el espacio vacío de estudio, mientras mantiene un margen de seguridad (~10-15%)
 // para que globos altos, orejas de peluches/jirafitas y varas de orquídeas no se recorten en reposo ni en hover.
-export const ZOOM_FOTO_HOME = 1.10;
+export const ZOOM_FOTO_HOME = 1.1;
 export const OBJECT_POSITION_FOTO_HOME = "center center";
 
 // ─── Fallback cuando no hay datos en Supabase ────────────────────────────────
@@ -176,7 +176,7 @@ function ProductCard({ producto }: { producto: ProductoRow }) {
             url={imgSrc}
             fallbackUrl={imgSrc}
             anchoMiniatura={480}
-            anchosMiniatura={[480]}
+            anchosMiniatura={[480, 960]}
             sizes="(min-width: 1280px) 280px, (min-width: 1024px) 260px, (min-width: 768px) 30vw, 45vw"
             alt={producto.nombre}
             loading="lazy"

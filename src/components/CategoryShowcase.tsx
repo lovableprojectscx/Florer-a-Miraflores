@@ -110,8 +110,8 @@ export function CategoryShowcase({ colecciones }: Props) {
                   url={img}
                   fallbackUrl={img || FALLBACK_IMGS[i % FALLBACK_IMGS.length]}
                   anchoMiniatura={isHero ? 960 : 480}
-                  anchosMiniatura={isHero ? [960] : [480]}
-                  originalWidth={isHero ? 1600 : undefined}
+                  anchosMiniatura={isHero ? [960] : [480, 960]}
+                  originalWidth={isHero ? 2048 : undefined}
                   sizes={
                     isHero
                       ? "(max-width: 1024px) 100vw, 66vw"

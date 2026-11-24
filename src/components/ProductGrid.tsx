@@ -114,7 +114,7 @@ export function ProductGrid({
                       url={primeraImagen}
                       fallbackUrl={primeraImagen || romantico}
                       anchoMiniatura={480}
-                      anchosMiniatura={[480]}
+                      anchosMiniatura={[480, 960]}
                       alt={p.nombre}
                       loading="lazy"
                       sizes="(min-width: 1536px) 360px, (min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"

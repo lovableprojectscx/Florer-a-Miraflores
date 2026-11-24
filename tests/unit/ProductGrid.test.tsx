@@ -109,7 +109,7 @@ describe("ProductGrid — paginación 'Ver más' y placeholder de imagen", () =>
     expect(img2.getAttribute("src")).not.toBe("undefined");
   });
 
-  it("tarjetas de producto restringen srcset a 480w para proteger la cuota de transferencia", () => {
+  it("tarjetas de producto incluyen srcset 480w y 960w para nitidez Retina sin cargar originales 2048w", () => {
     const productos = [
       {
         ...crearProductos(1)[0],
@@ -124,8 +124,9 @@ describe("ProductGrid — paginación 'Ver más' y placeholder de imagen", () =>
     const img = screen.getByAltText(productos[0].nombre) as HTMLImageElement;
     const srcset = img.getAttribute("srcset");
 
-    // Debe contener 480w y NO debe contener 960w ni 2560w para tarjetas de catálogo
+    // Debe contener 480w y 960w (para pantallas Retina/HD) y NO originales 2048w/2560w en tarjetas
     expect(srcset).toContain("thumbs/480/ramo.webp 480w");
-    expect(srcset).not.toContain("960w");
+    expect(srcset).toContain("thumbs/960/ramo.webp 960w");
+    expect(srcset).not.toContain("2048w");
   });
 });

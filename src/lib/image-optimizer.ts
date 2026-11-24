@@ -95,14 +95,14 @@ export async function convertToWebP(
 }
 
 /**
- * Genera miniaturas WebP de 480px y 960px (calidad ~72) para un archivo de imagen en el navegador.
+ * Genera miniaturas WebP de 480px (calidad 0.86) y 960px (calidad 0.88) para un archivo de imagen en el navegador.
  */
 export async function generarMiniaturasWebP(
   file: File,
 ): Promise<{ thumb480: File; thumb960: File }> {
   const [thumb480, thumb960] = await Promise.all([
-    convertToWebP(file, 0.72, 480),
-    convertToWebP(file, 0.72, 960),
+    convertToWebP(file, 0.86, 480),
+    convertToWebP(file, 0.88, 960),
   ]);
   return { thumb480, thumb960 };
 }

@@ -283,7 +283,7 @@ async function main() {
         if (missing480) {
           const buf480 = await sharp(inputBuf)
             .resize(480, 480, { fit: "inside", withoutEnlargement: true })
-            .webp({ quality: 75 })
+            .webp({ quality: 86 })
             .toBuffer();
           const { error } = await supabase.storage
             .from(b)
@@ -298,7 +298,7 @@ async function main() {
         if (missing960) {
           const buf960 = await sharp(inputBuf)
             .resize(960, 960, { fit: "inside", withoutEnlargement: true })
-            .webp({ quality: 80 })
+            .webp({ quality: 88 })
             .toBuffer();
           const { error } = await supabase.storage
             .from(b)
@@ -314,7 +314,7 @@ async function main() {
           const maxDim = b === "banners" ? 2560 : 1600;
           const optBuf = await sharp(inputBuf)
             .resize(maxDim, maxDim, { fit: "inside", withoutEnlargement: true })
-            .webp({ quality: 82 })
+            .webp({ quality: 88 })
             .toBuffer();
           const finalBuf = optBuf.length < inputBuf.length ? optBuf : inputBuf;
           const { error } = await supabase.storage.from(b).upload(rootObj.name, finalBuf, {

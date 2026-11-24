@@ -126,7 +126,8 @@ export function ProductDetailView({
                   fallbackUrl={imagenes[activeImg] || fallbackImg}
                   anchoMiniatura={960}
                   anchosMiniatura={[480, 960]}
-                  sizes="(max-width: 640px) 480px, 960px"
+                  originalWidth={2048}
+                  sizes="(max-width: 1024px) 100vw, 55vw"
                   alt={product.nombre}
                   fetchPriority="high"
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
