@@ -69,6 +69,9 @@ export function resolveCacheControl(url, method = "GET", status = 200, headers =
     !hasBypassParam &&
     !isAdminOrAuth
   ) {
+    if (pathOnly === "/sitemap.xml") {
+      return "public, s-maxage=3600, stale-while-revalidate=86400";
+    }
     // Páginas públicas SSR: cachear en Edge CDN de Vercel para blindar Supabase Egress
     // Catálogo masivo: 3 min (180s) | Resto de la tienda (Home, Producto, Categorías, Nosotros): 5 min (300s)
     const isCatalog = pathOnly === "/catalogo";
@@ -93,6 +96,14 @@ async function writeWebResponse(webRes, res, req) {
       "Cache-Control",
       resolveCacheControl(req?.url, req?.method, webRes.status, req?.headers),
     );
+  }
+
+  // A11: noindex SOLO cuando el host termine en .vercel.app
+  const host = String(req?.headers?.["x-forwarded-host"] || req?.headers?.host || "")
+    .toLowerCase()
+    .split(":")[0];
+  if (host.endsWith(".vercel.app")) {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow");
   }
 
   if (webRes.body) {

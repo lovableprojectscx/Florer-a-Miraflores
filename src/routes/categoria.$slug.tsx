@@ -55,17 +55,22 @@ export const Route = createFileRoute("/categoria/$slug")({
 
     return { cat, categorias, config, productos };
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.cat.nombre} | Florería Miraflores` },
-          {
-            name: "description",
-            content: `Explora ${loaderData.cat.nombre} en Florería Miraflores. Delivery en Lima.`,
-          },
-        ]
-      : [],
-  }),
+  head: ({ loaderData }) => {
+    if (!loaderData) return { meta: [] };
+    const isDefuncionSinProductos =
+      loaderData.cat.slug === "defuncion" && loaderData.productos.length === 0;
+
+    return {
+      meta: [
+        { title: `${loaderData.cat.nombre} | Florería Miraflores` },
+        {
+          name: "description",
+          content: `Explora ${loaderData.cat.nombre} en Florería Miraflores. Delivery en Lima.`,
+        },
+        ...(isDefuncionSinProductos ? [{ name: "robots", content: "noindex, follow" }] : []),
+      ],
+    };
+  },
   notFoundComponent: () => (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
       <h1 className="font-display text-4xl mb-4 text-[#2C2420]">Categoría no encontrada</h1>

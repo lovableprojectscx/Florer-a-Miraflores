@@ -204,6 +204,16 @@ function HomePage() {
       <Header categorias={categorias} config={config} />
       <main>
         <Hero banners={banners} />
+        <section className="w-full bg-[#FAF8F5] border-b border-[#E8DDD0]/70 py-5 sm:py-8 md:py-10 px-4 text-center">
+          <div className="max-w-3xl mx-auto space-y-1.5 sm:space-y-2">
+            <h1 className="font-display text-[19px] sm:text-3xl md:text-4xl text-[#2C2420] font-normal leading-snug">
+              Florería en Miraflores con delivery de flores el mismo día en Lima
+            </h1>
+            <p className="font-body text-xs sm:text-sm text-[#5C4D42] font-light leading-snug">
+              Pedidos antes de las 5:00 p.m. llegan el mismo día.
+            </p>
+          </div>
+        </section>
         <Novedades tagSecciones={seccionesPrincipales} />
         <CategoryShowcase colecciones={colecciones} />
         {seccionesPostColecciones.length > 0 && (

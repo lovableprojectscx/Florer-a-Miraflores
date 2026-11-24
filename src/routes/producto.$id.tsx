@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { ProductDetailView } from "@/components/ProductDetailView";
 import {
   getProductoPorId,
@@ -23,15 +23,15 @@ export const Route = createFileRoute("/producto/$id")({
       getTags().catch(() => []),
     ]);
 
-    if (!product) throw redirect({ to: "/" });
+    if (!product) throw notFound();
 
-    // Redirección canónica si el parámetro no coincide con el slug del producto + ID
+    // Redirección canónica 301 si el parámetro no coincide con el slug del producto + ID
     const canonicalId = `${slugify(product.nombre)}-${product.id}`;
     if (params.id !== canonicalId) {
       throw redirect({
         to: "/producto/$id",
         params: { id: canonicalId },
-        replace: true,
+        statusCode: 301,
       });
     }
 
@@ -61,6 +61,7 @@ export const Route = createFileRoute("/producto/$id")({
     const desc = stripMarkdown(loaderData.product.descripcion) || loaderData.product.nombre;
     const title = `${loaderData.product.nombre} | Florería Miraflores`;
     const img = loaderData.product.imagenes?.[0] ?? "https://floreriamiraflores.com/Logo.webp";
+    const canonicalUrl = `https://floreriamiraflores.com/producto/${slugify(loaderData.product.nombre)}-${loaderData.product.id}`;
 
     return {
       meta: [
@@ -75,6 +76,7 @@ export const Route = createFileRoute("/producto/$id")({
         { name: "twitter:description", content: desc },
         { name: "twitter:image", content: img },
       ],
+      links: [{ rel: "canonical", href: canonicalUrl }],
     };
   },
   notFoundComponent: () => (
@@ -162,6 +164,11 @@ function ProductPage() {
       seller: {
         "@type": "Florist",
         name: "Florería Miraflores",
+      },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "PE",
+        merchantReturnLink: "https://floreriamiraflores.com/cambios-y-devoluciones",
       },
     },
   };
