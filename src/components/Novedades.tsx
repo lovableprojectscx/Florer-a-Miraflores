@@ -13,9 +13,9 @@ import velvet from "@/assets/product-novedad-velvet.webp";
 import aurora from "@/assets/product-novedad-aurora.webp";
 
 // ─── Configuración de zoom y encuadre en fotos de producto del Home ─────────
-// Calibrado a 1.18 (+18% zoom base en reposo, ~1.24 en hover) a pedido de Sofía
-// para dar mayor presencia a las flores en la tarjeta 1:1 aprovechando el srcset 960w HD.
-export const ZOOM_FOTO_HOME = 1.18;
+// Calibrado a 1.10 (+10% zoom base en reposo, ~1.155 en hover):
+// da presencia a las flores en la tarjeta 1:1 sin recortar globos altos ni varas de orquídeas.
+export const ZOOM_FOTO_HOME = 1.1;
 export const OBJECT_POSITION_FOTO_HOME = "center center";
 
 // ─── Fallback cuando no hay datos en Supabase ────────────────────────────────

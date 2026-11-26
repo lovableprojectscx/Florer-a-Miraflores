@@ -117,13 +117,62 @@ test.describe("Popup Modal Club Florería Miraflores — Opción A (Horizontal C
     });
     expect(hasHorizontalScroll).toBe(false);
 
+    // En móvil los inputs deben tener >= 16px para evitar zoom automático de iOS y no tener autoFocus
+    const mobileInputCheck = await page.evaluate(() => {
+      const nameEl = document.querySelector("#subscriber-name-input") as HTMLElement | null;
+      const phoneEl = document.querySelector("#subscriber-phone-input") as HTMLElement | null;
+      return {
+        nameFontSize: nameEl ? parseFloat(window.getComputedStyle(nameEl).fontSize) : 0,
+        phoneFontSize: phoneEl ? parseFloat(window.getComputedStyle(phoneEl).fontSize) : 0,
+        isNameFocused: document.activeElement === nameEl,
+      };
+    });
+    expect(mobileInputCheck.nameFontSize).toBeGreaterThanOrEqual(16);
+    expect(mobileInputCheck.phoneFontSize).toBeGreaterThanOrEqual(16);
+    expect(mobileInputCheck.isNameFocused).toBe(false);
+
     // Validación inline al enviar vacío
     const submitBtn = card.locator('button[type="submit"]');
+    await expect(submitBtn).toBeVisible();
     await submitBtn.click();
 
     // Debe mostrar mensaje de error de validación
     const errorText = card.getByText(/Por favor ingresa tu nombre/i);
     await expect(errorText).toBeVisible();
+  });
+
+  test("Mobile compacto (360x640): cabe en pantalla y el botón enviar es accesible", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 360, height: 640 });
+
+    await page.route("**/rest/v1/popup*", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify(mockPopupConImagen),
+      });
+    });
+
+    await page.addInitScript(() => {
+      (window as unknown as { __POPUP_DELAY__: number }).__POPUP_DELAY__ = 100;
+    });
+
+    await page.goto("/");
+
+    const card = page.locator('[data-testid="popup-card"]');
+    await expect(card).toBeVisible({ timeout: 5000 });
+
+    const cardBox = await card.boundingBox();
+    expect(cardBox).not.toBeNull();
+    if (cardBox) {
+      expect(cardBox.width).toBeLessThanOrEqual(340);
+      expect(cardBox.height).toBeLessThanOrEqual(640 * 0.92);
+    }
+
+    const submitBtn = card.locator('button[type="submit"]');
+    await submitBtn.scrollIntoViewIfNeeded();
+    await expect(submitBtn).toBeVisible();
   });
 
   test("Retardo no invasivo: NO se abre de inmediato (respeta temporizador default de 8s)", async ({

@@ -186,7 +186,7 @@ function PopupModalInner({ popup, config }: Props) {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/35 backdrop-blur-2xs animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/35 backdrop-blur-2xs animate-fade-in overflow-y-auto overscroll-contain"
           onClick={handleClose}
           role="dialog"
           aria-modal="true"
@@ -194,7 +194,7 @@ function PopupModalInner({ popup, config }: Props) {
           data-testid="popup-modal"
         >
           <div
-            className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-2xl overflow-hidden border border-[#E8DDD0]/70 animate-fade-in flex flex-col md:flex-row md:items-stretch max-h-[92vh] md:max-h-none"
+            className="relative my-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-[360px] sm:max-w-md md:max-w-2xl overflow-y-auto md:overflow-hidden border border-[#E8DDD0]/70 animate-fade-in flex flex-col md:flex-row md:items-stretch max-h-[90dvh] md:max-h-none"
             style={{ animationDuration: "250ms" }}
             onClick={(e) => e.stopPropagation()}
             data-testid="popup-card"
@@ -203,16 +203,16 @@ function PopupModalInner({ popup, config }: Props) {
             <button
               type="button"
               onClick={handleClose}
-              className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-20 p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white text-[#2C2420] shadow-sm hover:shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer border border-[#E8DDD0]/40"
+              className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-white/95 hover:bg-white text-[#2C2420] shadow-sm hover:shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer border border-[#E8DDD0]/50"
               aria-label="Cerrar modal"
               data-testid="popup-close-button"
             >
               <X className="h-4 w-4" strokeWidth={2.5} />
             </button>
 
-            {/* Columna Izquierda: Visual / Imagen promocional */}
+            {/* Columna Izquierda: Visual / Imagen promocional (solo escritorio) */}
             {popup?.imagen_url ? (
-              <div className="relative w-full h-24 sm:h-28 md:h-auto md:w-5/12 shrink-0 bg-[#FAF8F6] overflow-hidden">
+              <div className="hidden md:block relative md:w-5/12 shrink-0 bg-[#FAF8F6] overflow-hidden">
                 <ResponsiveImage
                   url={popup.imagen_url}
                   fallbackUrl={popup.imagen_url}
@@ -221,12 +221,12 @@ function PopupModalInner({ popup, config }: Props) {
                   alt="Club Florería Miraflores"
                   className="w-full h-full object-cover block"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/45 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-2 left-3 md:bottom-4 md:left-4 text-white drop-shadow-sm pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-4 left-4 text-white drop-shadow-sm pointer-events-none">
                   <span className="text-[9px] uppercase tracking-[0.2em] font-medium text-white/90 block">
                     Club Exclusivo
                   </span>
-                  <span className="font-display text-xs md:text-sm font-normal text-white">
+                  <span className="font-display text-sm font-normal text-white">
                     Florería Miraflores
                   </span>
                 </div>
@@ -246,20 +246,34 @@ function PopupModalInner({ popup, config }: Props) {
             )}
 
             {/* Columna Derecha: Contenido y Formulario */}
-            <div className="flex-1 flex flex-col justify-center p-4 sm:p-5 md:p-6 overflow-y-auto">
+            <div className="flex-1 flex flex-col justify-center p-4 sm:p-5 md:p-6 md:overflow-y-auto">
               {!isSubscribed ? (
                 <>
-                  <div className="mb-2.5 sm:mb-3 pr-6 text-left">
-                    <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#9B4850] block mb-0.5">
-                      Comunidad WhatsApp
-                    </span>
-                    <h3 className="font-display text-lg sm:text-xl md:text-2xl text-[#2C2420] font-normal leading-tight">
-                      Únete a nuestro Club
-                    </h3>
-                    <p className="font-body text-[11px] sm:text-xs text-[#595753] mt-1 leading-snug">
-                      Recibe novedades, promociones y recordatorios de fechas especiales por
-                      WhatsApp.
-                    </p>
+                  <div className="flex items-center gap-3.5 mb-3 pr-7 text-left">
+                    {popup?.imagen_url && (
+                      <div className="md:hidden w-20 h-24 rounded-xl overflow-hidden shrink-0 border border-[#E8DDD0]/70 bg-[#FAF8F6] shadow-2xs">
+                        <ResponsiveImage
+                          url={popup.imagen_url}
+                          fallbackUrl={popup.imagen_url}
+                          anchoMiniatura={480}
+                          anchosMiniatura={[480]}
+                          alt="Arreglo floral Florería Miraflores"
+                          className="w-full h-full object-cover object-center block"
+                        />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-[#9B4850] block mb-0.5">
+                        Comunidad WhatsApp
+                      </span>
+                      <h3 className="font-display text-lg sm:text-xl md:text-2xl text-[#2C2420] font-normal leading-tight">
+                        Únete a nuestro Club
+                      </h3>
+                      <p className="font-body text-[11px] sm:text-xs text-[#595753] mt-1 leading-snug">
+                        Recibe novedades, promociones y recordatorios de fechas especiales por
+                        WhatsApp.
+                      </p>
+                    </div>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-2.5 sm:space-y-3">
@@ -282,8 +296,7 @@ function PopupModalInner({ popup, config }: Props) {
                           setNombre(e.target.value);
                           if (error) setError(null);
                         }}
-                        className="w-full h-9 sm:h-10 px-3 text-xs sm:text-sm text-[#2C2420] placeholder:text-[#8C8A84]/50 border border-[#E8DDD0] rounded-xl focus:border-[#C4848A] focus:ring-2 focus:ring-[#C4848A]/20 outline-none bg-white transition-all shadow-2xs"
-                        autoFocus
+                        className="w-full h-10 px-3 text-base sm:text-sm text-[#2C2420] placeholder:text-[#8C8A84]/50 border border-[#E8DDD0] rounded-xl focus:border-[#C4848A] focus:ring-2 focus:ring-[#C4848A]/20 outline-none bg-white transition-all shadow-2xs"
                       />
                     </div>
 
@@ -314,7 +327,7 @@ function PopupModalInner({ popup, config }: Props) {
                             if (val.length <= 9) setPhone(val);
                             if (error) setError(null);
                           }}
-                          className="w-full h-9 sm:h-10 px-3 text-xs sm:text-sm text-[#2C2420] placeholder:text-[#8C8A84]/50 focus:outline-none bg-transparent"
+                          className="w-full h-10 px-3 text-base sm:text-sm text-[#2C2420] placeholder:text-[#8C8A84]/50 focus:outline-none bg-transparent"
                         />
                       </div>
                     </div>
